@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9" /> 
+		<link rel="stylesheet" type="text/css" href="jquery-ui.css" />	
+		<style type="text/css">
+			body {
+				background-color: #737173;
+				position:absolute;
+				top: 0px;
+				bottom: 0px;
+				height: 95%;
+				width: 95%;
+				text-align: center;
+			}
+			div {
+				margin: 2em;
+			}
+			table {
+				margin:auto;
+				width: 100%;
+				height:100%;
+			}
+			
+			iframe {
+				height:100%;
+				width:100%;
+			}
+		</style>
+		<title>TR</title>
+	</head>
+	<body>
+		<script type="text/javascript" src="jquery.min.js"></script>		
+		<script type="text/javascript" src="jquery-ui.min.js"></script>
+		<table><tbody>
+			<tr>
+				<td style="width:30%;">
+					<div id="proxy">Wizualizacja</div><div id="proxy_min">Wizualizacja MIN</div><br/>
+					<div id="log">Log</div><div id="err">Raport błędów</div><br/>
+					<div id="restart">Restart Node</div><div id="exit">Wyłączenie Node</div><br/>
+					<div id="backup">Zapisanie zmian w TC (backup)</div><br/>
+					<div id="reboot">Reboot systemu</div><br/>
+					<div id="refresh">Odświerz przeglądarkę</div><br/>
+					<div id="time">Odczyt czasu NTP</div><br/>
+					<div id="zip">Pobranie danych arch</div><br/>
+					<div id="update">Update z pliku</div><br/>
+				</td>
+				<td>
+					<iframe id="i_frame" style="height:100%;width:100%;" src="/proxy/"></iframe>
+				</td>
+			</tr>
+		</tbody></table>
+		<script type="text/javascript" >
+			$(document).ready( function(){ 
+				$('#proxy').button().click(function(){	$("#i_frame").attr('src', "/proxy/"); });
+				$('#proxy_min').button().click(function(){	$("#i_frame").attr('src', "/proxy_min/"); });
+				$('#log').button().click(function(){	$("#i_frame").attr('src', "/log"); });
+				$('#err').button().click(function(){	$("#i_frame").attr('src', "/err"); });
+				$('#restart').button().click(function(){	$("#i_frame").attr('src', "/restart"); });
+				$('#exit').button().click(function(){	$("#i_frame").attr('src', "/exit"); });
+				$('#reboot').button().click(function(){	$("#i_frame").attr('src', "/reboot"); });
+				$('#refresh').button().click(function(){	$("#i_frame").attr('src', "/refresh"); });
+				$('#backup').button().click(function(){	$("#i_frame").attr('src', "/backup"); });
+				$('#time').button().click(function(){	$("#i_frame").attr('src', "/time"); });
+				$('#zip').button().click(function(){	$("#i_frame").attr('src', "/zip"); });
+				$('#update').button().click(function(){	$("#i_frame").attr('src', "/update"); });
+				
+				window.setInterval( function() {
+					if (( $("#i_frame").attr('src') == "/log" ) 
+					|| ( $("#i_frame").attr('src') == "/err" ) ) {
+						document.getElementById("i_frame").contentDocument.location.reload(true);
+					}
+				},	5000);
+				$("#i_frame").load(function(){this.contentWindow.scrollBy(0,100000)});
+			});
+		</script>
+	</body>
+</html>

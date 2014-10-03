@@ -1,0 +1,2 @@
+/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
+define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(a){switch(a){case b.kodyKlawiszy.lewo:return;case b.kodyKlawiszy.prawo:return;case b.kodyKlawiszy.gora:break;case b.kodyKlawiszy.dol:break;case b.kodyKlawiszy.enter:return void require(["ksiazkaSerwisowa/przypomnienie"],function(a){a.wyslijDoPLC()});case b.kodyKlawiszy.escape:require(["ksiazkaSerwisowa/przypomnienie"],function(a){a.zamknij()})}};return{wykonaj:c}});

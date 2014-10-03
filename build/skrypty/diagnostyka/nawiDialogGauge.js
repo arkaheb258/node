@@ -1,0 +1,2 @@
+/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
+define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(a){switch(a){case b.kodyKlawiszy.escape:require(["diagnostyka/main"],function(a){a.zamknij()});break;case b.kodyKlawiszy.enter:require(["diagnostyka/popUpKomunikaty"],function(a){a.inicjacja()})}};return{wykonaj:c}});

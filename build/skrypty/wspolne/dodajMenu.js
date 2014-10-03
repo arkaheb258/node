@@ -1,0 +1,2 @@
+/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
+define(["jquery","zmienneGlobalne"],function(a){"use strict";var b=function(b){var c,d,e,f;f=a(b).height(),d=a(b).children().length,e=a(b).children().first().outerHeight(!0),c=(f-d*e)/2.5,a(b).children().css({top:c})},c=function(b,c){var d,e=document.createDocumentFragment();return a.each(b,function(b,f){"tytul"!==b&&f.widocznosc&&(d=document.createElement("button"),a(d).text(f.nazwa).addClass(c).css({width:"75%","font-weight":"normal"}).attr("id",b),a(e).append(d))}),e};return{dodajElementyHtml:c,allignVertical:b}});

@@ -1,0 +1,2 @@
+/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
+define(["jquery","obslugaJSON","zmienneGlobalne","kommTCP"],function(a,b,c,d){"use strict";var e=new Date,f=function(){var b,f=(new Date("October 13, 1975 11:13:00"),function(a){return 10>a?"0"+a:a});e.setTime(d.daneTCP.timeStamp_js),b=e.getUTCFullYear()+"/"+f(e.getUTCMonth()+1)+"/"+f(e.getUTCDate())+" "+f(e.getUTCHours())+":"+f(e.getUTCMinutes())+":"+f(e.getUTCSeconds()),c.data=b,a("#p_dataCzas").text(b)},g=function(){setInterval(function(){f()},c.czasOdswiezania)};return{inicjacja:g}});

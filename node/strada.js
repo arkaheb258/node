@@ -10,9 +10,9 @@
 
 	    DEFAULT_TIMEOUT_MS = 1000,
 	    CONNECT_DELAY = 200,
+	    TIMEOUT_MUL = 1,
 	    CONNECT_TIMEOUT_MS = glob_par.STRADA_INTERVAL_MS * TIMEOUT_MUL,
 	    // TIMEOUT_MUL = 5,
-	    TIMEOUT_MUL = 1,
 		ntp_date = -1,
 		NTP_IP_i = 0,
 	    dt = new Date(),
@@ -546,9 +546,9 @@ console.log("Sterownik rząda daty 2");
 			rawHead = dane.slice(0, 12);
 			dane = dane.slice(12);	//przesłanie dalej tylko SerwerData
 			lastSent = null;
-			if (instrNoR === 0x302) {
-//				dane302 = {error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead};
-			}
+			// if (instrNoR === 0x302) {
+				// dane302 = {error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead};
+			// }
 			if (DataType === 0) {
 				dane = dane.toString();
 			}

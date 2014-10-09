@@ -9,7 +9,10 @@
 		glob_par = require('../par.js'),
 
 	    DEFAULT_TIMEOUT_MS = 1000,
-	    TIMEOUT_MUL = 5,
+	    CONNECT_DELAY = 200,
+	    CONNECT_TIMEOUT_MS = glob_par.STRADA_INTERVAL_MS * TIMEOUT_MUL,
+	    // TIMEOUT_MUL = 5,
+	    TIMEOUT_MUL = 1,
 		ntp_date = -1,
 		NTP_IP_i = 0,
 	    dt = new Date(),
@@ -30,7 +33,7 @@
 //		console.log("strada(onConnect)");
 		if (num === 0) {
 			client = new net.Socket();
-			client.setTimeout(glob_par.STRADA_INTERVAL_MS * TIMEOUT_MUL, function () { StradaTimeout(client); });
+			client.setTimeout(CONNECT_TIMEOUT_MS, function () { StradaTimeout(client); });
 			client.on('data', stradaGetData);
 			client.on('connect', function () {
 				console.log("on Connect 0");
@@ -52,7 +55,7 @@
 				console.log('client.on(close)');
 				setTimeout(function () {
 					strada(onConnect, 0);
-				}, 500);
+				}, CONNECT_DELAY);
 				if (glob_par.PLC_IP_GATEs && (!client2 || client2.destroyed)) {
 					num += 1;
 					if (glob_par.PLC_IP_GATEs.length <= num) { num = 0; }
@@ -80,7 +83,7 @@
 			}
 		} else if (!client2 || client2.destroyed) {
 			client2 = new net.Socket();
-			client2.setTimeout(glob_par.STRADA_INTERVAL_MS * TIMEOUT_MUL, function () { StradaTimeout(client2); });
+			client2.setTimeout(CONNECT_TIMEOUT_MS, function () { StradaTimeout(client2); });
 			client2.on('data', stradaGetData);
 			client2.on('connect', function () {
 				console.log("on Connect 1");

@@ -169,19 +169,19 @@
 		});
 
 		webServer.AddUrl('/json/sygnaly.json', function (jsonp, res, get) {
-			console.log("sygnaly.json 1");
+			// console.log("sygnaly.json 1");
 			parametry.odswierzParametry(function (temp) {
-				console.log("sygnaly.json 2");
+				// console.log("sygnaly.json 2");
 				var gpar = temp;
 				if (!gpar) {
-					console.log("sygnaly.json 2a");
+					// console.log("sygnaly.json 2a");
 					console.log("TCP - Brak połączenia z PLC");
 					res.write(JSON.stringify("Brak połączenia z PLC (sygnaly.json)"));
 					res.end();
 				} else if (glob_par.WEB_SYGN_FTP) {
-					console.log("sygnaly.json 2b");
+					// console.log("sygnaly.json 2b");
 					common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : "flash/Wizualizacja/sygnaly.json"}, function (text) {
-						console.log("sygnaly.json 3b");
+						// console.log("sygnaly.json 3b");
 						if (text !== false) {
 							res.write(JSON.stringify(czytajPlikSygnalow(text, gpar)));
 						} else {
@@ -191,9 +191,9 @@
 						res.end();
 					}, true);
 				} else {
-					console.log("sygnaly.json 2c");
+					// console.log("sygnaly.json 2c");
 					fs.readFile(glob_par.WEB_DIR + "/json/sygnaly.json", function (err, text) {
-						console.log("sygnaly.json 3c");
+						// console.log("sygnaly.json 3c");
 						if (err) {
 							res.write(JSON.stringify("sygnaly.json error"));
 //							throw err;

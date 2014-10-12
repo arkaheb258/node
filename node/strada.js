@@ -10,15 +10,14 @@
 
 	    DEFAULT_TIMEOUT_MS = 1000,
 	    CONNECT_DELAY = 200,
-	    TIMEOUT_MUL = 1,
-	    CONNECT_TIMEOUT_MS = glob_par.STRADA_INTERVAL_MS * TIMEOUT_MUL,
-	    // TIMEOUT_MUL = 5,
+	    TIMEOUT_MUL = 5,
+	    CONNECT_TIMEOUT_MS = glob_par.STRADA_INTERVAL_MS, // * TIMEOUT_MUL,
+		timeout_counter = 0,
 		ntp_date = -1,
 		NTP_IP_i = 0,
 	    dt = new Date(),
 	    instrID = 0,
 	    client = null,
-	    client2 = null,
 		main_client = null,
 	    queue = [],
 	    lastSent = null,
@@ -31,100 +30,45 @@
 	*/
 	function strada(onConnect, num) {
 //		console.log("strada(onConnect)");
-		if (num === 0) {
-			client = new net.Socket();
-			client.setTimeout(CONNECT_TIMEOUT_MS, function () { StradaTimeout(client); });
-			client.on('data', stradaGetData);
-			client.on('connect', function () {
-				console.log("on Connect 0");
-				PLCConnected = true;
-				if (client2) { client2.destroy(); client2 = null; }
-				strada_dane.stradaStopInterval();
-				// stradaClearQueue(true);
-				// console.log("queue.length "+queue.length);
-				main_client = client;
-				console.log('main_client = client');
-				onConnect();
-			});
-			client.on('error', function (err) {
-				strada_dane.dane_json('Strada client ErRoR: ' + err.code);
-				console.log(num + ": Strada ErRoR: " + err.code);
-				PLCConnected = false;
-			});
-			client.on('close', function () {
-				console.log('client.on(close)');
-				setTimeout(function () {
-					strada(onConnect, 0);
-				}, CONNECT_DELAY);
-				if (glob_par.PLC_IP_GATEs && (!client2 || client2.destroyed)) {
-					num += 1;
-					if (glob_par.PLC_IP_GATEs.length <= num) { num = 0; }
-					strada(onConnect, num);
-				}
-				if (client && !client.destroyed) {
-					console.log('client.destroy()');
-					client.destroy();
-				}
-				if (client2 && !client2.destroyed) { return; }
-				if (PLCConnected) {
-					PLCConnected = false;
-					strada_dane.dane_json('Strada Connection closed');
-					// console.log(dane302_json);
-					// stradaClearQueue(true);
-				}
-				strada_dane.stradaStopInterval();
-			});
-			if (glob_par.PLC_IP_GATEs) {
-				console.log('try to connect to ' + glob_par.PLC_IP_GATEs[num]);
-				client.connect(glob_par.STRADA_PORT, glob_par.PLC_IP_GATEs[num]);
-			} else {
-				client.connect(glob_par.STRADA_PORT, glob_par.PLC_IP);
-				console.log('try to connect to PLC');
+		client = new net.Socket();
+		client.setTimeout(CONNECT_TIMEOUT_MS, function () {
+			StradaTimeout(client);
+		});
+		client.on('data', stradaGetData);
+		client.on('connect', function () {
+			console.log("on Connect 0");
+			PLCConnected = true;
+			strada_dane.stradaStopInterval();
+			// stradaClearQueue(true);
+			// console.log("queue.length "+queue.length);
+			main_client = client;
+			console.log('main_client = client');
+			onConnect();
+		});
+		client.on('error', function (err) {
+			strada_dane.dane_json('Strada client ErRoR: ' + err.code);
+			console.log(num + ": Strada ErRoR: " + err.code);
+			PLCConnected = false;
+		});
+		client.on('close', function () {
+			console.log('client.on(close)');
+			setTimeout(function () {
+				strada(onConnect, 0);
+			}, CONNECT_DELAY);
+			if (client && !client.destroyed) {
+				console.log('client.destroy()');
+				client.destroy();
 			}
-		} else if (!client2 || client2.destroyed) {
-			client2 = new net.Socket();
-			client2.setTimeout(CONNECT_TIMEOUT_MS, function () { StradaTimeout(client2); });
-			client2.on('data', stradaGetData);
-			client2.on('connect', function () {
-				console.log("on Connect 1");
+			if (PLCConnected) {
+				PLCConnected = false;
+				strada_dane.dane_json('Strada Connection closed');
+				// console.log(dane302_json);
 				// stradaClearQueue(true);
-				// stradaClearQueue();
-				PLCConnected = true;
-				strada_dane.stradaStopInterval();
-				// stradaClearQueue(true);
-				main_client = client2;
-				console.log('main_client = client2');
-				onConnect();
-				// setTimeout(function () {
-					// strada(onConnect, 0);
-				// }, 10000);
-			});
-			client2.on('close', function () {
-				console.log('client2.on(close)');
-				if (client2 && !client2.destroyed) {
-					console.log('client2.destroy()');
-					client2.destroy();
-				}
-				if (client && !client.destroyed) { return; }
-				main_client = null;
-				console.log('main_client = null');
-				if (PLCConnected) {
-					PLCConnected = false;
-					strada_dane.dane_json('Strada Connection closed');
-					// console.log(dane302_json);
-				}
-				strada_dane.stradaStopInterval();
-				if (glob_par.PLC_IP_GATEs) {
-					num += 1;
-					if (glob_par.PLC_IP_GATEs.length <= num) { num = 0; }
-					strada(onConnect, num);
-				}
-			});
-			console.log('try to connect to ' + glob_par.PLC_IP_GATEs[num]);
-			client2.connect(glob_par.STRADA_PORT, glob_par.PLC_IP_GATEs[num]);
-		} else {
-			console.log('already connected to ' + glob_par.PLC_IP_GATEs[num]);
-		}
+			}
+			strada_dane.stradaStopInterval();
+		});
+		client.connect(glob_par.STRADA_PORT, glob_par.PLC_IP);
+		console.log('try to connect to PLC');
 	}
 
 	/**
@@ -157,16 +101,14 @@
 	*/
 	function StradaTimeout(clientt) {
 		// Close the client socket completely
+		console.log("Wystapil Strada timeout ");
+		timeout_counter += 1;
+		if (timeout_counter < TIMEOUT_MUL) { return; }
 		if (clientt && !clientt.destroyed) {
 			clientt.destroy();
 		}
-		// if (main_client === client) stradaClearQueue(true);
-		if (clientt === client) { console.log("Wystapil Strada timeout client"); }
-		if (clientt === client2) { console.log("Wystapil Strada timeout client2"); }
-		if (client2 && !client2.destroyed) { return; }
 		stradaClearQueue(true);
 		PLCConnected = false;
-			// console.log("Wystapil Strada timeout ");
 	}
 
 	/**
@@ -321,7 +263,7 @@
             temp_out_buff.writeUInt16LE(data, 4);	//uiCzytajObszarNr
 //console.log(strada_dane.strada_req_time());
 			if (strada_dane.strada_req_time()) {
-console.log("Sterownik rząda daty 2");
+				console.log("Sterownik rząda daty 2");
 				if (ntp_date === -1) {
 					ntp_date = 0;
 					common.getTime(function (ret) {
@@ -523,6 +465,7 @@ console.log("Sterownik rząda daty 2");
 			} else if (dane.length - 16 !== DataLenR) {
 				console.log("Błąd DataLen");
 			} else {
+				timeout_counter = 0;
 				error = null;
 			}
 		}

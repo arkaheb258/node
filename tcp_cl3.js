@@ -27,7 +27,7 @@
 		var d = new Date();
 		console.log(str);
 		if (glob_par.LOG_DIR) {
-			if (str) { buf_str += d.getTime() + ": " + str; } // + "\n"; }
+			if (str) { buf_str += d.toISOString() + ": " + str; } // + "\n"; }
 			if (d.getTime() - last_dump > 100 || buf_str.length > 100) {
 				fs.appendFile(glob_par.LOG_DIR + '/tcp_cl3.err', buf_str, function () {
 //					mylog((new Date()).getTime());
@@ -47,12 +47,12 @@
 		child.stdout.on('data', function (data) {
 			var str = data.toString(),
 				d = new Date();
-			if (str) { log_str += d.getTime() + ": " + str; } // + "\n";
+			if (str) { log_str += d.toISOString() + ": " + str; } // + "\n";
 			if (d.getTime() - last_dump_l > 100 || log_str.length > 200) {
 				fs.appendFile(glob_par.LOG_DIR + '/main.log', log_str, function () {
 				});
 				log_str = "";
-				last_dump_l = d.getTime();
+				last_dump_l = d.toISOString();
 			}
 		});
 
@@ -62,12 +62,13 @@
 				d = new Date();
 //			mylog(str);
 			// fs.appendFile(glob_par.LOG_DIR + '/main.err', d.getTime() + ": " + str, function () {});
-			if (str) { err_str += d.getTime() + ": " + str; } // + "\n";
+			if (str) { err_str += d.toISOString() + ": " + str; } // + "\n";
 			if (d.getTime() - last_dump_e > 100 || err_str.length > 200) {
 				fs.appendFile(glob_par.LOG_DIR + '/main.err', err_str, function () {
 				});
 				err_str = "";
-				last_dump_e = d.getTime();
+//				last_dump_e = d.getTime();
+				last_dump_e = d.toISOString();
 			}
 		});
 

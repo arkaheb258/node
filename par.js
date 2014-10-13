@@ -4,7 +4,6 @@
     var dir = __dirname;
     module.exports = {
 		PLC_IP : '192.168.3.30',
-		// PLC_IP_GATEs : ['192.168.3.31', '192.168.3.30'],
 		STRADA_PORT : 20021,
 		STRADA_INTERVAL_MS : 200,
 		WEB_PORT : 8888,
@@ -24,6 +23,7 @@
 		PARAM_LOC_FILE : dir + "/default.json",
 		// NTP_HWCLOCK : true,
 		// NTP_IPs : ["192.168.3.51", "ntp1.tp.pl"],		//tablica priorytetowa z serwerami czasu
+		WER_NODE	: "1.10.12",
 		ADM_WEB_DIR : dir + "/adm"
 	};
 }());

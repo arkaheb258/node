@@ -1,0 +1,15 @@
+#!/bin/sh
+cd /boot/uboot/
+git clone git://github.com/arkaheb258/node.git
+ln -s /boot/uboot/node/ /home/debian/kopex
+ln -s /boot/uboot/ /var/lib/cloud9/usb
+ln -s /boot/uboot/node/start.sh /etc/X11/Xsession.d/99x_nodejs_chrome	
+
+apt-get update
+apt-get upgrade
+apt-get install xdotool
+apt-get install unclutter
+
+chmod +x /boot/uboot/node/start
+echo "#!/bin/sh" > /etc/X11/Xsession.d/98x_mystart 
+echo "/boot/uboot/node/start" >> /etc/X11/Xsession.d/98x_mystart 

@@ -83,7 +83,8 @@
 			return;
 		}
 		// if (force) console.log("stradaClearQueue " + len);
-		for (i = 0; i < len; i += 1) {
+		// for (i = 0; i < len; i += 1) {
+		for (i = 0; i < queue.length; i += 1) {
 			el = queue[i];
 			// console.log("stradaClearQueue");
 //			console.log(el);

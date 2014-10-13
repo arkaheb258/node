@@ -12,6 +12,10 @@
 		strada_dane = require("./strada_dane.js"),
 		strada = require("./strada.js");
 
+	if (!glob_par.WER_NODE) {
+		glob_par.WER_NODE = "1.?.?";
+	}
+
 	function szukajPar(gpar, naz) {
 		var i;
 		if (gpar && gpar.DANE) {
@@ -305,7 +309,8 @@
 				// text = text.replace(new RegExp("127.0.0.1:8888", 'g'), "192.168.3.31:8888");
 				// text = text.replace(new RegExp("127.0.0.1:8888", 'g'), res.socket._peername.address + ":8888");
 				text = text.replace(new RegExp('"czyNaviRamkaPLC":true', 'g'), '"czyNaviRamkaPLC":false');
-				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"1.0.0"');
+				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
+				text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
 				res.write(text);
 				res.end();
 			});
@@ -313,12 +318,13 @@
 
 		webServer.AddUrl("/json/konfiguracja.json", function (jsonp, res, get) {
 			fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
-				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"1.0.0"');
+				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
+				text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
 				res.write(text);
 				res.end();
 			});
 		});
-		
+
 		webServer.AddUrl('/rozkaz', function (jsonp, res, get) {
 			var end = true,
 				blok,
@@ -337,7 +343,7 @@
 			if (jsonp) {
 				res.write(jsonp + "(");
 			}
-console.log(get);
+			console.log(get);
 			switch (get.rozkaz) {
 			case "ustawBlokade":
 				end = false;
@@ -379,7 +385,7 @@ console.log(get);
 					res.write(JSON.stringify("NaN"));
 					break;
 				}
-			
+
 				temp = get.wartosc / 1000;
 
 				//konwersja czas lokalny -> UTC

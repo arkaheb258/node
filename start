@@ -1,0 +1,7 @@
+#!/bin/sh
+echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
+hwclock -s -f /dev/rtc1
+hwclock -w
+node /home/debian/kopex/tcp_cl3.js &
+chromium -kiosk -incognito http://127.0.0.1:8888/min/ &
+sleep 16 && xdotool mousemove --sync 465 20 click 1 && sleep 1 && xdotool mousemove --sync 0 0

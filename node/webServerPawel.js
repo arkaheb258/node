@@ -12,131 +12,6 @@
 		strada_dane = require("./strada_dane.js"),
 		strada = require("./strada.js");
 
-	if (!glob_par.WER_NODE) {
-		glob_par.WER_NODE = "1.?.?";
-	}
-
-	function szukajPar(gpar, naz) {
-		var i;
-		if (gpar && gpar.DANE) {
-			for (i in gpar.DANE) {
-				if (gpar.DANE.hasOwnProperty(i) && gpar.DANE[i].NAZ === naz) { return gpar.DANE[i].WART; }
-			}
-		}
-		return null;
-	}
-
-	function czytajPlikParametrowWiz(data, gpar) {
-		var temp = null,
-			g,
-			p,
-			s,
-			js;
-		try {
-			js = JSON.parse(data);
-			if (js.DANE) {
-				for (g in js.DANE) {
-					if (typeof js.DANE[g] === "object") {
-						for (p in js.DANE[g]) {
-							if (typeof js.DANE[g][p] === "object") {
-								for (s in js.DANE[g][p]) {
-									if (typeof js.DANE[g][p][s] === "object" && js.DANE[g][p][s].WART !== undefined) {
-										// if (js.DANE[g][p][s].TYP === "pCzas") console.log(js.DANE[g][p][s].WART);
-										temp = szukajPar(gpar, s);
-										if (temp === null) {
-											console.log("P - Nie znaleziono parametru \"" + s + "\"");
-										} else if (js.DANE[g][p][s].WART !== temp) {
-			//console.log(" "+ s + ": " + js.DANE[g][p][s].WART + " -> " + temp);
-											js.DANE[g][p][s].WART = temp;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			return js;
-		} catch (err) {
-			console.log(data);
-			return "Błąd pliku parametrów (JSON parser)";
-		}
-	}
-
-	function czytajPlikSygnalow(data, gpar) {
-		var temp = null,
-			g,
-			p,
-			s,
-			js = JSON.parse(data);
-		if (typeof js === "object") {
-			for (g in js) {
-				if (typeof js[g] === "object") {
-					for (p in js[g]) {
-						//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
-						// if (js[g][p] === null) {
-							// delete js[g][p];
-						// } else 
-						if (typeof js[g][p] === "string") {
-							//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
-							// console.log(p+": "+js[g][p]);
-							// if (js[g][p] === "") {
-								// delete js[g][p];
-							// } else 
-							if (js[g][p].indexOf("_par_") === 0) {
-								s = js[g][p].substr(5);
-								temp = szukajPar(gpar, s);
-								if (temp === null) {
-									console.log("S - Nie znaleziono parametru \"" + s + "\"");
-								} else {
-		//							console.log(" "+ s + ": " + js[g][p] + " -> " + temp);
-									js[g][p] = temp;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return js;
-	}
-
-	function czytajPlikKomunikatow(text, word) {
-//		text = text.replace(/\t(.*)/mg, "$1");	//usuniecie tabulacji na początku wierszy
-		var lines = text.split("\n"),
-			output = [],
-			l,
-			nr,
-			nb,
-			bit,
-			opis,
-			out_string = "", //do generowania listy komunikatów dla serwisu
-			i = 0;
-		for (l in lines) {
-			if (lines.hasOwnProperty(l)) {
-				lines[l] = lines[l].trim();
-				if (lines[l].search(";") !== -1 && lines[l].search("x") === 0) {
-					nr = (i - (i % 16)) / 16;
-					bit = (i % 16);
-					opis = lines[l].substring(lines[l].search(/\(\*/g) + 2, lines[l].search(/\*\)/g)).trim();
-					if (output[nr] === undefined) { output[nr] = {opis: "opis slowa " + nr, nr: nr, bity: []}; }
-					if (opis.indexOf("_nb_") === 0) {
-						opis = opis.substring(4).trim();
-						nb = 1;
-					} else {
-						nb = 0;
-					}
-		//				output[nr].bity[bit] = {nr: nr, bit: bit, opis: opis};
-					out_string += "Kod " + (nr * 16 + bit) + ": " + opis + "\n";
-					output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
-					i += 1;
-				}
-			}
-		}
-		if (word) { return out_string; } //else { 
-		return output; //}
-	}
-
 	function init(webServer) {
 		webServer.AddUrl('/json/parametry.json', function (jsonp, res, get) {
 			parametry.odswierzParametry(function (temp) {
@@ -144,28 +19,13 @@
 					console.log("TCP - Brak połączenia z PLC");
 					res.write(JSON.stringify("Brak połączenia z PLC (parametry.json)"));
 					res.end();
-				} else if (glob_par.WEB_PAR_FTP) {
-					common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : "flash/Wizualizacja/parametry.json"}, function (text) {
-						var p;
-						if (text !== false) {
-							p = czytajPlikParametrowWiz(text, temp);
-							if (temp.WER !== p.WER || temp.DATA !== p.DATA) { console.log("Nieprawidlowy plik parametrow"); }
-							res.write(JSON.stringify(p));
-							// res.end();
-						} else {
-							console.log("FTP - Błąd pobrania pliku parametry.json");
-							res.write(JSON.stringify("Błąd pobrania pliku parametry.json"));
-							// res.end();
-						}
-						res.end();
-					}, true);
 				} else {
-					fs.readFile(glob_par.WEB_DIR + "/json/parametry.json", function (err, text) {
+					var file_to_read = common.wer_jezykowa(temp, "parametry", ".json");
+					fs.readFile(file_to_read, function (err, text) {
 						if (err) {
 							res.write(JSON.stringify("parametry.json error"));
-//							throw err;
 						}
-						res.write(JSON.stringify(czytajPlikParametrowWiz(text, temp)));
+						res.write(JSON.stringify(common.czytajPlikParametrowWiz(text, temp)));
 						res.end();
 					});
 				}
@@ -173,36 +33,18 @@
 		});
 
 		webServer.AddUrl('/json/sygnaly.json', function (jsonp, res, get) {
-			// console.log("sygnaly.json 1");
 			parametry.odswierzParametry(function (temp) {
-				// console.log("sygnaly.json 2");
-				var gpar = temp;
-				if (!gpar) {
-					// console.log("sygnaly.json 2a");
+				if (!temp) {
 					console.log("TCP - Brak połączenia z PLC");
 					res.write(JSON.stringify("Brak połączenia z PLC (sygnaly.json)"));
 					res.end();
-				} else if (glob_par.WEB_SYGN_FTP) {
-					// console.log("sygnaly.json 2b");
-					common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : "flash/Wizualizacja/sygnaly.json"}, function (text) {
-						// console.log("sygnaly.json 3b");
-						if (text !== false) {
-							res.write(JSON.stringify(czytajPlikSygnalow(text, gpar)));
-						} else {
-							console.log("FTP - Błąd pobrania pliku sygnaly.json");
-							res.write(JSON.stringify("Błąd pobrania pliku sygnaly.json"));
-						}
-						res.end();
-					}, true);
 				} else {
-					// console.log("sygnaly.json 2c");
-					fs.readFile(glob_par.WEB_DIR + "/json/sygnaly.json", function (err, text) {
-						// console.log("sygnaly.json 3c");
+					var file_to_read = common.wer_jezykowa(temp, "sygnaly", ".json");
+					fs.readFile(file_to_read, function (err, text) {
 						if (err) {
 							res.write(JSON.stringify("sygnaly.json error"));
-//							throw err;
 						}
-						res.write(JSON.stringify(czytajPlikSygnalow(text, gpar)));
+						res.write(JSON.stringify(common.czytajPlikSygnalow(text, temp)));
 						res.end();
 					});
 				}
@@ -210,35 +52,32 @@
 		});
 
 		webServer.AddUrl('/json/komunikaty.json', function (jsonp, res, get) {
-			if (glob_par.WEB_KOM_FTP) {
-				common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : "flash/Wizualizacja/STR_KOMUNIKATY.EXP"}, function (text) {
-					if (text !== false) {
-						res.write(JSON.stringify(czytajPlikKomunikatow(text)));
-					} else {
-						console.log("FTP - Błąd pobrania pliku FTP STR_KOMUNIKATY.EXP");
-						res.write(JSON.stringify("Błąd pobrania pliku STR_KOMUNIKATY.EXP"));
-					}
+			parametry.odswierzParametry(function (temp) {
+				var gpar = temp;
+				if (!gpar) {
+					console.log("TCP - Brak połączenia z PLC");
+					res.write(JSON.stringify("Brak połączenia z PLC (komunikaty.json)"));
 					res.end();
-				}, true);
-			} else {
-				fs.readFile(glob_par.WEB_DIR + "/json/STR_KOMUNIKATY.EXP", 'utf8', function (err, text) {
-					if (err) {
-						res.write(JSON.stringify("STR_KOMUNIKATY.EXP error"));
-//						res.write(JSON.stringify(err));
-//							throw err;
-					} else {
-						res.write(JSON.stringify(czytajPlikKomunikatow(text)));
-					}
-					res.end();
-				});
-			}
+				} else {
+					var file_to_read = common.wer_jezykowa(temp, "komunikaty", ".json");
+					fs.readFile(file_to_read, function (err, text) {
+						if (err) {
+							res.write(JSON.stringify("komunikaty.json error"));
+						} else {
+//							res.write(JSON.stringify(czytajPlikKomunikatow(text)));
+							res.write(text);
+						}
+						res.end();
+					});
+				}
+			});
 		});
 
 		webServer.AddUrl('/json/komunikaty.txt', function (jsonp, res, get) {
 			if (glob_par.WEB_KOM_FTP) {
 				common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : "flash/Wizualizacja/STR_KOMUNIKATY.EXP"}, function (text) {
 					if (text !== false) {
-						res.write(czytajPlikKomunikatow(text, true));
+						res.write(common.czytajPlikKomunikatow(text, true));
 					} else {
 						console.log("FTP - Błąd pobrania pliku FTP STR_KOMUNIKATY.EXP");
 						res.write(JSON.stringify("Błąd pobrania pliku STR_KOMUNIKATY.EXP"));
@@ -252,7 +91,7 @@
 //						res.write(JSON.stringify(err));
 //							throw err;
 					} else {
-						res.write(czytajPlikKomunikatow(text, true));
+						res.write(common.czytajPlikKomunikatow(text, true));
 					}
 					res.end();
 				});
@@ -304,20 +143,33 @@
 		});
 
 		webServer.AddUrl("/json/konfiguracja_proxy.json", function (jsonp, res, get) {
-			fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
-				// console.log(res.socket._peername.address);
-				// text = text.replace(new RegExp("127.0.0.1:8888", 'g'), "192.168.3.31:8888");
-				// text = text.replace(new RegExp("127.0.0.1:8888", 'g'), res.socket._peername.address + ":8888");
-				text = text.replace(new RegExp('"czyNaviRamkaPLC":true', 'g'), '"czyNaviRamkaPLC":false');
-				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
-				text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
-				res.write(text);
-				res.end();
+			parametry.odswierzParametry(function (temp) {
+				var gpar = temp;
+				if (!gpar) {
+					console.log("TCP - Brak połączenia z PLC");
+					res.write(JSON.stringify("Brak połączenia z PLC (komunikaty.json)"));
+					res.end();
+				} else {
+					var file_to_read = common.wer_jezykowa(temp, "konfiguracja", ".json");
+					fs.readFile(file_to_read, 'utf8', function (err, text) {
+//					fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
+						// console.log(res.socket._peername.address);
+						// text = text.replace(new RegExp("127.0.0.1:8888", 'g'), "192.168.3.31:8888");
+						// text = text.replace(new RegExp("127.0.0.1:8888", 'g'), res.socket._peername.address + ":8888");
+		//				text = text.replace(new RegExp('"czyNaviRamkaPLC":true', 'g'), '"czyNaviRamkaPLC":false');
+						text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
+						text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
+						res.write(text);
+						res.end();
+					});
+				}
 			});
 		});
 
 		webServer.AddUrl("/json/konfiguracja.json", function (jsonp, res, get) {
-			fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
+			var file_to_read = common.wer_jezykowa(temp, "konfiguracja", ".json");
+			fs.readFile(file_to_read, function (err, text) {
+//			fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
 				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
 				text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
 				res.write(text);

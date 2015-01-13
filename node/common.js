@@ -267,6 +267,7 @@
 	}
 
 	function refresh_browser(res) {
+//return;
 		if (process.platform === "linux") {
 			console.log('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5');
 			cp.exec('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5', function (error, stdout, stderr) {
@@ -327,6 +328,158 @@
 		}
 		return buf.toString('utf8', start, i).substr(0, len);
 	}
+	
+
+	function szukajPar(gpar, naz) {
+		var i;
+		if (gpar && gpar.DANE) {
+			for (i in gpar.DANE) {
+				if (gpar.DANE.hasOwnProperty(i) && gpar.DANE[i].NAZ === naz) { return gpar.DANE[i].WART; }
+			}
+		}
+		return null;
+	}
+
+	function czytajPlikParametrowWiz(data, gpar) {
+		var temp = null,
+			g,
+			p,
+			s,
+			js;
+		try {
+			js = JSON.parse(data);
+			if (js.DANE) {
+				for (g in js.DANE) {
+					if (typeof js.DANE[g] === "object") {
+						for (p in js.DANE[g]) {
+							if (typeof js.DANE[g][p] === "object") {
+								for (s in js.DANE[g][p]) {
+									if (typeof js.DANE[g][p][s] === "object" && js.DANE[g][p][s].WART !== undefined) {
+										// if (js.DANE[g][p][s].TYP === "pCzas") console.log(js.DANE[g][p][s].WART);
+										temp = szukajPar(gpar, s);
+										if (temp === null) {
+											console.log("P - Nie znaleziono parametru \"" + s + "\"");
+										} else if (js.DANE[g][p][s].WART !== temp) {
+			//console.log(" "+ s + ": " + js.DANE[g][p][s].WART + " -> " + temp);
+											js.DANE[g][p][s].WART = temp;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return js;
+		} catch (err) {
+			console.log(data);
+			return "Błąd pliku parametrów (JSON parser)";
+		}
+	}
+
+	function czytajPlikSygnalow(data, gpar) {
+		var temp = null,
+			g,
+			p,
+			s,
+			js = JSON.parse(data);
+		if (typeof js === "object") {
+			for (g in js) {
+				if (typeof js[g] === "object") {
+					for (p in js[g]) {
+						//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
+						// if (js[g][p] === null) {
+							// delete js[g][p];
+						// } else 
+						if (typeof js[g][p] === "string") {
+							//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
+							// console.log(p+": "+js[g][p]);
+							// if (js[g][p] === "") {
+								// delete js[g][p];
+							// } else 
+							if (js[g][p].indexOf("_par_") === 0) {
+								s = js[g][p].substr(5);
+								temp = szukajPar(gpar, s);
+								if (temp === null) {
+									console.log("S - Nie znaleziono parametru \"" + s + "\"");
+								} else {
+		//							console.log(" "+ s + ": " + js[g][p] + " -> " + temp);
+									js[g][p] = temp;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return js;
+	}
+
+	function czytajPlikKomunikatow(text, word) {
+//		text = text.replace(/\t(.*)/mg, "$1");	//usuniecie tabulacji na początku wierszy
+		var lines = text.split("\n"),
+			output = [],
+			l,
+			nr,
+			nb,
+			bit,
+			opis,
+			out_string = "", //do generowania listy komunikatów dla serwisu
+			i = 0;
+		for (l in lines) {
+			if (lines.hasOwnProperty(l)) {
+				lines[l] = lines[l].trim();
+				if (lines[l].search(";") !== -1 && lines[l].search("x") === 0) {
+					nr = (i - (i % 16)) / 16;
+					bit = (i % 16);
+					opis = lines[l].substring(lines[l].search(/\(\*/g) + 2, lines[l].search(/\*\)/g)).trim();
+					if (output[nr] === undefined) { output[nr] = {opis: "opis slowa " + nr, nr: nr, bity: []}; }
+					if (opis.indexOf("_nb_") === 0) {
+						opis = opis.substring(4).trim();
+						nb = 1;
+					} else {
+						nb = 0;
+					}
+		//				output[nr].bity[bit] = {nr: nr, bit: bit, opis: opis};
+					out_string += "Kod " + (nr * 16 + bit) + ": " + opis + "\n";
+					output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
+					i += 1;
+				}
+			}
+		}
+		if (word) { return out_string; } //else { 
+		return output; //}
+	}
+
+	function wer_jezykowa(par, file_name, file_type){
+		console.log(par.error);
+		if (!glob_par || par.error) return null;
+		var file_to_read = glob_par.WEB_DIR + "/json/";
+		var sKonfTypKombajnu = par.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
+		var rKonfWersjaJezykowa = par.rKonfWersjaJezykowa/1;
+		if (sKonfTypKombajnu != "") {
+			file_to_read += sKonfTypKombajnu+"/";
+		}
+		file_to_read += file_name;
+		if (rKonfWersjaJezykowa !== undefined) {
+			file_to_read +=  "_"+rKonfWersjaJezykowa;
+		}
+		file_to_read += file_type;
+//		console.log(file_to_read);
+		
+		if (!fs.existsSync(file_to_read)) {
+			if (sKonfTypKombajnu != "") {
+			    file_to_read = glob_par.WEB_DIR + "/json/" + sKonfTypKombajnu + "/" + file_name + file_type;
+				if (!fs.existsSync(file_to_read)) {
+				    file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
+				}
+			} else {
+				    file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
+			}
+		}
+		console.log(file_to_read);
+		return file_to_read;
+	}
 
 
     module.exports.refresh_browser = refresh_browser;
@@ -339,4 +492,10 @@
     module.exports.msToCodesysTime = msToCodesysTime;
     module.exports.codesysTimeToMs = codesysTimeToMs;
     module.exports.readStringTo0 = readStringTo0;
+
+    module.exports.szukajPar = szukajPar;
+    module.exports.czytajPlikParametrowWiz = czytajPlikParametrowWiz;
+    module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
+    module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
+    module.exports.wer_jezykowa = wer_jezykowa;
 }());

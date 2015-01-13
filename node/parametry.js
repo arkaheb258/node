@@ -44,6 +44,8 @@
 					temp = js.DANE[i];
 					switch (temp.NAZ) {
 					case "sKonfTypKombajnu":
+					case "rKonfWersjaJezykowa":
+//						console.log(temp.WART);
 					case "sKonfNrKomisji":
 					case "sKonfNazwaKopalni":
 					case "sKonfNrSciany":

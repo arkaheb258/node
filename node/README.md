@@ -1,1 +1,0 @@
-Serwer wizualizacji KOPEX

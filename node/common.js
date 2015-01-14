@@ -4,6 +4,7 @@
 	var http = require('http'),
 		fs = require("fs"),
 		glob_par = require('../par.js'),
+		parametry = require("./parametry.js"),
 		cp = require('child_process'),
 		// exec = require('child_process').exec,
 		NTP_IP_i = 0,
@@ -481,6 +482,34 @@
 		return file_to_read;
 	}
 
+	function odsw_par_i_podstaw_wer_jezyk(fileName, fileType, edit_fun, callback){
+		parametry.odswierzParametry(function (temp) {
+			if (!temp || (typeof temp === 'string')) {
+//				console.log("TCP - Brak połączenia z PLC");
+				callback("Brak połączenia z PLC (" + fileName + fileType + ")");
+			} else {
+//				console.log(typeof temp);
+				var file_to_read = wer_jezykowa(temp, fileName, fileType);
+//				console.log('file_to_read');
+				if (file_to_read) {
+					fs.readFile(file_to_read, 'utf8', function (err, text) {
+						if (err) {
+							callback(fileName + fileType + " error");
+						} else {
+							if (edit_fun) {
+								callback(edit_fun(text, temp));
+							} else {
+								callback(text);
+							}
+						}
+					});
+				} else {
+					callback("Błąd odczytu parametrow (" + fileName + fileType + ")");
+				}
+			}
+		});
+	
+	}
 
     module.exports.refresh_browser = refresh_browser;
     module.exports.getTime = getTime;
@@ -498,4 +527,5 @@
     module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
     module.exports.wer_jezykowa = wer_jezykowa;
+    module.exports.odsw_par_i_podstaw_wer_jezyk = odsw_par_i_podstaw_wer_jezyk;
 }());

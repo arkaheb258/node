@@ -167,13 +167,22 @@
 		});
 
 		webServer.AddUrl("/json/konfiguracja.json", function (jsonp, res, get) {
-			var file_to_read = common.wer_jezykowa(temp, "konfiguracja", ".json");
-			fs.readFile(file_to_read, function (err, text) {
-//			fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
-				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
-				text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
-				res.write(text);
-				res.end();
+			parametry.odswierzParametry(function (temp) {
+				var gpar = temp;
+				if (!gpar) {
+					console.log("TCP - Brak połączenia z PLC");
+					res.write(JSON.stringify("Brak połączenia z PLC (komunikaty.json)"));
+					res.end();
+				} else {
+					var file_to_read = common.wer_jezykowa(temp, "konfiguracja", ".json");
+					fs.readFile(file_to_read, 'utf8', function (err, text) {
+		//			fs.readFile(glob_par.WEB_DIR + "/json/konfiguracja.json", 'utf8', function (err, text) {
+						text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
+						text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
+						res.write(text);
+						res.end();
+					});
+				}
 			});
 		});
 

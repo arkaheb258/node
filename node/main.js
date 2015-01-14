@@ -19,6 +19,7 @@
 		parametry.odswierzParametry(function (gpar) {
 			strada_dane.StartInterval(function (dane) {
 				if (gpar) {
+					webServer.emit(dane);
 					zapis.AppendFrame(dane, gpar, firstLoop);
 					firstLoop = false;
 					firstRun = false;

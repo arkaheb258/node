@@ -2,106 +2,38 @@
 (function () {
     "use strict";
     var express = require('express'),
-		path = require("path"),
-    	app = express(),
-        http2 = require('http').Server(app),
-		common = require("./common.js"),
-		glob_par = require('../par.js'),
-        io = require('socket.io')(http2);
+		app = express(),
+		server = require('http').Server(app),
+        io = require('socket.io')(server),
+		index_routes = require(__dirname + '/routes/index.js'),
+		rozkaz_routes = require(__dirname + '/routes/rozkaz.js'),
+		strada_routes = require(__dirname + '/routes/strada.js'),
+		compression = require('compression'),
+		port = process.env.PORT || 5000;        // set our port
 
-	var port = process.env.PORT || 5000;        // set our port
-	
-	if (!glob_par.WER_NODE) {
-		glob_par.WER_NODE = "1.?.?";
-	}
-
-	// gzip/deflate outgoing responses
-	var compression = require('compression')
 	app.use(compression());
-
-	app.use(function(req, res, next) {
+	app.use(function (req, res, next) {
 		console.log(req.connection.remoteAddress + " -> " + req.url);
-//		res.connection.setNoDelay(true);		//Bardzo ważne - bez tego wpisy każdy plik ma opóźnienie ok 200ms
 		next();
-	})
-
-
-    app.get('/json/parametry.json', function (req, res) {
-		common.odsw_par_i_podstaw_wer_jezyk("parametry", ".json", common.czytajPlikParametrowWiz, function(text){
-			res.jsonp(text);
-		});
-    });
-
-    app.get('/json/sygnaly.json', function (req, res) {
-		common.odsw_par_i_podstaw_wer_jezyk("sygnaly", ".json", common.czytajPlikSygnalow, function(text){
-			res.jsonp(text);
-		});
-    });
-
-    app.get('/json/komunikaty.json', function (req, res) {
-		common.odsw_par_i_podstaw_wer_jezyk("komunikaty", ".json", null, function(text){
-			res.jsonp(JSON.parse(text));
-		});
-    });
-
-    app.get('/json/konfiguracja.json', function (req, res) {
-		common.odsw_par_i_podstaw_wer_jezyk("konfiguracja", ".json", null, function(text){
-			if (text !== null) {
-	//			text = text.replace(new RegExp('"czyNaviRamkaPLC":true', 'g'), '"czyNaviRamkaPLC":false');
-				text = text.replace(new RegExp('"verSerwer":"0.0.0"', 'g'), '"verSerwer":"' + glob_par.WER_NODE + '"');
-				text = text.replace(new RegExp('"WER_NODE":"0.0.0"', 'g'), '"WER_NODE":"' + glob_par.WER_NODE + '"');
-			} else {
-				text = "text null";
-			}
-			res.jsonp(JSON.parse(text));
-		});
-    });
-
-    app.get('/exit', function (req, res) {
-		res.jsonp('exit OK');
-		process.exit(0);
 	});
+	app.use('/', index_routes);
 
-    app.get('/', function (req, res) {
-        res.sendFile(path.resolve(glob_par.WEB_DIR+'/index.html'));
+    server.listen(port, function () {
+        console.log("HTTP Server listening on port " + port);
     });
-
-	app.use(express.static(glob_par.WEB_DIR));
-	app.use(express.static(__dirname + "/../test"));
 
     io.on('connection', function (socket) {
-        console.log('a user connected');
-
-		socket.on('rozkaz', function(msg){
-			console.log('rozkaz: ' + msg);
-		});
-
-		socket.on('strada', function(msg){
+		socket.on('strada', function (msg) {
 			console.log('strada: ' + msg);
 		});
-		
-        socket.on('disconnect', function () {
-            console.log('user disconnected');
-        });
     });
 
-    http2.listen(port, function () {
-        console.log('listening on :'+port);
-    });
-
-    setInterval(function(){ 
-        var d = (new Date());
-//        console.log(d.getTime());
-        io.sockets.emit('dane', {"TimeStamp_s":Math.round(d.getTime()/1000),"TimeStamp_ms":d.getTime()%(1000*60*60*24),"TimeStamp_js":d.getTime(),"komisja":"01H900","wDataControl":0,"wData":[0,0,0,0,0,0],"Analog":[0,0,0,0,0,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,12,0,0,0,0,0,0,0,1355,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4160],"Bit":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,8192,0,0,0,0,0,0,0,14,0,2,0,26624,0,0,0],"Mesg":[18755,5202,21589,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32768,256,0,0,0,0,0,0,0,18432,1121,36929,1168,0,0,928,0,0,21,0,0,0],"MesgType":[768,710,0,32768,39034,43024,2439,31361,4248,34728,265,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9792,49186,20752,1284,5104,417,32768,258,57344,1055,0,0,0,0],"MesgStatus":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"BlockUsr":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"BlockSrvc":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"BlockAdv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]});
-        io.sockets.emit('data', {
-                'topic':'data',
-                'payload':(new Date()).toLocaleTimeString()
-            }
-        );
-    }, 100);
+	module.exports.emit = function(msg) {
+		io.emit('dane', msg);
+	};
 
 /*****************************************************************************/
-	
+
     var fs = require("fs"),
 		url = require("url"),
 		mime = require("mime"),

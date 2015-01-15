@@ -1,2 +1,0 @@
-/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){switch(c){case b.kodyKlawiszy.enter:require(["antykolizja/popUpAntykolizja"],function(b){a("#DialogPopUpAntykolizja").dialog("close"),b.uruchomTimer()})}};return{wykonaj:c}});

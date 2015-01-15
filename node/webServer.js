@@ -9,7 +9,7 @@
 		rozkaz_routes = require(__dirname + '/routes/rozkaz.js'),
 		strada_routes = require(__dirname + '/routes/strada.js'),
 		compression = require('compression'),
-		port = process.env.PORT || 5000;        // set our port
+		port = process.env.PORT || 8888;        // set our port
 
 	app.use(compression());
 	app.use(function (req, res, next) {
@@ -33,7 +33,7 @@
 	};
 
 /*****************************************************************************/
-
+/*
     var fs = require("fs"),
 		url = require("url"),
 		mime = require("mime"),
@@ -166,4 +166,6 @@
 	
     module.exports.StartServer = StartServer;
     module.exports.AddUrl = addUrl;
+*/
+    module.exports.StartServer = function() {};;
 }());

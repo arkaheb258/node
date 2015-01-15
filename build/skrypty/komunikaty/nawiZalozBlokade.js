@@ -1,2 +1,0 @@
-/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(a){switch(a){case b.kodyKlawiszy.lewo:break;case b.kodyKlawiszy.prawo:break;case b.kodyKlawiszy.dol:break;case b.kodyKlawiszy.enter:require(["komunikaty/zalozBlokade"],function(a){a.wyslij()});break;case b.kodyKlawiszy.escape:require(["komunikaty/zalozBlokade"],function(a){a.zamknij()}),require(["komunikaty/tooltip"],function(a){a.naSelectable()})}};return{wykonaj:c}});

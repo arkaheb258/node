@@ -1,2 +1,0 @@
-/*! Data kompilacji: Fri Oct 03 2014 10:52:28 */
-define(["jquery","kommTCP","zmienneGlobalne","obslugaJSON","kontrolkiUI","klawiatura","ladowanieHtml"],function(a,b,c,d,e,f,g){"use strict";var h=function(){d.inicjacja(),e.inicjacja(),b.inicjacja(),f.inicjacja(),g.inicjacja()};return{inicjacja:h}});

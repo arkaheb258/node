@@ -9,6 +9,7 @@
 		rozkaz_routes = require(__dirname + '/routes/rozkaz.js'),
 		strada_routes = require(__dirname + '/routes/strada.js'),
 		compression = require('compression'),
+		first_emit = true,
 		port = process.env.PORT || 8888;        // set our port
 
 	app.use(compression());
@@ -27,8 +28,16 @@
 			console.log('strada: ' + msg);
 		});
     });
+	
+	var inter_f = setInterval(function(){
+		io.emit('dane', {error:"Dane nie gotowe - oczekiwanie na PLC"});
+	}, 500);
 
 	module.exports.emit = function(msg) {
+		if (first_emit) {
+			clearInterval(inter_f);
+			first_emit = false;
+		}
 		io.emit('dane', msg);
 	};
 

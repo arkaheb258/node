@@ -20,7 +20,9 @@
 			strada_dane.StartInterval(function (dane) {
 				if (gpar) {
 					webServer.emit(dane);
-					zapis.AppendFrame(dane, gpar, firstLoop);
+					if (! dane.error) {
+						zapis.AppendFrame(dane, gpar, firstLoop);
+					}
 					firstLoop = false;
 					firstRun = false;
 				} else {

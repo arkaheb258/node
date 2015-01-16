@@ -46,9 +46,11 @@
 		var temp = new MySetInterval(function () {
 			strada.SendFunction(0x302, 0, function (dane) {
 				if (dane.error) {
-					dane302_json = '{"error":"Brak połączenia z PLC: ' + dane.error + '"}';
+					dane = {error:"Brak połączenia z PLC: " + dane.error};
 					console.log("zerwane połączenie ze sterownikiem");
-					// console.log(dane);
+					console.log(dane);
+					dane302_json = JSON.stringify(dane);
+					callback(dane);
 					return;
 				}
 				dane = strada_rozk.DecodeStrada302(dane.dane);

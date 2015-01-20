@@ -18,6 +18,7 @@
 		next();
 	});
 	app.use('/', index_routes);
+	app.use('/', rozkaz_routes);
 
     server.listen(port, function () {
         console.log("HTTP Server listening on port " + port);

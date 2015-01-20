@@ -25,6 +25,7 @@
 			temp,
 			error = null;
 		console.log(get);
+		// console.log("get.rozkaz");
 		switch (get.rozkaz) {
 		case "ustawBlokade":
 			end = false;

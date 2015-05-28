@@ -24,6 +24,11 @@
         res.sendFile('../test/test.html');
     });
 
+    app.get('/refresh', function (req, res) {
+		io.emit('x_agent', 'xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5');
+        res.send('OK');
+    });
+
     server.listen(port, function () {
         console.log("HTTP Server listening on port " + port);
     });

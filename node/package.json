@@ -1,20 +1,21 @@
 {
-	"name": "kopex",
-	"version": "1.0.0",
-	"description": "Serwer wizualizacji",
-	"main": "main.js",
-	"private": true,
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/arkaheb258/node.git"
-	},
-	"dependencies": {
-		"ftp": "0.3.x",
-		"express" : "4.10.x",
-		"socket.io" : "1.2.x",
-		"compression" : "1.3.x",
-		"mime": "1.2.x"
-	},
-	"author": "Arkadiusz <kopex.machinery@gmail.com>",
-	"engine": "node 0.8.0"
+  "name": "kopex",
+  "version": "1.0.0",
+  "description": "Serwer wizualizacji",
+  "main": "main.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/arkaheb258/node.git"
+  },
+  "dependencies": {
+    "compression": "1.3.x",
+    "express": "4.10.x",
+    "ftp": "0.3.x",
+    "mime": "1.2.x",
+    "socket.io": "1.2.x",
+    "socket.io-client": "^1.3.5"
+  },
+  "author": "Arkadiusz <kopex.machinery@gmail.com>",
+  "engine": "node 0.8.0"
 }

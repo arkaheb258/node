@@ -1,8 +1,16 @@
 #!/bin/sh
+
+#sudo sh -c "echo 'deb [arch=armhf] http://repos.rcn-ee.net/debian wheezy main' >> /etc/apt/sources.list"
+#sudo sh -c "echo '#deb-src [arch=armhf] http://repos.rcn-ee.net/debian wheezy main' >> /etc/apt/sources.list"
+
 apt-get update
 apt-get -y install xdotool
 apt-get -y install unclutter
 apt-get -y --force-yes upgrade
+#apt-get install npm --reinstall
+#npm cache clean -f
+#npm install -g n
+#n stable
 
 # pobranie serwera i wizualizacji
 mkdir /home/debian/kopex
@@ -23,16 +31,17 @@ git clone http://192.168.30.12:81/Bonobo.Git.Server/wizu.git build
 chmod -R a+w /home/debian/kopex
 
 # autostart node
+#http://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up
 #chmod +x /boot/uboot/node/start
 #echo '#!/bin/sh' > /etc/X11/Xsession.d/98x_mystart 
 #echo "/boot/uboot/node/start" >> /etc/X11/Xsession.d/98x_mystart 
 #echo "/boot/uboot/node/start_lxde" >> /etc/xdg/lxsession/LXDE/autostart 
 
-chmod +755 /home/debian/kopex/node/start
 chmod +755 /home/debian/kopex/node/start_lxde
 echo "/home/debian/kopex/node/start_lxde" > /etc/xdg/lxsession/LXDE/autostart 
 ln -s /home/debian/kopex/node/start /etc/init.d/kopex
-sudo update-rc.d kopex defaults
+chmod +755 /home/debian/kopex/node/start
+update-rc.d kopex defaults
 
 #RTC DS1307 jako usluga 
 mkdir /usr/share/rtc_ds1307
@@ -91,7 +100,7 @@ pcmanfm --set-wallpaper=test.png
 #wylaczenie niepotrzebnych uslug
 systemctl disable avahi-daemon.service
 
-#zapis do eMMC 
+#!!! zapis do eMMC !!!
 #/boot/uEnv.txt
 #cmdline=init=/opt/scripts/tools/eMMC/init-eMMC-flasher-v3.sh
 

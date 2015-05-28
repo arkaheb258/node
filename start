@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo 'deb' >> /tmp/my_log
-date >> /tmp/my_log
+echo 'deb' >> /tmp/my_log_b
+date >> /tmp/my_log_b
 cpufreq-set -g performance
-node /home/debian/kopex/tcp_cl3.js &
+node /home/debian/kopex/tcp_cl3.js >> /tmp/my_log_b &
 
 #echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
 #hwclock -s -f /dev/rtc1

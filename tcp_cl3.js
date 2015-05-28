@@ -95,12 +95,15 @@
 	startApp();
 
 	if (process.platform === "linux") {
+/*
 		if (glob_par.NTP_HWCLOCK) {
 			// cp.exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
 			cp.exec("sudo hwclock -s -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
 				console.log({type: "hwclock", date: new Date(), error: error, err: stderr, out: stdout});
 			});
 		}
+*/
+/*		
 		cp.exec("chromium -kiosk -incognito http://127.0.0.1:8888/min/ &", 
 		function (error, stdout, stderr) {
 			console.log({type: "chromium", error: error, err: stderr, out: stdout});
@@ -109,7 +112,11 @@
 		function (error, stdout, stderr) {
 			console.log({type: "click", error: error, err: stderr, out: stdout});
 		});
-		
+*/		
+		cp.exec("sleep 100 && xdotool mousemove --sync 0 0 click 1", 
+		function (error, stdout, stderr) {
+			console.log({type: "click", error: error, err: stderr, out: stdout});
+		});
 		//pkill chromium
 //		sleep 10 && xdotool mousemove --sync --repeat 2 --delay 500 465 20 click 1 &
 //		sleep 1 && xdotool mousemove --sync 0 0 click 1 &

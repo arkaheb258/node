@@ -1,15 +1,112 @@
 #!/bin/sh
-cd /boot/uboot/
-git clone git://github.com/arkaheb258/node.git
-ln -s /boot/uboot/node/ /home/debian/kopex
-ln -s /boot/uboot/ /var/lib/cloud9/usb
-ln -s /boot/uboot/node/start.sh /etc/X11/Xsession.d/99x_nodejs_chrome	
-
 apt-get update
-apt-get upgrade
-apt-get install xdotool
-apt-get install unclutter
+apt-get -y install xdotool
+apt-get -y install unclutter
+apt-get -y --force-yes upgrade
 
-chmod +x /boot/uboot/node/start
-echo "#!/bin/sh" > /etc/X11/Xsession.d/98x_mystart 
-echo "/boot/uboot/node/start" >> /etc/X11/Xsession.d/98x_mystart 
+# pobranie serwera i wizualizacji
+mkdir /home/debian/kopex
+cd /home/debian/kopex
+git clone -b wydawka_borynia git://github.com/arkaheb258/node.git node
+git clone http://192.168.30.12:81/Bonobo.Git.Server/wizu.git build
+#cd /home/debian/kopex/node
+#npm install
+
+#cd /boot/uboot/
+#git clone git://github.com/arkaheb258/node.git
+#ln -s /boot/uboot/node/ /home/debian/kopex
+#ln -s /boot/uboot/ /var/lib/cloud9/usb
+#ln -s /boot/uboot/node/start.sh /etc/X11/Xsession.d/99x_nodejs_chrome	
+#ln -s /boot/uboot/node/start /etc/X11/Xsession.d/99x_nodejs_chrome	
+
+# prawa zapisu do folderu kopex dla wszystkich
+chmod -R a+w /home/debian/kopex
+
+# autostart node
+#chmod +x /boot/uboot/node/start
+#echo '#!/bin/sh' > /etc/X11/Xsession.d/98x_mystart 
+#echo "/boot/uboot/node/start" >> /etc/X11/Xsession.d/98x_mystart 
+#echo "/boot/uboot/node/start_lxde" >> /etc/xdg/lxsession/LXDE/autostart 
+
+chmod +755 /home/debian/kopex/node/start
+chmod +755 /home/debian/kopex/node/start_lxde
+echo "/home/debian/kopex/node/start_lxde" > /etc/xdg/lxsession/LXDE/autostart 
+ln -s /home/debian/kopex/node/start /etc/init.d/kopex
+sudo update-rc.d kopex defaults
+
+#RTC DS1307 jako usluga 
+mkdir /usr/share/rtc_ds1307
+echo 'echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device' > /usr/share/rtc_ds1307/clock_init.sh
+echo 'hwclock -s -f /dev/rtc1' >> /usr/share/rtc_ds1307/clock_init.sh
+echo 'hwclock -w' >> /usr/share/rtc_ds1307/clock_init.sh
+
+echo '[Unit]' > /lib/systemd/system/rtc-ds1307.service
+echo 'Description=DS1307 RTC Service' >> /lib/systemd/system/rtc-ds1307.service
+echo '[Service]' >> /lib/systemd/system/rtc-ds1307.service
+echo 'Type=simple' >> /lib/systemd/system/rtc-ds1307.service
+echo 'WorkingDirectory=/usr/share/rtc_ds1307' >> /lib/systemd/system/rtc-ds1307.service
+echo 'ExecStart=/bin/bash clock_init.sh' >> /lib/systemd/system/rtc-ds1307.service
+echo 'SyslogIdentifier=rtc_ds1307' >> /lib/systemd/system/rtc-ds1307.service
+echo '[Install]' >> /lib/systemd/system/rtc-ds1307.service
+echo 'WantedBy=multi-user.target' >> /lib/systemd/system/rtc-ds1307.service
+
+systemctl enable rtc-ds1307.service
+
+#restart
+shutdown -r now
+
+#pobranie aktualnego czasu i zapisanie do RTC
+ntpdate -b -s -u pl.pool.ntp.org
+hwclock -w -f /dev/rtc1
+
+#strefa czasowa
+echo "Europe/Warsaw" > /etc/timezone 
+dpkg-reconfigure -f noninteractive tzdata
+
+# update Bootloader + Kernel
+cd /opt/scripts/tools
+git pull
+/opt/scripts/tools/developers/update_bootloader.sh 
+/opt/scripts/tools/update_kernel.sh
+shutdown -r now
+
+# statyczne IP 192.168.3.51
+echo "auto eth0" >> /etc/network/interfaces
+echo "iface eth0 inet static" >> /etc/network/interfaces
+echo "address 192.168.3.51" >> /etc/network/interfaces
+echo "netmask 255.255.255.0" >> /etc/network/interfaces
+
+#usuniecie ostrzezenia o braku API keys
+export GOOGLE_API_KEY="no"
+export GOOGLE_DEFAULT_CLIENT_ID="no"
+export GOOGLE_DEFAULT_CLIENT_SECRET="no"
+
+
+
+#ustawienie tapety
+su debian
+export DISPLAY=:0
+pcmanfm --set-wallpaper=test.png
+
+#wylaczenie niepotrzebnych uslug
+systemctl disable avahi-daemon.service
+
+#zapis do eMMC 
+#/boot/uEnv.txt
+#cmdline=init=/opt/scripts/tools/eMMC/init-eMMC-flasher-v3.sh
+
+
+
+nano /etc/xdg/lxsession/LXDE/autostart 
+
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+
+
+root@beaglebone:/usr/share/xsessions# nano kopex.desktop
+
+[Desktop Entry]
+Type=Application
+Exec=/home/debian/kopex/start_lxde
+Name=KM S.A.
+Comment=Testing

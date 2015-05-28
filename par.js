@@ -21,10 +21,9 @@
 		LOGGER_DIR : "USB",
 		// LOGGER_DIR : "D:/Rejestracja",
 		PARAM_LOC_FILE : dir + "/default.json",
-		// NTP_HWCLOCK : true,
+		NTP_HWCLOCK : true,
 		// NTP_IPs : ["192.168.3.51", "ntp1.tp.pl"],		//tablica priorytetowa z serwerami czasu
 		WER_NODE	: "1.14.10",
 		ADM_WEB_DIR : dir + "/adm"
 	};
 }());
-

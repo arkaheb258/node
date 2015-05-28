@@ -9,7 +9,8 @@
 		rozkaz_routes = require('./routes/rozkaz.js'),
 		strada_routes = require('./routes/strada.js'),
 		compression = require('compression'),
-		port = process.env.PORT || 8888;        // set our port
+//		port = process.env.PORT || 8888;        // set our port
+		port = 8888;        // set our port
 
 	app.use(compression());
 	app.use(function (req, res, next) {

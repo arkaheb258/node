@@ -19,6 +19,9 @@
 	});
 	app.use('/', index_routes);
 	app.use('/', rozkaz_routes);
+	
+	app.use('/min', index_routes);
+	app.use('/min', rozkaz_routes);
 
     app.get('/test.html', function (req, res) {
         res.sendFile('../test/test.html');

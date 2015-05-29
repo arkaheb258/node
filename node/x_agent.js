@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://127.0.0.1:8888'),
+var socket = require('socket.io-client')('http://127.0.0.1:8889'),
 	cp = require('child_process');
 
 socket.on('connect', function(){console.log('connect');});
@@ -18,3 +18,10 @@ socket.on('disconnect', function(){
 		socket.connect();
 	}, 1000);
 });
+
+setTimeout(function(){ 
+	cp.exec("sleep 100 && xdotool mousemove --sync 0 0 click 1", 
+	function (error, stdout, stderr) {
+		console.log({type: "click", error: error, err: stderr, out: stdout});
+	});
+}, 1000);

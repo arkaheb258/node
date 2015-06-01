@@ -43,12 +43,12 @@
 		process.exit(0);
 	});
 
-    router.get('/', function (req, res) {
-        res.sendFile(path.resolve(glob_par.WEB_DIR + '/index.html'));
-    });
+    // router.get('/', function (req, res) {
+        // res.sendFile(path.resolve(glob_par.WEB_DIR + '/index.html'));
+    // });
 
-	router.use(express.static(glob_par.WEB_DIR));
-	router.use(express.static(__dirname + "/../../test"));
+	// router.use(express.static(glob_par.WEB_DIR));
+	// router.use(express.static(__dirname + "/../../test"));
 	
 	module.exports = router;
 }());

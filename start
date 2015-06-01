@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo 'deb' >> /tmp/my_log_b
+#echo 'deb' >> /tmp/my_log_b
 date >> /tmp/my_log_b
 cpufreq-set -g performance
 node /home/debian/kopex/tcp_cl3.js >> /tmp/my_log_b &

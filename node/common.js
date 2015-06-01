@@ -10,12 +10,24 @@
 		NTP_IP_i = 0,
 		ftp = require("ftp");
 
+	/**
+	 * Description
+	 * @method pad
+	 * @param {} num
+	 * @param {} size
+	 * @return s
+	 */
 	function pad(num, size) {
 		var s = num.toString();
 		while (s.length < size) { s = "0" + s; }
 		return s;
 	}
 
+	/**
+	 * Description
+	 * @method BlockRW
+	 * @param {} adr
+	 */
 	function BlockRW(adr) {
 		if (adr) {
 			this.adr = adr;
@@ -24,6 +36,13 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method read
+	 * @param {} data
+	 * @param {} sign
+	 * @return Temp
+	 */
 	BlockRW.prototype.read = function (data, sign) {
 		var Temp = [],
 			i,
@@ -44,6 +63,13 @@
 		return Temp;
 	};
 
+	/**
+	 * Description
+	 * @method write
+	 * @param {} tempBlock
+	 * @param {} sign
+	 * @return temp_out_buff
+	 */
 	BlockRW.prototype.write = function (tempBlock, sign) {
 		var temp_out_buff,
 			tempLen,
@@ -63,6 +89,13 @@
 		return temp_out_buff;
 	};
 
+    /**
+     * Description
+     * @method CreateDir
+     * @param {} dirName
+     * @param {} callback
+     * @param {} my_console
+     */
     function CreateDir(dirName, callback, my_console) {
 		if (!my_console) {my_console = console.log; }
 		// my_console("CreateDir() " + dirName);
@@ -86,6 +119,13 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method pobierzPlikFTP
+	 * @param {} con_par
+	 * @param {} callback
+	 * @param {} cache
+	 */
 	function pobierzPlikFTP(con_par, callback, cache) {
 		var c = new ftp(),
 			cache_file;
@@ -153,6 +193,11 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method set_time
+	 * @param {} dataa
+	 */
 	function set_time(dataa) {
 		var request,
 			i,
@@ -218,6 +263,11 @@
 		//TODO: obsługa błędu zapisu
 	}
 
+	/**
+	 * Description
+	 * @method getTime
+	 * @param {} callback
+	 */
 	function getTime(callback) {
 		if (process.platform === "linux") {
 			if (glob_par.NTP_IPs) {
@@ -267,6 +317,11 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method refresh_browser
+	 * @param {} res
+	 */
 	function refresh_browser(res) {
 //return;
 		if (process.platform === "linux") {
@@ -288,6 +343,12 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method msToCodesysTime
+	 * @param {} ms
+	 * @return out
+	 */
 	function msToCodesysTime(ms) {
 		var out = "T#0ms";
 		if (parseInt(ms, 10) > 0) {
@@ -300,6 +361,12 @@
 		return out;
 	}
 
+	/**
+	 * Description
+	 * @method codesysTimeToMs
+	 * @param {} time
+	 * @return BinaryExpression
+	 */
 	function codesysTimeToMs(time) {
 		if (typeof time !== 'string') {
 			console.log(time);
@@ -320,6 +387,14 @@
 		return d + h + m + s + ms;
 	}
 
+	/**
+	 * Description
+	 * @method readStringTo0
+	 * @param {} buf
+	 * @param {} start
+	 * @param {} len
+	 * @return CallExpression
+	 */
 	function readStringTo0(buf, start, len) {
 		var i;
 		for (i = start; i < start + len; i += 1) {
@@ -331,6 +406,13 @@
 	}
 	
 
+	/**
+	 * Description
+	 * @method szukajPar
+	 * @param {} gpar
+	 * @param {} naz
+	 * @return Literal
+	 */
 	function szukajPar(gpar, naz) {
 		var i;
 		if (gpar && gpar.DANE) {
@@ -341,6 +423,12 @@
 		return null;
 	}
 
+	/**
+	 * Description
+	 * @method czytajPlikParametrowWiz
+	 * @param {} data
+	 * @param {} gpar
+	 */
 	function czytajPlikParametrowWiz(data, gpar) {
 		var temp = null,
 			g,
@@ -378,6 +466,13 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method czytajPlikSygnalow
+	 * @param {} data
+	 * @param {} gpar
+	 * @return js
+	 */
 	function czytajPlikSygnalow(data, gpar) {
 		var temp = null,
 			g,
@@ -416,6 +511,13 @@
 		return js;
 	}
 
+	/**
+	 * Description
+	 * @method czytajPlikKomunikatow
+	 * @param {} text
+	 * @param {} word
+	 * @return output
+	 */
 	function czytajPlikKomunikatow(text, word) {
 //		text = text.replace(/\t(.*)/mg, "$1");	//usuniecie tabulacji na początku wierszy
 		var lines = text.split("\n"),
@@ -452,6 +554,14 @@
 		return output; //}
 	}
 
+	/**
+	 * Description
+	 * @method wer_jezykowa
+	 * @param {} par
+	 * @param {} file_name
+	 * @param {} file_type
+	 * @return file_to_read
+	 */
 	function wer_jezykowa(par, file_name, file_type){
 		console.log(par.error);
 		if (!glob_par || par.error) return null;
@@ -482,6 +592,14 @@
 		return file_to_read;
 	}
 
+	/**
+	 * Description
+	 * @method odsw_par_i_podstaw_wer_jezyk
+	 * @param {} fileName
+	 * @param {} fileType
+	 * @param {} edit_fun
+	 * @param {} callback
+	 */
 	function odsw_par_i_podstaw_wer_jezyk(fileName, fileType, edit_fun, callback){
 		parametry.odswierzParametry(function (temp) {
 			if (!temp || (typeof temp === 'string')) {

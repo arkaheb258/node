@@ -2,7 +2,7 @@
   "name": "kopex",
   "version": "1.0.0",
   "description": "Serwer wizualizacji",
-  "main": "tcp_cl3.js",
+  "main": "tcp_cl4.js",
   "private": true,
   "repository": {
     "type": "git",

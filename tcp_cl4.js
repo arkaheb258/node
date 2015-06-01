@@ -1,39 +1,44 @@
 // tcp_cl4.js - zarządzanie uruchomieniem programu i logowanie do pliku
 (function () {
     "use strict";
+    console.log("Start: ", Date.now());
     var express = require('express'),
 		app = express(),
 		server = require('http').Server(app),
         io = require('socket.io')(server),
-		compression = require('compression'),
+		// compression = require('compression'),
 		child,
 		glob_par = require('./par.js'),
-		common = require("./node/common.js"),
-		cp = require("child_process"),
-		spawn = cp.spawn;
+		// path = require("path"),
+		// common = require("./node/common.js"),
+		cp = require("child_process");
 
+    console.log("After require: ", Date.now());
 	startApp();
 
-	app.use(compression());
+	//tresc statyczna na poczatku routowania
+	app.use(express.static('adm'));
+	// app.use(express.static(path.join(__dirname, './adm')));
+	// app.use(compression());
 	app.use(function (req, res, next) {
+		console.log('Time:', Date.now());
 		console.log(req.connection.remoteAddress + " -> " + req.url);
 		next();
 	});
 	
-	app.set('views', __dirname + '/views')
-	app.set('view engine', 'jade')
+	// app.set('views', __dirname + '/views')
+	// app.set('view engine', 'jade')
 	
+	// app.get('/index1.html', function (req, res) {
+		// res.render('adm', {});
+	// });	
+
 	app.get('/', function (req, res) {
 		res.redirect('/index.html');
 	})
-	
-	app.get('/index.html', function (req, res) {
-		res.render('adm', {});
-	});	
-
-	app.use(express.static('adm'));
 
     server.listen(glob_par.NODE_DIAGN_PORT, function () {
+		console.log("Start: ", Date.now());
         console.log("HTTP Server listening on port " + glob_par.NODE_DIAGN_PORT);
     });
 	
@@ -61,6 +66,12 @@
 		});
     });
 
+	/**
+	 * Logowanie w Socket.io
+	 * @method mylog
+	 * @param {String} str
+	 * @param {String} typ
+	 */
 	function mylog(str, typ) {
 		// console.log(str);
 		if (str) { 
@@ -69,9 +80,13 @@
 		}
 	}
 
+	/**
+	 * Wystartowanie main.js (child)
+	 * @method startApp
+	 */
 	function startApp() {
 		mylog("startApp()");
-		child = spawn('node', [glob_par.NODE_MAIN]);
+		child = cp.spawn('node', [glob_par.NODE_MAIN]);
 
 		child.stdout.setEncoding('utf8');
 		child.stdout.on('data', function (data) {
@@ -92,6 +107,12 @@
 		});
 	}
 
+	/**
+	 * Restart main.js
+	 * @method restartApp
+	 * @param {} req
+	 * @param {} res
+	 */
 	function restartApp(req, res) {
 		mylog("restartApp()", 'log');
 		if (child) {
@@ -101,23 +122,4 @@
 		startApp();
 	}
 	
-/*
-		case "/upload":
-			res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-			if (get.url) {
-				mylog(get);
-				if (!get.file) {
-					get.file = "def.zip";
-				}
-				file = fs.createWriteStream(get.file);
-				request = http.get(get.url, function (response) {
-					response.pipe(file);
-					res.end("Done");
-				});
-			}
-			break;
-		case "/refresh":
-			common.refresh_browser(res);
-			break;
-*/
 }());

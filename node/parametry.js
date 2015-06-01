@@ -9,6 +9,14 @@
 		gpar = null,
 		ftp = require("ftp");
 
+	/**
+	 * Description
+	 * @method pobierzParametryPLC
+	 * @param {} strada
+	 * @param {} par
+	 * @param {function} callback
+	 
+	 */
 	function pobierzParametryPLC(strada, par, callback) {
 		strada.readAll(0x307, 0, function (dane) {
 			if (!dane || dane.error) {
@@ -27,10 +35,21 @@
 		});
 	}
 
+	/**
+	 * Description
+	 * @method f_gpar
+	 * @return gpar
+	 */
 	function f_gpar() {
 		return gpar;
 	}
 
+	/**
+	 * Description
+	 * @method wyluskajParametry
+	 * @param {} data
+	 * @return out
+	 */
 	function wyluskajParametry(data) {
 // return data;
 		var js = JSON.parse(data),
@@ -73,6 +92,13 @@
 		return out;
 	}
 
+	/**
+	 * Description
+	 * @method pobierzPlikParametrowLoc
+	 * @param {} file
+	 * @param {} callback
+	 
+	 */
 	function pobierzPlikParametrowLoc(file, callback) {
 		fs.readFile(file, function (err, data) {
 			if (err) {
@@ -83,6 +109,12 @@
 		});
 	}
 
+	/**
+	 * Description
+	 * @method pobierzPlikParametrowFTP
+	 * @param {} callback
+	 
+	 */
 	function pobierzPlikParametrowFTP(callback) {
 		common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : 'ide/Parametry/Temp.par'}, function (string) {
 			if (string === false) {
@@ -94,6 +126,13 @@
 		});
 	}
 
+	/**
+	 * Description
+	 * @method zapiszParametryLoc
+	 * @param {} filename
+	 * @param {} temp
+	 
+	 */
 	function zapiszParametryLoc(filename, temp) {
 		if (!temp) {
 			console.log("Błąd parametrów - brak zapisu");
@@ -106,6 +145,14 @@
 		});
 	}
 
+	/**
+	 * Description
+	 * @method pobierzParametryPLCWhile
+	 * @param {} strada
+	 * @param {} par2
+	 * @param {} callback
+	 
+	 */
 	function pobierzParametryPLCWhile(strada, par2, callback) {
 		console.log("pobierzParametryPLCWhile");
 		pobierzParametryPLC(strada, par2, function (temp) {
@@ -115,6 +162,13 @@
 		});
 	}
 
+	/**
+	 * Description
+	 * @method pobierzParametryAll
+	 * @param {} callback
+	 * @param {} force
+	 
+	 */
 	function pobierzParametryAll(callback, force) {
 		pobierzPlikParametrowLoc(glob_par.PARAM_LOC_FILE, function (par) {
 			if (par && !force) {

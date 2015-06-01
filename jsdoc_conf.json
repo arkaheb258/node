@@ -1,0 +1,7 @@
+{
+    "source": {
+		"include": ["tcp_cl4.js", "node"],
+		"includePattern": ".+\\.js$"
+    },
+	"recurse": true
+}

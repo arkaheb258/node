@@ -4,6 +4,12 @@
 	var common = require("./common.js"),
 		parametry = require("./parametry.js");
 
+	/**
+	 * Description
+	 * @method encodeStrada202
+	 * @param {Object} data
+	 * @return out_buff
+	 */
 	function encodeStrada202(data) {
 		var out_buff,
 			bw;
@@ -36,6 +42,12 @@
 //		return [];
 	}
 
+	/**
+	 * Description
+	 * @method DecodeStrada302
+	 * @param {Buffer} data
+	 * @return ThisExpression
+	 */
 	function DecodeStrada302(data) {
 		var br,
 			TimeStamp,
@@ -76,6 +88,13 @@
 		return this;
 	}
 
+	/**
+	 * Description
+	 * @method decodeStrada307
+	 * @param {Buffer} buf
+	 * @param {Object} out_par
+	 * @return out_par
+	 */
 	function decodeStrada307(buf, out_par) {
 		var i, len, ptr = 0, temp, temp_str, ok = true;
 		if (out_par && out_par.DANE) {
@@ -137,6 +156,12 @@
 		return out_par;
 	}
 
+	/**
+	 * Description
+	 * @method decodeStrada308
+	 * @param {Buffer} dane
+	 * @return out
+	 */
 	function decodeStrada308(dane) {
 		var i = 0,
 			temp,

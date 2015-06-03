@@ -4,12 +4,40 @@
 	var express = require('express'),
 		router = express.Router(),
 		url = require("url"),
+		fs = require('fs'),
 		parametry = require("../parametry.js"),
 		strada_rozk = require("../strada_rozk.js"),
 		strada_dane = require("../strada_dane.js"),
 		strada = require("../strada.js"),
 		common = require("../common.js");
-
+		
+	var os = require('os');		
+	var exec = require('child_process').exec;
+	function execute(command, callback){
+		exec(command, function(error, stdout, stderr){ callback(stdout); });
+	};			
+	
+	
+	//TODO: uzgodnic kształt informacji o wersji sprzętu (Beagle, Olimex, Tinycore) i serwera(/git-revision.sh ) i IP (/sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g')
+    router.get('/hardware.json', function (req, res) {
+		if (process.platform === "linux") {
+			// execute('cat /etc/dogtag', console.log);
+			 // /sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g'
+			// fs.readFile('~/kopex/git-revision.sh', 'utf8', function (err,data) {
+				// console.log(data);
+				var data = "0.8.30";
+				var err = null;
+				if (err) {
+					res.jsonp(({"error": err}));
+				} else {
+					res.jsonp(({"os": process.platform, "verSerwer":data, "ip":os.networkInterfaces().eth0[0].address, "hw":os.hostname()}));
+				}
+			// });		
+		} else {
+			res.jsonp(({"os":"win", "verSerwer":"0.0.0", "ip":"192.168.x.x", "hw":"PC"}));
+		}
+	});
+		
     router.get('/rozkaz', function (req, res) {
 		var get = url.parse(req.url, true).query,
 			end = true,

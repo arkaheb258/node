@@ -1,19 +1,22 @@
 // main.js
 (function () {
     "use strict";
-	var glob_par = require('../par.js'),
-		strada = require("./strada.js"),
-		http = require("http"),
-		strada_dane = require("./strada_dane.js"),
-		parametry = require("./parametry.js"),
-		webServer = require("./webServer.js"),
-		zapis = require("./zapisDoPliku.js"),
-		firstLoop = true,
+	// var glob_par = require('../par.js');
+	var strada = require("./strada.js");
+	// var http = require("http");
+	var strada_dane = require("./strada_dane.js");
+	var parametry = require("./parametry.js");
+	var webServer = require("./webServer.js");
+	var zapis = require("./zapisDoPliku.js");
+	var firstLoop = true,
 		firstRun = true;
 
-	webServer.StartServer();
+	// webServer.StartServer();
 
 	strada.connect(function () {
+		if (firstRun) {
+			
+		}
 		console.log('Strada Polaczono ....');
 		firstLoop = true;
 		parametry.odswierzParametry(function (gpar) {

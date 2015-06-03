@@ -119,3 +119,11 @@ Type=Application
 Exec=/home/debian/kopex/start_lxde
 Name=KM S.A.
 Comment=Testing
+
+
+
+user: zzm
+pass: wihajster
+
+user: root
+pass: wihajster1234

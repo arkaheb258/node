@@ -8,6 +8,11 @@
 	    stradaIntEnabled = false,
 		dane302_json = '{"error":"Dane nie gotowe - oczekiwanie na PLC"}';
 
+	/**
+	 * Description
+	 * @method f_dane302_json
+	 * @param {} err
+	 */
 	function f_dane302_json(err) {
 		if (err) {
 			dane302_json = '{"error":"' + err + '"}';
@@ -16,6 +21,12 @@
 		}
 	}
 
+	/**
+	 * Description
+	 * @method MySetInterval
+	 * @param {function} fun
+	 * @param {Number} interval
+	 */
 	function MySetInterval(fun, interval) {
         //problem z this przy use strict gdy brak new przy wywołaniu
 		if (!this.start) {
@@ -39,6 +50,11 @@
 		fun();
 	}
 
+	/**
+	 * Description
+	 * @method stradaStartInterval
+	 * @param {function} callback
+	 */
 	function stradaStartInterval(callback) {
 //		console.log("StradaStartInterval");
 		MySetInterval.start = 0;
@@ -66,11 +82,20 @@
 		}, glob_par.STRADA_INTERVAL_MS);
 	}
 
+	/**
+	 * Description
+	 * @method stradaStopInterval
+	 */
 	function stradaStopInterval() {
 //		console.log("stradaStopInterval !!!");
 		stradaIntEnabled = false;
 	}
 
+	/**
+	 * Description
+	 * @method Strada_req_time
+	 * @return strada_req_time
+	 */
 	function Strada_req_time() {
 		return strada_req_time;
 	}

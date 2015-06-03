@@ -15,7 +15,6 @@
 	 * @param {} strada
 	 * @param {} par
 	 * @param {function} callback
-	 
 	 */
 	function pobierzParametryPLC(strada, par, callback) {
 		strada.readAll(0x307, 0, function (dane) {
@@ -97,7 +96,6 @@
 	 * @method pobierzPlikParametrowLoc
 	 * @param {} file
 	 * @param {} callback
-	 
 	 */
 	function pobierzPlikParametrowLoc(file, callback) {
 		fs.readFile(file, function (err, data) {
@@ -113,7 +111,6 @@
 	 * Description
 	 * @method pobierzPlikParametrowFTP
 	 * @param {} callback
-	 
 	 */
 	function pobierzPlikParametrowFTP(callback) {
 		common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : 'ide/Parametry/Temp.par'}, function (string) {
@@ -131,7 +128,6 @@
 	 * @method zapiszParametryLoc
 	 * @param {} filename
 	 * @param {} temp
-	 
 	 */
 	function zapiszParametryLoc(filename, temp) {
 		if (!temp) {
@@ -151,7 +147,6 @@
 	 * @param {} strada
 	 * @param {} par2
 	 * @param {} callback
-	 
 	 */
 	function pobierzParametryPLCWhile(strada, par2, callback) {
 		console.log("pobierzParametryPLCWhile");
@@ -167,7 +162,6 @@
 	 * @method pobierzParametryAll
 	 * @param {} callback
 	 * @param {} force
-	 
 	 */
 	function pobierzParametryAll(callback, force) {
 		pobierzPlikParametrowLoc(glob_par.PARAM_LOC_FILE, function (par) {

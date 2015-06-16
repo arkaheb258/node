@@ -12,6 +12,17 @@ apt-get -y --force-yes upgrade
 #npm install -g n
 #n stable
 
+#update node.js
+wget http://nodejs.org/dist/v0.12.4/node-v0.12.4.tar.gz
+tar -zxvf node-v0.12.4.tar.gz
+cd node-v0.12.4
+./configure --without-snapshot
+make
+make install
+
+#process manager
+npm install pm2 -g
+
 # pobranie serwera i wizualizacji
 mkdir /home/debian/kopex
 cd /home/debian/kopex
@@ -98,7 +109,16 @@ export DISPLAY=:0
 pcmanfm --set-wallpaper=test.png
 
 #wylaczenie niepotrzebnych uslug
+#systemctl disable cloud9.service
+systemctl disable gateone.service
+systemctl disable bonescript.service
+systemctl disable bonescript.socket
+systemctl disable bonescript-autorun.service
 systemctl disable avahi-daemon.service
+systemctl disable gdm.service
+systemctl disable mpd.service
+sudo update-rc.d apache2 disable
+sudo update-rc.d udhcpd disable
 
 #!!! zapis do eMMC !!!
 #/boot/uEnv.txt
@@ -107,7 +127,6 @@ systemctl disable avahi-daemon.service
 
 
 nano /etc/xdg/lxsession/LXDE/autostart 
-
 @lxpanel --profile LXDE
 @pcmanfm --desktop --profile LXDE
 
@@ -127,3 +146,24 @@ pass: wihajster
 
 user: root
 pass: wihajster1234
+
+#udostepnianie internetu przez USB (start script)
+route add default gw 192.168.7.1
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+
+#wylaczenie diod (start script)
+echo 0 > '/sys/class/leds/beaglebone:green:usr0/brightness'
+echo 0 > '/sys/class/leds/beaglebone:green:usr1/brightness'
+echo 0 > '/sys/class/leds/beaglebone:green:usr2/brightness'
+echo 0 > '/sys/class/leds/beaglebone:green:usr3/brightness'
+
+#VNC server
+sudo apt-get install x11vnc
+x11vnc -bg -o %HOME/.x11vnc.log.%VNCDISPLAY -auth /var/run/lightdm/root/:0 -forever
+
+#u¿ycie pamiêci
+top
+
+#usb camera
+apt-get install motion
+apt-get install v4l-conf v4l-utils v4l2ucp

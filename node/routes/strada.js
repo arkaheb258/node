@@ -1,9 +1,8 @@
-// routes/strada.js
+﻿// routes/strada.js
 (function () {
     "use strict";
 	var express = require('express'),
 		router = express.Router(),
-		// parametry = require("../parametry.js"),
 		// strada_rozk = require("../strada_rozk.js"),
 		// strada_dane = require("../strada_dane.js"),
 		strada = require("../strada.js"),

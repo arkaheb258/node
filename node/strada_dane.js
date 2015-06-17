@@ -1,4 +1,4 @@
-// strada_dane.js 
+﻿// strada_dane.js 
 (function () {
     "use strict";
 	var socket = require('socket.io-client')('http://127.0.0.1:8888'),

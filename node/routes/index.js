@@ -1,4 +1,4 @@
-// routes/index.js
+ï»¿// routes/index.js
 (function () {
     "use strict";
 	var express = require('express'),
@@ -53,8 +53,8 @@
 	function odsw_par_i_podstaw_wer_jezyk(fileName, fileType, edit_fun, callback){
 		parametry.odswierzParametry(function (temp) {
 			if (!temp || (typeof temp === 'string')) {
-//				console.log("TCP - Brak po³¹czenia z PLC");
-				callback("Brak po³¹czenia z PLC (" + fileName + fileType + ")");
+//				console.log("TCP - Brak poÅ‚Ä…czenia z PLC");
+				callback("Brak poÅ‚Ä…czenia z PLC (" + fileName + fileType + ")");
 			} else {
 //				console.log(typeof temp);
 				var file_to_read = wer_jezykowa(temp, fileName, fileType);
@@ -72,7 +72,7 @@
 						}
 					});
 				} else {
-					callback("B³¹d odczytu parametrow (" + fileName + fileType + ")");
+					callback("BÅ‚Ä…d odczytu parametrow (" + fileName + fileType + ")");
 				}
 			}
 		});

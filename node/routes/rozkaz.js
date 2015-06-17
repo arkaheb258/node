@@ -1,4 +1,4 @@
-// routes/rozkaz.js
+﻿// routes/rozkaz.js
 (function () {
     "use strict";
 	var express = require('express'),

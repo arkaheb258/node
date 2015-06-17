@@ -1,4 +1,4 @@
-// zapisDoPliku.js
+﻿// zapisDoPliku.js
 (function () {
     "use strict";
     var fs = require("fs"),

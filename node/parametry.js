@@ -1,4 +1,4 @@
-// parametry.js
+﻿// parametry.js
 (function () {
     "use strict";
 	var fs = require("fs"),

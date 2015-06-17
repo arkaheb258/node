@@ -1,0 +1,33 @@
+{
+	"apps" : [{
+		"name"		: "Main (Strada)",
+		"script"	: "node/main.js",
+		"out_file"	: "log/main.log",
+		"error_file": "log/main.err",
+		"pid_file"	: "log/main.pid",
+		"env": {
+			"PLC_IP"			: "192.168.3.30",
+			"STRADA_PORT"		: 20021,
+			"STRADA_INTERVAL_MS": 200,
+			"WEB_PAR_FTP"		: 0,
+			"WEB_SYGN_FTP"		: 0,
+			"WEB_KOM_FTP"		: 0,
+			"PARAM_LOC_FILE"	: "temp/default.json",
+			"NTP_HWCLOCK"		: 1
+		}
+	},{
+		"name"		: "Web Server",
+		"script"	: "node/webServer.js",
+		"env": {
+			"PLC_IP"			: "192.168.3.30",
+			"PORT"				: 8888,
+			"WEB_DIR" 			: "../build"
+		}
+	},{
+		"name"		: "Zapis do pliku",
+		"script"	: "node/zapisDoPliku.js",
+		"env": {
+			"LOGGER_DIR"		: "c:/log"
+		}
+	}]
+}

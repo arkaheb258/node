@@ -1,4 +1,4 @@
-// common.js
+﻿// common.js
 (function () {
     "use strict";
 	var http = require('http'),

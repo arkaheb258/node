@@ -1,4 +1,4 @@
-// strada_rozk.js
+﻿// strada_rozk.js
 (function () {
     "use strict";
 	var common = require("./common.js");

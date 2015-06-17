@@ -3,9 +3,9 @@
     "use strict";
 	var express = require('express'),
 		router = express.Router(),
-		parametry = require("../parametry.js"),
-		strada_rozk = require("../strada_rozk.js"),
-		strada_dane = require("../strada_dane.js"),
+		// parametry = require("../parametry.js"),
+		// strada_rozk = require("../strada_rozk.js"),
+		// strada_dane = require("../strada_dane.js"),
 		strada = require("../strada.js"),
 		url = require("url");
 
@@ -56,23 +56,23 @@
 		case 0x606:	//Stwórz nowy plik Skrawu Wzorcowego
 			console.log("_" + instrNo);
 			break;
-		case 0x302:	//Odczytanie obszaru danych wizualizacyjnych kombajnu
-			console.log("_0x302");
-			res.jsonp(JSON.parse(res.write(strada_dane.dane_json())));
-			instrNo = null;
-			break;
-		case 0x307:	//Odczytanie obszaru danych konfiguracyjnych
-			strada.readAll(instrNo, data, function (dane) {
-				res.jsonp(JSON.parse('{instNo:"' + get.instrNo + '",wynik:"' + JSON.stringify(strada_rozk.decodeStrada307(dane, parametry.gpar())) + '"}'));
-			});
-			instrNo = null;
-			break;
-		case 0x308:	//Podaj historię zdarzeń.
-			strada.readAll(instrNo, data, function (dane) {
-				res.jsonp(JSON.parse('{instNo:"' + get.instrNo + '",wynik:"' + JSON.stringify(strada_rozk.decodeStrada308(dane)) + '"}'));
-			});
-			instrNo = null;
-			break;
+		// case 0x302:	//Odczytanie obszaru danych wizualizacyjnych kombajnu
+			// console.log("_0x302");
+			// res.jsonp(JSON.parse(res.write(strada_dane.dane_json())));
+			// instrNo = null;
+			// break;
+		// case 0x307:	//Odczytanie obszaru danych konfiguracyjnych
+			// strada.readAll(instrNo, data, function (dane) {
+				// res.jsonp(JSON.parse('{instNo:"' + get.instrNo + '",wynik:"' + JSON.stringify(strada_rozk.decodeStrada307(dane, parametry.gpar())) + '"}'));
+			// });
+			// instrNo = null;
+			// break;
+		// case 0x308:	//Podaj historię zdarzeń.
+			// strada.readAll(instrNo, data, function (dane) {
+				// res.jsonp(JSON.parse('{instNo:"' + get.instrNo + '",wynik:"' + JSON.stringify(strada_rozk.decodeStrada308(dane)) + '"}'));
+			// });
+			// instrNo = null;
+			// break;
 		default:
 			instrNo = null;
 			res.end();

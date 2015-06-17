@@ -2,29 +2,27 @@
 (function () {
     "use strict";
 	var fs = require("fs"),
-		strada = require("./strada.js"),
-		strada_rozk = require("./strada_rozk.js"),
+		socket = require('socket.io-client')('http://127.0.0.1:8888'),
 		common = require("./common.js"),
-		glob_par = require('../par.js'),
 		gpar = null,
 		ftp = require("ftp");
 
 	/**
 	 * Description
 	 * @method pobierzParametryPLC
-	 * @param {} strada
+	 * @param {} strada_readAll - funkcja odczytujaca obszary
 	 * @param {} par
 	 * @param {function} callback
 	 */
-	function pobierzParametryPLC(strada, par, callback) {
-		strada.readAll(0x307, 0, function (dane) {
+	function pobierzParametryPLC(strada_readAll, par, callback) {
+		strada_readAll(0x307, 0, function (dane) {
 			if (!dane || dane.error) {
 				console.log("blad odczytu - readAll");
 				callback(null);
 				return;
 			}
 
-			var temp =  strada_rozk.decodeStrada307(dane, par);
+			var temp =  decodeStrada307(dane, par);
 			if (!temp) {
 				console.log("Błędne parametry - 0x307");
 			} else {
@@ -113,7 +111,7 @@
 	 * @param {} callback
 	 */
 	function pobierzPlikParametrowFTP(callback) {
-		common.pobierzPlikFTP({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "file" : 'ide/Parametry/Temp.par'}, function (string) {
+		common.pobierzPlikFTP({"host" : process.env.PLC_IP || "192.168.3.30", "user" : "admin", "password" : "admin", "file" : 'ide/Parametry/Temp.par'}, function (string) {
 			if (string === false) {
 				console.log("FTP par error");
 				callback(null);
@@ -144,13 +142,13 @@
 	/**
 	 * Description
 	 * @method pobierzParametryPLCWhile
-	 * @param {} strada
+	 * @param {} strada_readAll
 	 * @param {} par2
 	 * @param {} callback
 	 */
-	function pobierzParametryPLCWhile(strada, par2, callback) {
+	function pobierzParametryPLCWhile(strada_readAll, par2, callback) {
 		console.log("pobierzParametryPLCWhile");
-		pobierzParametryPLC(strada, par2, function (temp) {
+		pobierzParametryPLC(strada_readAll, par2, function (temp) {
 			console.log("pobierzParametryPLC...");
 //			console.log(temp);
 			if (temp !== null) { callback(temp); }
@@ -163,11 +161,11 @@
 	 * @param {} callback
 	 * @param {} force
 	 */
-	function pobierzParametryAll(callback, force) {
-		pobierzPlikParametrowLoc(glob_par.PARAM_LOC_FILE, function (par) {
+	function pobierzParametryAll(strada_readAll, callback, force) {
+		pobierzPlikParametrowLoc(process.env.PARAM_LOC_FILE || "temp/default.json", function (par) {
 			if (par && !force) {
 				console.log("Wczytano parametry domyślne");
-				pobierzParametryPLC(strada, par, function (temp) {
+				pobierzParametryPLC(strada_readAll, par, function (temp) {
 					gpar = temp;
 					if (!temp || !par) {
 						console.log("Błędne parametry - pobranie struktury parametrów ze sterownika");
@@ -175,19 +173,23 @@
 	//						console.log(par2);
 							if (par2) {
 								console.log("Pobrano parametry przez FTP");
-								pobierzParametryPLCWhile(strada, par2, function (temp) {
+								pobierzParametryPLCWhile(strada_readAll, par2, function (temp) {
 									gpar = temp;
-									zapiszParametryLoc(glob_par.PARAM_LOC_FILE, temp);
+									zapiszParametryLoc(process.env.PARAM_LOC_FILE || "temp/default.json", temp);
+									socket.emit('gpar', temp);
 									if (callback) { callback(temp); }
 								});
 							} else {
-								console.log("Nie pobrano parametrow przez FTP");
-								if (callback) { callback({error: "Nie pobrano parametrow przez FTP"}); }
+								var err = "Nie pobrano parametrow przez FTP"
+								console.log(err);
+								if (callback) { callback({error: err}); }
+								// socket.emit('gpar', {error: err});
 							}
 						});
 					} else {
 						console.log("Struktura parametrów zgodna z danymi konfiguracyjnymi");
-						zapiszParametryLoc(glob_par.PARAM_LOC_FILE, temp);
+						zapiszParametryLoc(process.env.PARAM_LOC_FILE || "temp/default.json", temp);
+						socket.emit('gpar', temp);
 						if (callback) { callback(temp); }
 					}
 				});
@@ -196,20 +198,90 @@
 					if (par2) {
 						console.log("Pobrano parametry przez FTP f");
 						// console.log(par2.WER);
-						pobierzParametryPLCWhile(strada, par2, function (temp) {
+						pobierzParametryPLCWhile(strada_readAll, par2, function (temp) {
 							gpar = temp;
-							zapiszParametryLoc(glob_par.PARAM_LOC_FILE, temp);
+							zapiszParametryLoc(process.env.PARAM_LOC_FILE || "temp/default.json", temp);
+							socket.emit('gpar', temp);
 							if (callback) { callback(temp); }
 						});
 					} else {
-						console.log("Nie pobrano parametrow przez FTP f");
-						if (callback) { callback({error: "Nie pobrano parametrow przez FTP f"}); }
+						var err = "Nie pobrano parametrow przez FTP f"
+						console.log(err);
+						if (callback) { callback({error: err}); }
 					}
 				});
 			}
 		});
 	}
 
+	/**
+	 * Description
+	 * @method decodeStrada307
+	 * @param {Buffer} buf
+	 * @param {Object} out_par
+	 * @return out_par
+	 */
+	function decodeStrada307(buf, out_par) {
+		var i, len, ptr = 0, temp, temp_str, ok = true;
+		if (out_par && out_par.DANE) {
+			len = out_par.DANE.length;
+		} else {
+			return null;
+		}
+		for (i = 0; i < 5; i += 1) {
+			temp_str = out_par.DANE[i];
+			// console.log(temp_str);
+			if (typeof buf === "object" && buf.error !== undefined) {
+				console.log("Błąd decodeStrada307 " + i);
+				console.log(buf);
+				return null;
+			}
+			temp = common.readStringTo0(buf, i * 32, 32);
+			// console.log(temp);
+			if (temp !== temp_str.WART) { ok = false; console.log("[" + i + "] " + temp_str.NAZ + " zmiana z " + temp_str.WART + " na " + temp); }
+		}
+
+		//jeżeli zmiana komisji, typu, itd. to przerwać i zwrócić null
+		if (ok === false) { return null; }
+
+		ptr = 5 * 32;
+		for (i = 5; i < len; i += 1) {
+			temp_str = out_par.DANE[i];
+			if (buf.length < ptr + temp_str.ROZM * 2) { ok = false; console.log("błąd ilości parametrów (za mało) " + i); break; }
+	//		console.log(temp_str);
+			if (temp_str.NAZ[0] === "s") {
+				temp = common.readStringTo0(buf, ptr, temp_str.ROZM * 2);
+			} else if (temp_str.NAZ[0] === "t") {
+				if (temp_str.ROZM !== 2) { temp_str.ROZM = 2; console.log("[" + i + "] " + temp_str.NAZ + " - błąd rozmiaru TIME"); }
+				// temp = common.msToCodesysTime(buf.readInt32LE(ptr));
+				temp = buf.readInt32LE(ptr) / 1000;
+			} else {
+				if (temp_str.ROZM === 1) { temp = buf.readInt16LE(ptr); } else { temp = buf.readInt32LE(ptr); }
+				if (temp_str.PREC) { temp /= Math.pow(10, temp_str.PREC); }
+			}
+			if (temp_str.NAZ[0] === "t" && (typeof temp_str.WART === "string") && temp_str.WART[0] === "T") {
+				// console.log("[" + i + "] " + temp_str.NAZ + " porownanie " + temp_str.WART + " z " + temp); 
+				temp_str.WART = common.codesysTimeToMs(temp_str.WART);
+				out_par.DANE[i].WART = temp;
+			}
+			if (temp !== temp_str.WART) {
+				console.log("[" + i + "] " + temp_str.NAZ + " zmiana z " + temp_str.WART + " na " + temp);
+				out_par.DANE[i].WART = temp;
+			}
+			ptr += parseFloat(temp_str.ROZM) * 2;
+		}
+		if (ptr !== buf.length) { ok = false; console.log("błąd ilości parametrów " + ptr + " != " + buf.length); }
+
+		//jeżeli błąd w rozmiarze czasu lub różna długość parametrów to przerwać i zwrócić null
+		if (ok === false) { return null; }
+		out_par.sKonfTypKombajnu = common.readStringTo0(buf, 0, 32);
+		out_par.sKonfNrKomisji = common.readStringTo0(buf, 32, 32);
+		out_par.sKonfNazwaKopalni = common.readStringTo0(buf, 64, 32);
+		out_par.sKonfNrSciany = common.readStringTo0(buf, 96, 32);
+		out_par.sKonfWersjaProgramu = common.readStringTo0(buf, 128, 32);
+		return out_par;
+	}
+	
     module.exports.odswierzParametry = pobierzParametryAll;
     module.exports.gpar = f_gpar;
 }());

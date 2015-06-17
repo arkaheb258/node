@@ -4,7 +4,6 @@
 	var express = require('express'),
 		router = express.Router(),
 		Ftp = require("ftp"),
-		glob_par = require('../../par.js'),
 		url = require("url"),
 		last_res = null,
 		c = new Ftp();
@@ -14,7 +13,7 @@
 		if(!c.connected){
 			// c.end();
 			c.destroy();
-			c.connect({"host" : glob_par.PLC_IP, "user" : "admin", "password" : "admin", "connTimeout" : 2000, "pasvTimeout" : 2000});
+			c.connect({"host" : process.env.PLC_IP, "user" : "admin", "password" : "admin", "connTimeout" : 2000, "pasvTimeout" : 2000});
 		}
 		last_res = res;
 		if (req.url.slice(-1) == '/') {

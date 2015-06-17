@@ -3,10 +3,8 @@
     "use strict";
 	var http = require('http'),
 		fs = require("fs"),
-		glob_par = require('../par.js'),
-		parametry = require("./parametry.js"),
-		cp = require('child_process'),
-		// exec = require('child_process').exec,
+		glob_par = process.env,
+		exec = require('child_process').exec,
 		NTP_IP_i = 0,
 		ftp = require("ftp");
 
@@ -207,7 +205,7 @@
 		sTime = pad(dataa.getUTCHours(), 2) + ":" + pad(dataa.getUTCMinutes(), 2) + ":" + pad(dataa.getUTCSeconds(), 2);
 		if (process.platform === "linux") {
 			// console.log('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime);
-			cp.exec('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime, function (error, stdout, stderr) {
+			exec('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime, function (error, stdout, stderr) {
 				console.log('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime);
 				// console.log("date 2");
 				console.log("stdout: " + stdout);
@@ -215,13 +213,13 @@
 				console.log("error: " + error);
 				// console.log(sDate);
 				// console.log(sTime);
-				cp.exec("sudo hwclock -w", function (error, stdout, stderr) {
+				exec("sudo hwclock -w", function (error, stdout, stderr) {
 					console.log("sudo hwclock -w");
 					console.log("stdout: " + stdout);
 					console.log("stderr: " + stderr);
 					console.log("error: " + error);
 					if (glob_par.NTP_HWCLOCK) {
-						cp.exec("sudo hwclock -w -f /dev/rtc1", function (error, stdout, stderr) {
+						exec("sudo hwclock -w -f /dev/rtc1", function (error, stdout, stderr) {
 							console.log("sudo hwclock -w -f /dev/rtc1");
 							console.log("stdout: " + stdout);
 							console.log("stderr: " + stderr);
@@ -276,20 +274,20 @@
 				} else {
 					NTP_IP_i = 0;
 				}
-				// cp.exec("(sudo service ntp stop; sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i] + "; sudo service ntp start)", { timeout: 2000 }, function (error, stdout, stderr) {
-				cp.exec("sudo service ntp stop", function (error0, stdout0, stderr0) {
+				// exec("(sudo service ntp stop; sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i] + "; sudo service ntp start)", { timeout: 2000 }, function (error, stdout, stderr) {
+				exec("sudo service ntp stop", function (error0, stdout0, stderr0) {
 					// console.log("sudo service ntp stop");
-					cp.exec("sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i], { timeout: 10000 }, function (error, stdout, stderr) {
+					exec("sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i], { timeout: 10000 }, function (error, stdout, stderr) {
 						// console.log("sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i]);
-						cp.exec("sudo service ntp start", function (error0, stdout0, stderr0) {
+						exec("sudo service ntp start", function (error0, stdout0, stderr0) {
 							// console.log("sudo service ntp start");
 							if (!error) {
 								set_time(new Date());
 								if (callback) { callback({type: "ntp " + glob_par.NTP_IPs[NTP_IP_i], date: new Date(), error: error, err: stderr, out: stdout}); }
 							} else {
 								if (glob_par.NTP_HWCLOCK) {
-									// cp.exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
-									cp.exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
+									// exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
+									exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
 										if (!error) {
 											set_time(new Date());
 											callback({type: "hwclock", date: new Date(), error: error, err: stderr, out: stdout});
@@ -304,8 +302,8 @@
 				});
 			} else {
 				if (glob_par.NTP_HWCLOCK) {
-				// cp.exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
-					cp.exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
+				// exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
+					exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
 						callback({type: "hwclock", date: new Date(), error: error, err: stderr, out: stdout});
 					});
 				} else {
@@ -326,7 +324,7 @@
 //return;
 		if (process.platform === "linux") {
 			console.log('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5');
-			cp.exec('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5', function (error, stdout, stderr) {
+			exec('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5', function (error, stdout, stderr) {
 				if (stderr) { console.log("stderr: " + stderr); }
 				if (error) { console.log("error: " + error); }
 				if (res) {
@@ -592,43 +590,6 @@
 		return file_to_read;
 	}
 
-	/**
-	 * Description
-	 * @method odsw_par_i_podstaw_wer_jezyk
-	 * @param {} fileName
-	 * @param {} fileType
-	 * @param {} edit_fun
-	 * @param {} callback
-	 */
-	function odsw_par_i_podstaw_wer_jezyk(fileName, fileType, edit_fun, callback){
-		parametry.odswierzParametry(function (temp) {
-			if (!temp || (typeof temp === 'string')) {
-//				console.log("TCP - Brak połączenia z PLC");
-				callback("Brak połączenia z PLC (" + fileName + fileType + ")");
-			} else {
-//				console.log(typeof temp);
-				var file_to_read = wer_jezykowa(temp, fileName, fileType);
-//				console.log('file_to_read');
-				if (file_to_read) {
-					fs.readFile(file_to_read, 'utf8', function (err, text) {
-						if (err) {
-							callback(fileName + fileType + " error");
-						} else {
-							if (edit_fun) {
-								callback(edit_fun(text, temp));
-							} else {
-								callback(text);
-							}
-						}
-					});
-				} else {
-					callback("Błąd odczytu parametrow (" + fileName + fileType + ")");
-				}
-			}
-		});
-	
-	}
-
     module.exports.refresh_browser = refresh_browser;
     module.exports.getTime = getTime;
     module.exports.set_time = set_time;
@@ -645,5 +606,5 @@
     module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
     module.exports.wer_jezykowa = wer_jezykowa;
-    module.exports.odsw_par_i_podstaw_wer_jezyk = odsw_par_i_podstaw_wer_jezyk;
+    // module.exports.odsw_par_i_podstaw_wer_jezyk = odsw_par_i_podstaw_wer_jezyk;
 }());

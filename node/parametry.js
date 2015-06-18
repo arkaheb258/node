@@ -2,11 +2,11 @@
 (function () {
     "use strict";
 	var fs = require("fs"),
-		socket = require('socket.io-client')('http://127.0.0.1:8888'),
+		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
 		common = require("./common.js"),
 		gpar = null,
 		ftp = require("ftp");
-
+	
 	/**
 	 * Description
 	 * @method pobierzParametryPLC
@@ -176,6 +176,7 @@
 								pobierzParametryPLCWhile(strada_readAll, par2, function (temp) {
 									gpar = temp;
 									zapiszParametryLoc(process.env.PARAM_LOC_FILE || "temp/default.json", temp);
+									common.storeGpar(temp);
 									socket.emit('gpar', temp);
 									if (callback) { callback(temp); }
 								});
@@ -189,6 +190,8 @@
 					} else {
 						console.log("Struktura parametrów zgodna z danymi konfiguracyjnymi");
 						zapiszParametryLoc(process.env.PARAM_LOC_FILE || "temp/default.json", temp);
+						console.log(temp);
+						common.storeGpar(temp);
 						socket.emit('gpar', temp);
 						if (callback) { callback(temp); }
 					}
@@ -201,6 +204,7 @@
 						pobierzParametryPLCWhile(strada_readAll, par2, function (temp) {
 							gpar = temp;
 							zapiszParametryLoc(process.env.PARAM_LOC_FILE || "temp/default.json", temp);
+							common.storeGpar(temp);
 							socket.emit('gpar', temp);
 							if (callback) { callback(temp); }
 						});

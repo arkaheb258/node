@@ -4,7 +4,7 @@
 #date >> /tmp/my_log_b
 cpufreq-set -g performance
 #node /home/debian/kopex/tcp_cl3.js >> /tmp/my_log_b &
-pm2 /home/debian/kopex/node/pm2.json
+pm2 start /home/debian/kopex/pm2.json --env production &
 
 #echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
 #hwclock -s -f /dev/rtc1

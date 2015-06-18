@@ -1,7 +1,60 @@
 ﻿// strada_rozk.js
 (function () {
     "use strict";
-	var common = require("./common.js");
+	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
+		strada = require("./main.js"),
+		common = require("./common.js");
+
+	socket.on('gpar', function (gpar) {
+		console.log("storeGpar");
+		// common.storeGpar(gpar);
+	});		
+
+	socket.on("rozkaz", function(get){
+		var msg = {};
+		msg.instrID = get.instrID;
+		switch (get.rozkaz) {
+		case "podajHistorie":
+			strada.SendFunction(0x308, 0, function (dane) {
+				msg.dane = decodeStrada308(common.getGpar(), dane.dane);
+				socket.emit("odpowiedz", msg);
+			});
+			break;
+		case "ustawCzas":
+			var temp = get.wartosc / 1000;
+			//konwersja czas lokalny -> UTC
+			var d = new Date(temp * 1000);
+			var n = d.getTimezoneOffset();
+			var dataa = new Date();
+
+			d.setMonth(0);
+			n -= d.getTimezoneOffset();
+			var gpar = common.getGpar();
+			if (gpar) {
+				if (gpar.rKonfCzasStrefa !== undefined) { temp -= (gpar.rKonfCzasStrefa - 12) * 3600; }
+				if (gpar.rKonfCzasLetni) { temp += n * 60; }
+			}
+			dataa.setTime(temp * 1000);
+			if (temp < 0) {
+				msg.dane = "NaN";
+				socket.emit("odpowiedz", msg);
+			} else {
+				// console.log(gpar.rKonfCzasStrefa);
+				// console.log(gpar.rKonfCzasLetni);
+				// console.log(temp);
+				console.log("Ustawienie nowego czasu: ", dataa);
+				common.set_time(dataa);
+				strada.SendFunction(0x201, temp, function (dane) {
+					console.log("dane 201", dane);
+					if (!dane.error){
+						msg.dane = "OK";
+						socket.emit("odpowiedz", msg);
+					}
+				});
+			}
+			break;
+		}
+	});
 		
 	/**
 	 * Description

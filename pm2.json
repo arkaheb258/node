@@ -1,10 +1,14 @@
-{
+﻿{
 	"apps" : [{
-		"name"		: "Main (Strada)",
+		"name"		: "Strada",
 		"script"	: "node/main.js",
-		"out_file"	: "log/main.log",
-		"error_file": "log/main.err",
+		"out_file"	: "log/strada.log",
+		"error_file": "log/strada.err",
 		"pid_file"	: "log/main.pid",
+		"log_date_format" : "YYYY-MM-DD HH:mm:ss.SSS ",
+		"merge_logs": true,
+		"watch"		: true,
+		"max_memory_restart":	"150M",
 		"env": {
 			"PLC_IP"			: "192.168.3.30",
 			"STRADA_PORT"		: 20021,
@@ -13,21 +17,47 @@
 			"WEB_SYGN_FTP"		: 0,
 			"WEB_KOM_FTP"		: 0,
 			"PARAM_LOC_FILE"	: "temp/default.json",
-			"NTP_HWCLOCK"		: 1
+			"NTP_HWCLOCK"		: 1,
+			"PORT"				: 80
+		},
+		"env_production": {
+			"NODE_ENV"			: "production",
+			"PORT"				: 8888
 		}
 	},{
 		"name"		: "Web Server",
 		"script"	: "node/webServer.js",
+		"out_file"	: "log/web.log",
+		"error_file": "log/web.err",
+		"log_date_format" : "YYYY-MM-DD HH:mm:ss.SSS ",
+		"max_memory_restart":	"100M",
 		"env": {
 			"PLC_IP"			: "192.168.3.30",
+			"PORT"				: 80,
+			"WEB_DIR" 			: "../build",
+			"verSerwer"			: "2.0.0",
+			"HW"				: "PC"
+		},
+		"env_production": {
+			"NODE_ENV"			: "production",
 			"PORT"				: 8888,
-			"WEB_DIR" 			: "../build"
+			"HW"				: "beagle"
 		}
 	},{
 		"name"		: "Zapis do pliku",
 		"script"	: "node/zapisDoPliku.js",
+		"out_file"	: "log/zapis.log",
+		"error_file": "log/zapis.err",
+		"log_date_format" : "YYYY-MM-DD HH:mm:ss.SSS ",
+		"max_memory_restart":	"100M",
 		"env": {
-			"LOGGER_DIR"		: "c:/log"
+			"LOGGER_DIR"		: "USB",
+			"PORT"				: 80
+		},
+		"env_production": {
+			"NODE_ENV"			: "production",
+			"LOGGER_DIR"		: "log",
+			"PORT"				: 8888
 		}
 	}]
 }

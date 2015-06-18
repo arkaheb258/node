@@ -57,7 +57,7 @@
 				callback("Brak połączenia z PLC (" + fileName + fileType + ")");
 			} else {
 //				console.log(typeof temp);
-				var file_to_read = wer_jezykowa(temp, fileName, fileType);
+				var file_to_read = common.wer_jezykowa(temp, fileName, fileType);
 //				console.log('file_to_read');
 				if (file_to_read) {
 					fs.readFile(file_to_read, 'utf8', function (err, text) {

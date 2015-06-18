@@ -2,6 +2,7 @@
 (function () {
     "use strict";
 	var net = require('net'),
+		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
 		strada_rozk = require("./strada_rozk.js"),
 		parametry = require("./parametry.js"),
 		common = require("./common.js"),
@@ -17,6 +18,11 @@
 	    lastSent = null,
 	    PLCConnected = false;
 
+	socket.on("get_gpar", function(){
+		console.log("on get_gpar");
+		parametry.odswierzParametry(StradaReadAll, null, true);
+	});
+		
 	/**
 	* Konstruktor klasy
 	* @param client socket do połczenia
@@ -37,11 +43,9 @@
 			// console.log("queue.length "+queue.length);
 			main_client = client;
 			console.log('main_client = client');
-			
 			console.log('Strada Polaczono ....');
 			strada_dane.StartInterval(stradaEnqueue);
 			parametry.odswierzParametry(StradaReadAll, null, true);
-
 			onConnect();
 		});
 		client.on('error', function (err) {
@@ -148,6 +152,8 @@
 			data = null;
 			break;
 		case 0x201:	//Zapisz datę i czas.
+			// console.log("data: ");
+			// console.log(data);
             temp_out_buff = new Buffer(8);
             temp_out_buff.writeUInt16LE(1, 0);
             temp_out_buff.writeUInt16LE(4, 2);

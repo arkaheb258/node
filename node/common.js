@@ -445,7 +445,7 @@
 										// if (js.DANE[g][p][s].TYP === "pCzas") console.log(js.DANE[g][p][s].WART);
 										temp = szukajPar(gpar, s);
 										if (temp === null) {
-											console.log("P - Nie znaleziono parametru \"" + s + "\"");
+											// console.log("P - Nie znaleziono parametru \"" + s + "\"");
 										} else if (js.DANE[g][p][s].WART !== temp) {
 			//console.log(" "+ s + ": " + js.DANE[g][p][s].WART + " -> " + temp);
 											js.DANE[g][p][s].WART = temp;
@@ -606,5 +606,13 @@
     module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
     module.exports.wer_jezykowa = wer_jezykowa;
+	
+	var gpar = null;
+	var dane = null;
+
+	module.exports.storeDane = function(_dane){dane = _dane};
+	
+	module.exports.storeGpar = function(_gpar){gpar = _gpar};
+	module.exports.getGpar = function(){return gpar};
     // module.exports.odsw_par_i_podstaw_wer_jezyk = odsw_par_i_podstaw_wer_jezyk;
 }());

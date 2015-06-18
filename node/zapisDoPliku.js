@@ -2,11 +2,10 @@
 (function () {
     "use strict";
     var fs = require("fs"),
-		socket = require('socket.io-client')('http://127.0.0.1:8888'),
+		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
 		common = require("./common.js"),
 		cp = require("child_process"),
 		logger_dir = process.env.LOGGER_DIR,
-		parametry = null,
 		prev_data = null;
 
 	socket.on('dane', function (dane) {
@@ -17,13 +16,13 @@
 	});		
 
 	socket.on('gpar', function (gpar) {
-		// console.log("gpar zapis");
-		parametry = gpar;
+		common.storeGpar(gpar);
 	});		
 	
     function createFile(fileName, czas) {
         console.log("Tworzenie pustego pliku danych: " + fileName);
         common.CreateDir(logger_dir, function () {
+			var parametry = common.getGpar();
 			if (parametry) {
 				var out_buff = new Buffer(255),
 					adr = 0;
@@ -46,7 +45,7 @@
 				adr += 2;
 				fs.writeFile(fileName, out_buff);
 			} else {
-				console.log("Błąd parametrów przy tworzeniu pliku");
+				// console.log("Błąd parametrów przy tworzeniu pliku");
 			}
         });
     }
@@ -101,6 +100,7 @@
     function AppendFrame(data, forceAll) {
 		var fileName,
 			out_buff = new Buffer(10),
+			parametry = common.getGpar(),
 			adr = 0,
 			out_buff_dane,
 			countChange,
@@ -111,7 +111,7 @@
 			return;
 		}
 		if (!logger_dir) {
-			console.log("skip logger");
+			// console.log("skip logger");
 			return;
 		} else if (logger_dir == "USB") {
 			console.log("usb logger "+logger_dir);

@@ -1,7 +1,7 @@
 ﻿// strada_dane.js 
 (function () {
     "use strict";
-	var socket = require('socket.io-client')('http://127.0.0.1:8888'),
+	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
 		common = require("./common.js"),
 		strada_req_time = false,
 	    stradaIntEnabled = false,

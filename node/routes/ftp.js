@@ -26,7 +26,7 @@
 					return;
 				}
 				res.send(list.join('<br\>').replace(/<DIR>/g, ""));
-				console.dir(list);
+				// console.dir(list);
 				c.end();
 			});			
 		} else {

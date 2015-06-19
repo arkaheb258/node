@@ -53,9 +53,6 @@
 				msg.dane = "NaN";
 				socket.emit("odpowiedz", msg);
 			} else {
-				// console.log(gpar.rKonfCzasStrefa);
-				// console.log(gpar.rKonfCzasLetni);
-				// console.log(temp);
 				console.log("Ustawienie nowego czasu: ", dataa);
 				common.set_time(dataa);
 				strada.SendFunction(0x201, temp, function (dane) {
@@ -84,44 +81,22 @@
 			strada.SendFunction(0x202, temp, function (dane) {
 				console.log("dane 202");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null)) {
-					// msg.dane = "BLOK_OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 202";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 			});
 			break;
 		case "ustawParametr":
 			var typ = "STRING";
 			if (get.typ === "pCzas") {
-				typ = "TIME";
-				//wartosc w sekundach
+				typ = "TIME"; //wartosc w sekundach
 			} else if (get.typ === "pLiczba") {
 				typ = "REAL";
 			} else if (get.typ === "pLista") {
 //				typ = "LISTA";				//Błąd w dokumentacji Strada do wersji (1.2.2 włącznie)
 				typ = "REAL";
 			}
-	// console.log(get);
 			strada.SendFunction(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc}, function (dane) {
 				console.log("dane 500");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null)) {
-					// msg.dane = "PAR_OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 500";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 				socket.emit("get_gpar");
 			}, 10000);
@@ -157,16 +132,6 @@
 			strada.SendFunction(0x502, [plik, kierunek], function (dane) {
 				console.log("dane 502");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
-					// msg.dane = "OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 502";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 			});
 			break;
@@ -177,16 +142,6 @@
 			strada.SendFunction(0x701, [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100], function (dane) {
 				console.log("dane 701");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
-					// msg.dane = "OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 701";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 			}, 10000);
 			console.log("kalibracja end");
@@ -198,39 +153,17 @@
 			strada.SendFunction(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)], function (dane) {
 				console.log("dane 702");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
-					// msg.dane = "OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 702";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 			});
 			console.log("liczniki end");
 			break;
 		case "statusWeWyBloku_310":
 			console.log(get.rozkaz);
-			// console.log(get);
 			console.log(get.uiCzytajObszarNr);
-			// console.log(get.Rezerwa);
 			console.log(get.sIDbloku);
 			strada.SendFunction(0x310, [parseInt(get.uiCzytajObszarNr, 10), get.sIDbloku], function (dane) {
 				console.log("dane 310");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
-					// msg.dane = "OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 520";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 			});
 			// msg.dane = "Nieznany rozkaz";
@@ -242,16 +175,6 @@
 			strada.SendFunction(0x520, [parseInt(get.wActivID, 10)], function (dane) {
 				console.log("dane 520");
 				console.log(dane);
-				// if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
-					// msg.dane = "OK";
-				// } else if (dane.dane) {
-					// msg.dane = dane.dane;
-				// } else if (dane.error) {
-					// msg.dane = dane.error;
-				// } else {
-					// msg.dane = "Error Node 520";
-				// }
-				// socket.emit("odpowiedz", msg);
 				emitSIN(dane, msg);
 			});
 			break;
@@ -263,153 +186,72 @@
 			socket.emit("odpowiedz", msg);
 			break;
 
-			
 		case "miejsceSterPosuw_207":
-			console.log(get.rozkaz);
-			console.log(get.wSterPosuwemId);
-			strada.SendFunction(0x207, [parseInt(get.wSterPosuwemId, 10), 0], function (dane) {
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "trybPracyPosuw_208":
-			console.log(get.rozkaz);
-			console.log(get.wTrybPosuwuId);
-			strada.SendFunction(0x208, [parseInt(get.wTrybPosuwuId, 10), 0], function (dane) {
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "trybPracyCiagniki_209":
-			console.log(get.rozkaz);
-			console.log(get.wTrybCiagnikowId);
-			strada.SendFunction(0x209, [parseInt(get.wTrybCiagnikowId, 10), 0], function (dane) {
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "calkDystKomb_20C":
-			console.log(get.rozkaz);
-			console.log(get.wCalkowityDystans);
-			strada.SendFunction(0x20C, [parseInt(get.wCalkowityDystans, 10), 0], function (dane) {
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "kanalSSRK_216":
-			console.log(get.rozkaz);
-			console.log(get.wKanalNr);
-			strada.SendFunction(0x216, [parseInt(get.wKanalNr, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "typSkrawu_21B":
-			console.log(get.rozkaz);
-			console.log(get.wTypSkrawu);
-			strada.SendFunction(0x21B, [parseInt(get.wTypSkrawu, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "fazaSkrawu_21C":
-			console.log(get.rozkaz);
-			console.log(get.wFazaSkrawu);
-			strada.SendFunction(0x21C, [parseInt(get.wFazaSkrawu, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "autoFazaSkrawu_21D":
-			console.log(get.rozkaz);
-			console.log(get.wAutoFazaSkrawu);
-			strada.SendFunction(0x21D, [parseInt(get.wAutoFazaSkrawu, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "zewnSystSter_221":
-			console.log(get.rozkaz);
-			console.log(get.wSterZewn);
-			strada.SendFunction(0x221, [parseInt(get.wSterZewn, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "trybHydr_222":
-			console.log(get.rozkaz);
-			console.log(get.wTrybHydrId);
-			strada.SendFunction(0x222, [parseInt(get.wTrybHydrId, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "daneWizDodatkowe_31A":
-			console.log(get.rozkaz);
-			console.log(get.uiCzytajObszarNr);
-			strada.SendFunction(0x31A, [parseInt(get.uiCzytajObszarNr, 10), 0], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "testHamulca_401":
+		case "podajNazwyPlikow_601":
+		case "podajNazwePliku_603":
 			console.log(get.rozkaz);
-			console.log(get.wSterujTestHamulcow);
-			strada.SendFunction(0x401, [parseInt(get.wSterujTestHamulcow, 10), 0], function (dane) {
-				console.log(get.rozkaz);
+			console.log(get.wWartosc);
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseInt(get.wWartosc, 10), 0], function (dane) {
 				console.log(dane);
 				emitSIN(dane, msg);
 			});
 			break;
 
-			
-			
 		case "nrSekcji_204":
-			console.log(get.rozkaz);
-			console.log(get.wNrSekcji);
-			console.log(get.wNapedID);
-			strada.SendFunction(0x204, [parseFloat(get.wNrSekcji), parseInt(get.wNapedID, 10)], function (dane) {
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "czasPracy_20A":
-			console.log(get.rozkaz);
-			console.log(get.wCalkowityCzasPracy);
-			console.log(get.napedID);
-			strada.SendFunction(0x20A, [parseInt(get.wCalkowityCzasPracy, 10), parseInt(get.napedID, 10)], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "czasJazdy_20B":
-			console.log(get.rozkaz);
-			console.log(get.wCalkowityCzasJazdy);
-			console.log(get.napedID);
-			strada.SendFunction(0x20B, [parseInt(get.wCalkowityCzasJazdy, 10), parseInt(get.napedID, 10)], function (dane) {
-				console.log(get.rozkaz);
-				console.log(dane);
-				emitSIN(dane, msg);
-			});
-			break;
 		case "sterReflektorami_402":
+		case "kalibracjeEnk_404":
 			console.log(get.rozkaz);
-			console.log(get.wReflekId);
-			console.log(get.wSteruj);
-			strada.SendFunction(0x402, [parseInt(get.wReflekId, 10), parseInt(get.wSteruj, 10)], function (dane) {
-				console.log(get.rozkaz);
+			console.log(get.wWartosc);
+			console.log(get.wID);
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseFloat(get.wWartosc), parseInt(get.wID, 10)], function (dane) {
 				console.log(dane);
 				emitSIN(dane, msg);
 			});
 			break;
+			
+		case "plikSkrawuWz_600":
+		case "skasujPlik_604":
+		case "nowyPlik_606":
+			console.log(get.rozkaz);
+			console.log(get.sWartosc);
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), get.sWartosc, function (dane) {
+				console.log(dane);
+				emitSIN(dane, msg);
+			});
+			break;
+
+		case "zerujLicznikiDzien_403":
+		case "skasujAktywnyPlik_602":
+			console.log(get.rozkaz);
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), null, function (dane) {
+				console.log(dane);
+				emitSIN(dane, msg);
+			});
+			break;
+
+		case "zmienNazwePliku_605":
+			console.log(get.rozkaz);
+			console.log(get.sNazwaPlikuOld);
+			console.log(get.sNazwaPlikuNew);
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [get.sNazwaPlikuOld, get.sNazwaPlikuNew], function (dane) {
+				console.log(dane);
+				emitSIN(dane, msg);
+			});
+			break;
+			
 		default:
 			msg.dane = "Nieznany rozkaz";
 			socket.emit("odpowiedz", msg);

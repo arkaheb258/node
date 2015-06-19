@@ -2,9 +2,14 @@
 
 #echo 'deb' >> /tmp/my_log_b
 #date >> /tmp/my_log_b
-cpufreq-set -g performance
+sudo cpufreq-set -g performance
 #node /home/debian/kopex/tcp_cl3.js >> /tmp/my_log_b &
-pm2 start /home/debian/kopex/pm2.json --env production &
+#pm2 start /home/debian/kopex/pm2.json --env production &
+#forever start -l forever.log -o out.log -e err.log my-daemon.js
+node /home/debian/kopex/node/webServer.js
+#cd /home/debian/kopex/node/
+#forever start webServer.js
+#forever start zapisDoPliku.js
 
 #echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
 #hwclock -s -f /dev/rtc1

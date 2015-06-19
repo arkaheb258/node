@@ -2,7 +2,7 @@
 (function () {
     "use strict";
 	var fs = require("fs"),
-		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
+		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
 		common = require("./common.js"),
 		gpar = null,
 		ftp = require("ftp");

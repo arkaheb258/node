@@ -21,8 +21,9 @@ make
 make install
 
 #process manager
-npm install pm2 -g
-pm2 startup ubuntu
+npm install -g forever
+#npm install pm2 -g
+#pm2 startup ubuntu
 
 # pobranie serwera i wizualizacji
 mkdir /home/debian/kopex

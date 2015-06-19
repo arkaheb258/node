@@ -4,19 +4,20 @@
     var express = require('express'),
 		app = express(),
 		server = require('http').Server(app),
-		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
+		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
         io = require('socket.io')(server),
 		fs = require('fs'),
 		os = require('os'),
 		url = require("url"),
 		common = require("./common.js"),
-		ftp_routes = require('./routes/ftp.js'),
+		// ftp_routes = require('./routes/ftp.js'),
+		// json_routes = require('./routes/json.js'),
 		// index_routes = require('./routes/index.js'),
 		// rozkaz_routes = require('./routes/rozkaz.js'),
 		// strada_routes = require('./routes/strada.js'),
 		web_dir = process.env.WEB_DIR || "../build",
 	    instrID = 0,
-		port = process.env.PORT || 8888;        // set our port
+		port = process.env.WEB_PORT || 8888;        // set our port
 
 	//logowanie pobieranych plikow w wersji development
 	if (process.env.NODE_ENV != "production") {
@@ -26,76 +27,17 @@
 		});
 	}
 
-	app.get('/json/komunikaty.json', function (req, res, next) {
-		// var gpar = common.getGpar();
-		var gpar = null;
-		if (gpar) {
-			var file_to_read = "komunikaty";
-			var dir = "";
-			var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
-			if (sKonfTypKombajnu != "") {
-				dir += sKonfTypKombajnu+"/";
-			}
-			if (gpar.rKonfWersjaJezykowa !== undefined) {
-				file_to_read +=  "_"+rKonfWersjaJezykowa;
-			}
-			res.redirect('/json/' + dir + file_to_read + '.json');
-		} else {
-			next();
-		}
-	})
-	
-	//podstawienie aktualnych wartosci parametrow
-	app.get('/json/parametry.json', function (req, res) {
-		fs.readFile(__dirname+'/'+web_dir + "/json/parametry.json", 'utf8', function (err, text) {
-			if (err) {
-				res.end(JSON.stringify("parametry.json error"));
-			} else 
-				res.end(JSON.stringify(common.czytajPlikParametrowWiz(text, common.getGpar())));
-		});
-	});
-
-    app.get('/json/sygnaly.json', function (req, res) {
-		// odsw_par_i_podstaw_wer_jezyk("sygnaly", ".json", common.czytajPlikSygnalow, function (text) {
-		fs.readFile(__dirname+'/'+web_dir + "/json/sygnaly.json", 'utf8', function (err, text) {
-			// console.log(text);
-			if (err) {
-				res.end(JSON.stringify("sygnaly.json error"));
-			} else 
-				res.end(JSON.stringify(common.czytajPlikSygnalow(text, common.getGpar())));
-		});
-    });
-
-	//TODO: uzgodnic kształt informacji o wersji sprzętu (Beagle, Olimex, Tinycore) i serwera(/git-revision.sh ) i IP (/sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g')
-	app.get('/hardware.json', function (req, res) {
-		var data = "0.8.34";
-		var ip = "192.168.x.x";
-		var err = null;
-		if (process.platform === "linux") {
-			// execute('cat /etc/dogtag', console.log);
-			 // /sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g'
-			// fs.readFile('~/kopex/git-revision.sh', 'utf8', function (err,data) {
-				// console.log(data);
-				ip = os.networkInterfaces().eth0[0].address;
-				if (err) {
-					res.jsonp(({"error": err}));
-				} else {
-				}
-			// });		
-		}
-		if (process.env.verSerwer)
-			data = process.env.verSerwer;
-		res.jsonp(({"os": process.platform, "verSerwer":data, "ip":ip, "host":os.hostname(), "hw": process.env.HW}));
-	});
-	
 	//przekierowanie
 	app.get('/', function (req, res) {
 		res.redirect('/index.html');
 	})
-	
+
 	//tresc statyczna na poczatku routowania
 	app.use(express.static(__dirname+'/'+web_dir));
 
+	//mapowanie plikow JSON
+	// app.use('/json', json_routes);
+	
 	//obsluga rozkazow dla PLC
     app.get('/rozkaz', function (req, res) {
 		var get = url.parse(req.url, true).query;
@@ -117,12 +59,68 @@
 		});
 	});
 	
-	//mapowanie FTP sterownika
-	app.use('/ftp', ftp_routes);
-	
-	// app.use('/', index_routes);
-	// app.use('/', rozkaz_routes);
+	app.get('/json/hardware.json', function (req, res) {
+		var data = "0.8.34";
+		var ip = "192.168.x.x";
+		var err = null;
+		if (process.platform === "linux") {
+			// execute('cat /etc/dogtag', console.log);
+			 // /sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g'
+			// fs.readFile('~/kopex/git-revision.sh', 'utf8', function (err,data) {
+				// console.log(data);
+				ip = os.networkInterfaces().eth0[0].address;
+				if (err) {
+					res.jsonp(({"error": err}));
+				} else {
+				}
+			// });		
+		}
+		if (process.env.verSerwer)
+			data = process.env.verSerwer;
+		res.jsonp(({"os": process.platform, "verSerwer":data, "ip":ip, "host":os.hostname(), "hw": process.env.HW}));
+	});
 
+	app.get('/json/*', function (req, res, next) {
+		var gpar = common.getGpar();
+		// res.end(JSON.stringify(gpar));
+		// return;
+		var gpar = common.getGpar();
+		var file = req.url.match(/\/([a-z]+)\.json/)
+		if (gpar && file) {
+			var file_to_read = file[1];
+			var dir = "";
+			var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
+			if (sKonfTypKombajnu != "") {
+				dir += sKonfTypKombajnu+"/";
+			}
+			if (gpar.rKonfWersjaJezykowa !== undefined) {
+				file_to_read +=  "_"+gpar.rKonfWersjaJezykowa;
+			}
+			if (file[1] == 'sygnaly') {
+				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
+					if (err) {
+						res.end(JSON.stringify("sygnaly.json error"));
+					} else 
+						res.end(JSON.stringify(common.czytajPlikSygnalow(text, common.getGpar())));
+				});
+			} else if (file[1] == 'parametry') {
+				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
+					if (err) {
+						res.end(JSON.stringify("parametry.json error"));
+					} else 
+						res.end(JSON.stringify(common.czytajPlikParametrowWiz(text, common.getGpar())));
+				});
+			} else {
+				res.redirect('/json/' + dir + file_to_read + '.json');
+			}
+		} else {
+			next();
+		}
+	})
+	
+	//mapowanie FTP sterownika
+	// app.use('/ftp', ftp_routes);
+	
 	//wystartowanie serwera
     server.listen(port, function () {
         console.log("HTTP Server listening on port " + port);

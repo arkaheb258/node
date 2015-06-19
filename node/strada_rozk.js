@@ -1,7 +1,7 @@
 ﻿// strada_rozk.js
 (function () {
     "use strict";
-	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.PORT || 8888)),
+	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
 		strada = require("./main.js"),
 		// zamienic strada.SendFunction na strada_SendFunction
 		common = require("./common.js");
@@ -250,6 +250,13 @@
 				console.log(dane);
 				emitSIN(dane, msg);
 			});
+			break;
+			
+		case "zarzadzaniePlikami":
+			console.log(get.rozkaz);
+			console.log(get.sWartosc);
+			msg.dane = "Nieznany rozkaz";
+			socket.emit("odpowiedz", msg);
 			break;
 			
 		default:

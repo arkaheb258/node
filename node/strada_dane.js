@@ -66,18 +66,17 @@
 					dane = {error:"Brak połączenia z PLC: " + dane.error};
 					console.log("zerwane połączenie ze sterownikiem");
 					console.log(dane);
-					dane302_json = JSON.stringify(dane);
-					socket.emit('dane',dane);
-					return;
-				}
-				dane = new DecodeStrada302(dane.dane);
-				if (dane.wDataControl === 1) {
-					//console.log("Sterownik rząda daty");
-					strada_req_time = true;
 				} else {
-					strada_req_time = false;
+					dane = new DecodeStrada302(dane.dane);
+					if (dane.wDataControl === 1) {
+						//console.log("Sterownik rząda daty");
+						strada_req_time = true;
+					} else {
+						strada_req_time = false;
+					}
 				}
-				dane302_json = JSON.stringify(dane);
+				// dane302_json = JSON.stringify(dane);
+				common.storeDane(dane);
 				socket.emit('dane',dane);
 			});
 		}, process.env.STRADA_INTERVAL_MS || 200);

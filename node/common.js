@@ -611,6 +611,7 @@
 	var dane = null;
 
 	module.exports.storeDane = function(_dane){dane = _dane};
+	module.exports.getDane = function(){return dane};
 	
 	module.exports.storeGpar = function(_gpar){gpar = _gpar};
 	module.exports.getGpar = function(){return gpar};

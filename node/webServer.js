@@ -146,7 +146,8 @@
 			socket.broadcast.emit('rozkaz', msg);
 		});
 		socket.on('get_gpar', function (msg) {
-			socket.broadcast.emit('get_gpar', msg);
+			// socket.broadcast.emit('get_gpar', msg);
+			io.emit("get_gpar");
 		});
 		socket.on('odpowiedz', function (msg) {
 			socket.broadcast.emit('odpowiedz', msg);

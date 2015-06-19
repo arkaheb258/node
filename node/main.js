@@ -137,7 +137,7 @@
 		out_buff.writeUInt16LE(0, 14);
 
 		if (instrNo === 0x204) {
-			data = data * 100;
+			data[0] = data[0] * 100;
 		}
 
 		if (instrNo === 0x20C) {
@@ -169,12 +169,6 @@
             temp_out_buff.writeUInt16LE(data.length, 2);
 			break;
 		case 0x203:	//Zapisz aktualny język.
-		case 0x204:	//Zapisz aktualny numer sekcji.
-		case 0x207:	//Zapisz miejsce sterowanie posuwem.
-		case 0x208:	//Zapisz tryb pracy posuwu.
-		case 0x209:	//Zapisz tryb pracy ciągników.
-		case 0x20A:	//Zapisz całkowity czas pracy kombajnu.
-		case 0x20B:	//Zapisz całkowity czas jazdy kombajnu.
 		case 0x20C:	//Zapisz całkowity dystans kombajnu.
 		case 0x216:	//Zapisz kanał radiowy SSRK. (1-69)
 		case 0x21B:	//Zapisz typ skrawu wzorcowego.
@@ -194,6 +188,12 @@
             temp_out_buff.writeUInt16LE(0, 6);
             // temp_out_buff.writeUInt16LE(data, 4);
 			break;
+		case 0x204:	//Zapisz aktualny numer sekcji.
+		case 0x207:	//Zapisz miejsce sterowanie posuwem.
+		case 0x208:	//Zapisz tryb pracy posuwu.
+		case 0x209:	//Zapisz tryb pracy ciągników.
+		case 0x20A:	//Zapisz całkowity czas pracy kombajnu.
+		case 0x20B:	//Zapisz całkowity czas jazdy kombajnu.
 		case 0x402:	//Sterowanie reflektorami.
 		case 0x404:	//Kalibracja czujnika położenia napędów hydraulicznych
 		case 0x502:	//Obsluga plików parametrów
@@ -280,9 +280,9 @@
             temp_out_buff.fill(0);
             temp_out_buff.writeUInt16LE(1, 0);	//instrVer
             temp_out_buff.writeUInt16LE(28, 2);	//ClientDataLen
-			temp_out_buff.writeUInt16LE(0, 4);	//uiCzytajObszarNr
+			temp_out_buff.writeUInt16LE(data[0], 4);	//uiCzytajObszarNr
 			temp_out_buff.writeUInt16LE(0, 6);	//Rezerwa
-			temp_out_buff.write(data, 8);
+			temp_out_buff.write(data[1], 8);
 			data = null;
 			break;
 		case 0x500:	//Zapisz parametr
@@ -348,6 +348,12 @@
 		}
 		lastSent = {"DstID": DstID, "SrcID": SrcID, "Dir": Dir, "instrNo" : instrNo, "instrID" : instrID, "time" : new Date()};
 //		console.log("194 lastSent set");
+// if (instrNo == 0x520) {
+// if (instrNo == 0x310) {
+// console.log(lastSent);
+// console.log(out_buff);
+// } 
+// else
 		if (main_client) { main_client.write(out_buff); } else { console.log("błąd main_client"); }
 //		console.log("wysłano ID=" + instrID + " instrNo: " + instrNo + " lastSent.instrID = " + lastSent.instrID);
 		return instrID;

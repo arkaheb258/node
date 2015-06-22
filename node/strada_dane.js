@@ -1,10 +1,10 @@
-﻿// strada_dane.js 
+﻿// strada_dane.js
 (function () {
-    "use strict";
-	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
-		common = require("./common.js"),
-		strada_req_time = false,
-	    stradaIntEnabled = false;
+	"use strict";
+	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var common = require("./common.js");
+	var strada_req_time = false;
+	var stradaIntEnabled = false;
 		// dane302_json = '{"error":"Dane nie gotowe - oczekiwanie na PLC"}';
 
 	/**
@@ -27,9 +27,9 @@
 	 * @param {Number} interval
 	 */
 	function MySetInterval(fun, interval) {
-        //problem z this przy use strict gdy brak new przy wywołaniu
-		if (typeof interval != 'number') {
-			interval = parseInt(interval);
+		//problem z this przy use strict gdy brak new przy wywołaniu
+		if (typeof interval !== 'number') {
+			interval = parseInt(interval, 10);
 		}
 		if (!this.start) {
 			this.start = new Date().getTime();
@@ -63,7 +63,7 @@
 			// console.log("StradaStartInterval ex");
 			strada_SendFunction(0x302, 0, function (dane) {
 				if (dane.error) {
-					dane = {error:"Brak połączenia z PLC: " + dane.error};
+					dane = {error: "Brak połączenia z PLC: " + dane.error};
 					console.log("zerwane połączenie ze sterownikiem");
 					console.log(dane);
 				} else {
@@ -77,7 +77,7 @@
 				}
 				// dane302_json = JSON.stringify(dane);
 				common.storeDane(dane);
-				socket.emit('dane',dane);
+				socket.emit('dane', dane);
 			});
 		}, process.env.STRADA_INTERVAL_MS || 200);
 	}
@@ -145,10 +145,10 @@
 		this.BlockAdv = br.read(data);
 		return this;
 	}
-	
+
 	// stradaStartInterval();
-    module.exports.strada_req_time = Strada_req_time;
-    module.exports.StartInterval = stradaStartInterval;
-    module.exports.stradaStopInterval = stradaStopInterval;
-    // module.exports.dane_json = f_dane302_json;
+	module.exports.strada_req_time = Strada_req_time;
+	module.exports.StartInterval = stradaStartInterval;
+	module.exports.stradaStopInterval = stradaStopInterval;
+	// module.exports.dane_json = f_dane302_json;
 }());

@@ -1,26 +1,26 @@
 ﻿// webServer.js
 (function () {
-    "use strict";
-    var express = require('express'),
-		app = express(),
-		server = require('http').Server(app),
-		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
-        io = require('socket.io')(server),
-		fs = require('fs'),
-		os = require('os'),
-		url = require("url"),
-		common = require("./common.js"),
+	"use strict";
+	var express = require('express');
+	var app = express();
+	var server = require('http').Server(app);
+	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var io = require('socket.io')(server);
+	var fs = require('fs');
+	var os = require('os');
+	var url = require("url");
+	var common = require("./common.js");
 		// ftp_routes = require('./routes/ftp.js'),
 		// json_routes = require('./routes/json.js'),
 		// index_routes = require('./routes/index.js'),
 		// rozkaz_routes = require('./routes/rozkaz.js'),
 		// strada_routes = require('./routes/strada.js'),
-		web_dir = process.env.WEB_DIR || "../build",
-	    instrID = 0,
-		port = process.env.WEB_PORT || 8888;        // set our port
+	var web_dir = process.env.WEB_DIR || "../build";
+	var instrID = 0;
+	var port = process.env.WEB_PORT || 8888;        // set our port
 
 	//logowanie pobieranych plikow w wersji development
-	if (process.env.NODE_ENV != "production") {
+	if (process.env.NODE_ENV !== "production") {
 		app.use(function (req, res, next) {
 			console.log(req.connection.remoteAddress + " -> " + req.url);
 			next();
@@ -30,16 +30,16 @@
 	//przekierowanie
 	app.get('/', function (req, res) {
 		res.redirect('/index.html');
-	})
+	});
 
 	//tresc statyczna na poczatku routowania
-	app.use(express.static(__dirname+'/'+web_dir));
+	app.use(express.static(__dirname + '/' + web_dir));
 
 	//mapowanie plikow JSON
 	// app.use('/json', json_routes);
-	
+
 	//obsluga rozkazow dla PLC
-    app.get('/rozkaz', function (req, res) {
+	app.get('/rozkaz', function (req, res) {
 		var get = url.parse(req.url, true).query;
 		instrID = (instrID + 1) % 0x10000;
 		get.instrID = instrID;
@@ -54,11 +54,11 @@
 			break;
 		}
 		socket.emit("rozkaz", get);
-		socket.on("odpowiedz", function(msg){
+		socket.on("odpowiedz", function (msg) {
 			if (msg.instrID == get.instrID) { res.jsonp(msg.dane); }
 		});
 	});
-	
+
 	app.get('/json/hardware.json', function (req, res) {
 		var data = "0.8.34";
 		var ip = "192.168.x.x";
@@ -73,7 +73,7 @@
 					res.jsonp(({"error": err}));
 				} else {
 				}
-			// });		
+			// });
 		}
 		if (process.env.verSerwer)
 			data = process.env.verSerwer;
@@ -102,21 +102,21 @@
 				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
 					if (err) {
 						res.jsonp("sygnaly.json error");
-					} else 
+					} else
 						res.jsonp(common.czytajPlikSygnalow(text, common.getGpar()));
 				});
 			} else if (file[1] == 'parametry') {
 				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
 					if (err) {
 						res.jsonp("parametry.json error");
-					} else 
+					} else
 						res.jsonp(common.czytajPlikParametrowWiz(text, common.getGpar()));
 				});
 			} else if (file[1] == 'komunikaty') {
 				fs.readFile(__dirname+'/'+web_dir + '/json/' + 'STR_KOMUNIKATY.EXP', 'utf8', function (err, text) {
 					if (err) {
 						res.redirect('/json/' + dir + file_to_read + '.json');
-					} else 
+					} else
 						res.jsonp(common.czytajPlikKomunikatow(text, false));
 				});
 			} else {
@@ -126,17 +126,17 @@
 			res.jsonp("brak polaczenia z PLC -> brak parametrow");
 		}
 	})
-	
+
 	//mapowanie FTP sterownika
 	// app.use('/ftp', ftp_routes);
-	
+
 	//wystartowanie serwera
-    server.listen(port, function () {
-        console.log("HTTP Server listening on port " + port);
-    });
+	server.listen(port, function () {
+		console.log("HTTP Server listening on port " + port);
+	});
 
 	//Broadcast danych i parametrow
-    io.on('connection', function (socket) {
+	io.on('connection', function (socket) {
 		console.log("Nowy socket: ", socket.conn.id);
 		//dane do wyslania dla nowo-podlaczonych
 		socket.emit('dane', {error: "Dane nie gotowe - oczekiwanie na PLC"});
@@ -145,7 +145,7 @@
 			socket.emit('gpar', gpar);
 		else
 			io.emit("get_gpar");
-		
+
 		socket.on('strada', function (msg) {
 			console.log('strada: ' + msg);
 		});
@@ -168,11 +168,11 @@
 		socket.on('dane', function (msg) {
 			socket.broadcast.emit('dane', msg);
 			// io.emit('dane', dane);
-		});		
+		});
 		socket.on('gpar', function (gpar) {
-			console.log("on gpar");
+			console.log("weserver on gpar");
 			common.storeGpar(gpar);
 			socket.broadcast.emit('gpar', gpar);
-		});		
-    });
+		});
+	});
 }());

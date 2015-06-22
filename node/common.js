@@ -1,14 +1,15 @@
 ﻿// common.js
 (function () {
     "use strict";
-	var http = require('http'),
-		fs = require("fs"),
-		glob_par = process.env,
-		exec = require('child_process').exec,
-		walk = require('walk'),
-		NTP_IP_i = 0,
-		// ftpClient = require('ftp-client'),
-		ftp = require("ftp");
+	var http = require('http');
+	var fs = require("fs");
+	var glob_par = process.env;
+	var exec = require('child_process').exec;
+	var walk = require('walk');
+	var NTP_IP_i = 0;
+	var ftp = require("ftp");
+	var gpar = null;
+	var dane = null;
 
 	/**
 	 * Description
@@ -120,13 +121,13 @@
 	}
 
 	//funkcja usuwajaca duplikaty z tablicy
-	var arrayUnique = function(a) {
-		return a.reduce(function(p, c) {
-			if (p.indexOf(c) < 0) p.push(c);
+	var arrayUnique = function (a) {
+		return a.reduce(function (p, c) {
+			if (p.indexOf(c) < 0) {p.push(c); }
 			return p;
 		}, []);
 	};
-	
+
 	//TODO: kopiowanie zawartosci folderu json na PLC (dodac parametryzacje folderu json)
 	function kopiujJsonNaPLC(callback) {
 		var c = new ftp();
@@ -137,20 +138,20 @@
 		// Walker options
 		var walker  = walk.walk('./build/json', { followLinks: false });
 
-		walker.on('file', function(root, stat, next) {
+		walker.on('file', function (root, stat, next) {
 			// Add this file to the list of files
 			files.push('/' + root.split('\\')[1] + '/' + stat.name);
 			dirs.push(root.split('\\')[1]);
 			next();
 		});
 
-		walker.on('end', function() {
+		walker.on('end', function () {
 			dirs = arrayUnique(dirs);
 			// console.log(files);
 			c.connect({host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", "connTimeout" : 2000, "pasvTimeout" : 2000});
 		});
 
-		c.on('ready', function() {
+		c.on('ready', function () {
 			// console.log(files);
 			// console.log(dirs);
 			var f_count = files.length;
@@ -183,7 +184,7 @@
 									}
 								});
 							}
-						}					
+						}
 						// if (err) throw err;
 						if (err) console.log(err);
 					});
@@ -202,7 +203,7 @@
 			if (callback) {	callback("FTP timeout");}
 		});
 	}
-	
+
 	/**
 	 * Description
 	 * @method pobierzPlikFTP
@@ -487,7 +488,7 @@
 		}
 		return buf.toString('utf8', start, i).substr(0, len);
 	}
-	
+
 
 	/**
 	 * Description
@@ -569,13 +570,13 @@
 						//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
 						// if (js[g][p] === null) {
 							// delete js[g][p];
-						// } else 
+						// } else
 						if (typeof js[g][p] === "string") {
 							//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
 							// console.log(p+": "+js[g][p]);
 							// if (js[g][p] === "") {
 								// delete js[g][p];
-							// } else 
+							// } else
 							if (js[g][p].indexOf("_par_") === 0) {
 								s = js[g][p].substr(5);
 								temp = szukajPar(gpar, s);
@@ -633,7 +634,7 @@
 				}
 			}
 		}
-		if (word) { return out_string; } //else { 
+		if (word) { return out_string; } //else {
 		return output; //}
 	}
 
@@ -660,7 +661,7 @@
 		}
 		file_to_read += file_type;
 //		console.log(file_to_read);
-		
+
 		if (!fs.existsSync(file_to_read)) {
 			if (sKonfTypKombajnu != "") {
 			    file_to_read = glob_par.WEB_DIR + "/json/" + sKonfTypKombajnu + "/" + file_name + file_type;
@@ -692,13 +693,10 @@
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
     module.exports.wer_jezykowa = wer_jezykowa;
 	module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
-	
-	var gpar = null;
-	var dane = null;
 
 	module.exports.storeDane = function(_dane){dane = _dane};
 	module.exports.getDane = function(){return dane};
-	
+
 	module.exports.storeGpar = function(_gpar){gpar = _gpar};
 	module.exports.getGpar = function(){return gpar};
     // module.exports.odsw_par_i_podstaw_wer_jezyk = odsw_par_i_podstaw_wer_jezyk;

@@ -1,77 +1,26 @@
 ﻿// main.js
 (function () {
     "use strict";
-	var net = require('net'),
-		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
-		parametry = require("./parametry.js"),
-		common = require("./common.js"),
-		strada_dane = require("./strada_dane.js"),
+	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var parametry = require("./parametry.js");
+	var common = require("./common.js");
+	var strada_dane = require("./strada_dane.js");
+	var EverSocket = require('eversocket').EverSocket;
 
-	    CONNECT_TIMEOUT_MS = (process.env.STRADA_INTERVAL_MS || 200 ) * 5,
-		// timeout_counter = 0,
-		ntp_date = -1,
-	    instrID = 0,
-		main_client = null,
-	    queue = [],
-	    lastSent = null,
-	    PLCConnected = false;
+	var ntp_date = -1;
+	var instrID = 0;
+	// var main_client = null;
+	var queue = [];
+	var lastSent = null;
+	var PLCConnected = false;
 
-	socket.on("get_gpar", function(){
-		console.log("on get_gpar");
-		parametry.odswierzParametry(StradaReadAll, null, true);
+	var CONNECT_TIMEOUT_MS = (process.env.STRADA_INTERVAL_MS || 200) * 5;
+
+	var client = new EverSocket({
+		reconnectWait: CONNECT_TIMEOUT_MS,      // wait 100ms after close event before reconnecting 
+		timeout: CONNECT_TIMEOUT_MS,            // set the idle timeout to 100ms 
+		reconnectOnTimeout: true // reconnect if the connection is idle 
 	});
-		
-	/**
-	* Konstruktor klasy
-	*/
-	function strada() {
-		var client = new net.Socket();
-		client.setTimeout(CONNECT_TIMEOUT_MS, function () {
-			// console.log("Strada timeout ");
-			if (client && !client.destroyed) {
-				client.destroy();
-			}
-		});
-		client.on('data', stradaGetData);
-		client.on('connect', function () {
-			console.log('Strada Polaczono ....');
-			PLCConnected = true;
-			main_client = client;
-			strada_dane.stradaStopInterval();
-			// stradaClearQueue(true);
-			strada_dane.StartInterval(stradaEnqueue);
-			parametry.odswierzParametry(StradaReadAll, null, true);
-		});
-		client.on('error', function (err) {
-			socket.emit('dane', '{"error":"Strada client ErRoR: ' + err.code + '"}');
-			// strada_dane.dane_json('Strada client ErRoR: ' + err.code);
-			console.log("Strada ErRoR: " + err.code);
-			PLCConnected = false;
-		});
-		client.on('close', function () {
-			console.log('client close');
-			setTimeout(function () {
-				strada();
-			}, CONNECT_TIMEOUT_MS);
-			// if (client && !client.destroyed) {
-				// console.log('client.destroy()');
-				// client.destroy();
-			// }
-			if (PLCConnected) {
-				PLCConnected = false;
-	main_client = null;
-				socket.emit('dane', '{"error":"Strada Connection closed"}');
-				// strada_dane.dane_json('Strada Connection closed');
-				// console.log(dane302_json);
-				// stradaClearQueue(true);
-			}
-			strada_dane.stradaStopInterval();
-			// console.log("queue.length "+queue.length);
-			stradaClearQueue(true);
-		});
-		client.connect(process.env.STRADA_PORT || 20021, process.env.PLC_IP || "192.168.3.30");
-		console.log('try to connect to PLC');
-	}
 
 	/**
 	* Przegląd kolejki wiadomości w celu sprawdzenia timeoutów
@@ -93,26 +42,18 @@
 	}
 
 	/**
-	* Gdy sterownik nie odpowiada - reset połączenia
-	*/
-	// function StradaTimeout(clientt) {
-		// Close the client socket completely
-	// }
-
-	/**
 	* Wysłanie instrukcji do sterownika protokołem Strada
 	* @param instrNo kod instrukcji
 	* @param data dane do wyslania
 	*/
 	function stradaSendFunction(instrNo, data) {
-//		console.log(" stradaSendFunction()");
+		// console.log(" stradaSendFunction()");
 		instrID = (instrID + 1) % 0x10000;
 		var DstID = 1,
 		    SrcID = 4,
 		    Dir = 0x01,
 		    out_buff = new Buffer(16),
 			temp,
-			ip,
 		    temp_out_buff;
 
 		if (instrNo.length === 2) {
@@ -342,9 +283,10 @@
 // if (instrNo == 0x310) {
 // console.log(lastSent);
 // console.log(out_buff);
-// } 
+// }
 // else
-		if (main_client) { main_client.write(out_buff); } else { console.log("main_client error"); }
+		// if (main_client) { main_client.write(out_buff); } else { console.log("main_client error"); }
+		if (client) { client.write(out_buff); } else { console.log("client error"); }
 //		console.log("wysłano ID=" + instrID + " instrNo: " + instrNo + " lastSent.instrID = " + lastSent.instrID);
 		return instrID;
 	}
@@ -509,35 +451,66 @@
 		}
 	}
 
-	function StradaReadAll(instrNo, uiCzytajObszarNr, callback) {
+	function stradaReadAll(instrNo, uiCzytajObszarNr, callback) {
 		if (uiCzytajObszarNr === 0) {
-			StradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
+			stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 		}
 // console.log("uiCzytajObszarNr "+uiCzytajObszarNr);
 		stradaEnqueue(instrNo, uiCzytajObszarNr, function (dane) {
 			if (!dane.dane || (typeof dane.dane === "string")) {
 				callback(dane);
 			} else {
-				StradaReadAll.tempKonf.dane = new Buffer.concat([StradaReadAll.tempKonf.dane, dane.dane]);
-				StradaReadAll.tempKonf.DataLen = dane.DataLen;
+				stradaReadAll.tempKonf.dane = new Buffer.concat([stradaReadAll.tempKonf.dane, dane.dane]);
+				stradaReadAll.tempKonf.DataLen = dane.DataLen;
 				if (uiCzytajObszarNr > 3) {
 					console.log("nie ma końca - (uiCzytajObszarNr > 3)");
 					return;
 				}
-				if (StradaReadAll.tempKonf.dane.length < StradaReadAll.tempKonf.DataLen) {
-					new StradaReadAll(instrNo, uiCzytajObszarNr + 1, callback);
+				if (stradaReadAll.tempKonf.dane.length < stradaReadAll.tempKonf.DataLen) {
+					stradaReadAll(instrNo, uiCzytajObszarNr + 1, callback);
 				} else {
-					callback(StradaReadAll.tempKonf.dane);
+					callback(stradaReadAll.tempKonf.dane);
 				}
 			}
 		});
 	}
 
-	StradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
+	stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 
-	strada();
-	
-    // module.exports.connect = strada;
+	socket.on("get_gpar", function () {
+		console.log("on get_gpar");
+		parametry.odswierzParametry(stradaReadAll, null, true);
+	});
+
+	client.on('data', stradaGetData);
+	client.on('connect', function () {
+		console.log('Strada Polaczono ....');
+		// main_client = client;
+		PLCConnected = true;
+		strada_dane.stradaStopInterval();
+		stradaClearQueue(true);
+		strada_dane.StartInterval(stradaEnqueue);
+		parametry.odswierzParametry(stradaReadAll);
+	});
+	client.on('error', function (err) {
+		console.log("Strada ErRoR: " + err.code);
+		socket.emit('dane', '{"error":"Strada client ErRoR: ' + err.code + '"}');
+		PLCConnected = false;
+	});
+	client.on('close', function () {
+		// console.log('client close');
+		client.destroy();
+		if (PLCConnected) {
+			PLCConnected = false;
+			// main_client = null;
+			socket.emit('dane', '{"error":"Strada Connection closed"}');
+			strada_dane.stradaStopInterval();
+			stradaClearQueue(true);
+		}
+	});
+
+	client.connect(process.env.STRADA_PORT || 20021, process.env.PLC_IP || "192.168.3.30");
+
     module.exports.SendFunction = stradaEnqueue;
-    module.exports.readAll = StradaReadAll;
+    module.exports.readAll = stradaReadAll;
 }());

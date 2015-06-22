@@ -1,19 +1,19 @@
 ﻿// strada_rozk.js
 
+// zamienic strada.SendFunction na strada_SendFunction
 //module.exports
 (function () {
     "use strict";
-	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
-		strada = require("./main.js"),
-		// zamienic strada.SendFunction na strada_SendFunction
-		common = require("./common.js");
+	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var strada = require("./main.js");
+	var common = require("./common.js");
 
 	socket.on('gpar', function (gpar) {
 		console.log("storeGpar");
 		// common.storeGpar(gpar);
-	});		
-	
-	function emitSIN(dane, msg){
+	});
+
+	function emitSIN(dane, msg) {
 		if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
 			msg.dane = "PAR_OK";
 		} else if (dane.dane) {
@@ -26,7 +26,7 @@
 		socket.emit("odpowiedz", msg);
 	}
 
-	socket.on("rozkaz", function(get){
+	socket.on("rozkaz", function (get) {
 		var msg = {};
 		msg.instrID = get.instrID;
 		switch (get.rozkaz) {
@@ -59,7 +59,7 @@
 				common.set_time(dataa);
 				strada.SendFunction(0x201, temp, function (dane) {
 					console.log("dane 201", dane);
-					if (!dane.error){
+					if (!dane.error) {
 						msg.dane = "OK";
 						socket.emit("odpowiedz", msg);
 					}
@@ -224,7 +224,7 @@
 				emitSIN(dane, msg);
 			});
 			break;
-			
+
 		case "plikSkrawuWz_600":
 		case "skasujPlik_604":
 		case "nowyPlik_606":
@@ -254,12 +254,12 @@
 				emitSIN(dane, msg);
 			});
 			break;
-			
+
 		case "zarzadzaniePlikami":
 			console.log(get.rozkaz);
 			console.log(get.sWartosc);
-			if (get.sWartosc == 'jsonNaPLC') {
-				common.kopiujJsonNaPLC(function(dane){
+			if (get.sWartosc === 'jsonNaPLC') {
+				common.kopiujJsonNaPLC(function (dane) {
 					// msg.dane = "Nieznany rozkaz";
 					msg.dane = dane;
 					socket.emit("odpowiedz", msg);
@@ -269,14 +269,14 @@
 				socket.emit("odpowiedz", msg);
 			}
 			break;
-			
+
 		default:
 			msg.dane = "Nieznany rozkaz";
 			socket.emit("odpowiedz", msg);
 			break;
-	}
+		}
 	});
-		
+
 	/**
 	 * Description
 	 * @method encodeStrada202

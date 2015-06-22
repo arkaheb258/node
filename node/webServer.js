@@ -82,11 +82,13 @@
 
 	app.get('/json/*', function (req, res, next) {
 		var gpar = common.getGpar();
-		// res.end(JSON.stringify(gpar));
+		// res.jsonp(gpar);
 		// return;
 		var gpar = common.getGpar();
 		var file = req.url.match(/\/([a-z]+)\.json/)
-		if (gpar && file) {
+		if (! file) {
+			next();
+		} else if (gpar) {
 			var file_to_read = file[1];
 			var dir = "";
 			var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
@@ -99,22 +101,29 @@
 			if (file[1] == 'sygnaly') {
 				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
 					if (err) {
-						res.end(JSON.stringify("sygnaly.json error"));
+						res.jsonp("sygnaly.json error");
 					} else 
-						res.end(JSON.stringify(common.czytajPlikSygnalow(text, common.getGpar())));
+						res.jsonp(common.czytajPlikSygnalow(text, common.getGpar()));
 				});
 			} else if (file[1] == 'parametry') {
 				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
 					if (err) {
-						res.end(JSON.stringify("parametry.json error"));
+						res.jsonp("parametry.json error");
 					} else 
-						res.end(JSON.stringify(common.czytajPlikParametrowWiz(text, common.getGpar())));
+						res.jsonp(common.czytajPlikParametrowWiz(text, common.getGpar()));
+				});
+			} else if (file[1] == 'komunikaty') {
+				fs.readFile(__dirname+'/'+web_dir + '/json/' + 'STR_KOMUNIKATY.EXP', 'utf8', function (err, text) {
+					if (err) {
+						res.redirect('/json/' + dir + file_to_read + '.json');
+					} else 
+						res.jsonp(common.czytajPlikKomunikatow(text, false));
 				});
 			} else {
 				res.redirect('/json/' + dir + file_to_read + '.json');
 			}
 		} else {
-			next();
+			res.jsonp("brak polaczenia z PLC -> brak parametrow");
 		}
 	})
 	
@@ -145,7 +154,12 @@
 		});
 		socket.on('get_gpar', function (msg) {
 			// socket.broadcast.emit('get_gpar', msg);
-			io.emit("get_gpar");
+			var gpar = common.getGpar();
+			if (gpar)
+				socket.emit('gpar', gpar);
+			else
+				io.emit("get_gpar");
+			// io.emit("get_gpar");
 		});
 		socket.on('odpowiedz', function (msg) {
 			socket.broadcast.emit('odpowiedz', msg);

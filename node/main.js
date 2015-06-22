@@ -3,14 +3,12 @@
     "use strict";
 	var net = require('net'),
 		socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
-		strada_rozk = require("./strada_rozk.js"),
 		parametry = require("./parametry.js"),
 		common = require("./common.js"),
 		strada_dane = require("./strada_dane.js"),
 
-	    TIMEOUT_MUL = 5,
-	    CONNECT_TIMEOUT_MS = (process.env.STRADA_INTERVAL_MS || 200 ) * 2, // * TIMEOUT_MUL,
-		timeout_counter = 0,
+	    CONNECT_TIMEOUT_MS = (process.env.STRADA_INTERVAL_MS || 200 ) * 5,
+		// timeout_counter = 0,
 		ntp_date = -1,
 	    instrID = 0,
 		main_client = null,
@@ -25,50 +23,51 @@
 		
 	/**
 	* Konstruktor klasy
-	* @param client socket do połczenia
-	* @param onConnect funkcja wywoływana po polaczeniu
 	*/
-	function strada(onConnect, num) {
-//		console.log("strada(onConnect)");
+	function strada() {
 		var client = new net.Socket();
 		client.setTimeout(CONNECT_TIMEOUT_MS, function () {
-			StradaTimeout(client);
+			// console.log("Strada timeout ");
+			if (client && !client.destroyed) {
+				client.destroy();
+			}
 		});
 		client.on('data', stradaGetData);
 		client.on('connect', function () {
-			console.log("on Connect 0");
+			console.log('Strada Polaczono ....');
 			PLCConnected = true;
+			main_client = client;
 			strada_dane.stradaStopInterval();
 			// stradaClearQueue(true);
-			// console.log("queue.length "+queue.length);
-			main_client = client;
-			console.log('main_client = client');
-			console.log('Strada Polaczono ....');
 			strada_dane.StartInterval(stradaEnqueue);
 			parametry.odswierzParametry(StradaReadAll, null, true);
-			onConnect();
 		});
 		client.on('error', function (err) {
-			strada_dane.dane_json('Strada client ErRoR: ' + err.code);
-			console.log(num + ": Strada ErRoR: " + err.code);
+			socket.emit('dane', '{"error":"Strada client ErRoR: ' + err.code + '"}');
+			// strada_dane.dane_json('Strada client ErRoR: ' + err.code);
+			console.log("Strada ErRoR: " + err.code);
 			PLCConnected = false;
 		});
 		client.on('close', function () {
-			console.log('client.on(close)');
+			console.log('client close');
 			setTimeout(function () {
-				strada(onConnect, 0);
+				strada();
 			}, CONNECT_TIMEOUT_MS);
-			if (client && !client.destroyed) {
-				console.log('client.destroy()');
-				client.destroy();
-			}
+			// if (client && !client.destroyed) {
+				// console.log('client.destroy()');
+				// client.destroy();
+			// }
 			if (PLCConnected) {
 				PLCConnected = false;
-				strada_dane.dane_json('Strada Connection closed');
+	main_client = null;
+				socket.emit('dane', '{"error":"Strada Connection closed"}');
+				// strada_dane.dane_json('Strada Connection closed');
 				// console.log(dane302_json);
 				// stradaClearQueue(true);
 			}
 			strada_dane.stradaStopInterval();
+			// console.log("queue.length "+queue.length);
+			stradaClearQueue(true);
 		});
 		client.connect(process.env.STRADA_PORT || 20021, process.env.PLC_IP || "192.168.3.30");
 		console.log('try to connect to PLC');
@@ -96,17 +95,9 @@
 	/**
 	* Gdy sterownik nie odpowiada - reset połączenia
 	*/
-	function StradaTimeout(clientt) {
+	// function StradaTimeout(clientt) {
 		// Close the client socket completely
-		console.log("Wystapil Strada timeout ");
-		timeout_counter += 1;
-		if (timeout_counter < TIMEOUT_MUL) { return; }
-		if (clientt && !clientt.destroyed) {
-			clientt.destroy();
-		}
-		stradaClearQueue(true);
-		PLCConnected = false;
-	}
+	// }
 
 	/**
 	* Wysłanie instrukcji do sterownika protokołem Strada
@@ -162,7 +153,6 @@
             // temp_out_buff.writeUInt16LE(0, 6);
 			break;
 		case 0x202:	//Zapisz aktualne blokady.
-			data = strada_rozk.encodeStrada202(data);
             if (!data || !data.length) { data = [0, 0, 0, 0]; }
             temp_out_buff = new Buffer(4);		//naglowek Iver >=4bajty
             temp_out_buff.writeUInt16LE(1, 0);
@@ -354,7 +344,7 @@
 // console.log(out_buff);
 // } 
 // else
-		if (main_client) { main_client.write(out_buff); } else { console.log("błąd main_client"); }
+		if (main_client) { main_client.write(out_buff); } else { console.log("main_client error"); }
 //		console.log("wysłano ID=" + instrID + " instrNo: " + instrNo + " lastSent.instrID = " + lastSent.instrID);
 		return instrID;
 	}
@@ -453,7 +443,7 @@
 			} else if (dane.length - 16 !== DataLenR) {
 				console.log("Błąd DataLen");
 			} else {
-				timeout_counter = 0;
+				// timeout_counter = 0;
 				error = null;
 			}
 		}
@@ -545,9 +535,9 @@
 
 	StradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 
-	strada(function(){});
+	strada();
 	
-    module.exports.connect = strada;
+    // module.exports.connect = strada;
     module.exports.SendFunction = stradaEnqueue;
     module.exports.readAll = StradaReadAll;
 }());

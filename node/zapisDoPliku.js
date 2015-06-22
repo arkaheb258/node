@@ -45,7 +45,8 @@
 				adr += 2;
 				fs.writeFile(fileName, out_buff);
 			} else {
-				// console.log("Błąd parametrów przy tworzeniu pliku");
+				socket.emit("get_gpar");
+				console.log("Błąd parametrów przy tworzeniu pliku");
 			}
         });
     }
@@ -107,6 +108,7 @@
 			d = new Date();
 
 		if (!parametry) {
+			socket.emit("get_gpar");
 			console.log("Błąd parametrów przy zapisie do pliku");
 			return;
 		}

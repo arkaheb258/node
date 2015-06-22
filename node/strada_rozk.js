@@ -1,4 +1,6 @@
 ﻿// strada_rozk.js
+
+//module.exports
 (function () {
     "use strict";
 	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
@@ -78,7 +80,8 @@
 				tempBlock[parseInt(get.slowo, 10)] &= ~(1 << get.bit);
 			}
 			temp[blok] = tempBlock;
-			strada.SendFunction(0x202, temp, function (dane) {
+
+			strada.SendFunction(0x202, encodeStrada202(temp), function (dane) {
 				console.log("dane 202");
 				console.log(dane);
 				emitSIN(dane, msg);
@@ -255,8 +258,16 @@
 		case "zarzadzaniePlikami":
 			console.log(get.rozkaz);
 			console.log(get.sWartosc);
-			msg.dane = "Nieznany rozkaz";
-			socket.emit("odpowiedz", msg);
+			if (get.sWartosc == 'jsonNaPLC') {
+				common.kopiujJsonNaPLC(function(dane){
+					// msg.dane = "Nieznany rozkaz";
+					msg.dane = dane;
+					socket.emit("odpowiedz", msg);
+				});
+			} else {
+				msg.dane = "Nieznany rozkaz";
+				socket.emit("odpowiedz", msg);
+			}
 			break;
 			
 		default:
@@ -346,7 +357,4 @@
 		}
 		return out;
 	}
-
-    module.exports.encodeStrada202 = encodeStrada202;
-    module.exports.decodeStrada308 = decodeStrada308;
 }());

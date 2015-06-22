@@ -5,7 +5,9 @@
 		fs = require("fs"),
 		glob_par = process.env,
 		exec = require('child_process').exec,
+		walk = require('walk'),
 		NTP_IP_i = 0,
+		// ftpClient = require('ftp-client'),
 		ftp = require("ftp");
 
 	/**
@@ -117,6 +119,90 @@
 		}
 	}
 
+	//funkcja usuwajaca duplikaty z tablicy
+	var arrayUnique = function(a) {
+		return a.reduce(function(p, c) {
+			if (p.indexOf(c) < 0) p.push(c);
+			return p;
+		}, []);
+	};
+	
+	//TODO: kopiowanie zawartosci folderu json na PLC (dodac parametryzacje folderu json)
+	function kopiujJsonNaPLC(callback) {
+		var c = new ftp();
+		// var config = {host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", port : 21, "connTimeout" : 2000, "pasvTimeout" : 2000};
+		var files   = [];
+		var dirs   = [];
+
+		// Walker options
+		var walker  = walk.walk('./build/json', { followLinks: false });
+
+		walker.on('file', function(root, stat, next) {
+			// Add this file to the list of files
+			files.push('/' + root.split('\\')[1] + '/' + stat.name);
+			dirs.push(root.split('\\')[1]);
+			next();
+		});
+
+		walker.on('end', function() {
+			dirs = arrayUnique(dirs);
+			// console.log(files);
+			c.connect({host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", "connTimeout" : 2000, "pasvTimeout" : 2000});
+		});
+
+		c.on('ready', function() {
+			// console.log(files);
+			// console.log(dirs);
+			var f_count = files.length;
+			var f_counter = 0;
+			var d_count = dirs.length;
+			var d_counter = 0;
+			for (var d in dirs){
+				// console.log("ftp rmdir ", '/flash/json/' + dirs[d]);
+				// c.delete('/flash/json/*', function(err) {
+				// c.rmdir('/flash/json/' + dirs[d], true, function(err) {
+					c.mkdir('/flash/json/' + dirs[d], function(err) {
+						d_counter += 1;
+						console.log("ftp mkdir ", d_counter, '/', d_count);
+						if (d_count == d_counter){
+							console.log("ftp mkdir end");
+							for (var f in files){
+								// console.log(files[f], ' -> ', "ftp put ", '/flash/json/' + files[f]);
+								c.put(files[f], '/flash/json' + files[f], function(err) {
+									f_counter += 1;
+									console.log("ftp put ", f_counter, '/', f_count);
+									if (f_count == f_counter){
+										c.end();
+										console.log("ftp put end");
+										if (callback) {	callback("OK");}
+									}
+									if (err) {
+										console.log(err);
+										if (callback) {	callback("err: "+err);}
+										throw err;
+									}
+								});
+							}
+						}					
+						// if (err) throw err;
+						if (err) console.log(err);
+					});
+					// if (err) console.log("rm err ", err);
+				// });
+			}
+		});
+		c.on('error', function () {
+			console.log("FTP error");
+			c.end();
+			if (callback) {	callback("FTP error");}
+		});
+		c.on('timeout', function () {
+			console.log("FTP timeout");
+			c.end();
+			if (callback) {	callback("FTP timeout");}
+		});
+	}
+	
 	/**
 	 * Description
 	 * @method pobierzPlikFTP
@@ -125,11 +211,10 @@
 	 * @param {} cache
 	 */
 	function pobierzPlikFTP(con_par, callback, cache) {
+		console.log("pobierzPlikFTP");
+		// return;
 		var c = new ftp(),
 			cache_file;
-		if (glob_par.FTP_CACHE_DIR) {
-			cache_file = glob_par.FTP_CACHE_DIR + '/' + con_par.file.replace(new RegExp("/", 'g'), "_");
-		}
 		c.on('ready', function () {
 			c.get(con_par.file, function (err, stream) {
 				if (err) {
@@ -518,7 +603,7 @@
 	 */
 	function czytajPlikKomunikatow(text, word) {
 //		text = text.replace(/\t(.*)/mg, "$1");	//usuniecie tabulacji na początku wierszy
-		var lines = text.split("\n"),
+		var rows = text.split("\n"),
 			output = [],
 			l,
 			nr,
@@ -527,13 +612,13 @@
 			opis,
 			out_string = "", //do generowania listy komunikatów dla serwisu
 			i = 0;
-		for (l in lines) {
-			if (lines.hasOwnProperty(l)) {
-				lines[l] = lines[l].trim();
-				if (lines[l].search(";") !== -1 && lines[l].search("x") === 0) {
+		for (l in rows) {
+			if (rows.hasOwnProperty(l)) {
+				var row = rows[l].trim();
+				if (row.search(";") !== -1 && row.search("x") === 0) {
 					nr = (i - (i % 16)) / 16;
 					bit = (i % 16);
-					opis = lines[l].substring(lines[l].search(/\(\*/g) + 2, lines[l].search(/\*\)/g)).trim();
+					opis = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
 					if (output[nr] === undefined) { output[nr] = {opis: "opis slowa " + nr, nr: nr, bity: []}; }
 					if (opis.indexOf("_nb_") === 0) {
 						opis = opis.substring(4).trim();
@@ -606,6 +691,7 @@
     module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
     module.exports.wer_jezykowa = wer_jezykowa;
+	module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
 	
 	var gpar = null;
 	var dane = null;

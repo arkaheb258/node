@@ -4,21 +4,21 @@
 	var socket = require('socket.io-client')('http://127.0.0.1:'+(process.env.WEB_PORT || 8888)),
 		common = require("./common.js"),
 		strada_req_time = false,
-	    stradaIntEnabled = false,
-		dane302_json = '{"error":"Dane nie gotowe - oczekiwanie na PLC"}';
+	    stradaIntEnabled = false;
+		// dane302_json = '{"error":"Dane nie gotowe - oczekiwanie na PLC"}';
 
 	/**
 	 * Description
 	 * @method f_dane302_json
 	 * @param {} err
 	 */
-	function f_dane302_json(err) {
-		if (err) {
-			dane302_json = '{"error":"' + err + '"}';
-		} else {
-			return dane302_json;
-		}
-	}
+	// function f_dane302_json(err) {
+		// if (err) {
+			// dane302_json = '{"error":"' + err + '"}';
+		// } else {
+			// return dane302_json;
+		// }
+	// }
 
 	/**
 	 * Description
@@ -150,5 +150,5 @@
     module.exports.strada_req_time = Strada_req_time;
     module.exports.StartInterval = stradaStartInterval;
     module.exports.stradaStopInterval = stradaStopInterval;
-    module.exports.dane_json = f_dane302_json;
+    // module.exports.dane_json = f_dane302_json;
 }());

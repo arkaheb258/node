@@ -37,9 +37,9 @@
 	 * @method f_gpar
 	 * @return gpar
 	 */
-	function f_gpar() {
-		return gpar;
-	}
+	// function f_gpar() {
+		// return gpar;
+	// }
 
 	/**
 	 * Description
@@ -61,19 +61,16 @@
 					switch (temp.NAZ) {
 					case "sKonfTypKombajnu":
 					case "rKonfWersjaJezykowa":
-//						console.log(temp.WART);
+//						console.log(temp.NAZ, ": ", temp.WART);
 					case "sKonfNrKomisji":
 					case "sKonfNazwaKopalni":
 					case "sKonfNrSciany":
 					case "sKonfWersjaProgramu":
 					case "rKonfCzasLetni":
 					case "rKonfCzasStrefa":
-
 						out[temp.NAZ] = temp.WART;
 						break;
 					case "rZapisTyp":
-
-
 						out[temp.NAZ] = temp.WART;
 						break;
 					case "tZapisCzasZrzutu":
@@ -287,5 +284,5 @@
 	}
 	
     module.exports.odswierzParametry = pobierzParametryAll;
-    module.exports.gpar = f_gpar;
+    // module.exports.gpar = f_gpar;
 }());

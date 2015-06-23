@@ -7,7 +7,7 @@
 	var exec = require('child_process').exec;
 	var walk = require('walk');
 	var NTP_IP_i = 0;
-	var ftp = require("ftp");
+	var Ftp = require("ftp");
 	var gpar = null;
 	var dane = null;
 
@@ -24,100 +24,20 @@
 		return s;
 	}
 
-	/**
-	 * Description
-	 * @method BlockRW
-	 * @param {} adr
-	 */
-	function BlockRW(adr) {
-		if (adr) {
-			this.adr = adr;
-		} else {
-			this.adr = 0;
-		}
-	}
-
-	/**
-	 * Description
-	 * @method read
-	 * @param {} data
-	 * @param {} sign
-	 * @return Temp
-	 */
-	BlockRW.prototype.read = function (data, sign) {
-		var Temp = [],
-			i,
-			Temp_Len = data.readUInt16LE(this.adr);
-		this.adr += 2;
-		if (Temp_Len > data.length) {
-			console.error("Temp_Len " + Temp_Len);
-			console.error("data.length " + data.length);
-		}
-		for (i = 0; i < Temp_Len; i = i + 2) {
-			if (sign) {
-				Temp.push(data.readInt16LE(i + this.adr));
-			} else {
-				Temp.push(data.readUInt16LE(i + this.adr));
-			}
-		}
-		this.adr += Temp_Len;
-		return Temp;
-	};
-
-	/**
-	 * Description
-	 * @method write
-	 * @param {} tempBlock
-	 * @param {} sign
-	 * @return temp_out_buff
-	 */
-	BlockRW.prototype.write = function (tempBlock, sign) {
-		var temp_out_buff,
-			tempLen,
-			i;
-
-		tempLen = tempBlock.length;
-		temp_out_buff = new Buffer(tempLen * 2 + 2);
-		temp_out_buff.writeUInt16LE(tempLen * 2, 0);		//rozmiar bloku w bajtach !!! (zmiana 09-05-2004 po uzgodnieniu z Wieśkiem)
-//		temp_out_buff.writeUInt16LE(tempLen, 0);
-		for (i = 0; i < tempLen; i += 1) {
-			if (sign) {
-				temp_out_buff.writeInt16LE(tempBlock[i], i * 2 + 2);
-			} else {
-				temp_out_buff.writeUInt16LE(tempBlock[i], i * 2 + 2);
-			}
-		}
-		return temp_out_buff;
-	};
-
     /**
      * Description
-     * @method CreateDir
+     * @method createDir
      * @param {} dirName
      * @param {} callback
-     * @param {} my_console
+     * @param {} console.log
      */
-    function CreateDir(dirName, callback, my_console) {
-		if (!my_console) {my_console = console.log; }
-		// my_console("CreateDir() " + dirName);
-		try {
-			fs.readdirSync(dirName);
-			// my_console("CreateDir try callback");
-			if (callback) { callback(); }
-		} catch (err) {
-			my_console("CreateDir catch");
-			my_console(err);
-			if (err.code === 'ENOENT') {
-				fs.mkdirSync(dirName);
-			} else {
-				my_console(err);
+    function createDir(dirName, callback) {
+		fs.readdir(dirName, function (err, files) {
+			if (err) {
+				if (err.code === 'ENOENT') { fs.mkdirSync(dirName);	} else { console.log(err); }
 			}
-			// my_console("CreateDir catch callback");
 			if (callback) { callback(); }
-			return;
-		// } finally {
-			// my_console("CreateDir finally");
-		}
+		});
 	}
 
 	//funkcja usuwajaca duplikaty z tablicy
@@ -130,7 +50,7 @@
 
 	//TODO: kopiowanie zawartosci folderu json na PLC (dodac parametryzacje folderu json)
 	function kopiujJsonNaPLC(callback) {
-		var c = new ftp();
+		var c = new Ftp();
 		// var config = {host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", port : 21, "connTimeout" : 2000, "pasvTimeout" : 2000};
 		var files   = [];
 		var dirs   = [];
@@ -158,36 +78,38 @@
 			var f_counter = 0;
 			var d_count = dirs.length;
 			var d_counter = 0;
-			for (var d in dirs){
+			var d;
+			for (d in dirs) {
 				// console.log("ftp rmdir ", '/flash/json/' + dirs[d]);
 				// c.delete('/flash/json/*', function(err) {
 				// c.rmdir('/flash/json/' + dirs[d], true, function(err) {
-					c.mkdir('/flash/json/' + dirs[d], function(err) {
-						d_counter += 1;
-						console.log("ftp mkdir ", d_counter, '/', d_count);
-						if (d_count == d_counter){
-							console.log("ftp mkdir end");
-							for (var f in files){
-								// console.log(files[f], ' -> ', "ftp put ", '/flash/json/' + files[f]);
-								c.put(files[f], '/flash/json' + files[f], function(err) {
-									f_counter += 1;
-									console.log("ftp put ", f_counter, '/', f_count);
-									if (f_count == f_counter){
-										c.end();
-										console.log("ftp put end");
-										if (callback) {	callback("OK");}
-									}
-									if (err) {
-										console.log(err);
-										if (callback) {	callback("err: "+err);}
-										throw err;
-									}
-								});
-							}
+				c.mkdir('/flash/json/' + dirs[d], function (err) {
+					d_counter += 1;
+					console.log("ftp mkdir ", d_counter, '/', d_count);
+					if (d_count == d_counter) {
+						console.log("ftp mkdir end");
+						var f;
+						for (f in files) {
+							// console.log(files[f], ' -> ', "ftp put ", '/flash/json/' + files[f]);
+							c.put(files[f], '/flash/json' + files[f], function (err) {
+								f_counter += 1;
+								console.log("ftp put ", f_counter, '/', f_count);
+								if (f_count == f_counter) {
+									c.end();
+									console.log("ftp put end");
+									if (callback) {	callback("OK"); }
+								}
+								if (err) {
+									console.log(err);
+									if (callback) {	callback("err: " + err); }
+									throw err;
+								}
+							});
 						}
-						// if (err) throw err;
-						if (err) console.log(err);
-					});
+					}
+					// if (err) throw err;
+					if (err) { console.log(err); }
+				});
 					// if (err) console.log("rm err ", err);
 				// });
 			}
@@ -195,12 +117,12 @@
 		c.on('error', function () {
 			console.log("FTP error");
 			c.end();
-			if (callback) {	callback("FTP error");}
+			if (callback) {	callback("FTP error"); }
 		});
 		c.on('timeout', function () {
 			console.log("FTP timeout");
 			c.end();
-			if (callback) {	callback("FTP timeout");}
+			if (callback) {	callback("FTP timeout"); }
 		});
 	}
 
@@ -214,7 +136,7 @@
 	function pobierzPlikFTP(con_par, callback, cache) {
 		console.log("pobierzPlikFTP");
 		// return;
-		var c = new ftp(),
+		var c = new Ftp(),
 			cache_file;
 		c.on('ready', function () {
 			c.get(con_par.file, function (err, stream) {
@@ -260,7 +182,7 @@
 		// console.log(cache);
 		// console.log(glob_par.FTP_CACHE_DIR);
 		if (cache && glob_par.FTP_CACHE_DIR) {
-			CreateDir(glob_par.FTP_CACHE_DIR, function () {
+			createDir(glob_par.FTP_CACHE_DIR, function () {
 				fs.readFile(cache_file, function (err, text) {
 					if (err) {
 						// throw err;
@@ -322,17 +244,18 @@
 					try {
 						http.get({ host: glob_par.NTP_IPs[i], port: glob_par.NODE_DIAGN_PORT, path: "/set_time?time=" + dataa.getTime() }, function (res) {
 							// console.log("http://" + glob_par.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " says:");
-							if (res && res.req && res.req._headers)
+							if (res && res.req && res.req._headers) {
 								console.log(res.req._headers.host + res.req.path + " OK");
-						}).on('error', function(e) {
+							}
+						}).on('error', function (e) {
 							console.log("http.get got error: " + e.message);
 						}).setTimeout(3000, function () {
 							// handle timeout here
 							console.log("http://" + glob_par.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " timeout");
 						});
 					} catch (err) {
-						my_console("http.get catch");
-						my_console(err);
+						console.log("http.get catch");
+						console.log(err);
 					}
 				}
 			}
@@ -646,30 +569,30 @@
 	 * @param {} file_type
 	 * @return file_to_read
 	 */
-	function wer_jezykowa(par, file_name, file_type){
+	function wer_jezykowa(par, file_name, file_type) {
 		console.log(par.error);
-		if (!glob_par || par.error) return null;
+		if (!glob_par || par.error) { return null; }
 		var file_to_read = glob_par.WEB_DIR + "/json/";
 		var sKonfTypKombajnu = par.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
-		var rKonfWersjaJezykowa = par.rKonfWersjaJezykowa/1;
-		if (sKonfTypKombajnu != "") {
-			file_to_read += sKonfTypKombajnu+"/";
+		var rKonfWersjaJezykowa = parseInt(par.rKonfWersjaJezykowa, 10);
+		if (sKonfTypKombajnu !== "") {
+			file_to_read += sKonfTypKombajnu + "/";
 		}
 		file_to_read += file_name;
 		if (rKonfWersjaJezykowa !== undefined) {
-			file_to_read +=  "_"+rKonfWersjaJezykowa;
+			file_to_read +=  "_" + rKonfWersjaJezykowa;
 		}
 		file_to_read += file_type;
 //		console.log(file_to_read);
 
 		if (!fs.existsSync(file_to_read)) {
-			if (sKonfTypKombajnu != "") {
+			if (sKonfTypKombajnu !== "") {
 			    file_to_read = glob_par.WEB_DIR + "/json/" + sKonfTypKombajnu + "/" + file_name + file_type;
 				if (!fs.existsSync(file_to_read)) {
 				    file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
 				}
 			} else {
-				    file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
+				file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
 			}
 		}
 		console.log(file_to_read);
@@ -681,8 +604,7 @@
     module.exports.set_time = set_time;
     module.exports.pobierzPlikFTP = pobierzPlikFTP;
     module.exports.pad = pad;
-    module.exports.CreateDir = CreateDir;
-    module.exports.BlockRW = BlockRW;
+    module.exports.createDir = createDir;
     module.exports.msToCodesysTime = msToCodesysTime;
     module.exports.codesysTimeToMs = codesysTimeToMs;
     module.exports.readStringTo0 = readStringTo0;
@@ -694,10 +616,8 @@
     module.exports.wer_jezykowa = wer_jezykowa;
 	module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
 
-	module.exports.storeDane = function(_dane){dane = _dane};
-	module.exports.getDane = function(){return dane};
-
-	module.exports.storeGpar = function(_gpar){gpar = _gpar};
-	module.exports.getGpar = function(){return gpar};
-    // module.exports.odsw_par_i_podstaw_wer_jezyk = odsw_par_i_podstaw_wer_jezyk;
+	module.exports.storeDane = function (d) { dane = d; };
+	module.exports.getDane = function () { return dane; };
+	module.exports.storeGpar = function (p) { gpar = p; };
+	module.exports.getGpar = function () { return gpar; };
 }());

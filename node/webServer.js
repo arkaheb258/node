@@ -68,56 +68,54 @@
 			 // /sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g'
 			// fs.readFile('~/kopex/git-revision.sh', 'utf8', function (err,data) {
 				// console.log(data);
-				ip = os.networkInterfaces().eth0[0].address;
-				if (err) {
-					res.jsonp(({"error": err}));
-				} else {
-				}
+			ip = os.networkInterfaces().eth0[0].address;
+			if (err) {
+				res.jsonp(({"error": err}));
+			}
 			// });
 		}
-		if (process.env.verSerwer)
-			data = process.env.verSerwer;
-		res.jsonp(({"os": process.platform, "verSerwer":data, "ip":ip, "host":os.hostname(), "hw": process.env.HW}));
+		if (process.env.verSerwer) { data = process.env.verSerwer; }
+		res.jsonp(({"os": process.platform, "verSerwer": data, "ip": ip, "host": os.hostname(), "hw": process.env.HW}));
 	});
 
 	app.get('/json/*', function (req, res, next) {
 		var gpar = common.getGpar();
-		// res.jsonp(gpar);
-		// return;
-		var gpar = common.getGpar();
-		var file = req.url.match(/\/([a-z]+)\.json/)
-		if (! file) {
+		var file = req.url.match(/\/([a-z]+)\.json/);
+		if (!file) {
 			next();
 		} else if (gpar) {
 			var file_to_read = file[1];
 			var dir = "";
 			var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
-			if (sKonfTypKombajnu != "") {
-				dir += sKonfTypKombajnu+"/";
+			if (sKonfTypKombajnu !== "") {
+				dir += sKonfTypKombajnu + "/";
 			}
 			if (gpar.rKonfWersjaJezykowa !== undefined) {
-				file_to_read +=  "_"+gpar.rKonfWersjaJezykowa;
+				file_to_read +=  "_" + gpar.rKonfWersjaJezykowa;
 			}
-			if (file[1] == 'sygnaly') {
-				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
+			if (file[1] === 'sygnaly') {
+				fs.readFile(__dirname + '/' + web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
 					if (err) {
 						res.jsonp("sygnaly.json error");
-					} else
+					} else {
 						res.jsonp(common.czytajPlikSygnalow(text, common.getGpar()));
+					}
 				});
-			} else if (file[1] == 'parametry') {
-				fs.readFile(__dirname+'/'+web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
+			} else if (file[1] === 'parametry') {
+				fs.readFile(__dirname + '/' + web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
 					if (err) {
 						res.jsonp("parametry.json error");
-					} else
+					} else {
 						res.jsonp(common.czytajPlikParametrowWiz(text, common.getGpar()));
+					}
 				});
-			} else if (file[1] == 'komunikaty') {
-				fs.readFile(__dirname+'/'+web_dir + '/json/' + 'STR_KOMUNIKATY.EXP', 'utf8', function (err, text) {
+			} else if (file[1] === 'komunikaty') {
+				fs.readFile(__dirname + '/' + web_dir + '/json/' + 'STR_KOMUNIKATY.EXP', 'utf8', function (err, text) {
 					if (err) {
 						res.redirect('/json/' + dir + file_to_read + '.json');
-					} else
+					} else {
 						res.jsonp(common.czytajPlikKomunikatow(text, false));
+					}
 				});
 			} else {
 				res.redirect('/json/' + dir + file_to_read + '.json');
@@ -125,7 +123,7 @@
 		} else {
 			res.jsonp("brak polaczenia z PLC -> brak parametrow");
 		}
-	})
+	});
 
 	//mapowanie FTP sterownika
 	// app.use('/ftp', ftp_routes);
@@ -141,10 +139,7 @@
 		//dane do wyslania dla nowo-podlaczonych
 		socket.emit('dane', {error: "Dane nie gotowe - oczekiwanie na PLC"});
 		var gpar = common.getGpar();
-		if (gpar)
-			socket.emit('gpar', gpar);
-		else
-			io.emit("get_gpar");
+		if (gpar) {	socket.emit('gpar', gpar); } else { io.emit("get_gpar"); }
 
 		socket.on('strada', function (msg) {
 			console.log('strada: ' + msg);
@@ -152,14 +147,10 @@
 		socket.on('rozkaz', function (msg) {
 			socket.broadcast.emit('rozkaz', msg);
 		});
-		socket.on('get_gpar', function (msg) {
+		socket.on('get_gpar', function () {
 			// socket.broadcast.emit('get_gpar', msg);
 			var gpar = common.getGpar();
-			if (gpar)
-				socket.emit('gpar', gpar);
-			else
-				io.emit("get_gpar");
-			// io.emit("get_gpar");
+			if (gpar) {	socket.emit('gpar', gpar); } else {	io.emit("get_gpar"); }
 		});
 		socket.on('odpowiedz', function (msg) {
 			socket.broadcast.emit('odpowiedz', msg);
@@ -169,8 +160,12 @@
 			socket.broadcast.emit('dane', msg);
 			// io.emit('dane', dane);
 		});
+		socket.on('broadcast', function (msg) {
+			io.emit(msg);
+		});
+		
 		socket.on('gpar', function (gpar) {
-			console.log("weserver on gpar");
+			console.log("webServer on gpar");
 			common.storeGpar(gpar);
 			socket.broadcast.emit('gpar', gpar);
 		});

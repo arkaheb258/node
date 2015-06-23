@@ -10,7 +10,7 @@
 
     function createFile(fileName, czas) {
         console.log("Tworzenie pustego pliku danych: " + fileName);
-        common.CreateDir(logger_dir, function () {
+        common.createDir(logger_dir, function () {
 			var parametry = common.getGpar();
 			if (parametry) {
 				var out_buff = new Buffer(255);

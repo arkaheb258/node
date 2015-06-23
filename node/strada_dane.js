@@ -3,22 +3,9 @@
 	"use strict";
 	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
 	var common = require("./common.js");
-	var strada_req_time = false;
+	var BlockRW = require("./blockrw.js");
+	// var strada_req_time = false;
 	var stradaIntEnabled = false;
-		// dane302_json = '{"error":"Dane nie gotowe - oczekiwanie na PLC"}';
-
-	/**
-	 * Description
-	 * @method f_dane302_json
-	 * @param {} err
-	 */
-	// function f_dane302_json(err) {
-		// if (err) {
-			// dane302_json = '{"error":"' + err + '"}';
-		// } else {
-			// return dane302_json;
-		// }
-	// }
 
 	/**
 	 * Description
@@ -64,15 +51,14 @@
 			strada_SendFunction(0x302, 0, function (dane) {
 				if (dane.error) {
 					dane = {error: "Brak połączenia z PLC: " + dane.error};
-					console.log("zerwane połączenie ze sterownikiem");
+					// console.log("zerwane połączenie ze sterownikiem");
 					console.log(dane);
 				} else {
 					dane = new DecodeStrada302(dane.dane);
-					if (dane.wDataControl === 1) {
-						//console.log("Sterownik rząda daty");
-						strada_req_time = true;
-					} else {
-						strada_req_time = false;
+					// strada_req_time = (dane.wDataControl === 1);
+					if (dane.wDataControl === 1) { 
+						// console.log('Sterownik rząda daty 1');
+						socket.emit('broadcast', 'strada_req_time'); 
 					}
 				}
 				// dane302_json = JSON.stringify(dane);
@@ -96,9 +82,9 @@
 	 * @method Strada_req_time
 	 * @return strada_req_time
 	 */
-	function Strada_req_time() {
-		return strada_req_time;
-	}
+	// function Strada_req_time() {
+		// return strada_req_time;
+	// }
 
 	/**
 	 * Description
@@ -107,14 +93,14 @@
 	 * @return ThisExpression
 	 */
 	function DecodeStrada302(data) {
-		var br,
-			TimeStamp,
-			d,
-			n,
-			gpar,
-			SpecData;
+		var br;
+		var TimeStamp;
+		var d;
+		var n;
+		var SpecData;
+		
 		if (data.length < 20) { return "ERROR"; }
-		br = new common.BlockRW();
+		br = new BlockRW();
 		TimeStamp = br.read(data);
 		this.TimeStamp_s = (TimeStamp[1] << 16) + TimeStamp[0];
 		this.TimeStamp_ms = (TimeStamp[3] << 16) + TimeStamp[2];
@@ -125,7 +111,7 @@
 		n = d.getTimezoneOffset();
 		d.setMonth(0);
 		n -= d.getTimezoneOffset();
-		// gpar = parametry.gpar();
+		var gpar = common.getGpar();
 		if (gpar) {
 			if (gpar.rKonfCzasStrefa !== undefined) { this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000; }
 			if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
@@ -134,7 +120,7 @@
 		SpecData = br.read(data);
 		this.wDataControl = SpecData[0];
 		this.wData = SpecData;
-		br = new common.BlockRW(24);
+		br = new BlockRW(24);
 		this.Analog = br.read(data, true);
 		this.Bit = br.read(data);
 		this.Mesg = br.read(data);
@@ -147,7 +133,7 @@
 	}
 
 	// stradaStartInterval();
-	module.exports.strada_req_time = Strada_req_time;
+	// module.exports.strada_req_time = Strada_req_time;
 	module.exports.StartInterval = stradaStartInterval;
 	module.exports.stradaStopInterval = stradaStopInterval;
 	// module.exports.dane_json = f_dane302_json;

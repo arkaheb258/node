@@ -63,7 +63,7 @@
 						out[temp.NAZ] = temp.WART;
 						break;
 					case 'tZapisCzasZrzutu':
-						out[temp.NAZ] = common.codesysTimeToMs(temp.WART+'');
+						out[temp.NAZ] = common.codesysTimeToMs(temp.WART.toString());
 						break;
 					default:
 						break;
@@ -88,10 +88,10 @@
 				callback(null);
 				return;
 			}
-			if (data.length > 0) { 
-				callback(wyluskajParametry(data)); 
-			} else { 
-				callback(null); 
+			if (data.length > 0) {
+				callback(wyluskajParametry(data));
+			} else {
+				callback(null);
 			}
 		});
 	}

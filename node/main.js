@@ -1,25 +1,25 @@
 ﻿// main.js
 (function () {
-    "use strict";
+    'use strict';
 	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
-	var parametry = require("./parametry.js");
-	var common = require("./common.js");
-	var strada_dane = require("./strada_dane.js");
+	var parametry = require('./parametry.js');
+	var common = require('./common.js');
+	var strada_dane = require('./strada_dane.js');
 	var EverSocket = require('eversocket').EverSocket;
 
 	var ntp_date = -1;
 	var instrID = 0;
-	// var main_client = null;
 	var queue = [];
 	var lastSent = null;
 	var PLCConnected = false;
+	var debug = false;
 
 	var CONNECT_TIMEOUT_MS = (process.env.STRADA_INTERVAL_MS || 200) * 5;
 
 	var client = new EverSocket({
-		reconnectWait: CONNECT_TIMEOUT_MS,      // wait 100ms after close event before reconnecting 
-		timeout: CONNECT_TIMEOUT_MS,            // set the idle timeout to 100ms 
-		reconnectOnTimeout: true // reconnect if the connection is idle 
+		reconnectWait: CONNECT_TIMEOUT_MS,      // wait after close event before reconnecting 
+		timeout: CONNECT_TIMEOUT_MS,            // set the idle timeout
+		reconnectOnTimeout: true 				// reconnect if the connection is idle 
 	});
 
 	/**
@@ -27,14 +27,14 @@
 	*/
 	function stradaClearQueue(force) {
 		var len = queue.length, i, el;
-//		console.log("len: " + len);
+//		console.log('len: ' + len);
 		if (len === 0) { return; }
-		// if (force) console.log("stradaClearQueue " + len);
+		// if (force) console.log('stradaClearQueue ' + len);
 		for (i = 0; i < queue.length; i += 1) {
 			el = queue[i];
 			if ((new Date() - el.time) > el.timeout || force) {
-				queue.splice(i, 1)[0].callback({error: "timeout"});
-				console.log("queue.splice + timeout");
+				queue.splice(i, 1)[0].callback({error: 'timeout'});
+				if (debug) { console.log('queue.splice + timeout'); }
 				i -= 1;
 				len -= 1;
 			}
@@ -47,7 +47,7 @@
 	* @param data dane do wyslania
 	*/
 	function stradaSendFunction(instrNo, data) {
-		// console.log(" stradaSendFunction()");
+		// console.log(' stradaSendFunction()');
 		instrID = (instrID + 1) % 0x10000;
 		var DstID = 1,
 		    SrcID = 4,
@@ -84,7 +84,7 @@
 			data = null;
 			break;
 		case 0x201:	//Zapisz datę i czas.
-			// console.log("data: ");
+			// console.log('data: ');
 			// console.log(data);
             temp_out_buff = new Buffer(8);
             temp_out_buff.writeUInt16LE(1, 0);
@@ -183,27 +183,16 @@
             temp_out_buff.fill(0);
             temp_out_buff.writeUInt16LE(1, 0);
             temp_out_buff.writeUInt16LE(12, 2);
-	//		console.log("uiCzytajObszarNr: "+data);
+	//		console.log('uiCzytajObszarNr: '+data);
             temp_out_buff.writeUInt16LE(data, 4);	//uiCzytajObszarNr
-//console.log(strada_dane.strada_req_time());
-			if (strada_dane.strada_req_time()) {
-				console.log("Sterownik rząda daty 2");
-				if (ntp_date === -1) {
-					ntp_date = 0;
-					common.getTime(function (ret) {
-						if (ret.error) {
-							console.log("error " + ret.error);
-							ntp_date = -1;
-						} else {
-							console.log(ret.date);
-							console.log("data po zmianie: " + Math.round((new Date()).getTime() / 1000));
-							ntp_date = 1;
-						}
-					});
-				} else if (ntp_date === 1) {
-					temp_out_buff.writeUInt16LE(1, 6);
-					temp_out_buff.writeUInt32LE(Math.round((new Date()).getTime() / 1000), 8);
-				}
+			if (ntp_date === 1) {
+				console.log("Sterownik dostaje date");
+				temp_out_buff.writeUInt16LE(1, 6);
+				temp_out_buff.writeUInt32LE(Math.round((new Date()).getTime() / 1000), 8);
+				ntp_date = -2;
+				setTimeout(function () {
+					ntp_date = -1;
+				}, 1000);
 			}
 			break;
 		case 0x310:	//Podaj status wejść/wyjść wybranego bloku.
@@ -222,37 +211,37 @@
             temp_out_buff.writeUInt16LE(1, 0);
             temp_out_buff.writeUInt16LE(96, 2);
 			if (data.NAZ.length > 31) {
-				console.log("0x500 - za długa NAZWA (" + data.NAZ.length + ")");
+				console.log('0x500 - za długa NAZWA (' + data.NAZ.length + ')');
 				data.NAZ = data.NAZ.substr(0, 31);
 			}
 			temp_out_buff.write(data.NAZ, 4);
 			temp_out_buff.write(data.TYP, 36);
 //console.log(data.TYP);
-			if (data.TYP === "STRING") {
+			if (data.TYP === 'STRING') {
 				if (data.WART.length > 29) {
-					console.log("0x500 - za długi STRING (" + data.WART.length + ")");
+					console.log('0x500 - za długi STRING (' + data.WART.length + ')');
 					data.WART = data.WART.substr(0, 29);
 				}
 				temp_out_buff.write('"' + data.WART + '"', 68);
-			// } else if (data.TYP === "LISTA") {
+			// } else if (data.TYP === 'LISTA') {
 				// temp_out_buff.write(data.WART.toFixed(1), 68);
-			} else if (data.TYP === "REAL" || (data.TYP === "LISTA")) {
+			} else if (data.TYP === 'REAL' || (data.TYP === 'LISTA')) {
 				temp = data.WART.toString();
 				if (temp.indexOf('.') === -1) {
-					data.WART = temp + ".0";
+					data.WART = temp + '.0';
 				} else if (temp.length - temp.indexOf('.') < 3) {
 					data.WART = parseFloat(temp).toFixed(1);//.toString();
 				} else {
 					data.WART = temp;
 				}
 				temp_out_buff.write(data.WART, 68);
-			} else if (data.TYP === "TIME") {
+			} else if (data.TYP === 'TIME') {
 //				temp_out_buff.write('"T#' + common.msToCodesysTime(data.WART) + 'ms"', 68);
 // console.log('"T#' + (data.WART*1000) + 'ms"');
 				// temp_out_buff.write('"T#' + (data.WART * 1000) + 'ms"', 68);
 				temp_out_buff.write('"' + common.msToCodesysTime(data.WART * 1000) + '"', 68);
 			} else {
-				console.log("0x500 - Błąd TYPU");
+				console.log('0x500 - Błąd TYPU');
 				temp_out_buff.write(data.WART, 68);
 			}
 			break;
@@ -275,19 +264,11 @@
 
 		out_buff.writeUInt16LE(out_buff.length - 16, 14);	//długość StradaData
 		if (lastSent) {
-			console.log("nadpisanie lastSent");
+			console.log('nadpisanie lastSent');
 		}
-		lastSent = {"DstID": DstID, "SrcID": SrcID, "Dir": Dir, "instrNo" : instrNo, "instrID" : instrID, "time" : new Date()};
-//		console.log("194 lastSent set");
-// if (instrNo == 0x520) {
-// if (instrNo == 0x310) {
-// console.log(lastSent);
-// console.log(out_buff);
-// }
-// else
-		// if (main_client) { main_client.write(out_buff); } else { console.log("main_client error"); }
-		if (client) { client.write(out_buff); } else { console.log("client error"); }
-//		console.log("wysłano ID=" + instrID + " instrNo: " + instrNo + " lastSent.instrID = " + lastSent.instrID);
+		lastSent = {DstID: DstID, SrcID: SrcID, Dir: Dir, instrNo : instrNo, instrID : instrID, time : new Date()};
+		if (client) { client.write(out_buff); } else { console.log('client error'); }
+//		console.log('wysłano ID=' + instrID + ' instrNo: ' + instrNo + ' lastSent.instrID = ' + lastSent.instrID);
 		return instrID;
 	}
 
@@ -296,22 +277,22 @@
 			outTimeout;
 		if (timeout) { outTimeout = timeout; } else { outTimeout = CONNECT_TIMEOUT_MS * 5; }
 		stradaClearQueue();
-//		console.log("instrNo: " + instrNo);
-//		console.log("queue.length: " + queue.length);
+//		console.log('instrNo: ' + instrNo);
+//		console.log('queue.length: ' + queue.length);
 		if (!PLCConnected) {
-			console.log("PLC nie polaczony");
-			callback({error: "PLC nie polaczony"});
+			console.log('PLC nie polaczony');
+			callback({error: 'PLC nie polaczony'});
 			return 1;
 		}
 		if (queue.length === 0) {
-//			console.log(" stradaSendFunction from enqueue");
+//			console.log(' stradaSendFunction from enqueue');
 			lastID = stradaSendFunction(instrNo, data);
 		}
 		if (!callback) { callback = console.log; }
-		// console.log("push");
+		// console.log('push');
 		queue.push({instrNo: instrNo, data: data, callback: callback, timeout: outTimeout, time: new Date(), instrID: lastID});
 		if (queue.length > 2) {
-			console.log("queue.length = " + queue.length + " instrNo = " + instrNo);
+			console.log('queue.length = ' + queue.length + ' instrNo = ' + instrNo);
 		}
 		if (queue.length > 20) {
 			throw new Error({'opis': 'Przepełnienie kolejki'});
@@ -319,7 +300,7 @@
 	}
 
 	function stradaSendNext(dane, asyn) {
-		// console.log("stradaSendNext(dane)");
+		// console.log('stradaSendNext(dane)');
 		var el = queue[0],
 			tempDate = new Date();
 		if (el) {
@@ -345,7 +326,7 @@
 	* @param dane odebrane dane
 	*/
 	function stradaGetData(dane) {
-//		console.log("dane");
+//		console.log('dane');
 //		console.log(dane.length);
 		var DstIDR = dane.readUInt32LE(0),
 		    SrcIDR = dane.readUInt32LE(4),
@@ -364,32 +345,32 @@
 			ErrNo,
 			ErrDesc;
 
-//		console.log(" stradaGetData lastSent.instrID = " + lastSent.instrID);
+//		console.log(' stradaGetData lastSent.instrID = ' + lastSent.instrID);
 		if (lastSent) {
 			if (DstIDR !== lastSent.SrcID) {
-				console.log("Błąd DstID");
+				console.log('Błąd DstID');
 			} else if (SrcIDR !== lastSent.DstID) {
-				console.log("Błąd SrcID");
+				console.log('Błąd SrcID');
 			} else if (DirR !== 0x10) {
-				console.log("Błąd Dir");
+				console.log('Błąd Dir');
 				if (DirR === 0x110) {
-					console.log("BOT nr=" + dane.readInt16LE(16) + ": " + dane.slice(20) + " (" + dane.slice(20).length + ")");
+					console.log('BOT nr=' + dane.readInt16LE(16) + ': ' + dane.slice(20) + ' (' + dane.slice(20).length + ')');
 				} else {
-					console.log("Dir = " + DirR);
+					console.log('Dir = ' + DirR);
 				}
 			} else if (instrNoR !== lastSent.instrNo) {
-				console.log("Błąd instrNo");
+				console.log('Błąd instrNo');
 			// } else if (instrIDR !== lastSent.instrID) {
 			} else if (instrIDR !== lastSent.instrID && instrNoR > 0x200 && instrNoR !== 0x301) {	//ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
-				console.log("Błąd instrID jest: " + instrIDR + " powinno być: " + lastSent.instrID);
+				console.log('Błąd instrID jest: ' + instrIDR + ' powinno być: ' + lastSent.instrID);
 			} else if (dane.length - 16 !== DataLenR) {
-				console.log("Błąd DataLen");
+				console.log('Błąd DataLen');
 			} else {
 				// timeout_counter = 0;
 				error = null;
 			}
 		}
-		// console.log("odebrano ID=" + instrIDR);
+		// console.log('odebrano ID=' + instrIDR);
 		dane = dane.slice(16);	//przesłanie dalej tylko StradaData
 
 		if (instrNoR < 0x200 || instrNoR === 0x301) {
@@ -422,21 +403,21 @@
 			case -2:
 			case -4:
 			case -5:
-				console.log("StatusInfNo: " + StatusInfNo + " - wyslanie ponowne");
+				console.log('StatusInfNo: ' + StatusInfNo + ' - wyslanie ponowne');
 				setTimeout(function () {
 					stradaSendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
 					// stradaSendNext({error: error, Dir: 0x101, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
 				}, 100);
 				break;
 			default:
-				// console.log("StatusInfNo: " + StatusInfNo);
-				// console.log("StatusInfNo: " + StatusInfNo);
-				// console.log("InstrVer: " + InstrVer);
-				// console.log("InstrID2: " + InstrID2);
-				// console.log("DataType: " + DataType);
-				// console.log("DataLenR: " + DataLenR);
-				// console.log("DataLen: " + DataLen);
-				// console.log("DataSegmentNo: " + DataSegmentNo);
+				// console.log('StatusInfNo: ' + StatusInfNo);
+				// console.log('StatusInfNo: ' + StatusInfNo);
+				// console.log('InstrVer: ' + InstrVer);
+				// console.log('InstrID2: ' + InstrID2);
+				// console.log('DataType: ' + DataType);
+				// console.log('DataLenR: ' + DataLenR);
+				// console.log('DataLen: ' + DataLen);
+				// console.log('DataSegmentNo: ' + DataSegmentNo);
 				error = StatusInfNo;
 				stradaSendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
 				break;
@@ -455,15 +436,15 @@
 		if (uiCzytajObszarNr === 0) {
 			stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 		}
-// console.log("uiCzytajObszarNr "+uiCzytajObszarNr);
+// console.log('uiCzytajObszarNr '+uiCzytajObszarNr);
 		stradaEnqueue(instrNo, uiCzytajObszarNr, function (dane) {
-			if (!dane.dane || (typeof dane.dane === "string")) {
+			if (!dane.dane || (typeof dane.dane === 'string')) {
 				callback(dane);
 			} else {
 				stradaReadAll.tempKonf.dane = new Buffer.concat([stradaReadAll.tempKonf.dane, dane.dane]);
 				stradaReadAll.tempKonf.DataLen = dane.DataLen;
 				if (uiCzytajObszarNr > 3) {
-					console.log("nie ma końca - (uiCzytajObszarNr > 3)");
+					console.log('nie ma końca - (uiCzytajObszarNr > 3)');
 					return;
 				}
 				if (stradaReadAll.tempKonf.dane.length < stradaReadAll.tempKonf.DataLen) {
@@ -477,15 +458,31 @@
 
 	stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 
-	socket.on("get_gpar", function () {
-		console.log("on get_gpar");
+	socket.on('get_gpar', function () {
+		console.log('on get_gpar');
 		parametry.odswierzParametry(stradaReadAll, null, true);
+	});
+	
+	socket.on('strada_req_time', function () {
+		console.log('Sterownik rzada daty');
+		if (ntp_date === -1) {
+			ntp_date = 0;
+			common.getTime(function (ret) {
+				if (ret.error) {
+					console.log('error ' + ret.error);
+					ntp_date = -1;
+				} else {
+					console.log('data dla PLC: ', ret.date);
+					// console.log('data po zmianie: ' + Math.round((new Date()).getTime() / 1000));
+					ntp_date = 1;
+				}
+			});
+		}
 	});
 
 	client.on('data', stradaGetData);
 	client.on('connect', function () {
 		console.log('Strada Polaczono ....');
-		// main_client = client;
 		PLCConnected = true;
 		strada_dane.stradaStopInterval();
 		stradaClearQueue(true);
@@ -493,8 +490,8 @@
 		parametry.odswierzParametry(stradaReadAll);
 	});
 	client.on('error', function (err) {
-		console.log("Strada ErRoR: " + err.code);
-		socket.emit('dane', '{"error":"Strada client ErRoR: ' + err.code + '"}');
+		console.log('Strada ErRoR: ' + err.code);
+		socket.emit('dane', {error: 'Strada client ErRoR: ' + err.code });
 		PLCConnected = false;
 	});
 	client.on('close', function () {
@@ -502,14 +499,13 @@
 		client.destroy();
 		if (PLCConnected) {
 			PLCConnected = false;
-			// main_client = null;
-			socket.emit('dane', '{"error":"Strada Connection closed"}');
+			socket.emit('dane', {error: 'Strada Connection closed'});
 			strada_dane.stradaStopInterval();
 			stradaClearQueue(true);
 		}
 	});
 
-	client.connect(process.env.STRADA_PORT || 20021, process.env.PLC_IP || "192.168.3.30");
+	client.connect(process.env.STRADA_PORT || 20021, process.env.PLC_IP || '192.168.3.30');
 
     module.exports.SendFunction = stradaEnqueue;
     module.exports.readAll = stradaReadAll;

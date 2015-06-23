@@ -9,6 +9,46 @@
 
 	/**
 	 * Description
+	 * @method DecodeStrada302
+	 * @param {Buffer} data
+	 * @return ThisExpression
+	 */
+	function DecodeStrada302(data) {
+		if (data.length < 20) { return "ERROR"; }
+		var br = new BlockRW();
+		var TimeStamp = br.read(data);
+		this.TimeStamp_s = (TimeStamp[1] << 16) + TimeStamp[0];
+		this.TimeStamp_ms = (TimeStamp[3] << 16) + TimeStamp[2];
+		this.TimeStamp_js = (this.TimeStamp_s * 1000 + this.TimeStamp_ms % 1000);
+
+		//konwersja UTC -> czas lokalny
+		var d = new Date(this.TimeStamp_js);
+		var n = d.getTimezoneOffset();
+		d.setMonth(0);
+		n -= d.getTimezoneOffset();
+		var gpar = common.getGpar();
+		if (gpar) {
+			if (gpar.rKonfCzasStrefa !== undefined) { this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000; }
+			if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
+			if (gpar.sKonfNrKomisji) { this.komisja = gpar.sKonfNrKomisji; }
+		}
+		var SpecData = br.read(data);
+		this.wDataControl = SpecData[0];
+		this.wData = SpecData;
+		br = new BlockRW(24);
+		this.Analog = br.read(data, true);
+		this.Bit = br.read(data);
+		this.Mesg = br.read(data);
+		this.MesgType = br.read(data);
+		this.MesgStatus = br.read(data);
+		this.BlockUsr = br.read(data);
+		this.BlockSrvc = br.read(data);
+		this.BlockAdv = br.read(data);
+		return this;
+	}
+
+	/**
+	 * Description
 	 * @method MySetInterval
 	 * @param {function} fun
 	 * @param {Number} interval
@@ -56,9 +96,9 @@
 				} else {
 					dane = new DecodeStrada302(dane.dane);
 					// strada_req_time = (dane.wDataControl === 1);
-					if (dane.wDataControl === 1) { 
+					if (dane.wDataControl === 1) {
 						// console.log('Sterownik rząda daty 1');
-						socket.emit('broadcast', 'strada_req_time'); 
+						socket.emit('broadcast', 'strada_req_time');
 					}
 				}
 				// dane302_json = JSON.stringify(dane);
@@ -77,64 +117,6 @@
 		stradaIntEnabled = false;
 	}
 
-	/**
-	 * Description
-	 * @method Strada_req_time
-	 * @return strada_req_time
-	 */
-	// function Strada_req_time() {
-		// return strada_req_time;
-	// }
-
-	/**
-	 * Description
-	 * @method DecodeStrada302
-	 * @param {Buffer} data
-	 * @return ThisExpression
-	 */
-	function DecodeStrada302(data) {
-		var br;
-		var TimeStamp;
-		var d;
-		var n;
-		var SpecData;
-		
-		if (data.length < 20) { return "ERROR"; }
-		br = new BlockRW();
-		TimeStamp = br.read(data);
-		this.TimeStamp_s = (TimeStamp[1] << 16) + TimeStamp[0];
-		this.TimeStamp_ms = (TimeStamp[3] << 16) + TimeStamp[2];
-		this.TimeStamp_js = (this.TimeStamp_s * 1000 + this.TimeStamp_ms % 1000);
-
-		//konwersja UTC -> czas lokalny
-		d = new Date(this.TimeStamp_js);
-		n = d.getTimezoneOffset();
-		d.setMonth(0);
-		n -= d.getTimezoneOffset();
-		var gpar = common.getGpar();
-		if (gpar) {
-			if (gpar.rKonfCzasStrefa !== undefined) { this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000; }
-			if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
-			if (gpar.sKonfNrKomisji) { this.komisja = gpar.sKonfNrKomisji; }
-		}
-		SpecData = br.read(data);
-		this.wDataControl = SpecData[0];
-		this.wData = SpecData;
-		br = new BlockRW(24);
-		this.Analog = br.read(data, true);
-		this.Bit = br.read(data);
-		this.Mesg = br.read(data);
-		this.MesgType = br.read(data);
-		this.MesgStatus = br.read(data);
-		this.BlockUsr = br.read(data);
-		this.BlockSrvc = br.read(data);
-		this.BlockAdv = br.read(data);
-		return this;
-	}
-
-	// stradaStartInterval();
-	// module.exports.strada_req_time = Strada_req_time;
 	module.exports.StartInterval = stradaStartInterval;
 	module.exports.stradaStopInterval = stradaStopInterval;
-	// module.exports.dane_json = f_dane302_json;
 }());

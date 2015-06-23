@@ -8,9 +8,25 @@
 	var logger_dir = process.env.LOGGER_DIR;
 	var prev_data = null;
 
+    /**
+     * Description
+     * @method createDir
+     * @param {} dirName
+     * @param {} callback
+     * @param {} console.log
+     */
+    function createDir(dirName, callback) {
+		fs.readdir(dirName, function (err, files) {
+			if (err) {
+				if (err.code === 'ENOENT') { fs.mkdirSync(dirName);	} else { console.log(err); }
+			}
+			if (callback) { callback(); }
+		});
+	}
+
     function createFile(fileName, czas) {
         console.log("Tworzenie pustego pliku danych: " + fileName);
-        common.createDir(logger_dir, function () {
+        createDir(logger_dir, function () {
 			var parametry = common.getGpar();
 			if (parametry) {
 				var out_buff = new Buffer(255);
@@ -70,10 +86,9 @@
 
 	function EncodeBlock(data, prev, offset, sign) {
 		var len = data.length;
-		var i;
 		var count = 0;
 		var out_buff = new Buffer(4 * len);
-        for (i = 0; i < len; i += 1) {
+        for (var i = 0; i < len; i += 1) {
 			if (prev[i] === undefined || prev[i] !== data[i]) {
 				out_buff.writeUInt16LE(i + offset, 4 * count);        //id zmiennej
 				if (sign) {

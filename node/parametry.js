@@ -38,15 +38,13 @@
 	 */
 	function wyluskajParametry(data) {
 // return data;
-		var js = JSON.parse(data),
-			out = [],
-			i,
-			temp;
+		var js = JSON.parse(data);
+		var out = [];
 		if (js.DANE) {
 			out = js;
-			for (i in js.DANE) {
+			for (var i in js.DANE) {
 				if (js.DANE.hasOwnProperty(i)) {
-					temp = js.DANE[i];
+					var temp = js.DANE[i];
 					switch (temp.NAZ) {
 					case 'sKonfTypKombajnu':
 					case 'rKonfWersjaJezykowa':
@@ -200,13 +198,13 @@
 	 * @return out_par
 	 */
 	function decodeStrada307(buf, out_par) {
-		var i, len, ptr = 0, temp, temp_str, ok = true;
+		var len, ptr = 0, temp, temp_str, ok = true;
 		if (out_par && out_par.DANE) {
 			len = out_par.DANE.length;
 		} else {
 			return null;
 		}
-		for (i = 0; i < 5; i += 1) {
+		for (var i = 0; i < 5; i += 1) {
 			temp_str = out_par.DANE[i];
 			// console.log(temp_str);
 			if (typeof buf === 'object' && buf.error !== undefined) {
@@ -223,7 +221,7 @@
 		if (ok === false) { return null; }
 
 		ptr = 5 * 32;
-		for (i = 5; i < len; i += 1) {
+		for (var i = 5; i < len; i += 1) {
 			temp_str = out_par.DANE[i];
 			if (buf.length < ptr + temp_str.ROZM * 2) { ok = false; console.log('błąd ilości parametrów (za mało) ' + i); break; }
 	//		console.log(temp_str);

@@ -19,24 +19,25 @@
 	var client = new EverSocket({
 		reconnectWait: CONNECT_TIMEOUT_MS,      // wait after close event before reconnecting 
 		timeout: CONNECT_TIMEOUT_MS,            // set the idle timeout
-		reconnectOnTimeout: true 				// reconnect if the connection is idle 
+		reconnectOnTimeout: true				// reconnect if the connection is idle 
 	});
 
 	/**
 	* Przegląd kolejki wiadomości w celu sprawdzenia timeoutów
 	*/
 	function stradaClearQueue(force) {
-		var len = queue.length, i, el;
+		// var len = queue.length;
 //		console.log('len: ' + len);
-		if (len === 0) { return; }
+		if (queue.length === 0) { return; }
+		// if (len === 0) { return; }
 		// if (force) console.log('stradaClearQueue ' + len);
-		for (i = 0; i < queue.length; i += 1) {
-			el = queue[i];
+		for (var i = 0; i < queue.length; i += 1) {
+			var el = queue[i];
 			if ((new Date() - el.time) > el.timeout || force) {
 				queue.splice(i, 1)[0].callback({error: 'timeout'});
 				if (debug) { console.log('queue.splice + timeout'); }
 				i -= 1;
-				len -= 1;
+				// len -= 1;
 			}
 		}
 	}
@@ -49,12 +50,12 @@
 	function stradaSendFunction(instrNo, data) {
 		// console.log(' stradaSendFunction()');
 		instrID = (instrID + 1) % 0x10000;
-		var DstID = 1,
-		    SrcID = 4,
-		    Dir = 0x01,
-		    out_buff = new Buffer(16),
-			temp,
-		    temp_out_buff;
+		var DstID = 1;
+		var SrcID = 4;
+		var Dir = 0x01;
+		var out_buff = new Buffer(16);
+		var temp;
+		var temp_out_buff;
 
 		if (instrNo.length === 2) {
 			Dir = 0x101;
@@ -273,8 +274,8 @@
 	}
 
 	function stradaEnqueue(instrNo, data, callback, timeout) {
-		var lastID = null,
-			outTimeout;
+		var lastID = null;
+		var outTimeout;
 		if (timeout) { outTimeout = timeout; } else { outTimeout = CONNECT_TIMEOUT_MS * 5; }
 		stradaClearQueue();
 //		console.log('instrNo: ' + instrNo);
@@ -301,8 +302,8 @@
 
 	function stradaSendNext(dane, asyn) {
 		// console.log('stradaSendNext(dane)');
-		var el = queue[0],
-			tempDate = new Date();
+		var el = queue[0];
+		var tempDate = new Date();
 		if (el) {
 			if (asyn) {
 //				console.log(el);
@@ -328,22 +329,13 @@
 	function stradaGetData(dane) {
 //		console.log('dane');
 //		console.log(dane.length);
-		var DstIDR = dane.readUInt32LE(0),
-		    SrcIDR = dane.readUInt32LE(4),
-		    DirR = dane.readUInt16LE(8),
-		    instrNoR = dane.readUInt16LE(10),
-		    instrIDR = dane.readUInt16LE(12),
-		    DataLenR = dane.readUInt16LE(14),
-			error = true,
-			StatusInfNo,
-			InstrVer,
-		    InstrID2,
-		    DataType,
-		    DataLen,
-		    DataSegmentNo,
-			rawHead,
-			ErrNo,
-			ErrDesc;
+		var DstIDR = dane.readUInt32LE(0);
+		var SrcIDR = dane.readUInt32LE(4);
+		var DirR = dane.readUInt16LE(8);
+		var instrNoR = dane.readUInt16LE(10);
+		var instrIDR = dane.readUInt16LE(12);
+		var DataLenR = dane.readUInt16LE(14);
+		var error = true;
 
 //		console.log(' stradaGetData lastSent.instrID = ' + lastSent.instrID);
 		if (lastSent) {
@@ -364,7 +356,7 @@
 			} else if (instrIDR !== lastSent.instrID && instrNoR > 0x200 && instrNoR !== 0x301) {	//ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
 				console.log('Błąd instrID jest: ' + instrIDR + ' powinno być: ' + lastSent.instrID);
 			} else if (dane.length - 16 !== DataLenR) {
-				console.log('Błąd DataLen');
+				console.log('Błąd DataLenR');
 			} else {
 				// timeout_counter = 0;
 				error = null;
@@ -381,13 +373,13 @@
 //		console.log(lastSent);
 		if (!error) {
 			//SIN
-			StatusInfNo = dane.readInt16LE(0);
-		    InstrVer = dane.readUInt16LE(2);
-		    InstrID2 = dane.readUInt16LE(4);
-		    DataType = dane.readUInt16LE(6);
-		    DataLen  = dane.readUInt16LE(8);
-		    DataSegmentNo = dane.readUInt16LE(10);
-			rawHead = dane.slice(0, 12);
+			var StatusInfNo = dane.readInt16LE(0);
+		    var InstrVer = dane.readUInt16LE(2);
+		    var InstrID2 = dane.readUInt16LE(4);
+		    var DataType = dane.readUInt16LE(6);
+		    var DataLen  = dane.readUInt16LE(8);
+		    var DataSegmentNo = dane.readUInt16LE(10);
+			var rawHead = dane.slice(0, 12);
 			dane = dane.slice(12);	//przesłanie dalej tylko SerwerData
 			lastSent = null;
 			// if (instrNoR === 0x302) {
@@ -424,11 +416,9 @@
 			}
 		} else {
 			//BOT
-		    ErrNo = dane.readInt16LE(0);	//numer błędu
-			ErrDesc = dane.slice(4);			//opis błędu
-			error = ErrNo;
-			dane = ErrDesc.toString();
-			stradaSendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
+		    var error = dane.readInt16LE(0);	//numer błędu
+			var ErrDesc = dane.slice(4);			//opis błędu
+			stradaSendNext({error: error, Dir: DirR, dane: ErrDesc.toString(), DataLen: DataLen, RawHead: rawHead});
 		}
 	}
 
@@ -462,7 +452,7 @@
 		console.log('on get_gpar');
 		parametry.odswierzParametry(stradaReadAll, null, true);
 	});
-	
+
 	socket.on('strada_req_time', function () {
 		console.log('Sterownik rzada daty');
 		if (ntp_date === -1) {

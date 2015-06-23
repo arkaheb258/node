@@ -11,33 +11,11 @@
 	var gpar = null;
 	var dane = null;
 
-	/**
-	 * Description
-	 * @method pad
-	 * @param {} num
-	 * @param {} size
-	 * @return s
-	 */
+	//dodanie zer wiodących
 	function pad(num, size) {
 		var s = num.toString();
 		while (s.length < size) { s = "0" + s; }
 		return s;
-	}
-
-    /**
-     * Description
-     * @method createDir
-     * @param {} dirName
-     * @param {} callback
-     * @param {} console.log
-     */
-    function createDir(dirName, callback) {
-		fs.readdir(dirName, function (err, files) {
-			if (err) {
-				if (err.code === 'ENOENT') { fs.mkdirSync(dirName);	} else { console.log(err); }
-			}
-			if (callback) { callback(); }
-		});
 	}
 
 	//funkcja usuwajaca duplikaty z tablicy
@@ -78,8 +56,7 @@
 			var f_counter = 0;
 			var d_count = dirs.length;
 			var d_counter = 0;
-			var d;
-			for (d in dirs) {
+			for (var d in dirs) {
 				// console.log("ftp rmdir ", '/flash/json/' + dirs[d]);
 				// c.delete('/flash/json/*', function(err) {
 				// c.rmdir('/flash/json/' + dirs[d], true, function(err) {
@@ -88,8 +65,7 @@
 					console.log("ftp mkdir ", d_counter, '/', d_count);
 					if (d_count == d_counter) {
 						console.log("ftp mkdir end");
-						var f;
-						for (f in files) {
+						for (var f in files) {
 							// console.log(files[f], ' -> ', "ftp put ", '/flash/json/' + files[f]);
 							c.put(files[f], '/flash/json' + files[f], function (err) {
 								f_counter += 1;
@@ -136,8 +112,8 @@
 	function pobierzPlikFTP(con_par, callback, cache) {
 		console.log("pobierzPlikFTP");
 		// return;
-		var c = new Ftp(),
-			cache_file;
+		var c = new Ftp();
+		var cache_file;
 		c.on('ready', function () {
 			c.get(con_par.file, function (err, stream) {
 				if (err) {
@@ -148,7 +124,7 @@
 //					throw err;
 				}
 	//            console.log("ftp");
-				c.on('readable', function (dane) {
+				c.on('readable', function () {
 					var chunk;
 					while (null !== (chunk = c.read())) {
 						console.log('got %d bytes of data', chunk.length);
@@ -205,12 +181,8 @@
 	 * @param {} dataa
 	 */
 	function set_time(dataa) {
-		var request,
-			i,
-			sDate,
-			sTime;
-		sDate = dataa.getUTCFullYear() + "-" + pad(dataa.getUTCMonth() + 1, 2) + "-" + pad(dataa.getUTCDate(), 2);
-		sTime = pad(dataa.getUTCHours(), 2) + ":" + pad(dataa.getUTCMinutes(), 2) + ":" + pad(dataa.getUTCSeconds(), 2);
+		var sDate = dataa.getUTCFullYear() + "-" + pad(dataa.getUTCMonth() + 1, 2) + "-" + pad(dataa.getUTCDate(), 2);
+		var sTime = pad(dataa.getUTCHours(), 2) + ":" + pad(dataa.getUTCMinutes(), 2) + ":" + pad(dataa.getUTCSeconds(), 2);
 		if (process.platform === "linux") {
 			// console.log('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime);
 			exec('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime, function (error, stdout, stderr) {
@@ -238,7 +210,7 @@
 			});
 			// console.log("sudo hwclock -w");
 			if (glob_par.NTP_IPs) {
-				for (i in glob_par.NTP_IPs) {
+				for (var i in glob_par.NTP_IPs) {
 					// console.log("ustaw czas zdalnie na " + glob_par.NTP_IPs[i]);
 					console.log("http://" + glob_par.NTP_IPs[i] + "/set_time?time=" + dataa.getTime());
 					try {
@@ -326,32 +298,6 @@
 
 	/**
 	 * Description
-	 * @method refresh_browser
-	 * @param {} res
-	 */
-	function refresh_browser(res) {
-//return;
-		if (process.platform === "linux") {
-			console.log('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5');
-			exec('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5', function (error, stdout, stderr) {
-				if (stderr) { console.log("stderr: " + stderr); }
-				if (error) { console.log("error: " + error); }
-				if (res) {
-					res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-					res.write("refreshing ...");
-					res.end();
-				}
-			});
-		} else {
-			if (res) {
-				res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-				res.end("Platforma nie obslugiwana");
-			}
-		}
-	}
-
-	/**
-	 * Description
 	 * @method msToCodesysTime
 	 * @param {} ms
 	 * @return out
@@ -381,11 +327,11 @@
 			return 0;
 		}
 //		var regexp = /(\d+)d(\d+)h(\d+)m(\d+)s(\d+)ms/;
-		var d = time.match(/(\d+)d/),
-			h = time.match(/(\d+)h/),
-			m = time.match(/(\d+)m/),
-			s = time.match(/(\d+)s/),
-			ms = time.match(/(\d+)ms/);
+		var d = time.match(/(\d+)d/);
+		var h = time.match(/(\d+)h/);
+		var m = time.match(/(\d+)m/);
+		var s = time.match(/(\d+)s/);
+		var ms = time.match(/(\d+)ms/);
 		if (d) { d = d[1] * 86400000; }
 		if (h) { h = h[1] * 3600000; }
 		if (m) { m = m[1] * 60000; }
@@ -403,15 +349,13 @@
 	 * @return CallExpression
 	 */
 	function readStringTo0(buf, start, len) {
-		var i;
-		for (i = start; i < start + len; i += 1) {
+		for (var i = start; i < start + len; i += 1) {
 			if (buf[i] === 0) {
 				break;
 			}
 		}
 		return buf.toString('utf8', start, i).substr(0, len);
 	}
-
 
 	/**
 	 * Description
@@ -421,9 +365,8 @@
 	 * @return Literal
 	 */
 	function szukajPar(gpar, naz) {
-		var i;
 		if (gpar && gpar.DANE) {
-			for (i in gpar.DANE) {
+			for (var i in gpar.DANE) {
 				if (gpar.DANE.hasOwnProperty(i) && gpar.DANE[i].NAZ === naz) { return gpar.DANE[i].WART; }
 			}
 		}
@@ -437,19 +380,16 @@
 	 * @param {} gpar
 	 */
 	function czytajPlikParametrowWiz(data, gpar) {
-		var temp = null,
-			g,
-			p,
-			s,
-			js;
+		var temp = null;
+		var js;
 		try {
 			js = JSON.parse(data);
 			if (js.DANE) {
-				for (g in js.DANE) {
+				for (var g in js.DANE) {
 					if (typeof js.DANE[g] === "object") {
-						for (p in js.DANE[g]) {
+						for (var p in js.DANE[g]) {
 							if (typeof js.DANE[g][p] === "object") {
-								for (s in js.DANE[g][p]) {
+								for (var s in js.DANE[g][p]) {
 									if (typeof js.DANE[g][p][s] === "object" && js.DANE[g][p][s].WART !== undefined) {
 										// if (js.DANE[g][p][s].TYP === "pCzas") console.log(js.DANE[g][p][s].WART);
 										temp = szukajPar(gpar, s);
@@ -481,15 +421,12 @@
 	 * @return js
 	 */
 	function czytajPlikSygnalow(data, gpar) {
-		var temp = null,
-			g,
-			p,
-			s,
-			js = JSON.parse(data);
+		var temp = null;
+		var js = JSON.parse(data);
 		if (typeof js === "object") {
-			for (g in js) {
+			for (var g in js) {
 				if (typeof js[g] === "object") {
-					for (p in js[g]) {
+					for (var p in js[g]) {
 						//TODO: Paweł - poprawa reakcji na undefined przy odchudzonym pliku
 						// if (js[g][p] === null) {
 							// delete js[g][p];
@@ -501,7 +438,7 @@
 								// delete js[g][p];
 							// } else
 							if (js[g][p].indexOf("_par_") === 0) {
-								s = js[g][p].substr(5);
+								var s = js[g][p].substr(5);
 								temp = szukajPar(gpar, s);
 								if (temp === null) {
 									console.log("S - Nie znaleziono parametru \"" + s + "\"");
@@ -527,28 +464,22 @@
 	 */
 	function czytajPlikKomunikatow(text, word) {
 //		text = text.replace(/\t(.*)/mg, "$1");	//usuniecie tabulacji na początku wierszy
-		var rows = text.split("\n"),
-			output = [],
-			l,
-			nr,
-			nb,
-			bit,
-			opis,
-			out_string = "", //do generowania listy komunikatów dla serwisu
-			i = 0;
-		for (l in rows) {
+		var rows = text.split("\n");
+		var output = [];
+		var out_string = ""; //do generowania listy komunikatów dla serwisu
+		var i = 0;
+		for (var l in rows) {
 			if (rows.hasOwnProperty(l)) {
 				var row = rows[l].trim();
 				if (row.search(";") !== -1 && row.search("x") === 0) {
-					nr = (i - (i % 16)) / 16;
-					bit = (i % 16);
-					opis = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
+					var nr = (i - (i % 16)) / 16;
+					var bit = (i % 16);
+					var opis = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
+					var nb = 0;
 					if (output[nr] === undefined) { output[nr] = {opis: "opis slowa " + nr, nr: nr, bity: []}; }
 					if (opis.indexOf("_nb_") === 0) {
 						opis = opis.substring(4).trim();
 						nb = 1;
-					} else {
-						nb = 0;
 					}
 		//				output[nr].bity[bit] = {nr: nr, bit: bit, opis: opis};
 					out_string += "Kod " + (nr * 16 + bit) + ": " + opis + "\n";
@@ -599,21 +530,19 @@
 		return file_to_read;
 	}
 
-    module.exports.refresh_browser = refresh_browser;
     module.exports.getTime = getTime;
     module.exports.set_time = set_time;
     module.exports.pobierzPlikFTP = pobierzPlikFTP;
     module.exports.pad = pad;
-    module.exports.createDir = createDir;
     module.exports.msToCodesysTime = msToCodesysTime;
     module.exports.codesysTimeToMs = codesysTimeToMs;
     module.exports.readStringTo0 = readStringTo0;
 
-    module.exports.szukajPar = szukajPar;
+    // module.exports.szukajPar = szukajPar;
     module.exports.czytajPlikParametrowWiz = czytajPlikParametrowWiz;
     module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
-    module.exports.wer_jezykowa = wer_jezykowa;
+    // module.exports.wer_jezykowa = wer_jezykowa;
 	module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
 
 	module.exports.storeDane = function (d) { dane = d; };

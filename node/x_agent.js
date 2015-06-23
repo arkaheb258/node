@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://127.0.0.1:8889');
+﻿var socket = require('socket.io-client')('http://127.0.0.1:8888');
 var cp = require('child_process');
 
 socket.on('connect', function () {console.log('connect'); });
@@ -35,7 +35,8 @@ function refresh_browser(res) {
 //return;
 	if (process.platform === "linux") {
 		console.log('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5');
-		cp.exec('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5', function (error, stdout, stderr) {
+		cp.exec('xdotool search --onlyvisible --name "chromium" windowactivate --sync key --delay 250 F5', 
+		function (error, stdout, stderr) {
 			if (stderr) { console.log("stderr: " + stderr); }
 			if (error) { console.log("error: " + error); }
 			if (res) {

@@ -3,7 +3,7 @@
     "use strict";
 	var http = require('http');
 	var fs = require("fs");
-	var glob_par = process.env;
+	var globPar = process.env;
 	var exec = require('child_process').exec;
 	var walk = require('walk');
 	var NTP_IP_i = 0;
@@ -26,7 +26,8 @@
 		}, []);
 	};
 
-	//TODO: kopiowanie zawartosci folderu json na PLC (dodac parametryzacje folderu json)
+	//TODO: kopiowanie zawartosci folderu json na PLC 
+	// (dodac parametryzacje folderu json)
 	function kopiujJsonNaPLC(callback) {
 		var c = new Ftp();
 		// var config = {host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", port : 21, "connTimeout" : 2000, "pasvTimeout" : 2000};
@@ -46,7 +47,9 @@
 		walker.on('end', function () {
 			dirs = arrayUnique(dirs);
 			// console.log(files);
-			c.connect({host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", "connTimeout" : 2000, "pasvTimeout" : 2000});
+			c.connect({host : process.env.PLC_IP || "192.168.3.30", 
+				user : "admin", password : "admin", 
+				connTimeout : 2000, pasvTimeout : 2000});
 		});
 
 		c.on('ready', function () {
@@ -141,7 +144,7 @@
 					c.end();
 				});
 				// console.log("con_par.file " + con_par.file);
-				if (cache && glob_par.FTP_CACHE_DIR) {
+				if (cache && globPar.FTP_CACHE_DIR) {
 					stream.pipe(fs.createWriteStream(cache_file));
 				}
 			});
@@ -156,14 +159,16 @@
 		});
 		// console.log("cache");
 		// console.log(cache);
-		// console.log(glob_par.FTP_CACHE_DIR);
-		if (cache && glob_par.FTP_CACHE_DIR) {
-			createDir(glob_par.FTP_CACHE_DIR, function () {
+		// console.log(globPar.FTP_CACHE_DIR);
+		if (cache && globPar.FTP_CACHE_DIR) {
+			createDir(globPar.FTP_CACHE_DIR, function () {
 				fs.readFile(cache_file, function (err, text) {
 					if (err) {
 						// throw err;
 						console.log(err);
-						c.connect({"host" : con_par.host, "user" : con_par.user, "password" : con_par.password, "connTimeout" : 2000, "pasvTimeout" : 2000});
+						c.connect({host: con_par.host, 
+							user: con_par.user, password: con_par.password,
+							connTimeout: 2000, pasvTimeout : 2000});
 					} else {
 						console.log("FTP cache " + con_par.file);
 						callback(text.toString());
@@ -171,7 +176,9 @@
 				});
 			});
 		} else {
-			c.connect({"host" : con_par.host, "user" : con_par.user, "password" : con_par.password, "connTimeout" : 2000, "pasvTimeout" : 2000});
+			c.connect({host: con_par.host, 
+				user: con_par.user, password: con_par.password,
+				connTimeout: 2000, pasvTimeout: 2000});
 		}
 	}
 
@@ -181,6 +188,10 @@
 	 * @param {} dataa
 	 */
 	function set_time(dataa) {
+		// TODO: zamienic na ponizsze i przetestowac
+		// var str = dataa.toISOString().split('T');
+		// sDate = str[0];
+		// sTime = str[1].replace(/\..+/, '');
 		var sDate = dataa.getUTCFullYear() + "-" + pad(dataa.getUTCMonth() + 1, 2) + "-" + pad(dataa.getUTCDate(), 2);
 		var sTime = pad(dataa.getUTCHours(), 2) + ":" + pad(dataa.getUTCMinutes(), 2) + ":" + pad(dataa.getUTCSeconds(), 2);
 		if (process.platform === "linux") {
@@ -198,7 +209,7 @@
 					console.log("stdout: " + stdout);
 					console.log("stderr: " + stderr);
 					console.log("error: " + error);
-					if (glob_par.NTP_HWCLOCK) {
+					if (globPar.NTP_HWCLOCK) {
 						exec("sudo hwclock -w -f /dev/rtc1", function (error, stdout, stderr) {
 							console.log("sudo hwclock -w -f /dev/rtc1");
 							console.log("stdout: " + stdout);
@@ -209,13 +220,13 @@
 				});
 			});
 			// console.log("sudo hwclock -w");
-			if (glob_par.NTP_IPs) {
-				for (var i in glob_par.NTP_IPs) {
-					// console.log("ustaw czas zdalnie na " + glob_par.NTP_IPs[i]);
-					console.log("http://" + glob_par.NTP_IPs[i] + "/set_time?time=" + dataa.getTime());
+			if (globPar.NTP_IPs) {
+				for (var i in globPar.NTP_IPs) {
+					// console.log("ustaw czas zdalnie na " + globPar.NTP_IPs[i]);
+					console.log("http://" + globPar.NTP_IPs[i] + "/set_time?time=" + dataa.getTime());
 					try {
-						http.get({ host: glob_par.NTP_IPs[i], port: glob_par.NODE_DIAGN_PORT, path: "/set_time?time=" + dataa.getTime() }, function (res) {
-							// console.log("http://" + glob_par.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " says:");
+						http.get({ host: globPar.NTP_IPs[i], port: globPar.NODE_DIAGN_PORT, path: "/set_time?time=" + dataa.getTime() }, function (res) {
+							// console.log("http://" + globPar.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " says:");
 							if (res && res.req && res.req._headers) {
 								console.log(res.req._headers.host + res.req.path + " OK");
 							}
@@ -223,7 +234,7 @@
 							console.log("http.get got error: " + e.message);
 						}).setTimeout(3000, function () {
 							// handle timeout here
-							console.log("http://" + glob_par.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " timeout");
+							console.log("http://" + globPar.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " timeout");
 						});
 					} catch (err) {
 						console.log("http.get catch");
@@ -249,24 +260,24 @@
 	 */
 	function getTime(callback) {
 		if (process.platform === "linux") {
-			if (glob_par.NTP_IPs) {
-				if (glob_par.NTP_IPs[NTP_IP_i + 1]) {
+			if (globPar.NTP_IPs) {
+				if (globPar.NTP_IPs[NTP_IP_i + 1]) {
 					NTP_IP_i += 1;
 				} else {
 					NTP_IP_i = 0;
 				}
-				// exec("(sudo service ntp stop; sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i] + "; sudo service ntp start)", { timeout: 2000 }, function (error, stdout, stderr) {
+				// exec("(sudo service ntp stop; sudo ntpdate " + globPar.NTP_IPs[NTP_IP_i] + "; sudo service ntp start)", { timeout: 2000 }, function (error, stdout, stderr) {
 				exec("sudo service ntp stop", function (error0, stdout0, stderr0) {
 					// console.log("sudo service ntp stop");
-					exec("sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i], { timeout: 10000 }, function (error, stdout, stderr) {
-						// console.log("sudo ntpdate " + glob_par.NTP_IPs[NTP_IP_i]);
+					exec("sudo ntpdate " + globPar.NTP_IPs[NTP_IP_i], { timeout: 10000 }, function (error, stdout, stderr) {
+						// console.log("sudo ntpdate " + globPar.NTP_IPs[NTP_IP_i]);
 						exec("sudo service ntp start", function (error0, stdout0, stderr0) {
 							// console.log("sudo service ntp start");
 							if (!error) {
 								set_time(new Date());
-								if (callback) { callback({type: "ntp " + glob_par.NTP_IPs[NTP_IP_i], date: new Date(), error: error, err: stderr, out: stdout}); }
+								if (callback) { callback({type: "ntp " + globPar.NTP_IPs[NTP_IP_i], date: new Date(), error: error, err: stderr, out: stdout}); }
 							} else {
-								if (glob_par.NTP_HWCLOCK) {
+								if (globPar.NTP_HWCLOCK) {
 									// exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
 									exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
 										if (!error) {
@@ -282,7 +293,7 @@
 					});
 				});
 			} else {
-				if (glob_par.NTP_HWCLOCK) {
+				if (globPar.NTP_HWCLOCK) {
 				// exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
 					exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
 						callback({type: "hwclock", date: new Date(), error: error, err: stderr, out: stdout});
@@ -496,38 +507,38 @@
 	 * Description
 	 * @method wer_jezykowa
 	 * @param {} par
-	 * @param {} file_name
+	 * @param {} fileName
 	 * @param {} file_type
-	 * @return file_to_read
+	 * @return fileToRead
 	 */
-	function wer_jezykowa(par, file_name, file_type) {
+	function wer_jezykowa(par, fileName, file_type) {
 		console.log(par.error);
-		if (!glob_par || par.error) { return null; }
-		var file_to_read = glob_par.WEB_DIR + "/json/";
+		if (!globPar || par.error) { return null; }
+		var fileToRead = globPar.WEB_DIR + "/json/";
 		var sKonfTypKombajnu = par.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
 		var rKonfWersjaJezykowa = parseInt(par.rKonfWersjaJezykowa, 10);
 		if (sKonfTypKombajnu !== "") {
-			file_to_read += sKonfTypKombajnu + "/";
+			fileToRead += sKonfTypKombajnu + "/";
 		}
-		file_to_read += file_name;
+		fileToRead += fileName;
 		if (rKonfWersjaJezykowa !== undefined) {
-			file_to_read +=  "_" + rKonfWersjaJezykowa;
+			fileToRead +=  "_" + rKonfWersjaJezykowa;
 		}
-		file_to_read += file_type;
-//		console.log(file_to_read);
+		fileToRead += file_type;
+//		console.log(fileToRead);
 
-		if (!fs.existsSync(file_to_read)) {
+		if (!fs.existsSync(fileToRead)) {
 			if (sKonfTypKombajnu !== "") {
-			    file_to_read = glob_par.WEB_DIR + "/json/" + sKonfTypKombajnu + "/" + file_name + file_type;
-				if (!fs.existsSync(file_to_read)) {
-				    file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
+			    fileToRead = globPar.WEB_DIR + "/json/" + sKonfTypKombajnu + "/" + fileName + file_type;
+				if (!fs.existsSync(fileToRead)) {
+				    fileToRead = globPar.WEB_DIR + "/json/" + fileName + file_type;
 				}
 			} else {
-				file_to_read = glob_par.WEB_DIR + "/json/" + file_name + file_type;
+				fileToRead = globPar.WEB_DIR + "/json/" + fileName + file_type;
 			}
 		}
-		console.log(file_to_read);
-		return file_to_read;
+		console.log(fileToRead);
+		return fileToRead;
 	}
 
     module.exports.getTime = getTime;

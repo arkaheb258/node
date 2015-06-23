@@ -1,13 +1,14 @@
 ﻿// main.js
 (function () {
     'use strict';
-	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var socket = require('socket.io-client')
+		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
 	var parametry = require('./parametry.js');
 	var common = require('./common.js');
-	var strada_dane = require('./strada_dane.js');
+	var stradaDane = require('./strada_dane.js');
 	var EverSocket = require('eversocket').EverSocket;
 
-	var ntp_date = -1;
+	var ntpDate = -1;
 	var instrID = 0;
 	var queue = [];
 	var lastSent = null;
@@ -17,9 +18,9 @@
 	var CONNECT_TIMEOUT_MS = (process.env.STRADA_INTERVAL_MS || 200) * 5;
 
 	var client = new EverSocket({
-		reconnectWait: CONNECT_TIMEOUT_MS,      // wait after close event before reconnecting 
-		timeout: CONNECT_TIMEOUT_MS,            // set the idle timeout
-		reconnectOnTimeout: true				// reconnect if the connection is idle 
+		reconnectWait: CONNECT_TIMEOUT_MS,	// wait after close event before reconnecting 
+		timeout: CONNECT_TIMEOUT_MS,		// set the idle timeout
+		reconnectOnTimeout: true			// reconnect if the connection is idle 
 	});
 
 	/**
@@ -53,21 +54,21 @@
 		var DstID = 1;
 		var SrcID = 4;
 		var Dir = 0x01;
-		var out_buff = new Buffer(16);
+		var outBuff = new Buffer(16);
 		var temp;
-		var temp_out_buff;
+		var tempOutBuff;
 
 		if (instrNo.length === 2) {
 			Dir = 0x101;
 			instrNo = instrNo[0];
 		}
 
-		out_buff.writeUInt32LE(DstID, 0);
-		out_buff.writeUInt32LE(SrcID, 4);
-		out_buff.writeUInt16LE(Dir, 8);
-		out_buff.writeUInt16LE(instrNo, 10);
-		out_buff.writeUInt16LE(instrID, 12);
-		out_buff.writeUInt16LE(0, 14);
+		outBuff.writeUInt32LE(DstID, 0);
+		outBuff.writeUInt32LE(SrcID, 4);
+		outBuff.writeUInt16LE(Dir, 8);
+		outBuff.writeUInt16LE(instrNo, 10);
+		outBuff.writeUInt16LE(instrID, 12);
+		outBuff.writeUInt16LE(0, 14);
 
 		if (instrNo === 0x204) {
 			data[0] = data[0] * 100;
@@ -80,25 +81,25 @@
 		switch (instrNo) {
 		case 0x0:	//External instrNo
 			instrNo = data[0];
-			out_buff.writeUInt16LE(instrNo, 10);
-			temp_out_buff = data[1];
+			outBuff.writeUInt16LE(instrNo, 10);
+			tempOutBuff = data[1];
 			data = null;
 			break;
 		case 0x201:	//Zapisz datę i czas.
 			// console.log('data: ');
 			// console.log(data);
-            temp_out_buff = new Buffer(8);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(4, 2);
-            temp_out_buff.writeUInt32LE(data, 4);
-            // temp_out_buff.writeUInt16LE(data, 4);
-            // temp_out_buff.writeUInt16LE(0, 6);
+            tempOutBuff = new Buffer(8);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(4, 2);
+            tempOutBuff.writeUInt32LE(data, 4);
+            // tempOutBuff.writeUInt16LE(data, 4);
+            // tempOutBuff.writeUInt16LE(0, 6);
 			break;
 		case 0x202:	//Zapisz aktualne blokady.
             if (!data || !data.length) { data = [0, 0, 0, 0]; }
-            temp_out_buff = new Buffer(4);		//naglowek Iver >=4bajty
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(data.length, 2);
+            tempOutBuff = new Buffer(4);		//naglowek Iver >=4bajty
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(data.length, 2);
 			break;
 		case 0x203:	//Zapisz aktualny język.
 		case 0x20C:	//Zapisz całkowity dystans kombajnu.
@@ -113,12 +114,12 @@
 		case 0x401:	//Testuj hamulec.
 		case 0x601:	//Podaj nazwy plików Skrawu Wzorcowego.
 		case 0x603:	//Podaj nazwę aktualnego pliku Skrawu Wzorcowego.
-            temp_out_buff = new Buffer(8);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(4, 2);
-            temp_out_buff.writeUInt16LE(data, 4);
-            temp_out_buff.writeUInt16LE(0, 6);
-            // temp_out_buff.writeUInt16LE(data, 4);
+            tempOutBuff = new Buffer(8);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(4, 2);
+            tempOutBuff.writeUInt16LE(data, 4);
+            tempOutBuff.writeUInt16LE(0, 6);
+            // tempOutBuff.writeUInt16LE(data, 4);
 			break;
 		case 0x204:	//Zapisz aktualny numer sekcji.
 		case 0x207:	//Zapisz miejsce sterowanie posuwem.
@@ -129,103 +130,103 @@
 		case 0x402:	//Sterowanie reflektorami.
 		case 0x404:	//Kalibracja czujnika położenia napędów hydraulicznych
 		case 0x502:	//Obsluga plików parametrów
-            temp_out_buff = new Buffer(8);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(4, 2);
-            temp_out_buff.writeUInt16LE(data[0], 4);
-            temp_out_buff.writeUInt16LE(data[1], 6);
+            tempOutBuff = new Buffer(8);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(4, 2);
+            tempOutBuff.writeUInt16LE(data[0], 4);
+            tempOutBuff.writeUInt16LE(data[1], 6);
 			data = null;
 			break;
 		case 0x701:	//Kalibracja czujników położenia napędów hydraulicznych kombajnów chodnikowych
-            temp_out_buff = new Buffer(8);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(4, 2);
-            temp_out_buff.writeUInt16LE(data[0], 4);
-            temp_out_buff.writeInt16LE(data[1], 6);
+            tempOutBuff = new Buffer(8);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(4, 2);
+            tempOutBuff.writeUInt16LE(data[0], 4);
+            tempOutBuff.writeInt16LE(data[1], 6);
 			data = null;
 			break;
 		case 0x702:	//Ustawianie liczników czasu pracy dla kombajnów chodnikowych.
-            temp_out_buff = new Buffer(12);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(8, 2);
-            temp_out_buff.writeUInt16LE(data[0], 4);
-            temp_out_buff.writeUInt16LE(0, 6);
-            temp_out_buff.writeInt32LE(data[1], 8);
+            tempOutBuff = new Buffer(12);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(8, 2);
+            tempOutBuff.writeUInt16LE(data[0], 4);
+            tempOutBuff.writeUInt16LE(0, 6);
+            tempOutBuff.writeInt32LE(data[1], 8);
 			data = null;
 			break;
 		case 0x403:	//Zeruj liczniki dzienne.
 		case 0x602:	//Skasuj aktywny plik Skrawu Wzorcowego i usuń dane Skrawu z pamięci.
-            temp_out_buff = new Buffer(4);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(0, 2);
+            tempOutBuff = new Buffer(4);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(0, 2);
 			data = null;
 			break;
 		case 0x600:	//Zapisz nazwę pliku Skrawu Wzorcowego wybranego przez użytkownika.
 		case 0x604:	//Skasuj plik Skrawu Wzorcowego (inny niż aktywny).
 		case 0x606:	//Stwórz nowy plik Skrawu Wzorcowego
-            temp_out_buff = new Buffer(26);
-            temp_out_buff.fill(0);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(24, 2);
-			temp_out_buff.write(data, 4);
+            tempOutBuff = new Buffer(26);
+            tempOutBuff.fill(0);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(24, 2);
+			tempOutBuff.write(data, 4);
 			data = null;
 			break;
 		case 0x605:	//Zmień nazwę pliku Skrawu Wzorcowego
-            temp_out_buff = new Buffer(50);
-            temp_out_buff.fill(0);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(24, 2);
-			temp_out_buff.write(data[0], 4);
-			temp_out_buff.write(data[1], 28);
+            tempOutBuff = new Buffer(50);
+            tempOutBuff.fill(0);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(24, 2);
+			tempOutBuff.write(data[0], 4);
+			tempOutBuff.write(data[1], 28);
 			data = null;
 			break;
 		case 0x302:	//Odczytanie obszaru danych wizualizacyjnych kombajnu
-            temp_out_buff = new Buffer(16);
-            temp_out_buff.fill(0);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(12, 2);
+            tempOutBuff = new Buffer(16);
+            tempOutBuff.fill(0);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(12, 2);
 	//		console.log('uiCzytajObszarNr: '+data);
-            temp_out_buff.writeUInt16LE(data, 4);	//uiCzytajObszarNr
-			if (ntp_date === 1) {
+            tempOutBuff.writeUInt16LE(data, 4);	//uiCzytajObszarNr
+			if (ntpDate === 1) {
 				console.log("Sterownik dostaje date");
-				temp_out_buff.writeUInt16LE(1, 6);
-				temp_out_buff.writeUInt32LE(Math.round((new Date()).getTime() / 1000), 8);
-				ntp_date = -2;
+				tempOutBuff.writeUInt16LE(1, 6);
+				tempOutBuff.writeUInt32LE(Math.round((new Date()).getTime() / 1000), 8);
+				ntpDate = -2;
 				setTimeout(function () {
-					ntp_date = -1;
+					ntpDate = -1;
 				}, 1000);
 			}
 			break;
 		case 0x310:	//Podaj status wejść/wyjść wybranego bloku.
-            temp_out_buff = new Buffer(32);
-            temp_out_buff.fill(0);
-            temp_out_buff.writeUInt16LE(1, 0);	//instrVer
-            temp_out_buff.writeUInt16LE(28, 2);	//ClientDataLen
-			temp_out_buff.writeUInt16LE(data[0], 4);	//uiCzytajObszarNr
-			temp_out_buff.writeUInt16LE(0, 6);	//Rezerwa
-			temp_out_buff.write(data[1], 8);
+            tempOutBuff = new Buffer(32);
+            tempOutBuff.fill(0);
+            tempOutBuff.writeUInt16LE(1, 0);	//instrVer
+            tempOutBuff.writeUInt16LE(28, 2);	//ClientDataLen
+			tempOutBuff.writeUInt16LE(data[0], 4);	//uiCzytajObszarNr
+			tempOutBuff.writeUInt16LE(0, 6);	//Rezerwa
+			tempOutBuff.write(data[1], 8);
 			data = null;
 			break;
 		case 0x500:	//Zapisz parametr
-            temp_out_buff = new Buffer(100);
-            temp_out_buff.fill(0);
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(96, 2);
+            tempOutBuff = new Buffer(100);
+            tempOutBuff.fill(0);
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(96, 2);
 			if (data.NAZ.length > 31) {
 				console.log('0x500 - za długa NAZWA (' + data.NAZ.length + ')');
 				data.NAZ = data.NAZ.substr(0, 31);
 			}
-			temp_out_buff.write(data.NAZ, 4);
-			temp_out_buff.write(data.TYP, 36);
+			tempOutBuff.write(data.NAZ, 4);
+			tempOutBuff.write(data.TYP, 36);
 //console.log(data.TYP);
 			if (data.TYP === 'STRING') {
 				if (data.WART.length > 29) {
 					console.log('0x500 - za długi STRING (' + data.WART.length + ')');
 					data.WART = data.WART.substr(0, 29);
 				}
-				temp_out_buff.write('"' + data.WART + '"', 68);
+				tempOutBuff.write('"' + data.WART + '"', 68);
 			// } else if (data.TYP === 'LISTA') {
-				// temp_out_buff.write(data.WART.toFixed(1), 68);
+				// tempOutBuff.write(data.WART.toFixed(1), 68);
 			} else if (data.TYP === 'REAL' || (data.TYP === 'LISTA')) {
 				temp = data.WART.toString();
 				if (temp.indexOf('.') === -1) {
@@ -235,40 +236,40 @@
 				} else {
 					data.WART = temp;
 				}
-				temp_out_buff.write(data.WART, 68);
+				tempOutBuff.write(data.WART, 68);
 			} else if (data.TYP === 'TIME') {
-//				temp_out_buff.write('"T#' + common.msToCodesysTime(data.WART) + 'ms"', 68);
+//				tempOutBuff.write('"T#' + common.msToCodesysTime(data.WART) + 'ms"', 68);
 // console.log('"T#' + (data.WART*1000) + 'ms"');
-				// temp_out_buff.write('"T#' + (data.WART * 1000) + 'ms"', 68);
-				temp_out_buff.write('"' + common.msToCodesysTime(data.WART * 1000) + '"', 68);
+				// tempOutBuff.write('"T#' + (data.WART * 1000) + 'ms"', 68);
+				tempOutBuff.write('"' + common.msToCodesysTime(data.WART * 1000) + '"', 68);
 			} else {
 				console.log('0x500 - Błąd TYPU');
-				temp_out_buff.write(data.WART, 68);
+				tempOutBuff.write(data.WART, 68);
 			}
 			break;
         default:	//domyślnie jako parametr przyjmuje tablicę
 			if (instrNo < 0x200 || instrNo === 0x301) { break; }	//dla rozkazow SSN, SSO i Tiefenbach
             if (!data || !data.length) { data = [0, 0, 0, 0]; }
-            temp_out_buff = new Buffer(4);		//naglowek Iver >=4bajty
-            temp_out_buff.writeUInt16LE(1, 0);
-            temp_out_buff.writeUInt16LE(data.length, 2);
+            tempOutBuff = new Buffer(4);		//naglowek Iver >=4bajty
+            tempOutBuff.writeUInt16LE(1, 0);
+            tempOutBuff.writeUInt16LE(data.length, 2);
 			break;
 		}
 
-        if (temp_out_buff && temp_out_buff.length) {
-			out_buff = Buffer.concat([out_buff, temp_out_buff]);
+        if (tempOutBuff && tempOutBuff.length) {
+			outBuff = Buffer.concat([outBuff, tempOutBuff]);
 		}
 
         if (data && data.length) {
-            out_buff = Buffer.concat([out_buff, new Buffer(data)]);
+            outBuff = Buffer.concat([outBuff, new Buffer(data)]);
         }
 
-		out_buff.writeUInt16LE(out_buff.length - 16, 14);	//długość StradaData
+		outBuff.writeUInt16LE(outBuff.length - 16, 14);	//długość StradaData
 		if (lastSent) {
 			console.log('nadpisanie lastSent');
 		}
 		lastSent = {DstID: DstID, SrcID: SrcID, Dir: Dir, instrNo : instrNo, instrID : instrID, time : new Date()};
-		if (client) { client.write(out_buff); } else { console.log('client error'); }
+		if (client) { client.write(outBuff); } else { console.log('client error'); }
 //		console.log('wysłano ID=' + instrID + ' instrNo: ' + instrNo + ' lastSent.instrID = ' + lastSent.instrID);
 		return instrID;
 	}
@@ -276,7 +277,8 @@
 	function stradaEnqueue(instrNo, data, callback, timeout) {
 		var lastID = null;
 		var outTimeout;
-		if (timeout) { outTimeout = timeout; } else { outTimeout = CONNECT_TIMEOUT_MS * 5; }
+		if (timeout) { outTimeout = timeout; } 
+		else { outTimeout = CONNECT_TIMEOUT_MS * 5; }
 		stradaClearQueue();
 //		console.log('instrNo: ' + instrNo);
 //		console.log('queue.length: ' + queue.length);
@@ -291,7 +293,8 @@
 		}
 		if (!callback) { callback = console.log; }
 		// console.log('push');
-		queue.push({instrNo: instrNo, data: data, callback: callback, timeout: outTimeout, time: new Date(), instrID: lastID});
+		queue.push({instrNo: instrNo, data: data, callback: callback, 
+			timeout: outTimeout, time: new Date(), instrID: lastID});
 		if (queue.length > 2) {
 			console.log('queue.length = ' + queue.length + ' instrNo = ' + instrNo);
 		}
@@ -353,7 +356,9 @@
 			} else if (instrNoR !== lastSent.instrNo) {
 				console.log('Błąd instrNo');
 			// } else if (instrIDR !== lastSent.instrID) {
-			} else if (instrIDR !== lastSent.instrID && instrNoR > 0x200 && instrNoR !== 0x301) {	//ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
+			} else if (instrIDR !== lastSent.instrID 
+			&& instrNoR > 0x200 
+			&& instrNoR !== 0x301) {	//ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
 				console.log('Błąd instrID jest: ' + instrIDR + ' powinno być: ' + lastSent.instrID);
 			} else if (dane.length - 16 !== DataLenR) {
 				console.log('Błąd DataLenR');
@@ -449,48 +454,46 @@
 	stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 
 	socket.on('get_gpar', function () {
-		console.log('on get_gpar');
+		// console.log('on get_gpar');
 		parametry.odswierzParametry(stradaReadAll, null, true);
 	});
 
 	socket.on('strada_req_time', function () {
 		console.log('Sterownik rzada daty');
-		if (ntp_date === -1) {
-			ntp_date = 0;
+		if (ntpDate === -1) {
+			ntpDate = 0;
 			common.getTime(function (ret) {
 				if (ret.error) {
 					console.log('error ' + ret.error);
-					ntp_date = -1;
+					ntpDate = -1;
 				} else {
 					console.log('data dla PLC: ', ret.date);
 					// console.log('data po zmianie: ' + Math.round((new Date()).getTime() / 1000));
-					ntp_date = 1;
+					ntpDate = 1;
 				}
 			});
 		}
 	});
 
-	client.on('data', stradaGetData);
-	client.on('connect', function () {
+	client.on('data', stradaGetData)
+	.on('connect', function () {
 		console.log('Strada Polaczono ....');
 		PLCConnected = true;
-		strada_dane.stradaStopInterval();
+		stradaDane.stradaStopInterval();
 		stradaClearQueue(true);
-		strada_dane.StartInterval(stradaEnqueue);
+		stradaDane.StartInterval(stradaEnqueue);
 		parametry.odswierzParametry(stradaReadAll);
-	});
-	client.on('error', function (err) {
+	}).on('error', function (err) {
 		console.log('Strada ErRoR: ' + err.code);
 		socket.emit('dane', {error: 'Strada client ErRoR: ' + err.code });
 		PLCConnected = false;
-	});
-	client.on('close', function () {
+	}).on('close', function () {
 		// console.log('client close');
 		client.destroy();
 		if (PLCConnected) {
 			PLCConnected = false;
 			socket.emit('dane', {error: 'Strada Connection closed'});
-			strada_dane.stradaStopInterval();
+			stradaDane.stradaStopInterval();
 			stradaClearQueue(true);
 		}
 	});

@@ -4,7 +4,8 @@
 	var express = require('express');
 	var app = express();
 	var server = require('http').Server(app);
-	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var socket = require('socket.io-client')
+		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
 	var io = require('socket.io')(server);
 	var fs = require('fs');
 	var os = require('os');
@@ -75,7 +76,8 @@
 			// });
 		}
 		if (process.env.verSerwer) { data = process.env.verSerwer; }
-		res.jsonp(({"os": process.platform, "verSerwer": data, "ip": ip, "host": os.hostname(), "hw": process.env.HW}));
+		res.jsonp(({os: process.platform, verSerwer: data, 
+			ip: ip, host: os.hostname(), hw: process.env.HW}));
 	});
 
 	app.get('/json/*', function (req, res, next) {
@@ -84,17 +86,19 @@
 		if (!file) {
 			next();
 		} else if (gpar) {
-			var file_to_read = file[1];
+			var fileToRead = file[1];
 			var dir = "";
 			var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
 			if (sKonfTypKombajnu !== "") {
 				dir += sKonfTypKombajnu + "/";
 			}
 			if (gpar.rKonfWersjaJezykowa !== undefined) {
-				file_to_read +=  "_" + gpar.rKonfWersjaJezykowa;
+				fileToRead +=  '_' + gpar.rKonfWersjaJezykowa;
 			}
 			if (file[1] === 'sygnaly') {
-				fs.readFile(__dirname + '/' + web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
+				fs.readFile(__dirname + '/' + web_dir + '/json/' 
+				+ dir + fileToRead + '.json', 'utf8', 
+				function (err, text) {
 					if (err) {
 						res.jsonp("sygnaly.json error");
 					} else {
@@ -102,7 +106,9 @@
 					}
 				});
 			} else if (file[1] === 'parametry') {
-				fs.readFile(__dirname + '/' + web_dir + '/json/' + dir + file_to_read + '.json', 'utf8', function (err, text) {
+				fs.readFile(__dirname + '/' + web_dir + '/json/' 
+				+ dir + fileToRead + '.json', 'utf8', 
+				function (err, text) {
 					if (err) {
 						res.jsonp("parametry.json error");
 					} else {
@@ -110,15 +116,17 @@
 					}
 				});
 			} else if (file[1] === 'komunikaty') {
-				fs.readFile(__dirname + '/' + web_dir + '/json/' + 'STR_KOMUNIKATY.EXP', 'utf8', function (err, text) {
+				fs.readFile(__dirname + '/' + web_dir + '/json/' 
+				+ 'STR_KOMUNIKATY.EXP', 'utf8', 
+				function (err, text) {
 					if (err) {
-						res.redirect('/json/' + dir + file_to_read + '.json');
+						res.redirect('/json/' + dir + fileToRead + '.json');
 					} else {
 						res.jsonp(common.czytajPlikKomunikatow(text, false));
 					}
 				});
 			} else {
-				res.redirect('/json/' + dir + file_to_read + '.json');
+				res.redirect('/json/' + dir + fileToRead + '.json');
 			}
 		} else {
 			res.jsonp("brak polaczenia z PLC -> brak parametrow");
@@ -143,28 +151,21 @@
 
 		socket.on('strada', function (msg) {
 			console.log('strada: ' + msg);
-		});
-		socket.on('rozkaz', function (msg) {
+		}).on('rozkaz', function (msg) {
 			socket.broadcast.emit('rozkaz', msg);
-		});
-		socket.on('get_gpar', function () {
+		}).on('get_gpar', function () {
 			// socket.broadcast.emit('get_gpar', msg);
 			var gpar = common.getGpar();
 			if (gpar) {	socket.emit('gpar', gpar); } else {	io.emit("get_gpar"); }
-		});
-		socket.on('odpowiedz', function (msg) {
+		}).on('odpowiedz', function (msg) {
 			socket.broadcast.emit('odpowiedz', msg);
 			// console.log('strada: ' + msg);
-		});
-		socket.on('dane', function (msg) {
+		}).on('dane', function (msg) {
 			socket.broadcast.emit('dane', msg);
 			// io.emit('dane', dane);
-		});
-		socket.on('broadcast', function (msg) {
+		}).on('broadcast', function (msg) {
 			io.emit(msg);
-		});
-		
-		socket.on('gpar', function (gpar) {
+		}).on('gpar', function (gpar) {
 			console.log("webServer on gpar");
 			common.storeGpar(gpar);
 			socket.broadcast.emit('gpar', gpar);

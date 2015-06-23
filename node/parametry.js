@@ -2,18 +2,19 @@
 (function () {
     'use strict';
 	var fs = require('fs');
-	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var socket = require('socket.io-client')
+		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
 	var common = require('./common.js');
 
 	/**
 	 * Description
 	 * @method pobierzParametryPLC
-	 * @param {} strada_readAll - funkcja odczytujaca obszary
+	 * @param {} stradaReadAll - funkcja odczytujaca obszary
 	 * @param {} par
 	 * @param {function} callback
 	 */
-	function pobierzParametryPLC(strada_readAll, par, callback) {
-		strada_readAll(0x307, 0, function (dane) {
+	function pobierzParametryPLC(stradaReadAll, par, callback) {
+		stradaReadAll(0x307, 0, function (dane) {
 			if (!dane || dane.error) {
 				console.log('blad odczytu - readAll');
 				callback(null);
@@ -100,7 +101,9 @@
 	 * @param {} callback
 	 */
 	function pobierzPlikParametrowFTP(callback) {
-		common.pobierzPlikFTP({host : process.env.PLC_IP || '192.168.3.30', user : 'admin', password : 'admin', file : 'ide/Parametry/Temp.par'}, function (string) {
+		common.pobierzPlikFTP({host : process.env.PLC_IP || '192.168.3.30', 
+		user : 'admin', password : 'admin', file : 'ide/Parametry/Temp.par'},
+		function (string) {
 			if (string === false) {
 				console.log('FTP par error');
 				callback(null);
@@ -123,7 +126,9 @@
 		}
 		temp.DATA = (new Date()).toISOString().substring(0, 10);
 		//podmiana wartości całkowitych x na x.0 wyrażeniem regularnym
-		fs.writeFile(filename, JSON.stringify(temp).replace(/"WART":([-]?)(\d+),/g, '"WART":$1$2.0,'), function (err) {
+		fs.writeFile(filename, 
+		JSON.stringify(temp).replace(/"WART":([-]?)(\d+),/g, '"WART":$1$2.0,'),
+		function (err) {
 			if (err) { console.log(err); } else { console.log('Zapisano parametry domyślne'); }
 		});
 	}
@@ -134,17 +139,18 @@
 	 * @param {} callback
 	 * @param {} force
 	 */
-	function pobierzParametryAll(strada_readAll, callback, force) {
+	function pobierzParametryAll(stradaReadAll, callback, force) {
 		pobierzPlikParametrowLoc(function (par) {
 			if (par && !force) {
 				console.log('Wczytano parametry domyślne');
-				pobierzParametryPLC(strada_readAll, par, function (temp) {
+				pobierzParametryPLC(stradaReadAll, par, function (temp) {
 					if (!temp) {
 						console.log('Błędne parametry - pobranie struktury parametrów ze sterownika');
 						pobierzPlikParametrowFTP(function (par2) {
 							if (par2) {
 								console.log('Pobrano parametry przez FTP');
-								pobierzParametryPLC(strada_readAll, par2, function (temp) {
+								pobierzParametryPLC(stradaReadAll, par2, 
+								function (temp) {
 									if (temp !== null) {
 										zapiszParametryLoc(process.env.PARAM_LOC_FILE || 'default.json', temp);
 										common.storeGpar(temp);
@@ -172,7 +178,7 @@
 					if (par2) {
 						console.log('Pobrano parametry przez FTP f');
 						// console.log(par2.WER);
-						pobierzParametryPLC(strada_readAll, par2, function (temp) {
+						pobierzParametryPLC(stradaReadAll, par2, function (temp) {
 							if (temp !== null) {
 								zapiszParametryLoc(process.env.PARAM_LOC_FILE || 'default.json', temp);
 								common.storeGpar(temp);
@@ -194,19 +200,19 @@
 	 * Description
 	 * @method decodeStrada307
 	 * @param {Buffer} buf
-	 * @param {Object} out_par
-	 * @return out_par
+	 * @param {Object} outPar
+	 * @return outPar
 	 */
-	function decodeStrada307(buf, out_par) {
-		var len, ptr = 0, temp, temp_str, ok = true;
-		if (out_par && out_par.DANE) {
-			len = out_par.DANE.length;
+	function decodeStrada307(buf, outPar) {
+		var len, ptr = 0, temp, tempStr, ok = true;
+		if (outPar && outPar.DANE) {
+			len = outPar.DANE.length;
 		} else {
 			return null;
 		}
 		for (var i = 0; i < 5; i += 1) {
-			temp_str = out_par.DANE[i];
-			// console.log(temp_str);
+			tempStr = outPar.DANE[i];
+			// console.log(tempStr);
 			if (typeof buf === 'object' && buf.error !== undefined) {
 				console.log('Błąd decodeStrada307 ' + i);
 				console.log(buf);
@@ -214,7 +220,11 @@
 			}
 			temp = common.readStringTo0(buf, i * 32, 32);
 			// console.log(temp);
-			if (temp !== temp_str.WART) { ok = false; console.log('[' + i + '] ' + temp_str.NAZ + ' zmiana z ' + temp_str.WART + ' na ' + temp); }
+			if (temp !== tempStr.WART) { 
+				ok = false; 
+				console.log('[', i, '] ', tempStr.NAZ, 
+				' zmiana z ', tempStr.WART, ' na ', temp); 
+			}
 		}
 
 		//jeżeli zmiana komisji, typu, itd. to przerwać i zwrócić null
@@ -222,40 +232,49 @@
 
 		ptr = 5 * 32;
 		for (var i = 5; i < len; i += 1) {
-			temp_str = out_par.DANE[i];
-			if (buf.length < ptr + temp_str.ROZM * 2) { ok = false; console.log('błąd ilości parametrów (za mało) ' + i); break; }
-	//		console.log(temp_str);
-			if (temp_str.NAZ[0] === 's') {
-				temp = common.readStringTo0(buf, ptr, temp_str.ROZM * 2);
-			} else if (temp_str.NAZ[0] === 't') {
-				if (temp_str.ROZM !== 2) { temp_str.ROZM = 2; console.log('[' + i + '] ' + temp_str.NAZ + ' - błąd rozmiaru TIME'); }
+			tempStr = outPar.DANE[i];
+			if (buf.length < ptr + tempStr.ROZM * 2) { 
+				ok = false; 
+				console.log('błąd ilości parametrów (za mało) ' + i); 
+				break; 
+			}
+	//		console.log(tempStr);
+			if (tempStr.NAZ[0] === 's') {
+				temp = common.readStringTo0(buf, ptr, tempStr.ROZM * 2);
+			} else if (tempStr.NAZ[0] === 't') {
+				if (tempStr.ROZM !== 2) { 
+					tempStr.ROZM = 2; 
+					console.log('[', i, '] ', tempStr.NAZ, ' - błąd rozmiaru TIME');
+				}
 				// temp = common.msToCodesysTime(buf.readInt32LE(ptr));
 				temp = buf.readInt32LE(ptr) / 1000;
 			} else {
-				if (temp_str.ROZM === 1) { temp = buf.readInt16LE(ptr); } else { temp = buf.readInt32LE(ptr); }
-				if (temp_str.PREC) { temp /= Math.pow(10, temp_str.PREC); }
+				if (tempStr.ROZM === 1) { temp = buf.readInt16LE(ptr); } 
+				else { temp = buf.readInt32LE(ptr); }
+				if (tempStr.PREC) { temp /= Math.pow(10, tempStr.PREC); }
 			}
-			if (temp_str.NAZ[0] === 't' && (typeof temp_str.WART === 'string') && temp_str.WART[0] === 'T') {
-				// console.log('[' + i + '] ' + temp_str.NAZ + ' porownanie ' + temp_str.WART + ' z ' + temp);
-				temp_str.WART = common.codesysTimeToMs(temp_str.WART);
-				out_par.DANE[i].WART = temp;
+			if (tempStr.NAZ[0] === 't' && (typeof tempStr.WART === 'string') && tempStr.WART[0] === 'T') {
+				// console.log('[', i, '] ', tempStr.NAZ, ' porownanie ', tempStr.WART, ' z ', temp);
+				tempStr.WART = common.codesysTimeToMs(tempStr.WART);
+				outPar.DANE[i].WART = temp;
 			}
-			if (temp !== temp_str.WART) {
-				console.log('[' + i + '] ' + temp_str.NAZ + ' zmiana z ' + temp_str.WART + ' na ' + temp);
-				out_par.DANE[i].WART = temp;
+			if (temp !== tempStr.WART) {
+				console.log('[', i, '] ', tempStr.NAZ, 
+				' zmiana z ', tempStr.WART, ' na ', temp);
+				outPar.DANE[i].WART = temp;
 			}
-			ptr += parseFloat(temp_str.ROZM) * 2;
+			ptr += parseFloat(tempStr.ROZM) * 2;
 		}
-		if (ptr !== buf.length) { ok = false; console.log('błąd ilości parametrów ' + ptr + ' != ' + buf.length); }
+		if (ptr !== buf.length) { ok = false; console.log('błąd ilości parametrów ', ptr, ' != ', buf.length); }
 
 		//jeżeli błąd w rozmiarze czasu lub różna długość parametrów to przerwać i zwrócić null
 		if (ok === false) { return null; }
-		out_par.sKonfTypKombajnu = common.readStringTo0(buf, 0, 32);
-		out_par.sKonfNrKomisji = common.readStringTo0(buf, 32, 32);
-		out_par.sKonfNazwaKopalni = common.readStringTo0(buf, 64, 32);
-		out_par.sKonfNrSciany = common.readStringTo0(buf, 96, 32);
-		out_par.sKonfWersjaProgramu = common.readStringTo0(buf, 128, 32);
-		return out_par;
+		outPar.sKonfTypKombajnu = common.readStringTo0(buf, 0, 32);
+		outPar.sKonfNrKomisji = common.readStringTo0(buf, 32, 32);
+		outPar.sKonfNazwaKopalni = common.readStringTo0(buf, 64, 32);
+		outPar.sKonfNrSciany = common.readStringTo0(buf, 96, 32);
+		outPar.sKonfWersjaProgramu = common.readStringTo0(buf, 128, 32);
+		return outPar;
 	}
 
     module.exports.odswierzParametry = pobierzParametryAll;

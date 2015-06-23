@@ -1,4 +1,4 @@
-//BlockRW.js
+﻿//BlockRW.js
 "use strict";
 
 /**
@@ -45,24 +45,26 @@ BlockRW.prototype.read = function (data, sign) {
  * @method write
  * @param {} tempBlock
  * @param {} sign
- * @return temp_out_buff
+ * @return tempOutBuff
  */
 BlockRW.prototype.write = function (tempBlock, sign) {
-	var temp_out_buff;
+	var tempOutBuff;
 	var tempLen;
 
 	tempLen = tempBlock.length;
-	temp_out_buff = new Buffer(tempLen * 2 + 2);
-	temp_out_buff.writeUInt16LE(tempLen * 2, 0);		//rozmiar bloku w bajtach !!! (zmiana 09-05-2014 po uzgodnieniu z Wie�kiem)
-//		temp_out_buff.writeUInt16LE(tempLen, 0);
+	tempOutBuff = new Buffer(tempLen * 2 + 2);
+	//rozmiar bloku w bajtach 
+	// !!! (zmiana 09-05-2014 po uzgodnieniu z Wieśkiem)
+	//tempOutBuff.writeUInt16LE(tempLen, 0);
+	tempOutBuff.writeUInt16LE(tempLen * 2, 0);		
 	for (var i = 0; i < tempLen; i += 1) {
 		if (sign) {
-			temp_out_buff.writeInt16LE(tempBlock[i], i * 2 + 2);
+			tempOutBuff.writeInt16LE(tempBlock[i], i * 2 + 2);
 		} else {
-			temp_out_buff.writeUInt16LE(tempBlock[i], i * 2 + 2);
+			tempOutBuff.writeUInt16LE(tempBlock[i], i * 2 + 2);
 		}
 	}
-	return temp_out_buff;
+	return tempOutBuff;
 };
 
 module.exports = BlockRW;

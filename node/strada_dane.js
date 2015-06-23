@@ -1,7 +1,8 @@
 ﻿// strada_dane.js
 (function () {
 	"use strict";
-	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var socket = require('socket.io-client')
+		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
 	var common = require("./common.js");
 	var BlockRW = require("./blockrw.js");
 	// var strada_req_time = false;
@@ -28,7 +29,9 @@
 		n -= d.getTimezoneOffset();
 		var gpar = common.getGpar();
 		if (gpar) {
-			if (gpar.rKonfCzasStrefa !== undefined) { this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000; }
+			if (gpar.rKonfCzasStrefa !== undefined) { 
+				this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000; 
+			}
 			if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
 			if (gpar.sKonfNrKomisji) { this.komisja = gpar.sKonfNrKomisji; }
 		}

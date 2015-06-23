@@ -4,7 +4,8 @@
 //module.exports
 (function () {
     'use strict';
-	var socket = require('socket.io-client')('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var socket = require('socket.io-client')
+		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
 	var strada = require('./main.js');
 	var BlockRW = require("./blockrw.js");
 	var common = require('./common.js');
@@ -18,38 +19,33 @@
 	 * Description
 	 * @method encodeStrada202
 	 * @param {Object} data
-	 * @return out_buff
+	 * @return outBuff
 	 */
 	function encodeStrada202(data) {
-		var out_buff;
+		var outBuff;
 		var bw;
 		if (!data.BlockUsr) {
 			console.log('Brak BlockUsr');
 			data.BlockUsr = [];
 		}
-		// else
 		if (!data.BlockSrvc) {
 			console.log('Brak BlockSrvc');
 			data.BlockSrvc = [];
 		}
-		// else
 		if (!data.BlockAdv) {
 			console.log('Brak BlockAdv');
 			data.BlockAdv = [];
 		}
-		// else
-	// {
-		bw = new BlockRW();
-		out_buff = bw.write(data.BlockUsr, false);
-		out_buff = Buffer.concat([out_buff, bw.write(data.BlockSrvc, false)]);
-		out_buff = Buffer.concat([out_buff, bw.write(data.BlockAdv, false)]);
 
-		if (out_buff.length % 4) {
-			out_buff = Buffer.concat([out_buff, new Buffer([0, 0])]);
+		bw = new BlockRW();
+		outBuff = bw.write(data.BlockUsr, false);
+		outBuff = Buffer.concat([outBuff, bw.write(data.BlockSrvc, false)]);
+		outBuff = Buffer.concat([outBuff, bw.write(data.BlockAdv, false)]);
+
+		if (outBuff.length % 4) {
+			outBuff = Buffer.concat([outBuff, new Buffer([0, 0])]);
 		}
-		return out_buff;
-	//	}
-//		return [];
+		return outBuff;
 	}
 
 	/**
@@ -59,14 +55,11 @@
 	 * @return out
 	 */
 	function decodeStrada308(dane) {
-		var i = 0;
-		var temp;
-		var d;
-		var n;
 		var out = [];
 		var gpar = common.getGpar();
+		var i = 0;
 		while (i < dane.length) {
-			temp = {};
+			var temp = {};
 			temp.nr = dane.readUInt16LE(i) & 0x7FFF;
 			if (dane.readUInt16LE(i) > 0x8000) {
 				temp.typ = 'Ostrzeżenie';
@@ -79,8 +72,8 @@
 			if (temp.czas === 0 && temp.nr === 0) {
 				break;
 			}
-			d = new Date(temp.czas);
-			n = d.getTimezoneOffset();
+			var d = new Date(temp.czas);
+			var n = d.getTimezoneOffset();
 			d.setMonth(0);
 			n -= d.getTimezoneOffset();
 			if (gpar) {
@@ -130,7 +123,9 @@
 			n -= d.getTimezoneOffset();
 			var gpar = common.getGpar();
 			if (gpar) {
-				if (gpar.rKonfCzasStrefa !== undefined) { temp -= (gpar.rKonfCzasStrefa - 12) * 3600; }
+				if (gpar.rKonfCzasStrefa !== undefined) { 
+					temp -= (gpar.rKonfCzasStrefa - 12) * 3600; 
+				}
 				if (gpar.rKonfCzasLetni) { temp += n * 60; }
 			}
 			dataa.setTime(temp * 1000);
@@ -177,10 +172,12 @@
 			} else if (get.typ === 'pLiczba') {
 				typ = 'REAL';
 			} else if (get.typ === 'pLista') {
-//				typ = 'LISTA';				//Błąd w dokumentacji Strada do wersji (1.2.2 włącznie)
+				// Błąd w dokumentacji Strada do wersji (1.2.2 włącznie)
+				// typ = 'LISTA';
 				typ = 'REAL';
 			}
-			strada.SendFunction(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc}, function (dane) {
+			strada.SendFunction(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc},
+			function (dane) {
 				console.log('dane 500');
 				console.log(dane);
 				emitSIN(dane, msg);
@@ -225,7 +222,8 @@
 			console.log('kalibracja 2');
 			console.log(get.napedId);
 			console.log(get.pozycja * 100);
-			strada.SendFunction(0x701, [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100], function (dane) {
+			strada.SendFunction(0x701, [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100], 
+			function (dane) {
 				console.log('dane 701');
 				console.log(dane);
 				emitSIN(dane, msg);
@@ -236,7 +234,8 @@
 			console.log('liczniki');
 			console.log(get.rozkazId);
 			console.log(get.wartosc);
-			strada.SendFunction(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)], function (dane) {
+			strada.SendFunction(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)], 
+			function (dane) {
 				console.log('dane 702');
 				console.log(dane);
 				emitSIN(dane, msg);
@@ -247,7 +246,8 @@
 			console.log(get.rozkaz);
 			console.log(get.uiCzytajObszarNr);
 			console.log(get.sIDbloku);
-			strada.SendFunction(0x310, [parseInt(get.uiCzytajObszarNr, 10), get.sIDbloku], function (dane) {
+			strada.SendFunction(0x310, [parseInt(get.uiCzytajObszarNr, 10), get.sIDbloku], 
+			function (dane) {
 				console.log('dane 310');
 				console.log(dane);
 				emitSIN(dane, msg);
@@ -257,8 +257,10 @@
 			break;
 		case 'eks_520':
 			console.log(get.rozkaz);
-			console.log(get.wActivID);// identyfikator rozkazu (np 2001 dla prac miesięcznych)
-			strada.SendFunction(0x520, [parseInt(get.wActivID, 10)], function (dane) {
+			// identyfikator rozkazu (np 2001 dla prac miesięcznych)
+			console.log(get.wActivID);
+			strada.SendFunction(0x520, [parseInt(get.wActivID, 10)], 
+			function (dane) {
 				console.log('dane 520');
 				console.log(dane);
 				emitSIN(dane, msg);
@@ -302,7 +304,8 @@
 			console.log(get.rozkaz);
 			console.log(get.wWartosc);
 			console.log(get.wID);
-			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseFloat(get.wWartosc), parseInt(get.wID, 10)], function (dane) {
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseFloat(get.wWartosc), parseInt(get.wID, 10)], 
+			function (dane) {
 				console.log(dane);
 				emitSIN(dane, msg);
 			});
@@ -313,7 +316,8 @@
 		case 'nowyPlik_606':
 			console.log(get.rozkaz);
 			console.log(get.sWartosc);
-			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), get.sWartosc, function (dane) {
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), get.sWartosc,
+			function (dane) {
 				console.log(dane);
 				emitSIN(dane, msg);
 			});
@@ -322,7 +326,8 @@
 		case 'zerujLicznikiDzien_403':
 		case 'skasujAktywnyPlik_602':
 			console.log(get.rozkaz);
-			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), null, function (dane) {
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), null, 
+			function (dane) {
 				console.log(dane);
 				emitSIN(dane, msg);
 			});
@@ -332,7 +337,8 @@
 			console.log(get.rozkaz);
 			console.log(get.sNazwaPlikuOld);
 			console.log(get.sNazwaPlikuNew);
-			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [get.sNazwaPlikuOld, get.sNazwaPlikuNew], function (dane) {
+			strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [get.sNazwaPlikuOld, get.sNazwaPlikuNew], 
+			function (dane) {
 				console.log(dane);
 				emitSIN(dane, msg);
 			});

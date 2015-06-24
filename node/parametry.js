@@ -1,10 +1,12 @@
 ﻿// parametry.js
 (function () {
     'use strict';
-	var fs = require('fs');
-	var socket = require('socket.io-client')
-		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var argv = require('minimist')(process.argv.slice(2));
+	var port = argv.port || 8888;
+	var socket = require('socket.io-client')('http://127.0.0.1:' + port);
 	var common = require('./common.js');
+	var fs = require('fs');
+	var freshPar = 0;
 
 	/**
 	 * Description
@@ -14,10 +16,11 @@
 	 * @param {function} callback
 	 */
 	function pobierzParametryPLC(stradaReadAll, par, callback) {
-		stradaReadAll(0x307, 0, function (dane) {
+		console.log('pobierzParametryPLC');
+		stradaReadAll(0x307, 0, null, function (dane) {
 			if (!dane || dane.error) {
 				console.log('blad odczytu - readAll');
-				callback(null);
+				if (callback) callback(null);
 				return;
 			}
 
@@ -27,7 +30,7 @@
 			} else {
 				console.log('0x307 - Struktura parametrów zgodna z danymi konfiguracyjnymi');
 			}
-			callback(temp);
+			if (callback) callback(temp);
 		});
 	}
 
@@ -80,8 +83,8 @@
 	 * @param {} callback
 	 */
 	function pobierzPlikParametrowLoc(callback) {
-		var file = process.env.PARAM_LOC_FILE || 'default.json';
 		// console.log('pobierzPlikParametrowLoc');
+		var file = process.env.PARAM_LOC_FILE || 'default.json';
 		fs.readFile(file, 'utf8', function (err, data) {
 			if (err) {
 				callback(null);
@@ -101,6 +104,7 @@
 	 * @param {} callback
 	 */
 	function pobierzPlikParametrowFTP(callback) {
+		// console.log('pobierzPlikParametrowFTP');
 		common.pobierzPlikFTP({host : process.env.PLC_IP || '192.168.3.30', 
 		user : 'admin', password : 'admin', file : 'ide/Parametry/Temp.par'},
 		function (string) {
@@ -133,6 +137,18 @@
 		});
 	}
 
+	function zapiszParametry(temp) {
+		if (temp !== null) {
+			zapiszParametryLoc(process.env.PARAM_LOC_FILE || 'default.json', temp);
+			common.storeGpar(temp);
+			freshPar = 2;
+			setTimeout(function () {
+				freshPar = 0;
+			}, 1000);
+			socket.emit('gpar', temp);
+		}
+	}
+	
 	/**
 	 * Description
 	 * @method pobierzParametryAll
@@ -140,6 +156,14 @@
 	 * @param {} force
 	 */
 	function pobierzParametryAll(stradaReadAll, callback, force) {
+		console.log('pobierzParametryAll ', force, ' ', freshPar);
+		var temp = common.getGpar();
+		if (!force && freshPar > 0) {
+			socket.emit('gpar', temp);
+			if (callback) { callback(temp); }
+			return;
+		}
+		freshPar = 1;
 		pobierzPlikParametrowLoc(function (par) {
 			if (par && !force) {
 				console.log('Wczytano parametry domyślne');
@@ -151,25 +175,19 @@
 								console.log('Pobrano parametry przez FTP');
 								pobierzParametryPLC(stradaReadAll, par2, 
 								function (temp) {
-									if (temp !== null) {
-										zapiszParametryLoc(process.env.PARAM_LOC_FILE || 'default.json', temp);
-										common.storeGpar(temp);
-										socket.emit('gpar', temp);
-									}
+									zapiszParametry(temp);
 									if (callback) { callback(temp); }
 								});
 							} else {
 								var err = 'Nie pobrano parametrow przez FTP';
 								console.log(err);
+								freshPar = 0;
 								if (callback) { callback({error: err}); }
 								// socket.emit('gpar', {error: err});
 							}
 						});
 					} else {
-						// console.log('Struktura parametrów zgodna z danymi konfiguracyjnymi');
-						zapiszParametryLoc(process.env.PARAM_LOC_FILE || 'default.json', temp);
-						common.storeGpar(temp);
-						socket.emit('gpar', temp);
+						zapiszParametry(temp);
 						if (callback) { callback(temp); }
 					}
 				});
@@ -179,15 +197,12 @@
 						console.log('Pobrano parametry przez FTP f');
 						// console.log(par2.WER);
 						pobierzParametryPLC(stradaReadAll, par2, function (temp) {
-							if (temp !== null) {
-								zapiszParametryLoc(process.env.PARAM_LOC_FILE || 'default.json', temp);
-								common.storeGpar(temp);
-								socket.emit('gpar', temp);
-							}
+							zapiszParametry(temp);
 							if (callback) { callback(temp); }
 						});
 					} else {
 						var err = 'Nie pobrano parametrow przez FTP f';
+						freshPar = 0;
 						console.log(err);
 						if (callback) { callback({error: err}); }
 					}

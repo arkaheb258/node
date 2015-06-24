@@ -219,29 +219,6 @@
 					}
 				});
 			});
-			// console.log("sudo hwclock -w");
-			if (globPar.NTP_IPs) {
-				for (var i in globPar.NTP_IPs) {
-					// console.log("ustaw czas zdalnie na " + globPar.NTP_IPs[i]);
-					console.log("http://" + globPar.NTP_IPs[i] + "/set_time?time=" + dataa.getTime());
-					try {
-						http.get({ host: globPar.NTP_IPs[i], port: globPar.NODE_DIAGN_PORT, path: "/set_time?time=" + dataa.getTime() }, function (res) {
-							// console.log("http://" + globPar.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " says:");
-							if (res && res.req && res.req._headers) {
-								console.log(res.req._headers.host + res.req.path + " OK");
-							}
-						}).on('error', function (e) {
-							console.log("http.get got error: " + e.message);
-						}).setTimeout(3000, function () {
-							// handle timeout here
-							console.log("http://" + globPar.NTP_IPs[i] + "/set_time?time=" + dataa.getTime() + " timeout");
-						});
-					} catch (err) {
-						console.log("http.get catch");
-						console.log(err);
-					}
-				}
-			}
 		} else if (process.platform === "win32") {
 					// child = exec('date ' + dataa.getUTCFullYear() + "/" + dataa.getUTCMonth() + "/" + dataa.getUTCDate(), function (error, stdout, stderr) {
 	//					console.log('stdout: ' + stdout);
@@ -251,60 +228,6 @@
 					// child = exec('time ' + dataa.getUTCHours() + ":" + dataa.getUTCMinutes() + ":" + dataa.getUTCSeconds(), function (error, stdout, stderr) {});
 		}
 		//TODO: obsługa błędu zapisu
-	}
-
-	/**
-	 * Description
-	 * @method getTime
-	 * @param {} callback
-	 */
-	function getTime(callback) {
-		if (process.platform === "linux") {
-			if (globPar.NTP_IPs) {
-				if (globPar.NTP_IPs[NTP_IP_i + 1]) {
-					NTP_IP_i += 1;
-				} else {
-					NTP_IP_i = 0;
-				}
-				// exec("(sudo service ntp stop; sudo ntpdate " + globPar.NTP_IPs[NTP_IP_i] + "; sudo service ntp start)", { timeout: 2000 }, function (error, stdout, stderr) {
-				exec("sudo service ntp stop", function (error0, stdout0, stderr0) {
-					// console.log("sudo service ntp stop");
-					exec("sudo ntpdate " + globPar.NTP_IPs[NTP_IP_i], { timeout: 10000 }, function (error, stdout, stderr) {
-						// console.log("sudo ntpdate " + globPar.NTP_IPs[NTP_IP_i]);
-						exec("sudo service ntp start", function (error0, stdout0, stderr0) {
-							// console.log("sudo service ntp start");
-							if (!error) {
-								set_time(new Date());
-								if (callback) { callback({type: "ntp " + globPar.NTP_IPs[NTP_IP_i], date: new Date(), error: error, err: stderr, out: stdout}); }
-							} else {
-								if (globPar.NTP_HWCLOCK) {
-									// exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
-									exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
-										if (!error) {
-											set_time(new Date());
-											callback({type: "hwclock", date: new Date(), error: error, err: stderr, out: stdout});
-										}
-									});
-								} else {
-									if (callback) { callback({error: "Błąd ntp, brak hwclock"}); }
-								}
-							}
-						});
-					});
-				});
-			} else {
-				if (globPar.NTP_HWCLOCK) {
-				// exec("sudo hwclock -r", { timeout: 2000 }, function (error, stdout, stderr) {
-					exec("sudo hwclock -r -f /dev/rtc1", { timeout: 2000 }, function (error, stdout, stderr) {
-						callback({type: "hwclock", date: new Date(), error: error, err: stderr, out: stdout});
-					});
-				} else {
-					if (callback) { callback({error: "Brak ntp i hwclock"}); }
-				}
-			}
-		} else {
-			if (callback) { callback({date: new Date(), out: "Platforma nie obslugiwana"}); }
-		}
 	}
 
 	/**
@@ -503,45 +426,6 @@
 		return output; //}
 	}
 
-	/**
-	 * Description
-	 * @method wer_jezykowa
-	 * @param {} par
-	 * @param {} fileName
-	 * @param {} file_type
-	 * @return fileToRead
-	 */
-	function wer_jezykowa(par, fileName, file_type) {
-		console.log(par.error);
-		if (!globPar || par.error) { return null; }
-		var fileToRead = globPar.WEB_DIR + "/json/";
-		var sKonfTypKombajnu = par.sKonfTypKombajnu.trim().replace(" ", "_").toLowerCase();
-		var rKonfWersjaJezykowa = parseInt(par.rKonfWersjaJezykowa, 10);
-		if (sKonfTypKombajnu !== "") {
-			fileToRead += sKonfTypKombajnu + "/";
-		}
-		fileToRead += fileName;
-		if (rKonfWersjaJezykowa !== undefined) {
-			fileToRead +=  "_" + rKonfWersjaJezykowa;
-		}
-		fileToRead += file_type;
-//		console.log(fileToRead);
-
-		if (!fs.existsSync(fileToRead)) {
-			if (sKonfTypKombajnu !== "") {
-			    fileToRead = globPar.WEB_DIR + "/json/" + sKonfTypKombajnu + "/" + fileName + file_type;
-				if (!fs.existsSync(fileToRead)) {
-				    fileToRead = globPar.WEB_DIR + "/json/" + fileName + file_type;
-				}
-			} else {
-				fileToRead = globPar.WEB_DIR + "/json/" + fileName + file_type;
-			}
-		}
-		console.log(fileToRead);
-		return fileToRead;
-	}
-
-    module.exports.getTime = getTime;
     module.exports.set_time = set_time;
     module.exports.pobierzPlikFTP = pobierzPlikFTP;
     module.exports.pad = pad;
@@ -553,7 +437,6 @@
     module.exports.czytajPlikParametrowWiz = czytajPlikParametrowWiz;
     module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
     module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
-    // module.exports.wer_jezykowa = wer_jezykowa;
 	module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
 
 	module.exports.storeDane = function (d) { dane = d; };

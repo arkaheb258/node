@@ -1,12 +1,13 @@
 ﻿// zapisDoPliku.js
 (function () {
     "use strict";
+	var argv = require('minimist')(process.argv.slice(2));
     var fs = require("fs");
-	var socket = require('socket.io-client')
-		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var port = argv.port || 8888;
+	var socket = require('socket.io-client')('http://127.0.0.1:' + port);
 	var common = require("./common.js");
 	var cp = require("child_process");
-	var logger_dir = process.env.LOGGER_DIR;
+	var logger_dir = argv.dir;
 	var prev_data = null;
 
     /**
@@ -55,7 +56,7 @@
 				adr += 2;
 				fs.writeFile(fileName, outBuff);
 			} else {
-				socket.emit("get_gpar");
+				socket.emit("get_gpar", false);
 				console.log("Brak parametrów do utworzenia pliku");
 			}
         });
@@ -122,7 +123,7 @@
         }
 
 		if (!parametry) {
-			socket.emit("get_gpar");
+			socket.emit("get_gpar", false);
 			console.log("Błąd parametrów przy zapisie do pliku");
 			return;
 		}

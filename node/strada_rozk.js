@@ -1,19 +1,16 @@
 ﻿// strada_rozk.js
 
 // zamienic strada.SendFunction na strada_SendFunction
+//socket i strada przekazywane w parametrze konstruktora
 //module.exports
 (function () {
     'use strict';
-	var socket = require('socket.io-client')
-		('http://127.0.0.1:' + (process.env.WEB_PORT || 8888));
+	var argv = require('minimist')(process.argv.slice(2));
+	var port = argv.port || 8888;
+	var socket = require('socket.io-client')('http://127.0.0.1:' + port);
 	var strada = require('./main.js');
 	var BlockRW = require("./blockrw.js");
 	var common = require('./common.js');
-
-	// socket.on('gpar', function (gpar) {
-		// console.log('storeGpar');
-		// common.storeGpar(gpar);
-	// });
 
 	/**
 	 * Description
@@ -181,7 +178,7 @@
 				console.log('dane 500');
 				console.log(dane);
 				emitSIN(dane, msg);
-				socket.emit('get_gpar');
+				socket.emit('get_gpar', true);
 			}, 10000);
 			break;
 		case 'ustawPlik':
@@ -244,9 +241,13 @@
 			break;
 		case 'statusWeWyBloku_310':
 			console.log(get.rozkaz);
-			console.log(get.uiCzytajObszarNr);
-			console.log(get.sIDbloku);
-			strada.SendFunction(0x310, [parseInt(get.uiCzytajObszarNr, 10), get.sIDbloku], 
+			console.log(get.wID);
+			console.log(get.sID);
+			if (!get.sID) {
+				msg.dane = "Brak parametru sID";
+				socket.emit('odpowiedz', msg);
+			} else 
+			strada.readAll(0x310, 0, get.sID, 
 			function (dane) {
 				console.log('dane 310');
 				console.log(dane);

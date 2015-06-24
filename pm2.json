@@ -13,7 +13,7 @@
 	},{
 		"name"		: "Web Server",
 		"script"	: "node/webServer.js",
-		"args"		: ["--port=8888", "--dir=../www", "--hw=PC"],
+		"args"		: ["--port=8888", "--dir=../build", "--hw=PC"],
 		"out_file"	: "log/web.log",
 		"error_file": "log/web.err",
 		"log_date_format" : "YYYY-MM-DD HH:mm:ss.SSS ",

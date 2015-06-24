@@ -10,6 +10,9 @@
   var Ftp = require("ftp");
   var gpar = null;
   var dane = null;
+  
+  var cl = function(){};
+  // var cl = console.log;
 
   //dodanie zer wiodących
   function pad(num, size) {
@@ -426,6 +429,92 @@
     return output; //}
   }
 
+  /**
+   * Description
+   * @method decodeStrada307
+   * @param {Buffer} buf dane ze strady
+   * @param {Object} outPar
+   * @return outPar
+   */
+  function decodeStrada307(buf, outPar) {
+    var len, ptr = 0, temp, tempStr;
+    // var ok = true;
+    if (outPar && outPar.DANE) {
+      len = outPar.DANE.length;
+    } else {
+      return null;
+    }
+    for (var i = 0; i < 5; i += 1) {
+      tempStr = outPar.DANE[i];
+      // console.log(tempStr);
+      if (typeof buf === 'object' && buf.error !== undefined) {
+        console.log('Błąd decodeStrada307 ' + i);
+        console.log(buf);
+        return null;
+      }
+      temp = readStringTo0(buf, i * 32, 32);
+      // console.log(temp);
+      if (temp !== tempStr.WART) { 
+        console.log('![', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp); 
+        // ok = false; 
+        return null;
+      }
+    }
+
+    //jeżeli zmiana komisji, typu, itd. to przerwać i zwrócić null
+    // if (ok === false) { return null; }
+
+    ptr = 5 * 32;
+    for (var i = 5; i < len; i += 1) {
+      tempStr = outPar.DANE[i];
+      if (buf.length < ptr + tempStr.ROZM * 2) { 
+        console.log('błąd ilości parametrów (za mało) ' + i); 
+        // ok = false; 
+        return null; 
+        break; 
+      }
+  //    console.log(tempStr);
+      if (tempStr.NAZ[0] === 's') {
+        temp = readStringTo0(buf, ptr, tempStr.ROZM * 2);
+      } else if (tempStr.NAZ[0] === 't') {
+        if (tempStr.ROZM !== 2) { 
+          tempStr.ROZM = 2; 
+          console.log('[', i, '] ', tempStr.NAZ, ' - błąd rozmiaru TIME');
+        }
+        // temp = msToCodesysTime(buf.readInt32LE(ptr));
+        temp = buf.readInt32LE(ptr) / 1000;
+      } else {
+        if (tempStr.ROZM === 1) { temp = buf.readInt16LE(ptr); } 
+        else { temp = buf.readInt32LE(ptr); }
+        if (tempStr.PREC) { temp /= Math.pow(10, tempStr.PREC); }
+      }
+      if (tempStr.NAZ[0] === 't' && (typeof tempStr.WART === 'string') && tempStr.WART[0] === 'T') {
+        // console.log('[', i, '] ', tempStr.NAZ, ' porownanie ', tempStr.WART, ' z ', temp);
+        tempStr.WART = codesysTimeToMs(tempStr.WART);
+        outPar.DANE[i].WART = temp;
+      }
+      if (temp !== tempStr.WART) {
+        console.log('[', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp);
+        outPar.DANE[i].WART = temp;
+      }
+      ptr += parseFloat(tempStr.ROZM) * 2;
+    }
+    if (ptr !== buf.length) { 
+      console.log('błąd ilości parametrów ', ptr, ' != ', buf.length);
+      // ok = false; 
+      return null;
+    }      
+
+    //jeżeli błąd w rozmiarze czasu lub różna długość parametrów to przerwać i zwrócić null
+    // if (ok === false) { return null; }
+    outPar.sKonfTypKombajnu = readStringTo0(buf, 0, 32);
+    outPar.sKonfNrKomisji = readStringTo0(buf, 32, 32);
+    outPar.sKonfNazwaKopalni = readStringTo0(buf, 64, 32);
+    outPar.sKonfNrSciany = readStringTo0(buf, 96, 32);
+    outPar.sKonfWersjaProgramu = readStringTo0(buf, 128, 32);
+    return outPar;
+  }
+  
   module.exports.set_time = set_time;
   module.exports.pobierzPlikFTP = pobierzPlikFTP;
   module.exports.pad = pad;
@@ -433,6 +522,7 @@
   module.exports.codesysTimeToMs = codesysTimeToMs;
   module.exports.readStringTo0 = readStringTo0;
 
+  module.exports.decodeStrada307 = decodeStrada307;
   // module.exports.szukajPar = szukajPar;
   module.exports.czytajPlikParametrowWiz = czytajPlikParametrowWiz;
   module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
@@ -441,6 +531,6 @@
 
   module.exports.storeDane = function (d) { dane = d; };
   module.exports.getDane = function () { return dane; };
-  module.exports.storeGpar = function (p) { gpar = p; };
-  module.exports.getGpar = function () { return gpar; };
+  module.exports.storeGpar = function (p) { cl('storeGpar', p == null); gpar = p; };
+  module.exports.getGpar = function () { cl('getGpar'); return gpar; };
 }());

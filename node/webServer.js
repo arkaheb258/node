@@ -146,9 +146,15 @@
     socket
     .on('strada', function (msg) { console.log('strada: ' + msg); })
     .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
-    .on('get_gpar', function () {
+    .on('get_gpar', function (msg) {
+      console.log('web on get_gpar', msg);
       var gpar = common.getGpar();
-      if (gpar) { socket.emit('gpar', gpar); } else { socket.broadcast.emit('get_gpar', false); }
+      if (gpar && !msg) { 
+        socket.emit('gpar', gpar);
+      } else {
+        common.storeGpar(null);
+        io.emit('get_gpar', msg);
+      }
     })
     .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
     .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })

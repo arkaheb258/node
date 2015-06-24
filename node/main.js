@@ -434,18 +434,18 @@
     }
   }
 
-  function stradaReadAll(instrNo, uiCzytajObszarNr, dane2, callback) {
-    // console.log('stradaReadAll');
+  function readAll(instrNo, uiCzytajObszarNr, dane2, callback) {
+    // console.log('readAll');
     // console.log(instrNo);
     // console.log(uiCzytajObszarNr);
     // if (uiCzytajObszarNr[0] === 0) {
     if (uiCzytajObszarNr === 0) {
-      stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
+      readAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
     }
 // console.log('uiCzytajObszarNr '+uiCzytajObszarNr);
     var enqPar = uiCzytajObszarNr;
     if (dane2) { enqPar = [uiCzytajObszarNr, dane2]; }
-    // console.log('stradaReadAll');
+    // console.log('readAll');
     // console.log(instrNo);
     // console.log(dane2);
     // console.log(enqPar);
@@ -453,30 +453,30 @@
       if (!dane.dane || (typeof dane.dane === 'string')) {
         if (callback) { callback(dane); }
       } else {
-        stradaReadAll.tempKonf.dane = new Buffer.concat([stradaReadAll.tempKonf.dane, dane.dane]);
-        stradaReadAll.tempKonf.DataLen = dane.DataLen;
+        readAll.tempKonf.dane = new Buffer.concat([readAll.tempKonf.dane, dane.dane]);
+        readAll.tempKonf.DataLen = dane.DataLen;
         // if (uiCzytajObszarNr[0] > 3) {
         if (uiCzytajObszarNr > 3) {
           console.log('nie ma końca - (uiCzytajObszarNr > 3)');
           return;
         }
-        if (stradaReadAll.tempKonf.dane.length < stradaReadAll.tempKonf.DataLen) {
+        if (readAll.tempKonf.dane.length < readAll.tempKonf.DataLen) {
           // uiCzytajObszarNr[0] += 1;
           // uiCzytajObszarNr += 1;
-          stradaReadAll(instrNo, uiCzytajObszarNr + 1, dane2, callback);
-          // stradaReadAll(instrNo, uiCzytajObszarNr, dane, callback);
+          readAll(instrNo, uiCzytajObszarNr + 1, dane2, callback);
+          // readAll(instrNo, uiCzytajObszarNr, dane, callback);
         } else {
-          if (callback) { callback(stradaReadAll.tempKonf.dane); }
+          if (callback) { callback(readAll.tempKonf.dane); }
         }
       }
     });
   }
 
-  stradaReadAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
+  readAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
 
   socket.on('get_gpar', function (msg) {
-    console.log('on get_gpar');
-    parametry.odswierzParametry(stradaReadAll, socket, null, msg);
+    console.log(' on get_gpar');
+    parametry.odswierzParametry(readAll, socket, null, msg);
   });
 
   //mechanizm do usuniecia (zastepuje go usluga systemowa)
@@ -498,7 +498,7 @@
       stradaDane.stopInterval();
       stradaClearQueue(true);
       stradaDane.startInterval(stradaEnqueue, socket);
-      parametry.odswierzParametry(stradaReadAll, socket, null, false);
+      parametry.odswierzParametry(readAll, socket, null, false);
     })
     .on('error', function (err) {
       console.log('Strada ErRoR: ' + err.code);
@@ -518,6 +518,7 @@
 
   client.connect(20021, '192.168.3.30');
 
-  module.exports.SendFunction = stradaEnqueue;
-  module.exports.readAll = stradaReadAll;
+  module.exports.sendFunction = stradaEnqueue;
+  module.exports.readAll = readAll;
+  module.exports.parametry = parametry;
 }());

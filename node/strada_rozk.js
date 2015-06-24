@@ -77,9 +77,10 @@ function StradaRozk(strada, socket) {
     return out;
   }
 
-  function emitSIN(dane, msg) {
+  function emitSIN(dane, msg, ok) {
+    if (!ok) {ok = "OK"}
     if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
-      msg.dane = 'PAR_OK';
+      msg.dane = ok;
     } else if (dane.dane) {
       msg.dane = dane.dane;
     } else if (dane.error) {
@@ -95,7 +96,7 @@ function StradaRozk(strada, socket) {
     msg.instrID = get.instrID;
     switch (get.rozkaz) {
     case 'podajHistorie':
-      strada.SendFunction(0x308, 0, function (dane) {
+      strada.sendFunction(0x308, 0, function (dane) {
         msg.dane = decodeStrada308(dane.dane);
         socket.emit('odpowiedz', msg);
       });
@@ -123,7 +124,7 @@ function StradaRozk(strada, socket) {
       } else {
         console.log('Ustawienie nowego czasu: ', dataa);
         common.set_time(dataa);
-        strada.SendFunction(0x201, temp, function (dane) {
+        strada.sendFunction(0x201, temp, function (dane) {
           console.log('dane 201', dane);
           if (!dane.error) {
             msg.dane = 'OK';
@@ -147,10 +148,10 @@ function StradaRozk(strada, socket) {
       }
       temp[blok] = tempBlock;
 
-      strada.SendFunction(0x202, encodeStrada202(temp), function (dane) {
+      strada.sendFunction(0x202, encodeStrada202(temp), function (dane) {
         console.log('dane 202');
         console.log(dane);
-        emitSIN(dane, msg);
+        emitSIN(dane, msg, 'BLOK_OK');
       });
       break;
     case 'ustawParametr':
@@ -164,12 +165,17 @@ function StradaRozk(strada, socket) {
         // typ = 'LISTA';
         typ = 'REAL';
       }
-      strada.SendFunction(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc},
+      strada.sendFunction(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc},
         function (dane) {
           console.log('dane 500');
           console.log(dane);
-          emitSIN(dane, msg);
-          socket.emit('get_gpar', true);
+          if (!dane.error) {
+            strada.parametry.odswierzParametry(strada.readAll, socket, function() {
+              emitSIN(dane, msg, 'PAR_OK');
+            }, false);
+          } else {
+            emitSIN(dane, msg, 'PAR_OK');
+          }
         }, 10000);
       break;
     case 'ustawPlik':
@@ -200,7 +206,7 @@ function StradaRozk(strada, socket) {
       } else if (get.akcja === 'save') {
         kierunek = 2;
       }
-      strada.SendFunction(0x502, [plik, kierunek], function (dane) {
+      strada.sendFunction(0x502, [plik, kierunek], function (dane) {
         console.log('dane 502');
         console.log(dane);
         emitSIN(dane, msg);
@@ -210,7 +216,7 @@ function StradaRozk(strada, socket) {
       console.log('kalibracja 2');
       console.log(get.napedId);
       console.log(get.pozycja * 100);
-      strada.SendFunction(0x701, [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100],
+      strada.sendFunction(0x701, [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100],
         function (dane) {
           console.log('dane 701');
           console.log(dane);
@@ -222,7 +228,7 @@ function StradaRozk(strada, socket) {
       console.log('liczniki');
       console.log(get.rozkazId);
       console.log(get.wartosc);
-      strada.SendFunction(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)],
+      strada.sendFunction(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)],
         function (dane) {
           console.log('dane 702');
           console.log(dane);
@@ -252,11 +258,11 @@ function StradaRozk(strada, socket) {
       console.log(get.rozkaz);
       // identyfikator rozkazu (np 2001 dla prac miesięcznych)
       console.log(get.wActivID);
-      strada.SendFunction(0x520, [parseInt(get.wActivID, 10)],
+      strada.sendFunction(0x520, [parseInt(get.wActivID, 10)],
         function (dane) {
           console.log('dane 520');
           console.log(dane);
-          emitSIN(dane, msg);
+          emitSIN(dane, msg, 'EKS_OK');
         });
       break;
     case 'trybSerwisowy':
@@ -283,7 +289,7 @@ function StradaRozk(strada, socket) {
     case 'podajNazwePliku_603':
       console.log(get.rozkaz);
       console.log(get.wWartosc);
-      strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseInt(get.wWartosc, 10), 0], function (dane) {
+      strada.sendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseInt(get.wWartosc, 10), 0], function (dane) {
         console.log(dane);
         emitSIN(dane, msg);
       });
@@ -297,7 +303,7 @@ function StradaRozk(strada, socket) {
       console.log(get.rozkaz);
       console.log(get.wWartosc);
       console.log(get.wID);
-      strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseFloat(get.wWartosc), parseInt(get.wID, 10)],
+      strada.sendFunction(parseInt(get.rozkaz.split('_')[1], 16), [parseFloat(get.wWartosc), parseInt(get.wID, 10)],
         function (dane) {
           console.log(dane);
           emitSIN(dane, msg);
@@ -309,7 +315,7 @@ function StradaRozk(strada, socket) {
     case 'nowyPlik_606':
       console.log(get.rozkaz);
       console.log(get.sWartosc);
-      strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), get.sWartosc,
+      strada.sendFunction(parseInt(get.rozkaz.split('_')[1], 16), get.sWartosc,
         function (dane) {
           console.log(dane);
           emitSIN(dane, msg);
@@ -319,7 +325,7 @@ function StradaRozk(strada, socket) {
     case 'zerujLicznikiDzien_403':
     case 'skasujAktywnyPlik_602':
       console.log(get.rozkaz);
-      strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), null,
+      strada.sendFunction(parseInt(get.rozkaz.split('_')[1], 16), null,
         function (dane) {
           console.log(dane);
           emitSIN(dane, msg);
@@ -330,7 +336,7 @@ function StradaRozk(strada, socket) {
       console.log(get.rozkaz);
       console.log(get.sNazwaPlikuOld);
       console.log(get.sNazwaPlikuNew);
-      strada.SendFunction(parseInt(get.rozkaz.split('_')[1], 16), [get.sNazwaPlikuOld, get.sNazwaPlikuNew],
+      strada.sendFunction(parseInt(get.rozkaz.split('_')[1], 16), [get.sNazwaPlikuOld, get.sNazwaPlikuNew],
         function (dane) {
           console.log(dane);
           emitSIN(dane, msg);

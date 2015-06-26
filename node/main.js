@@ -4,9 +4,8 @@
   var argv = require('minimist')(process.argv.slice(2));
   var port = argv.port || 8888;
   var socket = require('socket.io-client')('http://127.0.0.1:' + port);
-  var stradaDane = require('./strada_dane.js');
-  var stradaRozk = new (require('./strada_rozk.js'))(module.exports, socket);
-  var parametry = require('./parametry.js');
+
+  var fs = require('fs');
   var common = require('./common.js');
   var EverSocket = require('eversocket').EverSocket;
 
@@ -25,15 +24,21 @@
     reconnectOnTimeout: true    // reconnect if the connection is idle
   });
 
+  var Strada = function(socket) {
+    this.socket = socket;
+    var self = this;
+    this.tempKonf = {dane: new Buffer(0), DataLen: 0};
+  };
+  require('./parametry.js')(Strada, socket);
+  require('./strada_dane.js')(Strada, socket);
+
+  
   /**
   * Przegląd kolejki wiadomości w celu sprawdzenia timeoutów
   */
-  function stradaClearQueue(force) {
-    // var len = queue.length;
-//    console.log('len: ' + len);
+  Strada.prototype.clearQueue = function(force) {
     if (queue.length === 0) { return; }
-    // if (len === 0) { return; }
-    // if (force) console.log('stradaClearQueue ' + len);
+    // if (force) console.log('strada.clearQueue ' + queue.length);
     var i;
     for (i = 0; i < queue.length; i += 1) {
       var el = queue[i];
@@ -41,7 +46,6 @@
         queue.splice(i, 1)[0].callback({error: 'timeout'});
         if (debug) { console.log('queue.splice + timeout'); }
         i -= 1;
-        // len -= 1;
       }
     }
   }
@@ -51,8 +55,8 @@
   * @param instrNo kod instrukcji
   * @param data dane do wyslania
   */
-  function stradaSendFunction(instrNo, data) {
-    // console.log(' stradaSendFunction()');
+  Strada.prototype.sendFunction = function(instrNo, data) {
+    // console.log(' strada.sendFunction()');
     instrID = (instrID + 1) % 0x10000;
     var DstID = 1;
     var SrcID = 4;
@@ -278,7 +282,83 @@
     return instrID;
   }
 
-  function stradaEnqueue(instrNo, data, callback, timeout) {
+  
+  /**
+   * Description
+   * @method encodeStrada202
+   * @param {Object} data
+   * @return outBuff
+   */
+  Strada.prototype.encodeStrada202 = function(data) {
+    var BlockRW = require("./blockrw.js");
+    var outBuff;
+    var bw;
+    if (!data.BlockUsr) {
+      console.log('Brak BlockUsr');
+      data.BlockUsr = [];
+    }
+    if (!data.BlockSrvc) {
+      console.log('Brak BlockSrvc');
+      data.BlockSrvc = [];
+    }
+    if (!data.BlockAdv) {
+      console.log('Brak BlockAdv');
+      data.BlockAdv = [];
+    }
+    bw = new BlockRW();
+    outBuff = bw.write(data.BlockUsr, false);
+    outBuff = Buffer.concat([outBuff, bw.write(data.BlockSrvc, false)]);
+    outBuff = Buffer.concat([outBuff, bw.write(data.BlockAdv, false)]);
+
+    if (outBuff.length % 4) {
+      outBuff = Buffer.concat([outBuff, new Buffer([0, 0])]);
+    }
+    return outBuff;
+  }
+
+  /**
+   * Description
+   * @method decodeStrada308
+   * @param {Buffer} dane
+   * @return out
+   */
+  Strada.prototype.decodeStrada308 = function(dane) {
+    var out = [];
+    var gpar = common.getGpar();
+    var i = 0;
+    while (i < dane.length) {
+      var temp = {};
+      temp.nr = dane.readUInt16LE(i) & 0x7FFF;
+      if (dane.readUInt16LE(i) > 0x8000) {
+        temp.typ = 'Ostrzeżenie';
+      } else {
+        temp.typ = 'Alarm';
+      }
+      i += 2;
+      temp.czas = dane.readUInt32LE(i) * 1000;
+      i += 4;
+      if (temp.czas === 0 && temp.nr === 0) {
+        break;
+      }
+      var d = new Date(temp.czas);
+      var n = d.getTimezoneOffset();
+      d.setMonth(0);
+      n -= d.getTimezoneOffset();
+      if (gpar) {
+        if (gpar.rKonfCzasStrefa !== undefined) {
+          temp.czas += (gpar.rKonfCzasStrefa - 12) * 3600000;
+        }
+        if (gpar.rKonfCzasLetni) {
+          temp.czas -= n * 60000;
+        }
+      }
+      out.push(temp);
+    }
+    return out;
+  }
+  
+  // dodanie rozkazu do kolejki
+  Strada.prototype.stradaEnqueue = function(instrNo, data, callback, timeout) {
     var lastID = null;
     var outTimeout;
     if (timeout) {
@@ -286,17 +366,17 @@
     } else {
       outTimeout = CONNECT_TIMEOUT_MS * 5;
     }
-    stradaClearQueue();
-//    console.log('instrNo: ' + instrNo);
-//    console.log('queue.length: ' + queue.length);
+    strada.clearQueue();
+    // console.log('queue.length: ' + queue.length);
     if (!PLCConnected) {
+      console.log('instrNo: ' + instrNo);
       console.log('PLC nie polaczony');
       callback({error: 'PLC nie polaczony'});
       return 1;
     }
     if (queue.length === 0) {
-//      console.log(' stradaSendFunction from enqueue');
-      lastID = stradaSendFunction(instrNo, data);
+      // console.log(' strada.sendFunction from enqueue');
+      lastID = strada.sendFunction(instrNo, data);
     }
     if (!callback) { callback = console.log; }
     // console.log('push');
@@ -310,8 +390,8 @@
     }
   }
 
-  function stradaSendNext(dane, asyn) {
-    // console.log('stradaSendNext(dane)');
+  Strada.prototype.sendNext = function(dane, asyn) {
+    // console.log('strada.sendNext');
     var el = queue[0];
     var tempDate = new Date();
     if (el) {
@@ -319,16 +399,16 @@
 //        console.log(el);
 //        console.log(tempDate - el.time);
         if (el.instrNo.length === 2) { el.instrNo = el.instrNo[0]; }
-        stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (tempDate - el.time));
+        strada.stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (tempDate - el.time));
       } else {
         el.callback(dane);
       }
     }
     queue.shift();
-    stradaClearQueue();
+    strada.clearQueue();
     if (queue.length > 0) {
       el = queue[0];
-      queue[0].instrID = stradaSendFunction(el.instrNo, el.data);
+      queue[0].instrID = strada.sendFunction(el.instrNo, el.data);
     }
   }
 
@@ -336,9 +416,9 @@
   * Odebranie danych ze sterownika protokołem Strada
   * @param dane odebrane dane
   */
-  function stradaGetData(dane) {
-//    console.log('dane');
-//    console.log(dane.length);
+  Strada.prototype.getData = function(dane) {
+    // console.log('strada.getData');
+    // console.log(dane.length);
     var DstIDR = dane.readUInt32LE(0);
     var SrcIDR = dane.readUInt32LE(4);
     var DirR = dane.readUInt16LE(8);
@@ -347,7 +427,7 @@
     var DataLenR = dane.readUInt16LE(14);
     var error = true;
 
-//    console.log(' stradaGetData lastSent.instrID = ' + lastSent.instrID);
+    // console.log(' strada.getData lastSent.instrID = ' + lastSent.instrID);
     if (lastSent) {
       if (DstIDR !== lastSent.SrcID) {
         console.log('Błąd DstID');
@@ -362,7 +442,6 @@
         }
       } else if (instrNoR !== lastSent.instrNo) {
         console.log('Błąd instrNo');
-      // } else if (instrIDR !== lastSent.instrID) {
       } else if (instrIDR !== lastSent.instrID
           && instrNoR > 0x200
           && instrNoR !== 0x301) {  //ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
@@ -370,7 +449,6 @@
       } else if (dane.length - 16 !== DataLenR) {
         console.log('Błąd DataLenR');
       } else {
-        // timeout_counter = 0;
         error = null;
       }
     }
@@ -378,11 +456,11 @@
     dane = dane.slice(16);  //przesłanie dalej tylko StradaData
 
     if (instrNoR < 0x200 || instrNoR === 0x301) {
-      stradaSendNext({error: error, Dir: DirR, dane: dane, RawHead: new Buffer([])});
+      strada.sendNext({error: error, Dir: DirR, dane: dane, RawHead: new Buffer([])});
       lastSent = null;
       return;
     }
-//    console.log(lastSent);
+    // console.log(lastSent);
     if (!error) {
       //SIN
       var StatusInfNo = dane.readInt16LE(0);
@@ -402,15 +480,15 @@
       }
       switch (StatusInfNo) {
       case -1:
-        stradaSendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
+        strada.sendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
         break;
       case -2:
       case -4:
       case -5:
         console.log('StatusInfNo: ' + StatusInfNo + ' - wyslanie ponowne');
         setTimeout(function () {
-          stradaSendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
-          // stradaSendNext({error: error, Dir: 0x101, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
+          strada.sendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
+          // strada.sendNext({error: error, Dir: 0x101, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
         }, 100);
         break;
       default:
@@ -423,60 +501,72 @@
         // console.log('DataLen: ' + DataLen);
         // console.log('DataSegmentNo: ' + DataSegmentNo);
         error = StatusInfNo;
-        stradaSendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
+        strada.sendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
         break;
       }
     } else {
       //BOT
       var error2 = dane.readInt16LE(0);  //numer błędu
       var ErrDesc = dane.slice(4);      //opis błędu
-      stradaSendNext({error: error2, Dir: DirR, dane: ErrDesc.toString(), DataLen: null, RawHead: null});
+      strada.sendNext({error: error2, Dir: DirR, dane: ErrDesc.toString(), DataLen: null, RawHead: null});
     }
   }
-
-  function readAll(instrNo, uiCzytajObszarNr, dane2, callback) {
+  
+  // rekurencyjne odczytanie wielu obszarow
+  Strada.prototype.readAll = function(instrNo, uiCzytajObszarNr, dane2, callback) {
+    var self = this;
     // console.log('readAll');
     // console.log(instrNo);
     // console.log(uiCzytajObszarNr);
     // if (uiCzytajObszarNr[0] === 0) {
     if (uiCzytajObszarNr === 0) {
-      readAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
+      self.tempKonf = {dane: new Buffer(0), DataLen: 0};
     }
-// console.log('uiCzytajObszarNr '+uiCzytajObszarNr);
+    // console.log('uiCzytajObszarNr '+uiCzytajObszarNr);
     var enqPar = uiCzytajObszarNr;
     if (dane2) { enqPar = [uiCzytajObszarNr, dane2]; }
     // console.log('readAll');
     // console.log(instrNo);
     // console.log(dane2);
     // console.log(enqPar);
-    stradaEnqueue(instrNo, enqPar, function (dane) {
+    strada.stradaEnqueue(instrNo, enqPar, function (dane) {
       if (!dane.dane || (typeof dane.dane === 'string')) {
         if (callback) { callback(dane); }
       } else {
-        readAll.tempKonf.dane = new Buffer.concat([readAll.tempKonf.dane, dane.dane]);
-        readAll.tempKonf.DataLen = dane.DataLen;
-        // if (uiCzytajObszarNr[0] > 3) {
+        self.tempKonf.dane = new Buffer.concat([self.tempKonf.dane, dane.dane]);
+        self.tempKonf.DataLen = dane.DataLen;
         if (uiCzytajObszarNr > 3) {
           console.log('nie ma końca - (uiCzytajObszarNr > 3)');
           return;
         }
-        if (readAll.tempKonf.dane.length < readAll.tempKonf.DataLen) {
-          // uiCzytajObszarNr[0] += 1;
-          // uiCzytajObszarNr += 1;
-          readAll(instrNo, uiCzytajObszarNr + 1, dane2, callback);
-          // readAll(instrNo, uiCzytajObszarNr, dane, callback);
+        if (self.tempKonf.dane.length < self.tempKonf.DataLen) {
+          self.readAll(instrNo, uiCzytajObszarNr + 1, dane2, callback);
         } else {
-          if (callback) { callback(readAll.tempKonf.dane); }
+          if (callback) { callback(self.tempKonf.dane); }
         }
       }
     });
   }
+  
+  var strada = new Strada(socket);
 
-  readAll.tempKonf = {dane: new Buffer(0), DataLen: 0};
+  require('./strada_rozk.js')(strada, socket);
 
   socket.on('get_gpar', function (msg) {
     console.log(' on get_gpar');
-    parametry.odswierzParametry(readAll, socket, null, msg);
+
+    // jezeli freshPar -> wyslij
+    // if (!force && freshPar > 0) {
+      // socket.emit('gpar', gpar);
+      // return;
+    // }
+    //do zmiany (przemyslenia)
+    // freshPar = 1;
+    
+    //dodac callback z zapisem(store + emit)
+    // console.log('odswierzParametry ', force, ' ', freshPar);
+    // parametry.
+    strada.odswierzParametry(msg);
   });
 
   //mechanizm do usuniecia (zastepuje go usluga systemowa)
@@ -490,15 +580,18 @@
     });
   }
 
+  strada.stopInterval();
   client
-    .on('data', stradaGetData)
+    .on('data', strada.getData)
     .on('connect', function () {
       console.log('Strada Polaczono ....');
       PLCConnected = true;
-      stradaDane.stopInterval();
-      stradaClearQueue(true);
-      stradaDane.startInterval(stradaEnqueue, socket);
-      parametry.odswierzParametry(readAll, socket, null, false);
+      strada.stopInterval();
+      strada.clearQueue(true);
+      strada.startInterval(argv.interval);
+    //dodac callback z zapisem(store + emit)
+      // parametry.
+      strada.odswierzParametry(false);
     })
     .on('error', function (err) {
       console.log('Strada ErRoR: ' + err.code);
@@ -511,14 +604,11 @@
       if (PLCConnected) {
         PLCConnected = false;
         socket.emit('dane', {error: 'Strada Connection closed'});
-        stradaDane.stopInterval();
-        stradaClearQueue(true);
+        strada.stopInterval();
+        strada.clearQueue(true);
       }
     });
 
   client.connect(20021, '192.168.3.30');
 
-  module.exports.sendFunction = stradaEnqueue;
-  module.exports.readAll = readAll;
-  module.exports.parametry = parametry;
 }());

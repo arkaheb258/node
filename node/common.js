@@ -3,7 +3,7 @@
   "use strict";
   var http = require('http');
   var fs = require("fs");
-  var globPar = process.env;
+  var NTP_HWCLOCK = false;
   var exec = require('child_process').exec;
   var walk = require('walk');
   var NTP_IP_i = 0;
@@ -33,7 +33,7 @@
   // (dodac parametryzacje folderu json)
   function kopiujJsonNaPLC(callback) {
     var c = new Ftp();
-    // var config = {host : process.env.PLC_IP || "192.168.3.30", user : "admin", password : "admin", port : 21, "connTimeout" : 2000, "pasvTimeout" : 2000};
+    // var config = {host : "192.168.3.30", user : "admin", password : "admin", port : 21, "connTimeout" : 2000, "pasvTimeout" : 2000};
     var files   = [];
     var dirs   = [];
 
@@ -50,7 +50,7 @@
     walker.on('end', function () {
       dirs = arrayUnique(dirs);
       // console.log(files);
-      c.connect({host : process.env.PLC_IP || "192.168.3.30",
+      c.connect({host : "192.168.3.30",
         user : "admin", password : "admin",
         connTimeout : 2000, pasvTimeout : 2000});
     });
@@ -115,17 +115,15 @@
    * @param {} callback
    * @param {} cache
    */
-  function pobierzPlikFTP(con_par, callback, cache) {
-    console.log("pobierzPlikFTP");
-    // return;
+  function pobierzPlikFTP(file, con_par, callback) {
+    con_par = con_par || {host : '192.168.3.30', user : 'admin', password : 'admin'}
     var c = new Ftp();
-    var cache_file;
     c.on('ready', function () {
-      c.get(con_par.file, function (err, stream) {
+      c.get(file, function (err, stream) {
         if (err) {
           console.log("FTP error");
           console.log(err);
-          callback(false);
+          callback(null);
           return;
           // throw err;
         }
@@ -133,7 +131,7 @@
         c.on('readable', function () {
           var chunk;
           while (null !== (chunk = c.read())) {
-            console.log('got %d bytes of data', chunk.length);
+            // console.log('got %d bytes of data', chunk.length);
           }
         });
         var string = "";
@@ -142,47 +140,23 @@
           //console.log(response);
         });
         stream.once('close', function () {
-          console.log("FTP pobrano " + con_par.file);
+          console.log("FTP: pobrano plik ", file);
           callback(string);
           c.end();
         });
-        // console.log("con_par.file " + con_par.file);
-        if (cache && globPar.FTP_CACHE_DIR) {
-          stream.pipe(fs.createWriteStream(cache_file));
-        }
       });
     });
     c.on('timeout', function () {
       console.log("FTP timeout");
-      callback(false);
+      callback(null);
     });
     c.on('error', function () {
       console.log("FTP error");
-      callback(false);
+      callback(null);
     });
-    // console.log("cache");
-    // console.log(cache);
-    // console.log(globPar.FTP_CACHE_DIR);
-    if (cache && globPar.FTP_CACHE_DIR) {
-      createDir(globPar.FTP_CACHE_DIR, function () {
-        fs.readFile(cache_file, function (err, text) {
-          if (err) {
-            // throw err;
-            console.log(err);
-            c.connect({host: con_par.host, 
-              user: con_par.user, password: con_par.password,
-              connTimeout: 2000, pasvTimeout : 2000});
-          } else {
-            console.log("FTP cache " + con_par.file);
-            callback(text.toString());
-          }
-        });
-      });
-    } else {
-      c.connect({host: con_par.host, 
-        user: con_par.user, password: con_par.password,
-        connTimeout: 2000, pasvTimeout: 2000});
-    }
+    c.connect({host: con_par.host, 
+      user: con_par.user, password: con_par.password,
+      connTimeout: 2000, pasvTimeout: 2000});
   }
 
   /**
@@ -212,7 +186,7 @@
           console.log("stdout: " + stdout);
           console.log("stderr: " + stderr);
           console.log("error: " + error);
-          if (globPar.NTP_HWCLOCK) {
+          if (NTP_HWCLOCK) {
             exec("sudo hwclock -w -f /dev/rtc1", function (error, stdout, stderr) {
               console.log("sudo hwclock -w -f /dev/rtc1");
               console.log("stdout: " + stdout);
@@ -431,6 +405,46 @@
 
   /**
    * Description
+   * @method wyluskajParametry
+   * @param {} data
+   * @return out
+   */
+  function wyluskajParametry(data) {
+    if (!data) { return null; }
+    var js = JSON.parse(data);
+    var out = [];
+    if (js.DANE) {
+      out = js;
+      var i;
+      for (i in js.DANE) {
+        if (js.DANE.hasOwnProperty(i)) {
+          var temp = js.DANE[i];
+          switch (temp.NAZ) {
+          case 'sKonfTypKombajnu':
+          case 'rKonfWersjaJezykowa':
+          case 'sKonfNrKomisji':
+          case 'sKonfNazwaKopalni':
+          case 'sKonfNrSciany':
+          case 'sKonfWersjaProgramu':
+          case 'rKonfCzasLetni':
+          case 'rKonfCzasStrefa':
+          case 'rZapisTyp':
+            out[temp.NAZ] = temp.WART;
+            break;
+          case 'tZapisCzasZrzutu':
+            out[temp.NAZ] = codesysTimeToMs(temp.WART.toString());
+            break;
+          default:
+            break;
+          }
+        }
+      }
+    }
+    return out;
+  }
+  
+  /**
+   * Description
    * @method decodeStrada307
    * @param {Buffer} buf dane ze strady
    * @param {Object} outPar
@@ -494,7 +508,7 @@
         outPar.DANE[i].WART = temp;
       }
       if (temp !== tempStr.WART) {
-        console.log('[', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp);
+        // console.log('[', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp);
         outPar.DANE[i].WART = temp;
       }
       ptr += parseFloat(tempStr.ROZM) * 2;
@@ -523,6 +537,7 @@
   module.exports.readStringTo0 = readStringTo0;
 
   module.exports.decodeStrada307 = decodeStrada307;
+  module.exports.wyluskajParametry = wyluskajParametry;
   // module.exports.szukajPar = szukajPar;
   module.exports.czytajPlikParametrowWiz = czytajPlikParametrowWiz;
   module.exports.czytajPlikSygnalow = czytajPlikSygnalow;

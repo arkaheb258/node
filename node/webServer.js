@@ -82,28 +82,35 @@
     var file = req.url.match(/\/([a-z]+)\.json/);
     if (!file) {
       next();
-    } else if (gpar) {
-      var fileToRead = file[1];
-      var dir = '';
-      var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(' ', '_').toLowerCase();
-      if (sKonfTypKombajnu !== '') {
-        dir += sKonfTypKombajnu + '/';
-      }
-      if (gpar.rKonfWersjaJezykowa !== undefined) {
-        fileToRead +=  '_' + gpar.rKonfWersjaJezykowa;
-      }
-      if (file[1] === 'sygnaly') {
-        fs.readFile(__dirname + '/' + web_dir + '/json/' 
-        + dir + fileToRead + '.json', 'utf8', 
-        function (err, text) {
-          if (err) {
-            res.jsonp('sygnaly.json error: ' + web_dir + '/json/' + dir + fileToRead + '.json');
-          } else {
-            res.jsonp(common.czytajPlikSygnalow(text, common.getGpar()));
-          }
-        });
-      } else if (file[1] === 'parametry') {
-        fs.readFile(__dirname + '/' + web_dir + '/json/' 
+      return;
+    } 
+    if (!gpar) {
+      res.jsonp('Brak połączenia z PLC -> brak parametrów');
+      return;
+    }
+    var fileToRead = file[1];
+    var dir = '';
+    var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(' ', '_').toLowerCase();
+    if (sKonfTypKombajnu !== '') {
+      dir += sKonfTypKombajnu + '/';
+    }
+    if (gpar.rKonfWersjaJezykowa !== undefined) {
+      fileToRead +=  '_' + gpar.rKonfWersjaJezykowa;
+    }
+    switch (file[1]) {
+    case 'sygnaly':
+      fs.readFile(__dirname + '/' + web_dir + '/json/' 
+      + dir + fileToRead + '.json', 'utf8', 
+      function (err, text) {
+        if (err) {
+          res.jsonp('sygnaly.json error: ' + web_dir + '/json/' + dir + fileToRead + '.json');
+        } else {
+          res.jsonp(common.czytajPlikSygnalow(text, common.getGpar()));
+        }
+      });
+      break;
+    case 'parametry':
+      fs.readFile(__dirname + '/' + web_dir + '/json/' 
         + dir + fileToRead + '.json', 'utf8', 
         function (err, text) {
           if (err) {
@@ -112,21 +119,21 @@
             res.jsonp(common.czytajPlikParametrowWiz(text, common.getGpar()));
           }
         });
-      } else if (file[1] === 'komunikaty') {
-        fs.readFile(__dirname + '/' + web_dir + '/json/' 
-        + 'STR_KOMUNIKATY.EXP', 'utf8', 
-        function (err, text) {
-          if (err) {
-            res.redirect('/json/' + dir + fileToRead + '.json');
-          } else {
-            res.jsonp(common.czytajPlikKomunikatow(text, false));
-          }
-        });
-      } else {
-        res.redirect('/json/' + dir + fileToRead + '.json');
-      }
-    } else {
-      res.jsonp('brak polaczenia z PLC -> brak parametrow');
+      break;
+    case 'komunikaty':
+      fs.readFile(__dirname + '/' + web_dir + '/json/' 
+      + 'STR_KOMUNIKATY.EXP', 'utf8', 
+      function (err, text) {
+        if (err) {
+          res.redirect('/json/' + dir + fileToRead + '.json');
+        } else {
+          res.jsonp(common.czytajPlikKomunikatow(text, false));
+        }
+      });
+      break;
+    default:
+      res.redirect('/json/' + dir + fileToRead + '.json');
+      break;
     }
   });
 
@@ -139,26 +146,28 @@
   io.on('connection', function (socket) {
     console.log('Nowy socket: ', socket.conn.id);
     //dane do wyslania dla nowo-podlaczonych
-    socket.emit('dane', {error: 'Dane nie gotowe - oczekiwanie na PLC'});
+    // socket.emit('dane', {error: 'Dane nie gotowe - oczekiwanie na PLC'});
     var gpar = common.getGpar();
-    if (gpar) { socket.emit('gpar', gpar); } else { io.emit('get_gpar', false); }
+    if (gpar) { socket.emit('gpar', gpar); } else { io.emit('get_gpar'); }
 
     socket
-    .on('strada', function (msg) { console.log('strada: ' + msg); })
+    // .on('strada', function (msg) { console.log('strada: ' + msg); })
     .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
+    .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
+    .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
+    .on('broadcast', function (msg) { io.emit(msg); })
     .on('get_gpar', function (msg) {
       console.log('web on get_gpar', msg);
       var gpar = common.getGpar();
       if (gpar && !msg) { 
         socket.emit('gpar', gpar);
       } else {
+        console.log('kasowanie gpar');
         common.storeGpar(null);
-        io.emit('get_gpar', msg);
+        socket.broadcast.emit('get_gpar', msg);
+        // io.emit('get_gpar', msg);
       }
     })
-    .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
-    .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
-    .on('broadcast', function (msg) { io.emit(msg); })
     .on('gpar', function (gpar) {
       console.log('webServer on gpar');
       common.storeGpar(gpar);

@@ -7,7 +7,7 @@
   var socket = require('socket.io-client')('http://127.0.0.1:' + port);
   var common = require('./common.js');
   var cp = require('child_process');
-  var logger_dir = argv.dir;
+  var logger_dir = argv.dir || null;
   var prev_data = null;
 
   /**
@@ -15,15 +15,18 @@
    * @method createDir
    * @param {} dirName
    * @param {} callback
-   * @param {} console.log
    */
   function createDir(dirName, callback) {
-    fs.readdir(dirName, function (err, files) {
+    fs.readdir(dirName, function (err) {
       if (err) {
-        if (err.code === 'ENOENT') { fs.mkdirSync(dirName); }
-        else { console.log(err); }
+        if (err.code === 'ENOENT') {
+          fs.mkdir(dirName, function () {
+            if (callback) { callback(); }
+          });
+        } else { console.log(err); }
+      } else {
+        if (callback) { callback(); }
       }
-      if (callback) { callback(); }
     });
   }
 
@@ -94,7 +97,8 @@
     var len = data.length;
     var count = 0;
     var outBuff = new Buffer(4 * len);
-    for (var i = 0; i < len; i += 1) {
+    var i;
+    for (i = 0; i < len; i += 1) {
       if (prev[i] === undefined || prev[i] !== data[i]) {
         outBuff.writeUInt16LE(i + offset, 4 * count);//id zmiennej
         if (sign) {
@@ -143,12 +147,12 @@
             var pen = stdout.substring(poz + 2).trim();
             console.log("Znaleziono PENDRIVE: " + pen);
             cp.exec("mkdir " + pen + "/Rejestracja",
-            function (error, stdout, stderr) {
-              console.log(stdout);
-              logger_dir = pen + "/Rejestracja";
-              if (stderr) { console.log("stderr: " + stderr); }
-              if (error) { console.log("error 1: " + error); }
-            });
+              function (error, stdout, stderr) {
+                console.log(stdout);
+                logger_dir = pen + "/Rejestracja";
+                if (stderr) { console.log("stderr: " + stderr); }
+                if (error) { console.log("error 1: " + error); }
+              });
           }
           if (stderr) { console.log("stderr: " + stderr); }
           if (error) { console.log("error 2: " + error); }
@@ -157,9 +161,8 @@
       return;
     }
 
-
     d.setTime(data.TimeStamp_js);
-    fileName = d.toISOString().substring(0,10).replace('-', '_');
+    fileName = d.toISOString().substring(0, 10).replace('-', '_');
     // fileName = d.getUTCFullYear() + "_" + common.pad(d.getUTCMonth() + 1, 2) + "_" + common.pad(d.getUTCDate(), 2);
 
     if (parametry.rZapisTyp === 0) {
@@ -181,18 +184,11 @@
       console.log(parametry.tZapisCzasZrzutu);
       console.log(typeof parametry.tZapisCzasZrzutu);
     }
-    // console.log(common.codesysTimeToMs(parametry.tZapisCzasZrzutu));
 
-    // if (forceAll || (data.TimeStamp_js - prev_data.TimeStamp_js) > common.codesysTimeToMs(parametry.tZapisCzasZrzutu)) {
     var czas_zrzutu = parametry.tZapisCzasZrzutu;
-// console.log(forceAll);
-// console.log(czas_zrzutu);
-// console.log((data.TimeStamp_js - prev_data.TimeStamp_js));
     if (!czas_zrzutu) {czas_zrzutu = 60000; }
-    if (forceAll || !prev_data 
-    || ((data.TimeStamp_js - prev_data.TimeStamp_js) > czas_zrzutu)) {
+    if (forceAll || !prev_data || ((data.TimeStamp_js - prev_data.TimeStamp_js) > czas_zrzutu)) {
       prev_data = new EmptyData();  // tylko przy zapisie całej ramki
-//      console.log("adr "+adr);
       outBuff.writeUInt32LE(0xffffffff, adr);
       adr += 4;
     }
@@ -217,14 +213,14 @@
     outBuff = outBuff.slice(0, adr);
     outBuff = Buffer.concat([outBuff, outBuffDane]);
     countChange = outBuffDane.length / 4;
-// console.log("countChange: " + countChange);
+    // console.log("countChange: " + countChange);
     if (countChange) {
       fs.appendFile(fileName, outBuff, function () {
         if (prev_data.TimeStamp_js === 0) {
-          console.log("Zapis całej ramki do pliku: ", fileName, 
+          console.log("Zapis całej ramki do pliku: ", fileName,
             ", zmian = ", countChange);
         } else {
-          console.log("Zapis zmian do pliku: ", fileName, 
+          console.log("Zapis zmian do pliku: ", fileName,
             ", zmian = ", countChange);
         }
       });
@@ -233,16 +229,15 @@
   }
   prev_data = new EmptyData();
 
-  socket.on('dane', function (dane) {
-    // console.log("dane zapis");
-    if (!dane.error) {
-      appendFrame(dane);
-    }
-  });
-
-  socket.on('gpar', function (gpar) {
-    console.log("zapis on gpar");
-    common.storeGpar(gpar);
-  });
-
+  socket
+    .on('dane', function (dane) {
+      // console.log("dane zapis");
+      if (!dane.error) {
+        appendFrame(dane);
+      }
+    })
+    .on('gpar', function (gpar) {
+      console.log("zapis on gpar");
+      common.storeGpar(gpar);
+    });
 }());

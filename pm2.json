@@ -21,7 +21,7 @@
 	},{
 		"name"		: "Zapis do pliku",
 		"script"	: "node/zapisDoPliku.js",
-		"args"		: ["--port=8888", "--dir=log"],
+		"args"		: ["--port=8888"],
 		"out_file"	: "log/zapis.log",
 		"error_file": "log/zapis.err",
 		"log_date_format" : "YYYY-MM-DD HH:mm:ss.SSS ",

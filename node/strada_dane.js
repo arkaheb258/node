@@ -1,8 +1,10 @@
 ﻿// strada_dane.js
-(function () {
-  'use strict';
+'use strict';
+var common = require("./common.js");
+
+module.exports = function(Strada, socket) {
   var stradaIntEnabled = false;
-  var common = require("./common.js");
+  var errorInterval = null;
 
   /**
    * Description
@@ -10,7 +12,7 @@
    * @param {Buffer} data
    * @return ThisExpression
    */
-  function DecodeStrada302(data) {
+  Strada.prototype.DecodeStrada302 = function(data) {
     if (data.length < 20) { return "ERROR"; }
     var BlockRW = require("./blockrw.js");
     var br = new BlockRW();
@@ -82,33 +84,52 @@
    * @method startInterval
    * @param {function} callback
    */
-  module.exports.startInterval = function (strada_SendFunction, socket, interval) {
+  Strada.prototype.startInterval = function (interval) {
+    var self = this;
     // console.log("StradaStartInterval");
     MySetInterval.start = 0;
     stradaIntEnabled = true;
     var temp = new MySetInterval(function () {
       // console.log("StradaStartInterval ex");
-      strada_SendFunction(0x302, 0, function (dane) {
+      self.stradaEnqueue(0x302, 0, function (dane) {
         if (dane.error) {
-          dane = {error: "Brak połączenia z PLC: " + dane.error};
+          dane = {error: "Utracono połączenie z PLC: " + dane.error};
           // console.log("zerwane połączenie ze sterownikiem");
           console.log(dane);
         } else {
-          dane = new DecodeStrada302(dane.dane);
+          dane = new self.DecodeStrada302(dane.dane);
           // strada_req_time = (dane.wDataControl === 1);
           if (dane.wDataControl === 1) {
             // console.log('Sterownik rząda daty 1');
-            socket.emit('broadcast', 'strada_req_time');
+            self.socket.emit('broadcast', 'strada_req_time');
           }
         }
         // dane302_json = JSON.stringify(dane);
         common.storeDane(dane);
-        socket.emit('dane', dane);
+        self.socket.emit('dane', dane);
       });
     }, interval || 200);
   };
 
-  module.exports.stopInterval = function () {
+  
+  Strada.prototype.stopInterval = function () {
+    console.log('Stop interval');
     stradaIntEnabled = false;
+  //gdy brak polaczenia wysyla tresc bledu co 1s
+    if (errorInterval) { clearInterval(errorInterval); }
+    errorInterval = setInterval(function(){ 
+      if (!stradaIntEnabled && self.socket) { 
+        var dane = common.getDane();
+        if (dane) {
+          // console.log(dane.error);
+          self.socket.emit('dane', dane); 
+        } else {
+          self.socket.emit('dane', {error: "Brak połączenia z PLC"});
+          // console.log('dane.error');
+        }
+      }
+    }, 1000);
   };
-}());
+  
+  return Strada;
+};

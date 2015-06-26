@@ -84,9 +84,9 @@ module.exports = function(Strada, socket) {
    * @method startInterval
    * @param {function} callback
    */
-  Strada.prototype.startInterval = function (interval) {
-    var self = this;
+  Strada.prototype.startInterval = function () {
     // console.log("StradaStartInterval");
+    var self = this;
     MySetInterval.start = 0;
     stradaIntEnabled = true;
     var temp = new MySetInterval(function () {
@@ -108,12 +108,14 @@ module.exports = function(Strada, socket) {
         common.storeDane(dane);
         self.socket.emit('dane', dane);
       });
-    }, interval || 200);
+    }, self.interval);
   };
 
   
   Strada.prototype.stopInterval = function () {
+    var self = this;
     console.log('Stop interval');
+    this.clearQueue(true);
     stradaIntEnabled = false;
   //gdy brak polaczenia wysyla tresc bledu co 1s
     if (errorInterval) { clearInterval(errorInterval); }

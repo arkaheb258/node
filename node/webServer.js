@@ -159,11 +159,9 @@
     .on('get_gpar', function (msg) {
       console.log('web on get_gpar', msg);
       var gpar = common.getGpar();
-      if (gpar && !msg) { 
+      if (gpar) { 
         socket.emit('gpar', gpar);
       } else {
-        console.log('kasowanie gpar');
-        common.storeGpar(null);
         socket.broadcast.emit('get_gpar', msg);
         // io.emit('get_gpar', msg);
       }

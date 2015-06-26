@@ -59,7 +59,7 @@
         adr += 2;
         fs.writeFile(fileName, outBuff);
       } else {
-        socket.emit("get_gpar", false);
+        socket.emit("get_gpar");
         console.log("Brak parametrów do utworzenia pliku");
       }
     });
@@ -127,7 +127,7 @@
     }
 
     if (!parametry) {
-      socket.emit("get_gpar", false);
+      socket.emit("get_gpar");
       console.log("Błąd parametrów przy zapisie do pliku");
       return;
     }

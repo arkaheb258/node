@@ -7,7 +7,7 @@
 		external_data = false,
 		fs = require("fs");
 
-	function read_dane() {
+	function readDane() {
 		is_reading = true;
 		fs.readFile("dane.json", 'utf8', function (err, data) {
 			is_reading = false;
@@ -23,12 +23,30 @@
 		});
 	}
 
+  function readDaneDiag() {
+		is_reading = true;
+		fs.readFile("daneDiag.json", 'utf8', function (err, data) {
+			is_reading = false;
+			if (!err) {
+				socket.emit('daneDiag', data);
+			} else {
+				console.log(err);
+			}
+		});
+	}
+
 	setInterval(function () {
 		if (!external_data && !is_reading) {
-			read_dane();
+			readDane();
 		}
 	}, 200);
 
+	setInterval(function () {
+		if (!external_data && !is_reading) {
+			readDaneDiag();
+		}
+	}, 1000);
+  
 	socket.emit('dane', {error: "Dane nie gotowe - oczekiwanie na PLC (PROXY)"});
 	socket.on('dane', function () {
 		external_data = true;

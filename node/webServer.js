@@ -15,6 +15,8 @@
   var web_dir = argv.dir || '../build';
   var instrID = 0;
 
+  argv.debug = true;
+  
   if (argv.debug) {
     app.use(function (req, res, next) {
       console.log(req.connection.remoteAddress + ' -> ' + req.url);
@@ -26,6 +28,9 @@
   app.get('/', function (req, res) {
     res.redirect('/index.html');
   });
+
+  //test.html
+  app.use('/test', express.static(__dirname + '/../test'));
 
   //tresc statyczna na poczatku routowania
   app.use(express.static(__dirname + '/' + web_dir));
@@ -155,7 +160,8 @@
     .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
     .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
     .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
-    .on('broadcast', function (msg) { io.emit(msg); })
+    .on('io_emit', function (msg) { io.emit(msg[0], msg[1]); })
+    .on('broadcast', function (msg) { socket.broadcast.emit(msg[0], msg[1]); })
     .on('get_gpar', function (msg) {
       console.log('web on get_gpar', msg);
       var gpar = common.getGpar();

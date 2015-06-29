@@ -1,6 +1,7 @@
 ﻿// strada_rozk.js
 'use strict';
 var common = require('./common.js');
+var BlockRW = require("./blockrw.js");
 module.exports = function(strada, socket) {
   // var self = this;
 
@@ -162,18 +163,48 @@ module.exports = function(strada, socket) {
       break;
     case 'statusWeWyBloku_310':
       console.log(get.rozkaz);
-      console.log(get.wID);
+      console.log(get.wartosc);
+      // console.log(get.wID);
       console.log(get.sID);
       if (!get.sID) {
         msg.dane = "Brak parametru sID";
         socket.emit('odpowiedz', msg);
       } else {
-        strada.readAll(0x310, 0, get.sID,
-          function (dane) {
-            console.log('dane 310');
-            console.log(dane);
-            emitSIN(dane, msg);
-          });
+        if (!get.wartosc || get.wartosc < 200) {
+          msg.dane = 'Błąd parametru "wartosc"';
+          socket.emit('odpowiedz', msg);
+          return;
+        }
+        if (strada.daneDiagn && strada.daneDiagn.sID == get.sID) {
+          strada.daneDiagn.lastReq = Date.now();
+        } else {
+          strada.daneDiagn = {sID: get.sID, interval: get.wartosc, lastReq: Date.now()};
+          setInterval(function(){
+            if (Date.now() - strada.daneDiagn.lastReq > 3000){
+              console.log('interval ', strada.daneDiagn.sID, ' timeout');
+              strada.daneDiagn = null;
+              clearInterval(this);
+            } else {
+              // console.log(strada.daneDiagn);
+              strada.readAll(0x310, 0, strada.daneDiagn.sID,
+                function (dane) {
+                  // console.log('dane 310');
+                  if (!dane.length){
+                    socket.emit('broadcast', ['daneDiag', {error:dane.dane}]);
+                    console.log('dane 310 ', dane);
+                    return;
+                  }
+                  var br = new BlockRW();
+                  var DigitData = br.read(dane);
+                  var AnalogData = br.read(dane);
+                  // console.log({DigitData: DigitData, AnalogData: AnalogData});
+                  socket.emit('broadcast', ['daneDiag', {sID: get.sID, DigitData: DigitData, AnalogData: AnalogData}]);
+                });
+            }
+          }, get.wartosc);
+          msg.dane = 'OK';
+          socket.emit('odpowiedz', msg);
+        }
       }
       // msg.dane = 'Nieznany rozkaz';
       // socket.emit('odpowiedz', msg);

@@ -3,7 +3,6 @@
 var common = require("./common.js");
 
 module.exports = function(Strada, socket) {
-  var stradaIntEnabled = false;
   var errorInterval = null;
 
   /**
@@ -49,13 +48,28 @@ module.exports = function(Strada, socket) {
     return this;
   }
 
+  //funkcja emitujaca blad danych w celu podtrzymania polaczenia z wizualizacja
+  function daneErrIntervalFun(self){ 
+    // var self = this;
+    if (!self.PLCConnected && self.socket) { 
+      var dane = common.getDane();
+      if (dane) {
+        console.log(dane.error);
+        self.socket.emit('dane', dane); 
+      } else {
+        self.socket.emit('dane', {error: "Brak połączenia z PLC"});
+        // console.log('dane.error');
+      }
+    }
+  }
+  
   /**
    * Description
    * @method MySetInterval
    * @param {function} fun
    * @param {Number} interval
    */
-  function MySetInterval(fun, interval) {
+  function MySetInterval(self, fun, interval) {
     //problem z this przy use strict gdy brak new przy wywołaniu
     if (typeof interval !== 'number') {
       interval = parseInt(interval, 10);
@@ -68,9 +82,9 @@ module.exports = function(Strada, socket) {
     this.nextAt += interval;
     var delay =  this.nextAt - new Date().getTime();
   //    console.log("delay = "+delay + "ms");
-    if (stradaIntEnabled) {
+    if (self.PLCConnected) {
       setTimeout(function () {
-        this.interval = new MySetInterval(fun, interval);
+        this.interval = new MySetInterval(self, fun, interval);
       }, delay);
     } else {
       this.start = 0;
@@ -88,8 +102,9 @@ module.exports = function(Strada, socket) {
     // console.log("StradaStartInterval");
     var self = this;
     MySetInterval.start = 0;
-    stradaIntEnabled = true;
-    var temp = new MySetInterval(function () {
+    if (errorInterval) { clearInterval(errorInterval); }
+    // stradaIntEnabled = true;
+    var temp = new MySetInterval(self, function () {
       // console.log("StradaStartInterval ex");
       self.stradaEnqueue(0x302, 0, function (dane) {
         if (dane.error) {
@@ -101,10 +116,9 @@ module.exports = function(Strada, socket) {
           // strada_req_time = (dane.wDataControl === 1);
           if (dane.wDataControl === 1) {
             // console.log('Sterownik rząda daty 1');
-            self.socket.emit('broadcast', 'strada_req_time');
+            self.socket.emit('io_emit', ['strada_req_time']);
           }
         }
-        // dane302_json = JSON.stringify(dane);
         common.storeDane(dane);
         self.socket.emit('dane', dane);
       });
@@ -114,23 +128,12 @@ module.exports = function(Strada, socket) {
   
   Strada.prototype.stopInterval = function () {
     var self = this;
-    console.log('Stop interval');
+    // console.log('Stop interval');
     this.clearQueue(true);
-    stradaIntEnabled = false;
+    // stradaIntEnabled = false;
   //gdy brak polaczenia wysyla tresc bledu co 1s
     if (errorInterval) { clearInterval(errorInterval); }
-    errorInterval = setInterval(function(){ 
-      if (!stradaIntEnabled && self.socket) { 
-        var dane = common.getDane();
-        if (dane) {
-          // console.log(dane.error);
-          self.socket.emit('dane', dane); 
-        } else {
-          self.socket.emit('dane', {error: "Brak połączenia z PLC"});
-          // console.log('dane.error');
-        }
-      }
-    }, 1000);
+    errorInterval = setInterval(function(){daneErrIntervalFun(self)}, 1000);
   };
   
   return Strada;

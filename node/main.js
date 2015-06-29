@@ -15,7 +15,7 @@
 
   var Strada = require('./strada.js');
   var strada = new Strada(socket, client);
-  require('./strada_rozk.js')(strada, socket);
+  require('./stradaRozk.js')(strada, socket);
 
   client.connect(20021, '192.168.3.30');
 }());

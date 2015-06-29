@@ -1,4 +1,4 @@
-﻿// strada_rozk.js
+﻿// stradaRozk.js
 'use strict';
 var common = require('./common.js');
 var BlockRW = require("./blockrw.js");

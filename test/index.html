@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io();
+	  socket.emit('strada', 'bla');
+	  socket.on('dane', function(msg){
+      // console.log(msg);
+      $('#dane').text(JSON.stringify(msg));
+      $('#t_dane').text(JSON.stringify(new Date()));
+	  });
+	  socket.on('gpar', function(msg){
+	  	// $('#gpar').text(JSON.stringify(msg));
+		$('#t_gpar').text(JSON.stringify(new Date()));
+	  });
+	  socket.on('daneDiag', function(msg){
+      // console.log('daneDiag', msg);
+      $('#daneDiag').text(JSON.stringify(msg));
+	  });
+	</script>
+  </head>
+  <body>
+	<div id="dane"></div>
+	<div id="daneDiag"></div>
+	Dane: <span id="t_dane"></span></br>
+	GPar: <span id="t_gpar"></span></br>
+	<div id="gpar"></div>
+  </body>
+</html>

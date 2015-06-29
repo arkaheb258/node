@@ -1,4 +1,4 @@
-﻿// strada_dane.js
+﻿// stradaDane.js
 'use strict';
 var common = require("./common.js");
 

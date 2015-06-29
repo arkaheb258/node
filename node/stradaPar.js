@@ -1,4 +1,4 @@
-﻿// parametry.js
+﻿// stradaPar.js
 'use strict';
 var common = require('./common.js');
 var fs = require('fs');

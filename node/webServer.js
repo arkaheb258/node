@@ -12,6 +12,7 @@
   var os = require('os');
   var url = require('url');
   var common = require('./common.js');
+  var jsonFiles = require('./jsonFiles.js');
   var web_dir = argv.dir || '../build';
   var instrID = 0;
 
@@ -104,35 +105,35 @@
     }
     switch (file[1]) {
     case 'sygnaly':
-      fs.readFile(__dirname + '/' + web_dir + '/json/' 
-      + dir + fileToRead + '.json', 'utf8', 
+      fs.readFile(__dirname + '/' + web_dir + '/json/' + dir + fileToRead + '.json',
+      'utf8',
       function (err, text) {
         if (err) {
           res.jsonp('sygnaly.json error: ' + web_dir + '/json/' + dir + fileToRead + '.json');
         } else {
-          res.jsonp(common.czytajPlikSygnalow(text, common.getGpar()));
+          res.jsonp(jsonFiles.czytajPlikSygnalow(text, common.getGpar()));
         }
       });
       break;
     case 'parametry':
-      fs.readFile(__dirname + '/' + web_dir + '/json/' 
-        + dir + fileToRead + '.json', 'utf8', 
+      fs.readFile(__dirname + '/' + web_dir + '/json/' + dir + fileToRead + '.json',
+        'utf8',
         function (err, text) {
           if (err) {
             res.jsonp('parametry.json error: ' + web_dir + '/json/' + dir + fileToRead + '.json');
           } else {
-            res.jsonp(common.czytajPlikParametrowWiz(text, common.getGpar()));
+            res.jsonp(jsonFiles.czytajPlikParametrowWiz(text, common.getGpar()));
           }
         });
       break;
     case 'komunikaty':
-      fs.readFile(__dirname + '/' + web_dir + '/json/' 
-      + 'STR_KOMUNIKATY.EXP', 'utf8', 
+      fs.readFile(__dirname + '/' + web_dir + '/json/' + 'STR_KOMUNIKATY.EXP',
+      'utf8', 
       function (err, text) {
         if (err) {
           res.redirect('/json/' + dir + fileToRead + '.json');
         } else {
-          res.jsonp(common.czytajPlikKomunikatow(text, false));
+          res.jsonp(jsonFiles.czytajPlikKomunikatow(text, false));
         }
       });
       break;

@@ -1,6 +1,7 @@
 ﻿// stradaPar.js
 'use strict';
 var common = require('./common.js');
+var decode = require('./decode.js');
 var fs = require('fs');
 
 module.exports = function(Strada) {
@@ -37,6 +38,46 @@ module.exports = function(Strada) {
 
   /**
    * Description
+   * @method wyluskajParametry
+   * @param {} data
+   * @return out
+   */
+  function wyluskajParametry(data) {
+    if (!data) { return null; }
+    var js = JSON.parse(data);
+    var out = [];
+    if (js.DANE) {
+      out = js;
+      var i;
+      for (i in js.DANE) {
+        if (js.DANE.hasOwnProperty(i)) {
+          var temp = js.DANE[i];
+          switch (temp.NAZ) {
+          case 'sKonfTypKombajnu':
+          case 'rKonfWersjaJezykowa':
+          case 'sKonfNrKomisji':
+          case 'sKonfNazwaKopalni':
+          case 'sKonfNrSciany':
+          case 'sKonfWersjaProgramu':
+          case 'rKonfCzasLetni':
+          case 'rKonfCzasStrefa':
+          case 'rZapisTyp':
+            out[temp.NAZ] = temp.WART;
+            break;
+          case 'tZapisCzasZrzutu':
+            out[temp.NAZ] = common.codesysTimeToMs(temp.WART.toString());
+            break;
+          default:
+            break;
+          }
+        }
+      }
+    }
+    return out;
+  }
+  
+  /**
+   * Description
    * @method odswierzParametry
    * @param {} callback
    * @param {} force
@@ -53,7 +94,7 @@ module.exports = function(Strada) {
         console.log('blad odczytu - readAll');
         return;
       }
-      gpar = common.decodeStrada307(stradaDane, gpar);
+      gpar = decode.decodeStrada307(stradaDane, gpar);
       if (gpar) {
         self.zapiszParametry(gpar);
         console.log('0x307 - Struktura parametrów poprawna');
@@ -62,8 +103,8 @@ module.exports = function(Strada) {
       // console.log('Struktura parametrów niepoprawna');
       fs.readFile(self.parFilename, 'utf8', function (err, data) {
         console.log('Wczytano parametry JSON');
-        gpar = common.wyluskajParametry(data);
-        gpar = common.decodeStrada307(stradaDane, gpar);
+        gpar = wyluskajParametry(data);
+        gpar = decode.decodeStrada307(stradaDane, gpar);
         if (gpar) {
           self.zapiszParametry(gpar);
           console.log('0x307 - Struktura parametrów poprawna');
@@ -71,10 +112,10 @@ module.exports = function(Strada) {
         } 
         // console.log('Struktura parametrów niepoprawna');
         common.pobierzPlikFTP('ide/Parametry/Temp.par', null, function (string) {
-          gpar = common.wyluskajParametry(string);
+          gpar = wyluskajParametry(string);
           if (gpar) {
             console.log('Wczytano parametry FTP');
-            gpar = common.decodeStrada307(stradaDane, gpar);
+            gpar = decode.decodeStrada307(stradaDane, gpar);
             if (gpar) {
               self.zapiszParametry(gpar, true);
               console.log('0x307 - Struktura parametrów poprawna');

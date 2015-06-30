@@ -2,6 +2,7 @@
 'use strict';
 var common = require('./common.js');
 var BlockRW = require("./blockrw.js");
+var decode = require('./decode.js');
 module.exports = function(strada, socket) {
   // var self = this;
 
@@ -25,7 +26,7 @@ module.exports = function(strada, socket) {
     switch (get.rozkaz) {
     case 'podajHistorie':
       strada.stradaEnqueue(0x308, 0, function (dane) {
-        msg.dane = strada.decodeStrada308(dane.dane);
+        msg.dane = decode.decodeStrada308(dane.dane);
         socket.emit('odpowiedz', msg);
       });
       break;
@@ -76,7 +77,7 @@ module.exports = function(strada, socket) {
       }
       temp[blok] = tempBlock;
 
-      strada.stradaEnqueue(0x202, strada.encodeStrada202(temp), function (dane) {
+      strada.stradaEnqueue(0x202, decode.encodeStrada202(temp), function (dane) {
         console.log('dane 202');
         console.log(dane);
         emitSIN(dane, msg, 'BLOK_OK');
@@ -302,11 +303,11 @@ module.exports = function(strada, socket) {
       console.log(get.rozkaz);
       console.log(get.sWartosc);
       if (get.sWartosc === 'jsonNaPLC') {
-        common.kopiujJsonNaPLC(function (dane) {
-          // msg.dane = 'Nieznany rozkaz';
-          msg.dane = dane;
+        // common.kopiujJsonNaPLC(function (dane) {
+          msg.dane = 'Nieznany rozkaz';
+          // msg.dane = dane;
           socket.emit('odpowiedz', msg);
-        });
+        // });
       } else {
         msg.dane = 'Nieznany rozkaz';
               // ncftpput -R -v -u "admin" -p "admin" 192.168.3.30 /flash/json /tmp/json

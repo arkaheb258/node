@@ -2,7 +2,7 @@
 	"apps" : [{
 		"name"		: "Strada",
 		"script"	: "node/main.js",
-		"args"		: ["--port=8888", "--interval=200"],
+		"args"		: ["--port=8888", "--interval=0"],
 		"out_file"	: "log/strada.log",
 		"error_file": "log/strada.err",
 		"pid_file"	: "log/main.pid",

@@ -1,52 +1,10 @@
 ﻿// stradaDane.js
 'use strict';
 var common = require("./common.js");
+var decode = require('./decode.js');
 
 module.exports = function(Strada, socket) {
   var errorInterval = null;
-
-  /**
-   * Description
-   * @method DecodeStrada302
-   * @param {Buffer} data
-   * @return ThisExpression
-   */
-  Strada.prototype.DecodeStrada302 = function(data) {
-    if (data.length < 20) { return "ERROR"; }
-    var BlockRW = require("./blockrw.js");
-    var br = new BlockRW();
-    var TimeStamp = br.read(data);
-    this.TimeStamp_s = (TimeStamp[1] << 16) + TimeStamp[0];
-    this.TimeStamp_ms = (TimeStamp[3] << 16) + TimeStamp[2];
-    this.TimeStamp_js = (this.TimeStamp_s * 1000 + this.TimeStamp_ms % 1000);
-
-    //konwersja UTC -> czas lokalny
-    var d = new Date(this.TimeStamp_js);
-    var n = d.getTimezoneOffset();
-    d.setMonth(0);
-    n -= d.getTimezoneOffset();
-    var gpar = common.getGpar();
-    if (gpar) {
-      if (gpar.rKonfCzasStrefa !== undefined) {
-        this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000;
-      }
-      if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
-      if (gpar.sKonfNrKomisji) { this.komisja = gpar.sKonfNrKomisji; }
-    }
-    var SpecData = br.read(data);
-    this.wDataControl = SpecData[0];
-    this.wData = SpecData;
-    br = new BlockRW(24);
-    this.Analog = br.read(data, true);
-    this.Bit = br.read(data);
-    this.Mesg = br.read(data);
-    this.MesgType = br.read(data);
-    this.MesgStatus = br.read(data);
-    this.BlockUsr = br.read(data);
-    this.BlockSrvc = br.read(data);
-    this.BlockAdv = br.read(data);
-    return this;
-  }
 
   //funkcja emitujaca blad danych w celu podtrzymania polaczenia z wizualizacja
   function daneErrIntervalFun(self){ 
@@ -69,22 +27,19 @@ module.exports = function(Strada, socket) {
    * @param {function} fun
    * @param {Number} interval
    */
-  function MySetInterval(self, fun, interval) {
+  function MySetInterval(strada, fun) {
     //problem z this przy use strict gdy brak new przy wywołaniu
-    if (typeof interval !== 'number') {
-      interval = parseInt(interval, 10);
-    }
     if (!this.start) {
       this.start = new Date().getTime();
-      this.start -= this.start % interval;  //zaokrglenie czasu startu
+      this.start -= this.start % strada.interval;  //zaokrglenie czasu startu
       this.nextAt = this.start;
     }
-    this.nextAt += interval;
+    this.nextAt += strada.interval;
     var delay =  this.nextAt - new Date().getTime();
   //    console.log("delay = "+delay + "ms");
-    if (self.PLCConnected) {
+    if (strada.PLCConnected) {
       setTimeout(function () {
-        this.interval = new MySetInterval(self, fun, interval);
+        this.interval = new MySetInterval(strada, fun);
       }, delay);
     } else {
       this.start = 0;
@@ -103,7 +58,16 @@ module.exports = function(Strada, socket) {
     var self = this;
     MySetInterval.start = 0;
     if (errorInterval) { clearInterval(errorInterval); }
-    // stradaIntEnabled = true;
+    var intEnable = (self.interval !== 0);
+    if (!intEnable) {
+      console.log('Emitowanie danych wyłączone');
+      self.interval = 200;
+    }
+    if (self.interval < 50) {
+      console.log('Błędny strada interval -> ustawiono 200ms');
+      self.interval = 200;
+    }
+    console.log('Strada startInterval:', self.interval);
     var temp = new MySetInterval(self, function () {
       // console.log("StradaStartInterval ex");
       self.stradaEnqueue(0x302, 0, function (dane) {
@@ -112,7 +76,7 @@ module.exports = function(Strada, socket) {
           // console.log("zerwane połączenie ze sterownikiem");
           console.log(dane);
         } else {
-          dane = new self.DecodeStrada302(dane.dane);
+          dane = new decode.DecodeStrada302(dane.dane);
           // strada_req_time = (dane.wDataControl === 1);
           if (dane.wDataControl === 1) {
             // console.log('Sterownik rząda daty 1');
@@ -120,9 +84,11 @@ module.exports = function(Strada, socket) {
           }
         }
         common.storeDane(dane);
-        self.socket.emit('dane', dane);
+        if (intEnable) {
+          self.socket.emit('dane', dane);
+        }
       });
-    }, self.interval);
+    });
   };
 
   
@@ -130,7 +96,6 @@ module.exports = function(Strada, socket) {
     var self = this;
     // console.log('Stop interval');
     this.clearQueue(true);
-    // stradaIntEnabled = false;
   //gdy brak polaczenia wysyla tresc bledu co 1s
     if (errorInterval) { clearInterval(errorInterval); }
     errorInterval = setInterval(function(){daneErrIntervalFun(self)}, 1000);

@@ -1,16 +1,21 @@
 ﻿#!/bin/sh
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo ' brak parametrow! przyklad: ./*.sh /tmp/json /flash/json'
+else
+  l_dir=$1
+  r_dir=$2
 
-dir="/tmp/json"
+  rm $l_dir -r
+  mkdir $l_dir
+  cd $l_dir
 
-rm $dir -r
-mkdir $dir
-cd $dir
+  ncftpls -u admin -p admin ftp://192.168.3.30/$r_dir/* > $l_dir/f_list.txt
 
-ncftpls -u admin -p admin ftp://192.168.3.30/flash/json/* > $dir/list
-
-while read p; do
-  echo $p
-  mkdir $dir/$p
-  cd $dir/$p
-  ncftpget -u admin -p admin ftp://192.168.3.30/flash/json/$p/*
-done < $dir/list
+  while read p; do
+    echo $p
+    mkdir $l_dir/$p
+    cd $l_dir/$p
+    ncftpget -u admin -p admin ftp://192.168.3.30/$r_dir/$p/*
+  done < $l_dir/f_list.txt
+  
+fi

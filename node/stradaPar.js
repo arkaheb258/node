@@ -89,12 +89,12 @@ module.exports = function(Strada) {
     var gpar = common.getGpar();
     
     console.log('0x307 - Pobranie parametrow Strada');
-    self.readAll(0x307, 0, null, function (stradaDane) {
+    self.readAll(0x307, [0, 0], function (stradaDane) {
       if (!stradaDane || stradaDane.error) {
         console.log('blad odczytu - readAll');
         return;
       }
-      gpar = decode.decodeStrada307(stradaDane, gpar);
+      gpar = decode.decodeStrada307(stradaDane.dane, gpar);
       if (gpar) {
         self.zapiszParametry(gpar);
         console.log('0x307 - Struktura parametrów poprawna');
@@ -104,7 +104,7 @@ module.exports = function(Strada) {
       fs.readFile(self.parFilename, 'utf8', function (err, data) {
         console.log('Wczytano parametry JSON');
         gpar = wyluskajParametry(data);
-        gpar = decode.decodeStrada307(stradaDane, gpar);
+        gpar = decode.decodeStrada307(stradaDane.dane, gpar);
         if (gpar) {
           self.zapiszParametry(gpar);
           console.log('0x307 - Struktura parametrów poprawna');
@@ -115,7 +115,7 @@ module.exports = function(Strada) {
           gpar = wyluskajParametry(string);
           if (gpar) {
             console.log('Wczytano parametry FTP');
-            gpar = decode.decodeStrada307(stradaDane, gpar);
+            gpar = decode.decodeStrada307(stradaDane.dane, gpar);
             if (gpar) {
               self.zapiszParametry(gpar, true);
               console.log('0x307 - Struktura parametrów poprawna');

@@ -46,6 +46,7 @@
 	  var out = [];
 	  var gpar = common.getGpar();
 	  var i = 0;
+    if (!dane) {return null;}
 	  while (i < dane.length) {
       var temp = {};
       temp.nr = dane.readUInt16LE(i) & 0x7FFF;

@@ -26,23 +26,15 @@ module.exports = function(Strada, socket) {
   }
 
   // rekurencyjne odczytanie wielu obszarow
-  Strada.prototype.readAll = function(instrNo, uiCzytajObszarNr, dane2, callback) {
+  Strada.prototype.readAll = function(instrNo, dane2, callback) {
+    // console.log('readAll', instrNo);
+    // console.log('readAll', dane2);
     var self = this;
-    // console.log('readAll');
-    // console.log(instrNo);
-    // console.log(uiCzytajObszarNr);
-    // if (uiCzytajObszarNr[0] === 0) {
+    var uiCzytajObszarNr = dane2[0];
     if (uiCzytajObszarNr === 0) {
       self.tempKonf = {dane: new Buffer(0), DataLen: 0};
     }
-    // console.log('uiCzytajObszarNr '+uiCzytajObszarNr);
-    var enqPar = uiCzytajObszarNr;
-    if (dane2) { enqPar = [uiCzytajObszarNr, dane2]; }
-    // console.log('readAll');
-    // console.log(instrNo);
-    // console.log(dane2);
-    // console.log(enqPar);
-    self.stradaEnqueue(instrNo, enqPar, function (dane) {
+    self.stradaEnqueue(instrNo, dane2, function (dane) {
       if (!dane.dane || (typeof dane.dane === 'string')) {
         if (callback) { callback(dane); }
       } else {
@@ -53,9 +45,10 @@ module.exports = function(Strada, socket) {
           return;
         }
         if (self.tempKonf.dane.length < self.tempKonf.DataLen) {
-          self.readAll(instrNo, uiCzytajObszarNr + 1, dane2, callback);
+          dane2[0] = uiCzytajObszarNr + 1;
+          self.readAll(instrNo, dane2, callback);
         } else {
-          if (callback) { callback(self.tempKonf.dane); }
+          if (callback) { callback(self.tempKonf); }
         }
       }
     });
@@ -99,6 +92,7 @@ module.exports = function(Strada, socket) {
     // console.log('sendNext()');
     var self = this;
     var el = queue[0];
+    // console.log('sendNext()', el.instrNo, el.instrID, asyn);
     var tempDate = new Date();
     if (el) {
       if (asyn) {
@@ -144,14 +138,8 @@ module.exports = function(Strada, socket) {
     outBuff.writeUInt16LE(instrNo, 10);
     outBuff.writeUInt16LE(instrID, 12);
     outBuff.writeUInt16LE(0, 14);
-
-    if (instrNo === 0x204) {
-      data[0] = data[0] * 100;
-    }
-
-    if (instrNo === 0x20C) {
-      data = data * 10;
-    }
+    if (instrNo === 0x204) { data[0] = data[0] * 100; }
+    if (instrNo === 0x20C) { data = data * 10; }
 
     switch (instrNo) {
     case 0x0: //External instrNo
@@ -161,14 +149,10 @@ module.exports = function(Strada, socket) {
       data = null;
       break;
     case 0x201: //Zapisz datę i czas.
-      // console.log('data: ');
-      // console.log(data);
       tempOutBuff = new Buffer(8);
       tempOutBuff.writeUInt16LE(1, 0);
       tempOutBuff.writeUInt16LE(4, 2);
       tempOutBuff.writeUInt32LE(data, 4);
-      // tempOutBuff.writeUInt16LE(data, 4);
-      // tempOutBuff.writeUInt16LE(0, 6);
       break;
     case 0x202: //Zapisz aktualne blokady.
       if (!data || !data.length) { data = [0, 0, 0, 0]; }
@@ -177,6 +161,12 @@ module.exports = function(Strada, socket) {
       tempOutBuff.writeUInt16LE(data.length, 2);
       break;
     case 0x203: //Zapisz aktualny język.
+    case 0x204: //Zapisz aktualny numer sekcji.
+    case 0x207: //Zapisz miejsce sterowanie posuwem.
+    case 0x208: //Zapisz tryb pracy posuwu.
+    case 0x209: //Zapisz tryb pracy ciągników.
+    case 0x20A: //Zapisz całkowity czas pracy kombajnu.
+    case 0x20B: //Zapisz całkowity czas jazdy kombajnu.
     case 0x20C: //Zapisz całkowity dystans kombajnu.
     case 0x216: //Zapisz kanał radiowy SSRK. (1-69)
     case 0x21B: //Zapisz typ skrawu wzorcowego.
@@ -187,24 +177,11 @@ module.exports = function(Strada, socket) {
     case 0x307: //Odczytanie obszaru danych konfiguracyjnych
     case 0x308: //Podaj historię zdarzeń.
     case 0x401: //Testuj hamulec.
-    case 0x601: //Podaj nazwy plików Skrawu Wzorcowego.
-    case 0x603: //Podaj nazwę aktualnego pliku Skrawu Wzorcowego.
-      tempOutBuff = new Buffer(8);
-      tempOutBuff.writeUInt16LE(1, 0);
-      tempOutBuff.writeUInt16LE(4, 2);
-      tempOutBuff.writeUInt16LE(data, 4);
-      tempOutBuff.writeUInt16LE(0, 6);
-      // tempOutBuff.writeUInt16LE(data, 4);
-      break;
-    case 0x204: //Zapisz aktualny numer sekcji.
-    case 0x207: //Zapisz miejsce sterowanie posuwem.
-    case 0x208: //Zapisz tryb pracy posuwu.
-    case 0x209: //Zapisz tryb pracy ciągników.
-    case 0x20A: //Zapisz całkowity czas pracy kombajnu.
-    case 0x20B: //Zapisz całkowity czas jazdy kombajnu.
     case 0x402: //Sterowanie reflektorami.
     case 0x404: //Kalibracja czujnika położenia napędów hydraulicznych
     case 0x502: //Obsluga plików parametrów
+    case 0x601: //Podaj nazwy plików Skrawu Wzorcowego.
+    case 0x603: //Podaj nazwę aktualnego pliku Skrawu Wzorcowego.
       tempOutBuff = new Buffer(8);
       tempOutBuff.writeUInt16LE(1, 0);
       tempOutBuff.writeUInt16LE(4, 2);
@@ -217,7 +194,7 @@ module.exports = function(Strada, socket) {
       tempOutBuff.writeUInt16LE(1, 0);
       tempOutBuff.writeUInt16LE(4, 2);
       tempOutBuff.writeUInt16LE(data[0], 4);
-      tempOutBuff.writeInt16LE(data[1], 6);
+      tempOutBuff.writeInt16LE(data[1], 6); // !! Int zamiast UInt
       data = null;
       break;
     case 0x702: //Ustawianie liczników czasu pracy dla kombajnów chodnikowych.
@@ -385,7 +362,7 @@ module.exports = function(Strada, socket) {
       } else if (instrIDR !== lastSent.instrID
           && instrNoR > 0x200
           && instrNoR !== 0x301) {  //ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
-        console.log('Błąd instrID jest: ' + instrIDR + ' powinno być: ' + lastSent.instrID);
+        console.log('Błąd instrID jest:', instrIDR, 'powinno być:', lastSent.instrID, lastSent.instrNo);
       } else if (dane.length - 16 !== DataLenR) {
         console.log('Błąd DataLenR');
       } else {

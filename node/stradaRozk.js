@@ -25,7 +25,8 @@ module.exports = function(strada, socket) {
     msg.instrID = get.instrID;
     switch (get.rozkaz) {
     case 'podajHistorie':
-      strada.stradaEnqueue(0x308, 0, function (dane) {
+      strada.readAll(0x308, [0, 0], function (dane) {
+        // console.log(dane);
         msg.dane = decode.decodeStrada308(dane.dane);
         socket.emit('odpowiedz', msg);
       });
@@ -187,7 +188,7 @@ module.exports = function(strada, socket) {
               clearInterval(this);
             } else {
               // console.log(strada.daneDiagn);
-              strada.readAll(0x310, 0, strada.daneDiagn.sID,
+              strada.readAll(0x310, [0, strada.daneDiagn.sID],
                 function (dane) {
                   // console.log('dane 310');
                   if (!dane.length){
@@ -302,20 +303,31 @@ module.exports = function(strada, socket) {
     case 'zarzadzaniePlikami':
       console.log(get.rozkaz);
       console.log(get.sWartosc);
-      if (get.sWartosc === 'jsonNaPLC') {
-        // common.kopiujJsonNaPLC(function (dane) {
-          msg.dane = 'Nieznany rozkaz';
+      if (process.platform === "linux") {
+        switch(get.sWartosc) {
+        case 'jsonNaPLC':
+          common.runScript();
           // msg.dane = dane;
+          msg.dane = 'Nieznany rozkaz';
           socket.emit('odpowiedz', msg);
-        // });
+          break;
+        default:
+          msg.dane = 'Nieznany rozkaz';
+          socket.emit('odpowiedz', msg);
+          break;
+        }
       } else {
-        msg.dane = 'Nieznany rozkaz';
-              // ncftpput -R -v -u "admin" -p "admin" 192.168.3.30 /flash/json /tmp/json
-              // wget -r -P /tmp/json ftp://admin:admin@192.168.3.30/flash/json/*
+        msg.dane = 'Platforma nieobsługiwana';
         socket.emit('odpowiedz', msg);
       }
+      // common.kopiujJsonNaPLC(function (dane) {
+        // msg.dane = 'Nieznany rozkaz';
+        // msg.dane = dane;
+        // socket.emit('odpowiedz', msg);
+      // });
+      // ncftpput -R -v -u "admin" -p "admin" 192.168.3.30 /flash/json /tmp/json
+      // wget -r -P /tmp/json ftp://admin:admin@192.168.3.30/flash/json/*
       break;
-
     default:
       msg.dane = 'Nieznany rozkaz';
       socket.emit('odpowiedz', msg);

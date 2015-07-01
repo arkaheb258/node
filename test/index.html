@@ -562,6 +562,9 @@
       $('#daneDiag').text(JSON.stringify(msg));
 	  });
     setInterval(function(){
+			dane.TimeStamp_js = Date.now();
+			dane.TimeStamp_s = Math.floor(dane.TimeStamp_js / 1000);
+			dane.TimeStamp_ms = dane.TimeStamp_js - (new Date()).setUTCHours(0, 0, 0, 0);
       socket.emit('io_emit', ['dane', dane]);
       socket.emit('io_emit', ['daneDiag', daneDiag]);
     }, 500);

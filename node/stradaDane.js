@@ -72,7 +72,7 @@ module.exports = function(Strada, socket) {
       // console.log("StradaStartInterval ex");
       self.stradaEnqueue(0x302, 0, function (dane) {
         if (dane.error) {
-          dane = {error: "Utracono połączenie z PLC: " + dane.error};
+          // dane = {error: "Utracono połączenie z PLC: " + dane.error};
           // console.log("zerwane połączenie ze sterownikiem");
           console.log(dane);
         } else {

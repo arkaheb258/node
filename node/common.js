@@ -29,6 +29,16 @@
     }, []);
   };
 
+  function runScript(script){
+    script = 'ls';
+    exec(script, function (error, stdout, stderr) {
+      console.log(script);
+      console.log("stdout: " + stdout);
+      console.log("stderr: " + stderr);
+      console.log("error: " + error);
+    });
+
+  }
   //TODO: kopiowanie zawartosci folderu json na PLC 
   // (dodac parametryzacje folderu json)
   function kopiujJsonNaPLC(callback) {
@@ -276,6 +286,7 @@
   module.exports.msToCodesysTime = msToCodesysTime;
   module.exports.codesysTimeToMs = codesysTimeToMs;
   module.exports.readStringTo0 = readStringTo0;
+  module.exports.runScript = runScript;
 
   // module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
 

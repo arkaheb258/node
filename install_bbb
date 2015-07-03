@@ -29,7 +29,7 @@ npm install -g forever
 mkdir /home/debian/kopex
 cd /home/debian/kopex
 git clone -b wydawka_borynia git://github.com/arkaheb258/node.git node
-git clone http://192.168.30.12:81/Bonobo.Git.Server/wizu.git build
+#git clone http://192.168.30.12:81/Bonobo.Git.Server/wizu.git build
 #cd /home/debian/kopex/node
 #npm install
 

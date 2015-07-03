@@ -1,6 +1,6 @@
 // decode.js
 (function () {
-  "use strict";
+  'use strict';
   var common = require('./common.js');
 
 	/**
@@ -10,7 +10,7 @@
 	 * @return outBuff
 	 */
 	function encodeStrada202(data) {
-	  var BlockRW = require("./blockrw.js");
+	  var BlockRW = require('./blockrw.js');
 	  var outBuff;
 	  var bw;
 	  if (!data.BlockUsr) {
@@ -80,20 +80,63 @@
 
   /**
    * Description
+   * @method wyluskajParametry
+   * @param {} data
+   * @return out
+   */
+  function wyluskajParametry(js) {
+    // console.log('wyluskajParametry');
+    if (!js) { return null; }
+    var out = [];
+    if (js.DANE) {
+      out = js;
+      var i;
+      for (i in js.DANE) {
+        if (js.DANE.hasOwnProperty(i)) {
+          var temp = js.DANE[i];
+          switch (temp.NAZ) {
+          // case 'sKonfTypKombajnu':
+          // case 'sKonfNrKomisji':
+          // case 'sKonfNazwaKopalni':
+          // case 'sKonfNrSciany':
+          // case 'sKonfWersjaProgramu':
+          case 'rKonfWersjaJezykowa':
+          case 'rKonfCzasLetni':
+          case 'rKonfCzasStrefa':
+          case 'rZapisTyp':
+            out[temp.NAZ] = temp.WART;
+            // console.log(temp.NAZ, temp.WART);
+            break;
+          case 'tZapisCzasZrzutu':
+            out[temp.NAZ] = common.codesysTimeToMs(temp.WART.toString());
+            break;
+          default:
+            break;
+          }
+        }
+      }
+    }
+    return out;
+  }
+
+  /**
+   * Description
    * @method decodeStrada307
    * @param {Buffer} buf dane ze strady
    * @param {Object} outPar
    * @return outPar
    */
   function decodeStrada307(buf, outPar) {
+    // console.log('decodeStrada307');
     var len, ptr = 0, temp, tempStr;
-    // var ok = true;
+    if (typeof outPar == 'string') { outPar = JSON.parse(outPar); }
     if (outPar && outPar.DANE) {
       len = outPar.DANE.length;
     } else {
       return null;
     }
     var i;
+    //jeżeli zmiana komisji, typu, itd. to przerwać i zwrócić null
     for (i = 0; i < 5; i += 1) {
       tempStr = outPar.DANE[i];
       // console.log(tempStr);
@@ -106,22 +149,18 @@
       // console.log(temp);
       if (temp !== tempStr.WART) {
         console.log('![', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp);
-        // ok = false;
         return null;
       }
     }
 
-    //jeżeli zmiana komisji, typu, itd. to przerwać i zwrócić null
-    // if (ok === false) { return null; }
 
+    //jeżeli błąd w rozmiarze czasu lub różna długość parametrów to przerwać i zwrócić null
     ptr = 5 * 32;
     for (i = 5; i < len; i += 1) {
       tempStr = outPar.DANE[i];
       if (buf.length < ptr + tempStr.ROZM * 2) {
         console.log('błąd ilości parametrów (za mało) ' + i);
-        // ok = false;
         return null;
-        // break;
       }
   //    console.log(tempStr);
       if (tempStr.NAZ[0] === 's') {
@@ -147,25 +186,22 @@
         outPar.DANE[i].WART = temp;
       }
       if (temp !== tempStr.WART) {
-        // console.log('[', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp);
+        console.log('[', i, '] ', tempStr.NAZ, ' zmiana z ', tempStr.WART, ' na ', temp);
         outPar.DANE[i].WART = temp;
       }
       ptr += parseFloat(tempStr.ROZM) * 2;
     }
     if (ptr !== buf.length) {
       console.log('błąd ilości parametrów ', ptr, ' != ', buf.length);
-      // ok = false;
       return null;
     }
 
-    //jeżeli błąd w rozmiarze czasu lub różna długość parametrów to przerwać i zwrócić null
-    // if (ok === false) { return null; }
     outPar.sKonfTypKombajnu = common.readStringTo0(buf, 0, 32);
     outPar.sKonfNrKomisji = common.readStringTo0(buf, 32, 32);
     outPar.sKonfNazwaKopalni = common.readStringTo0(buf, 64, 32);
     outPar.sKonfNrSciany = common.readStringTo0(buf, 96, 32);
     outPar.sKonfWersjaProgramu = common.readStringTo0(buf, 128, 32);
-    return outPar;
+    return wyluskajParametry(outPar);
   }
 
   /**
@@ -175,8 +211,14 @@
    * @return ThisExpression
    */
   function DecodeStrada302(data) {
-    if (data.length < 20) { return "ERROR"; }
-    var BlockRW = require("./blockrw.js");
+    // console.log('DecodeStrada302', typeof data);
+    // console.log(data);
+    if (typeof data == 'string') {
+      console.log('DecodeStrada302', data);
+      return null;
+    }
+    if (!data || data.length < 20) { console.log('DecodeStrada302 error'); return 'ERROR'; }
+    var BlockRW = require('./blockrw.js');
     var br = new BlockRW();
     var TimeStamp = br.read(data);
     this.TimeStamp_s = (TimeStamp[1] << 16) + TimeStamp[0];

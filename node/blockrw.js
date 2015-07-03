@@ -23,11 +23,16 @@ function BlockRW(adr) {
  */
 BlockRW.prototype.read = function (data, sign) {
 	var temp = [];
+  if (data.length < this.adr + 2) {
+		console.error("can't read data.length ", data.length, this.adr);
+    return temp;
+  }
 	var temp_Len = data.readUInt16LE(this.adr);
 	this.adr += 2;
 	if (temp_Len > data.length) {
 		console.error("temp_Len " + temp_Len);
 		console.error("data.length " + data.length);
+    return temp;
 	}
 	for (var i = 0; i < temp_Len; i = i + 2) {
 		if (sign) {

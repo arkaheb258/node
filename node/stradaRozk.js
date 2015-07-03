@@ -1,13 +1,13 @@
 ﻿// stradaRozk.js
 'use strict';
 var common = require('./common.js');
-var BlockRW = require("./blockrw.js");
+var BlockRW = require('./blockrw.js');
 var decode = require('./decode.js');
 module.exports = function(strada, socket) {
   // var self = this;
 
   function emitSIN(dane, msg, ok) {
-    if (!ok) {ok = "OK"}
+    if (!ok) {ok = 'OK'}
     if ((dane.error === 0) || (dane.error === null) || (dane.error === undefined)) {
       msg.dane = ok;
     } else if (dane.dane) {
@@ -169,7 +169,7 @@ module.exports = function(strada, socket) {
       // console.log(get.wID);
       console.log(get.sID);
       if (!get.sID) {
-        msg.dane = "Brak parametru sID";
+        msg.dane = 'Brak parametru sID';
         socket.emit('odpowiedz', msg);
       } else {
         if (!get.wartosc || get.wartosc < 200) {
@@ -303,10 +303,10 @@ module.exports = function(strada, socket) {
     case 'zarzadzaniePlikami':
       console.log(get.rozkaz);
       console.log(get.sWartosc);
-      if (process.platform === "linux") {
+      if (process.platform === 'linux') {
         switch(get.sWartosc) {
         case 'jsonNaPLC':
-          common.runScript();
+          common.runScript('./script/jsonNaPLC.sh');
           // msg.dane = dane;
           msg.dane = 'Nieznany rozkaz';
           socket.emit('odpowiedz', msg);

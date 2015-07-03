@@ -14,6 +14,7 @@ module.exports = function(Strada) {
    * @param {} temp
    */
   Strada.prototype.zapiszParametry = function(temp, toFile) {
+    // console.log('zapiszParametry');
     var self = this;
     if (!temp) {
       console.log('Błąd parametrów - brak zapisu');
@@ -30,52 +31,14 @@ module.exports = function(Strada) {
     }
     freshPar = 2;
     common.storeGpar(temp);
+    console.log('zapis_gpar', temp.TYP);
     self.socket.emit('gpar', temp);
     setTimeout(function () {
       freshPar = 0;
     }, 1000);
   }
 
-  /**
-   * Description
-   * @method wyluskajParametry
-   * @param {} data
-   * @return out
-   */
-  function wyluskajParametry(data) {
-    if (!data) { return null; }
-    var js = JSON.parse(data);
-    var out = [];
-    if (js.DANE) {
-      out = js;
-      var i;
-      for (i in js.DANE) {
-        if (js.DANE.hasOwnProperty(i)) {
-          var temp = js.DANE[i];
-          switch (temp.NAZ) {
-          case 'sKonfTypKombajnu':
-          case 'rKonfWersjaJezykowa':
-          case 'sKonfNrKomisji':
-          case 'sKonfNazwaKopalni':
-          case 'sKonfNrSciany':
-          case 'sKonfWersjaProgramu':
-          case 'rKonfCzasLetni':
-          case 'rKonfCzasStrefa':
-          case 'rZapisTyp':
-            out[temp.NAZ] = temp.WART;
-            break;
-          case 'tZapisCzasZrzutu':
-            out[temp.NAZ] = common.codesysTimeToMs(temp.WART.toString());
-            break;
-          default:
-            break;
-          }
-        }
-      }
-    }
-    return out;
-  }
-  
+  // dopisac cykliczna funkcje (interval) ktora przy braku paramatrow bedzie probowac je odczytac
   /**
    * Description
    * @method odswierzParametry
@@ -84,43 +47,40 @@ module.exports = function(Strada) {
    */
     //dodac callback z zapisem(store + emit)
   Strada.prototype.odswierzParametry = function(force) {
+    if (freshPar === 1) return;
+    freshPar = 1;   //parametry w trakcie odswierzania
     var self = this;
-    console.log('odswierzParametry ', (force) ? true : false );
+    console.log('odswierzParametry ', (force) ? 'force' : '' );
     var gpar = common.getGpar();
-    
-    console.log('0x307 - Pobranie parametrow Strada');
+    console.log('Pobranie parametrow Strada (0x307)');
     self.readAll(0x307, [0, 0], function (stradaDane) {
       if (!stradaDane || stradaDane.error) {
-        console.log('blad odczytu - readAll');
+        console.log('blad odczytu - odswierzParametry (readAll)', stradaDane ? stradaDane.error:'');
         return;
       }
       gpar = decode.decodeStrada307(stradaDane.dane, gpar);
       if (gpar) {
         self.zapiszParametry(gpar);
-        console.log('0x307 - Struktura parametrów poprawna');
+        console.log('Struktura parametrów poprawna (0x307) mem');
         return;
       } 
       // console.log('Struktura parametrów niepoprawna');
       fs.readFile(self.parFilename, 'utf8', function (err, data) {
         console.log('Wczytano parametry JSON');
-        gpar = wyluskajParametry(data);
-        gpar = decode.decodeStrada307(stradaDane.dane, gpar);
+        gpar = decode.decodeStrada307(stradaDane.dane, data);
         if (gpar) {
           self.zapiszParametry(gpar);
-          console.log('0x307 - Struktura parametrów poprawna');
+          console.log('Struktura parametrów poprawna (0x307) loc');
           return;
         } 
         // console.log('Struktura parametrów niepoprawna');
         common.pobierzPlikFTP('ide/Parametry/Temp.par', null, function (string) {
-          gpar = wyluskajParametry(string);
+          console.log('Wczytano parametry FTP');
+          gpar = decode.decodeStrada307(stradaDane.dane, string);
           if (gpar) {
-            console.log('Wczytano parametry FTP');
-            gpar = decode.decodeStrada307(stradaDane.dane, gpar);
-            if (gpar) {
-              self.zapiszParametry(gpar, true);
-              console.log('0x307 - Struktura parametrów poprawna');
-              return;
-            } 
+            self.zapiszParametry(gpar, true);
+            console.log('Struktura parametrów poprawna (0x307) ftp');
+            return;
           } 
           self.zapiszParametry(gpar);
           console.log('Nie pobrano parametrow FTP');

@@ -1,6 +1,6 @@
 ﻿// stradaDane.js
 'use strict';
-var common = require("./common.js");
+var common = require('./common.js');
 var decode = require('./decode.js');
 
 module.exports = function(Strada, socket) {
@@ -12,10 +12,11 @@ module.exports = function(Strada, socket) {
     if (!self.PLCConnected && self.socket) { 
       var dane = common.getDane();
       if (dane) {
+        // console.log('dane.error');
         console.log(dane.error);
         self.socket.emit('dane', dane); 
       } else {
-        self.socket.emit('dane', {error: "Brak połączenia z PLC"});
+        self.socket.emit('dane', {error: 'Brak połączenia z PLC'});
         // console.log('dane.error');
       }
     }
@@ -36,7 +37,7 @@ module.exports = function(Strada, socket) {
     }
     this.nextAt += strada.interval;
     var delay =  this.nextAt - new Date().getTime();
-  //    console.log("delay = "+delay + "ms");
+  //    console.log('delay = '+delay + 'ms');
     if (strada.PLCConnected) {
       setTimeout(function () {
         this.interval = new MySetInterval(strada, fun);
@@ -54,7 +55,7 @@ module.exports = function(Strada, socket) {
    * @param {function} callback
    */
   Strada.prototype.startInterval = function () {
-    // console.log("StradaStartInterval");
+    // console.log('StradaStartInterval');
     var self = this;
     MySetInterval.start = 0;
     if (errorInterval) { clearInterval(errorInterval); }
@@ -69,14 +70,15 @@ module.exports = function(Strada, socket) {
     }
     console.log('Strada startInterval:', self.interval);
     var temp = new MySetInterval(self, function () {
-      // console.log("StradaStartInterval ex");
+      // console.log('StradaStartInterval ex');
       self.stradaEnqueue(0x302, 0, function (dane) {
         if (dane.error) {
-          // dane = {error: "Utracono połączenie z PLC: " + dane.error};
-          // console.log("zerwane połączenie ze sterownikiem");
+          // dane = {error: 'Utracono połączenie z PLC: ' + dane.error};
+          // console.log('zerwane połączenie ze sterownikiem');
           console.log(dane);
         } else {
           dane = new decode.DecodeStrada302(dane.dane);
+          if (!dane) {console.log('DecodeStrada302 null'); return;}
           // strada_req_time = (dane.wDataControl === 1);
           if (dane.wDataControl === 1) {
             // console.log('Sterownik rząda daty 1');
@@ -86,7 +88,8 @@ module.exports = function(Strada, socket) {
         common.storeDane(dane);
         if (intEnable) {
           self.socket.emit('dane', dane);
-        }
+        } 
+        // else {console.log('d');}
       });
     });
   };
@@ -95,8 +98,7 @@ module.exports = function(Strada, socket) {
   Strada.prototype.stopInterval = function () {
     var self = this;
     // console.log('Stop interval');
-    this.clearQueue(true);
-  //gdy brak polaczenia wysyla tresc bledu co 1s
+    //gdy brak polaczenia wysyla tresc bledu co 1s
     if (errorInterval) { clearInterval(errorInterval); }
     errorInterval = setInterval(function(){daneErrIntervalFun(self)}, 1000);
   };

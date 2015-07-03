@@ -1,6 +1,6 @@
 ﻿// zapisDoPliku.js
 (function () {
-  "use strict";
+  'use strict';
   var argv = require('minimist')(process.argv.slice(2));
   var fs = require('fs');
   var port = argv.port || 8888;
@@ -31,36 +31,33 @@
   }
 
   function createFile(fileName, czas) {
-    console.log("Tworzenie pustego pliku danych: " + fileName);
+    console.log('Tworzenie pustego pliku danych: ' + fileName);
     createDir(logger_dir, function () {
       var parametry = common.getGpar();
       if (parametry) {
         var outBuff = new Buffer(255);
         var adr = 0;
         outBuff.fill(0x20);
-        outBuff.write("Typ kombajnu:\t\t" + parametry.sKonfTypKombajnu, adr);
+        outBuff.write('Typ kombajnu:\t\t' + parametry.sKonfTypKombajnu, adr);
         adr += 15 + 31;
-        outBuff.write("\r\nNr komisji:\t\t"
-          + parametry.sKonfNrKomisji, adr);
+        outBuff.write('\r\nNr komisji:\t\t' + parametry.sKonfNrKomisji, adr);
         adr += 15 + 31;
-        outBuff.write("\r\nNazwa kopalni:\t\t"
-          + parametry.sKonfNazwaKopalni, adr);
+        outBuff.write('\r\nNazwa kopalni:\t\t'+ parametry.sKonfNazwaKopalni, adr);
         adr += 18 + 31;
-        outBuff.write("\r\nNr sciany:\t\t" + parametry.sKonfNrSciany, adr);
+        outBuff.write('\r\nNr sciany:\t\t' + parametry.sKonfNrSciany, adr);
         adr += 14 + 31;
-        outBuff.write("\r\nWersja programu:\t"
-          + parametry.sKonfWersjaProgramu, adr);
+        outBuff.write('\r\nWersja programu:\t' + parametry.sKonfWersjaProgramu, adr);
         adr += 19 + 31;
-        outBuff.write("\r\nCzas star.:", adr);
+        outBuff.write('\r\nCzas star.:', adr);
         adr += 13;
         outBuff.writeUInt32LE(czas, adr);//epoch w sekundach
         adr += 4;
-        outBuff.write("\r\n", adr);
+        outBuff.write('\r\n', adr);
         adr += 2;
         fs.writeFile(fileName, outBuff);
       } else {
-        socket.emit("get_gpar");
-        console.log("Brak parametrów do utworzenia pliku");
+        socket.emit('get_gpar');
+        console.log('Brak parametrów do utworzenia pliku');
       }
     });
   }
@@ -122,40 +119,40 @@
     var d = new Date();
 
     if (!data) {
-      console.log("Brak danych");
+      console.log('Brak danych');
       return;
     }
 
     if (!parametry) {
-      socket.emit("get_gpar");
-      console.log("Błąd parametrów przy zapisie do pliku");
+      socket.emit('get_gpar');
+      console.log('Błąd parametrów przy zapisie do pliku');
       return;
     }
 
     if (!logger_dir) {
-      // console.log("skip logger");
+      // console.log('skip logger');
       return;
     }
 
-    if (logger_dir === "USB") {
-      console.log("usb logger " + logger_dir);
+    if (logger_dir === 'USB') {
+      console.log('usb logger ' + logger_dir);
       logger_dir = null;
-      if (process.platform === "linux") {
-        cp.exec("df | grep ^/dev/sd", function (error, stdout, stderr) {
-          var poz = stdout.search("%");
+      if (process.platform === 'linux') {
+        cp.exec('df | grep ^/dev/sd', function (error, stdout, stderr) {
+          var poz = stdout.search('%');
           if (poz !== -1) {
             var pen = stdout.substring(poz + 2).trim();
-            console.log("Znaleziono PENDRIVE: " + pen);
-            cp.exec("mkdir " + pen + "/Rejestracja",
+            console.log('Znaleziono PENDRIVE: ' + pen);
+            cp.exec('mkdir ' + pen + '/Rejestracja',
               function (error, stdout, stderr) {
                 console.log(stdout);
-                logger_dir = pen + "/Rejestracja";
-                if (stderr) { console.log("stderr: " + stderr); }
-                if (error) { console.log("error 1: " + error); }
+                logger_dir = pen + '/Rejestracja';
+                if (stderr) { console.log('stderr: ' + stderr); }
+                if (error) { console.log('error 1: ' + error); }
               });
           }
-          if (stderr) { console.log("stderr: " + stderr); }
-          if (error) { console.log("error 2: " + error); }
+          if (stderr) { console.log('stderr: ' + stderr); }
+          if (error) { console.log('error 2: ' + error); }
         });
       }
       return;
@@ -163,15 +160,15 @@
 
     d.setTime(data.TimeStamp_js);
     fileName = d.toISOString().substring(0, 10).replace('-', '_');
-    // fileName = d.getUTCFullYear() + "_" + common.pad(d.getUTCMonth() + 1, 2) + "_" + common.pad(d.getUTCDate(), 2);
+    // fileName = d.getUTCFullYear() + '_' + common.pad(d.getUTCMonth() + 1, 2) + '_' + common.pad(d.getUTCDate(), 2);
 
     if (parametry.rZapisTyp === 0) {
-      fileName += "_" + common.pad(d.getUTCHours(), 2);
+      fileName += '_' + common.pad(d.getUTCHours(), 2);
     }
 
-    fileName += ".dat";
+    fileName += '.dat';
 
-    if (logger_dir) { fileName = logger_dir + "/" + fileName; }
+    if (logger_dir) { fileName = logger_dir + '/' + fileName; }
 
     if (!fs.existsSync(fileName)) {
       createFile(fileName, data.TimeStamp_s);
@@ -180,7 +177,7 @@
     }
 
     if (typeof parametry.tZapisCzasZrzutu !== 'number') {
-      console.log("parametry.tZapisCzasZrzutu");
+      console.log('parametry.tZapisCzasZrzutu');
       console.log(parametry.tZapisCzasZrzutu);
       console.log(typeof parametry.tZapisCzasZrzutu);
     }
@@ -213,15 +210,15 @@
     outBuff = outBuff.slice(0, adr);
     outBuff = Buffer.concat([outBuff, outBuffDane]);
     countChange = outBuffDane.length / 4;
-    // console.log("countChange: " + countChange);
+    // console.log('countChange: ' + countChange);
     if (countChange) {
       fs.appendFile(fileName, outBuff, function () {
         if (prev_data.TimeStamp_js === 0) {
-          console.log("Zapis całej ramki do pliku: ", fileName,
-            ", zmian = ", countChange);
+          console.log('Zapis całej ramki do pliku: ', fileName,
+            ', zmian = ', countChange);
         } else {
-          console.log("Zapis zmian do pliku: ", fileName,
-            ", zmian = ", countChange);
+          console.log('Zapis zmian do pliku: ', fileName,
+            ', zmian = ', countChange);
         }
       });
     }
@@ -231,13 +228,13 @@
 
   socket
     .on('dane', function (dane) {
-      // console.log("dane zapis");
+      // console.log('dane zapis');
       if (!dane.error) {
         appendFrame(dane);
       }
     })
     .on('gpar', function (gpar) {
-      console.log("zapis on gpar");
+      console.log('zapis on gpar');
       common.storeGpar(gpar);
     });
 }());

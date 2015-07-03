@@ -2,114 +2,127 @@
 'use strict';
 var common = require('./common.js');
 module.exports = function(Strada, socket) {
-  var lastSent = null;
   var ntpDate = -1;
-  var queue = [];
-  var instrID = 0;
   var debug = false;
+  // var debug = true;
   
   /**
   * Przegląd kolejki wiadomości w celu sprawdzenia timeoutów
+  * Wyslanie nastepnej wiadomosci z kolejki
   */
   Strada.prototype.clearQueue = function(force) {
-    if (queue.length === 0) { return; }
-    // if (force) console.log('clearQueue ' + queue.length);
+    var self = this;
+    if (self.queue.length === 0) { return; }
+    // console.log('queue.length: ' + self.queue.length);
+    // if (force) console.log('clearQueue ' + self.queue.length);
+    // czyszczenie timeoutow
     var i;
-    for (i = 0; i < queue.length; i += 1) {
-      var el = queue[i];
-      if ((new Date() - el.time) > el.timeout || force) {
-        queue.splice(i, 1)[0].callback({error: 'timeout'});
-        if (debug) { console.log('queue.splice + timeout'); }
+    for (i = 0; i < self.queue.length; i += 1) {
+      var el = self.queue[i];
+      if (force || (Date.now() - el.time) > el.timeout) {
+        self.queue.splice(i, 1)[0].callback({error: 'timeout'});
+        if (debug) { console.log('self.queue.splice + timeout', force, (Date.now() - el.time), el.timeout); }
         i -= 1;
+      }
+    }
+    // wyslanie nastepnego zapytania
+    if (!self.lastSent && self.queue.length > 0) {
+      el = self.queue[0];
+      self.send(el.instrNo, el.instrID, el.data);
+      if (self.queue.length > 2) {
+        console.log('queue.length = ', self.queue.length);
       }
     }
   }
 
   // rekurencyjne odczytanie wielu obszarow
-  Strada.prototype.readAll = function(instrNo, dane2, callback) {
-    // console.log('readAll', instrNo);
-    // console.log('readAll', dane2);
+  Strada.prototype.readAll = function(instrNo, dane2, callback, tempKonf) {
+    // console.log('readAll', instrNo, dane2);
     var self = this;
     var uiCzytajObszarNr = dane2[0];
     if (uiCzytajObszarNr === 0) {
-      self.tempKonf = {dane: new Buffer(0), DataLen: 0};
+      tempKonf = {dane: new Buffer(0), DataLen: 0};
     }
     self.stradaEnqueue(instrNo, dane2, function (dane) {
+      // console.log('stradaEnqueue', dane.dane);
       if (!dane.dane || (typeof dane.dane === 'string')) {
         if (callback) { callback(dane); }
       } else {
-        self.tempKonf.dane = new Buffer.concat([self.tempKonf.dane, dane.dane]);
-        self.tempKonf.DataLen = dane.DataLen;
+        tempKonf.dane = new Buffer.concat([tempKonf.dane, dane.dane]);
+        tempKonf.DataLen = dane.DataLen;
         if (uiCzytajObszarNr > 3) {
           console.log('nie ma końca - (uiCzytajObszarNr > 3)');
           return;
         }
-        if (self.tempKonf.dane.length < self.tempKonf.DataLen) {
+        // console.log('readAll rep');
+        if (tempKonf.dane.length < tempKonf.DataLen) {
+          // console.log('readAll rep 2');
           dane2[0] = uiCzytajObszarNr + 1;
-          self.readAll(instrNo, dane2, callback);
+          self.readAll(instrNo, dane2, callback, tempKonf);
         } else {
-          if (callback) { callback(self.tempKonf); }
+          // console.log('readAll rep c');
+          if (callback) { callback(tempKonf); }
         }
       }
     });
   }
   
-  // dodanie rozkazu do kolejki
+  /**
+   *  @brief Dodanie rozkazu do kolejki
+   *  
+   *  @param [in] instrNo Numer instrukcji
+   *  @param [in] data Dane instrukcji
+   *  @param [in] callback Funkcja wywolywana po odebraniu odpowiedzi
+   *  @param [in] timeout Czas oczekiwania w kolejce
+   */
   Strada.prototype.stradaEnqueue = function(instrNo, data, callback, timeout) {
     var self = this;
-    var lastID = null;
-    var outTimeout;
-    if (timeout) {
-      outTimeout = timeout;
-    } else {
-      outTimeout = self.interval * 5;
-    }
+    if (!callback) { callback = console.log; }
+    if (!timeout) { timeout = 1000; }
+    // console.log(' stradaEnqueue', instrNo, timeout);
+    self.instrID = (self.instrID + 1) % 0x10000;
     self.clearQueue();
-    // console.log('queue.length: ' + queue.length);
     if (!self.PLCConnected) {
       console.log('instrNo: ' + instrNo);
       console.log('PLC nie polaczony');
       callback({error: 'PLC nie polaczony'});
       return 1;
     }
-    if (queue.length === 0) {
-      // console.log(' self.sendFunction from enqueue');
-      lastID = self.sendFunction(instrNo, data);
+    // console.log('queue.length: ' + self.queue.length);
+    if (self.queue.length > 20) {
+      callback({error: 'Przepełnienie kolejki'});
+      return;
     }
-    if (!callback) { callback = console.log; }
-    // console.log('push');
-    queue.push({instrNo: instrNo, data: data, callback: callback,
-      timeout: outTimeout, time: new Date(), instrID: lastID});
-    if (queue.length > 2) {
-      console.log('queue.length = ' + queue.length + ' instrNo = ' + instrNo);
-    }
-    if (queue.length > 20) {
-      throw new Error({'opis': 'Przepełnienie kolejki'});
-    }
+    self.queue.push({
+      instrNo: instrNo, 
+      instrID: Number(self.instrID), 
+      data: data, 
+      callback: callback,
+      timeout: timeout, 
+      time: Date.now()
+    });
+    self.clearQueue();
   }
 
-  Strada.prototype.sendNext = function(dane, asyn) {
-    // console.log('sendNext()');
+  /**
+   *  @brief wywolanie callbacka przy otrzymaniu danych
+   *  @param [in] dane 
+   *  @param [in] retry - ponowne wrzucenie do kolejki tego samego zapytania (przy zapytaniu asynchronicznym)
+   */
+  Strada.prototype.response = function(dane, retry) {
     var self = this;
-    var el = queue[0];
-    // console.log('sendNext()', el.instrNo, el.instrID, asyn);
-    var tempDate = new Date();
+    var el = self.queue.shift();;
     if (el) {
-      if (asyn) {
-  //        console.log(el);
-  //        console.log(tempDate - el.time);
+      // console.log('response()', el.instrNo.toString(16), el.instrID, retry ? true : false);
+      // console.log(dane);
+      if (retry) {
         if (el.instrNo.length === 2) { el.instrNo = el.instrNo[0]; }
-        self.stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (tempDate - el.time));
+        self.stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (Date.now() - el.time));
       } else {
         el.callback(dane);
       }
     }
-    queue.shift();
     self.clearQueue();
-    if (queue.length > 0) {
-      el = queue[0];
-      queue[0].instrID = self.sendFunction(el.instrNo, el.data);
-    }
   }
 
   /**
@@ -117,9 +130,9 @@ module.exports = function(Strada, socket) {
   * @param instrNo kod instrukcji
   * @param data dane do wyslania
   */
-  Strada.prototype.sendFunction = function(instrNo, data) {
-    // console.log('sendFunction()');
-    instrID = (instrID + 1) % 0x10000;
+  Strada.prototype.send = function(instrNo, instrID, data) {
+    var self = this;
+    if (debug) { console.log('sendData', instrNo.toString(16), instrID); }
     var DstID = 1;
     var SrcID = 4;
     var Dir = 0x01;
@@ -187,6 +200,8 @@ module.exports = function(Strada, socket) {
       tempOutBuff.writeUInt16LE(4, 2);
       tempOutBuff.writeUInt16LE(data[0], 4);
       tempOutBuff.writeUInt16LE(data[1], 6);
+      // console.log(data);
+      // console.log(tempOutBuff);
       data = null;
       break;
     case 0x701: //Kalibracja czujników położenia napędów hydraulicznych kombajnów chodnikowych
@@ -240,7 +255,7 @@ module.exports = function(Strada, socket) {
   //    console.log('uiCzytajObszarNr: '+data);
       tempOutBuff.writeUInt16LE(data, 4); //uiCzytajObszarNr
       if (ntpDate === 1) {
-        console.log("Sterownik dostaje date");
+        console.log('Sterownik dostaje date');
         tempOutBuff.writeUInt16LE(1, 6);
         tempOutBuff.writeUInt32LE(Math.round((new Date()).getTime() / 1000), 8);
         ntpDate = -2;
@@ -277,7 +292,7 @@ module.exports = function(Strada, socket) {
           console.log('0x500 - za długi STRING (' + data.WART.length + ')');
           data.WART = data.WART.substr(0, 29);
         }
-        tempOutBuff.write('"' + data.WART + '"', 68);
+        tempOutBuff.write('\"' + data.WART + '\"', 68);
       // } else if (data.TYP === 'LISTA') {
         // tempOutBuff.write(data.WART.toFixed(1), 68);
       } else if (data.TYP === 'REAL' || (data.TYP === 'LISTA')) {
@@ -312,19 +327,12 @@ module.exports = function(Strada, socket) {
     if (tempOutBuff && tempOutBuff.length) {
       outBuff = Buffer.concat([outBuff, tempOutBuff]);
     }
-
-    if (data && data.length) {
-      outBuff = Buffer.concat([outBuff, new Buffer(data)]);
-    }
-
+    if (data && data.length) { outBuff = Buffer.concat([outBuff, new Buffer(data)]); }
     outBuff.writeUInt16LE(outBuff.length - 16, 14); //długość StradaData
-    if (lastSent) {
-      console.log('nadpisanie lastSent');
-    }
-    lastSent = {DstID: DstID, SrcID: SrcID, Dir: Dir, instrNo : instrNo, instrID : instrID, time : new Date()};
-    if (this.client) { this.client.write(outBuff); } else { console.log('client error'); }
-  //    console.log('wysłano ID=' + instrID + ' instrNo: ' + instrNo + ' lastSent.instrID = ' + lastSent.instrID);
-    return instrID;
+    if (self.lastSent) { console.log('nadpisanie lastSent'); }
+    self.lastSent = {DstID: DstID, SrcID: SrcID, Dir: Dir, instrNo : instrNo, instrID : instrID, time : new Date()};
+    if (self.client) { self.client.write(outBuff); } else { console.log('client error'); }
+    // console.log('wysłano ID=' + instrID + ' instrNo: ' + instrNo + ' self.lastSent.instrID = ' + self.lastSent.instrID);
   }
 
   /**
@@ -334,7 +342,7 @@ module.exports = function(Strada, socket) {
   Strada.prototype.getData = function(dane) {
     var self = this;
     // console.log(self.interval);
-    // console.log('self.getData');
+    // console.log('getData');
     // console.log(dane.length);
     var DstIDR = dane.readUInt32LE(0);
     var SrcIDR = dane.readUInt32LE(4);
@@ -344,11 +352,11 @@ module.exports = function(Strada, socket) {
     var DataLenR = dane.readUInt16LE(14);
     var error = true;
 
-    // console.log(' self.getData lastSent.instrID = ' + lastSent.instrID);
-    if (lastSent) {
-      if (DstIDR !== lastSent.SrcID) {
+    if (self.lastSent) {
+      if (debug) { console.log(' getData', instrNoR.toString(16), instrIDR); }
+      if (DstIDR !== self.lastSent.SrcID) {
         console.log('Błąd DstID');
-      } else if (SrcIDR !== lastSent.DstID) {
+      } else if (SrcIDR !== self.lastSent.DstID) {
         console.log('Błąd SrcID');
       } else if (DirR !== 0x10) {
         console.log('Błąd Dir');
@@ -357,12 +365,16 @@ module.exports = function(Strada, socket) {
         } else {
           console.log('Dir = ' + DirR);
         }
-      } else if (instrNoR !== lastSent.instrNo) {
+      } else if (instrNoR !== self.lastSent.instrNo) {
         console.log('Błąd instrNo');
-      } else if (instrIDR !== lastSent.instrID
+      } else if (instrIDR !== self.lastSent.instrID
           && instrNoR > 0x200
           && instrNoR !== 0x301) {  //ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
-        console.log('Błąd instrID jest:', instrIDR, 'powinno być:', lastSent.instrID, lastSent.instrNo);
+        console.log('Błąd instrID jest:', instrIDR, 'powinno być:', self.lastSent.instrID, self.lastSent.instrNo);
+        // if (instrIDR < self.lastSent.instrID) {
+          // console.log('Wyjscie z funkcji - pominiecie odebranych danych');
+          // return;
+        // }
       } else if (dane.length - 16 !== DataLenR) {
         console.log('Błąd DataLenR');
       } else {
@@ -373,63 +385,62 @@ module.exports = function(Strada, socket) {
     dane = dane.slice(16);  //przesłanie dalej tylko StradaData
 
     if (instrNoR < 0x200 || instrNoR === 0x301) {
-      self.sendNext({error: error, Dir: DirR, dane: dane, RawHead: new Buffer([])});
-      lastSent = null;
+      self.response({error: error, Dir: DirR, dane: dane, RawHead: new Buffer([])});
+      self.lastSent = null;
       return;
     }
-    // console.log(lastSent);
-    if (!error) {
-      //SIN
-      var StatusInfNo = dane.readInt16LE(0);
-      var InstrVer = dane.readUInt16LE(2);
-      var InstrID2 = dane.readUInt16LE(4);
-      var DataType = dane.readUInt16LE(6);
-      var DataLen  = dane.readUInt16LE(8);
-      var DataSegmentNo = dane.readUInt16LE(10);
-      var rawHead = dane.slice(0, 12);
-      dane = dane.slice(12);  //przesłanie dalej tylko SerwerData
-      lastSent = null;
-      // if (instrNoR === 0x302) {
-        // dane302 = {error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead};
-      // }
-      if (DataType === 0) {
-        dane = dane.toString();
-      }
-      switch (StatusInfNo) {
-      case -1:
-        self.sendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
-        break;
-      case -2:
-      case -4:
-      case -5:
-        console.log('StatusInfNo: ' + StatusInfNo + ' - wyslanie ponowne');
-        setTimeout(function () {
-          self.sendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
-          // self.sendNext({error: error, Dir: 0x101, dane: dane, DataLen: DataLen, RawHead: rawHead}, true);
-        }, 100);
-        break;
-      default:
-        // console.log('StatusInfNo: ' + StatusInfNo);
-        // console.log('StatusInfNo: ' + StatusInfNo);
-        // console.log('InstrVer: ' + InstrVer);
-        // console.log('InstrID2: ' + InstrID2);
-        // console.log('DataType: ' + DataType);
-        // console.log('DataLenR: ' + DataLenR);
-        // console.log('DataLen: ' + DataLen);
-        // console.log('DataSegmentNo: ' + DataSegmentNo);
-        error = StatusInfNo;
-        self.sendNext({error: error, Dir: DirR, dane: dane, DataLen: DataLen, RawHead: rawHead});
-        break;
-      }
-    } else {
+    // console.log(self.lastSent);
+    if (error) {
       //BOT
       var error2 = dane.readInt16LE(0);  //numer błędu
       var ErrDesc = dane.slice(4);      //opis błędu
-      self.sendNext({error: error2, Dir: DirR, dane: ErrDesc.toString(), DataLen: null, RawHead: null});
+      self.response({error: error2, Dir: DirR, dane: ErrDesc.toString(), DataLen: null, RawHead: null});
+      return;
+    }
+    //SIN
+    var sin = {
+      statusInfNo : dane.readInt16LE(0),
+      instrVer : dane.readUInt16LE(2),
+      instrID2 : dane.readUInt16LE(4),
+      dataType : dane.readUInt16LE(6),
+      dataLen  : dane.readUInt16LE(8),
+      dataSegmentNo : dane.readUInt16LE(10),
+      rawHead : dane.slice(0, 12),
+    }
+    dane = dane.slice(12);  //przesłanie dalej tylko SerwerData
+    sin.daneLen = dane.length;
+    self.lastSent = null;
+    // if (instrNoR === 0x302) {
+      // dane302 = {error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead};
+    // }
+    if (sin.DataType === 0) {
+      dane = dane.toString();
+    }
+    if (debug) { console.log('SIN: ', sin); }
+    // if (debug) { console.log(dane.toString()); }
+    switch (sin.statusInfNo) {
+    case -1:
+      self.response({error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead});
+      break;
+    case -2:
+    case -4:
+    case -5:
+      console.log('StatusInfNo: ' + sin.statusInfNo + ' - wyslanie ponowne');
+      setTimeout(function () {
+        self.response({error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead}, true);
+        // self.response({error: error, Dir: 0x101, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead}, true);
+      }, 100);
+      break;
+    default:
+      // console.log('SIN: ', sin);
+      error = sin.statusInfNo;
+      self.response({error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead});
+      break;
     }
   }
 
   //mechanizm do usuniecia (zastepuje go usluga systemowa)
+  // zastapic skryptem *.sh
   // if (argv.clock) {
   if (false) {
     socket.on('strada_req_time', function () {
@@ -442,4 +453,4 @@ module.exports = function(Strada, socket) {
   }
   
   return Strada;
-};
+}

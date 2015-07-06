@@ -34,7 +34,8 @@ BlockRW.prototype.read = function (data, sign) {
 		console.error("data.length " + data.length);
     return temp;
 	}
-	for (var i = 0; i < temp_Len; i = i + 2) {
+  var i;
+	for (i = 0; i < temp_Len; i = i + 2) {
 		if (sign) {
 			temp.push(data.readInt16LE(i + this.adr));
 		} else {
@@ -61,8 +62,9 @@ BlockRW.prototype.write = function (tempBlock, sign) {
 	//rozmiar bloku w bajtach 
 	// !!! (zmiana 09-05-2014 po uzgodnieniu z Wieśkiem)
 	//tempOutBuff.writeUInt16LE(tempLen, 0);
-	tempOutBuff.writeUInt16LE(tempLen * 2, 0);		
-	for (var i = 0; i < tempLen; i += 1) {
+	tempOutBuff.writeUInt16LE(tempLen * 2, 0);
+  var i;
+	for (i = 0; i < tempLen; i += 1) {
 		if (sign) {
 			tempOutBuff.writeInt16LE(tempBlock[i], i * 2 + 2);
 		} else {

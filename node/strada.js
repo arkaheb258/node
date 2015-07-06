@@ -13,13 +13,14 @@ function Strada(socket, client) {
   this.lastSent = null;
   this.queue = [];
   this.instrID = 0;
-  
-  require('./stradaPar.js')(Strada, socket);
-  require('./stradaDane.js')(Strada, socket);
-  require('./stradaConn.js')(Strada, socket);
+  this.ntpDate = -1;
+
+  require('./stradaPar.js')(Strada);
+  require('./stradaDane.js')(Strada);
+  require('./stradaConn.js')(Strada);
 
   client
-    .on('data', function(dane) {
+    .on('data', function (dane) {
       self.getData(dane);
     })
     .on('connect', function () {
@@ -27,6 +28,7 @@ function Strada(socket, client) {
       self.PLCConnected = true;
       self.odswierzParametry();
       self.startInterval();
+      self.ntpDate = -1;
     })
     .on('error', function (err) {
       console.log('Strada ErRoR: ' + err.code);
@@ -45,13 +47,12 @@ function Strada(socket, client) {
       //czyszczenie kolejki wiadomosci
       self.clearQueue(true);
     });
-  
+
   self.stopInterval();
   socket.on('get_gpar', function (msg) {
     console.log(' on get_gpar');
-    if (self.PLCConnected)
-      self.odswierzParametry(msg);
+    if (self.PLCConnected) { self.odswierzParametry(msg); }
   });
-};
+}
 
 module.exports = Strada;

@@ -4,7 +4,7 @@ var common = require('./common.js');
 var decode = require('./decode.js');
 var fs = require('fs');
 
-module.exports = function(Strada) {
+module.exports = function (Strada) {
   var freshPar = 0;
 
   /**
@@ -13,7 +13,7 @@ module.exports = function(Strada) {
    * @param {} filename
    * @param {} temp
    */
-  Strada.prototype.zapiszParametry = function(temp, toFile) {
+  Strada.prototype.zapiszParametry = function (temp, toFile) {
     // console.log('zapiszParametry');
     var self = this;
     if (!temp) {
@@ -31,12 +31,12 @@ module.exports = function(Strada) {
     }
     freshPar = 2;
     common.storeGpar(temp);
-    console.log('zapis_gpar', temp.TYP);
+    // console.log('zapis_gpar', temp.TYP);
     self.socket.emit('gpar', temp);
     setTimeout(function () {
       freshPar = 0;
     }, 1000);
-  }
+  };
 
   // dopisac cykliczna funkcje (interval) ktora przy braku paramatrow bedzie probowac je odczytac
   /**
@@ -45,17 +45,16 @@ module.exports = function(Strada) {
    * @param {} callback
    * @param {} force
    */
-    //dodac callback z zapisem(store + emit)
-  Strada.prototype.odswierzParametry = function(force) {
-    if (freshPar === 1) return;
+  Strada.prototype.odswierzParametry = function (force) {
+    if (freshPar === 1) { return; }
     freshPar = 1;   //parametry w trakcie odswierzania
     var self = this;
-    console.log('odswierzParametry ', (force) ? 'force' : '' );
+    console.log('odswierzParametry ', (force) ? 'force' : '');
     var gpar = common.getGpar();
     console.log('Pobranie parametrow Strada (0x307)');
     self.readAll(0x307, [0, 0], function (stradaDane) {
       if (!stradaDane || stradaDane.error) {
-        console.log('blad odczytu - odswierzParametry (readAll)', stradaDane ? stradaDane.error:'');
+        console.log('blad odczytu - odswierzParametry (readAll)', stradaDane ? stradaDane.error : '');
         return;
       }
       gpar = decode.decodeStrada307(stradaDane.dane, gpar);
@@ -63,7 +62,7 @@ module.exports = function(Strada) {
         self.zapiszParametry(gpar);
         console.log('Struktura parametrów poprawna (0x307) mem');
         return;
-      } 
+      }
       // console.log('Struktura parametrów niepoprawna');
       fs.readFile(self.parFilename, 'utf8', function (err, data) {
         console.log('Wczytano parametry JSON');
@@ -72,7 +71,7 @@ module.exports = function(Strada) {
           self.zapiszParametry(gpar);
           console.log('Struktura parametrów poprawna (0x307) loc');
           return;
-        } 
+        }
         // console.log('Struktura parametrów niepoprawna');
         common.pobierzPlikFTP('ide/Parametry/Temp.par', null, function (string) {
           console.log('Wczytano parametry FTP');
@@ -81,14 +80,13 @@ module.exports = function(Strada) {
             self.zapiszParametry(gpar, true);
             console.log('Struktura parametrów poprawna (0x307) ftp');
             return;
-          } 
+          }
           self.zapiszParametry(gpar);
           console.log('Nie pobrano parametrow FTP');
         });
       });
     });
-  }
+  };
 
   return Strada;
 };
- 

@@ -159,11 +159,13 @@
     }
 
     d.setTime(data.TimeStamp_js);
-    fileName = d.toISOString().substring(0, 10).replace('-', '_');
+    fileName = d.toISOString().substring(0, 10).replace(/\-/mg, '_');
+    // fileName = d.toISOString().substring(0, 10).replace('-', '_');
     // fileName = d.getUTCFullYear() + '_' + common.pad(d.getUTCMonth() + 1, 2) + '_' + common.pad(d.getUTCDate(), 2);
 
     if (parametry.rZapisTyp === 0) {
-      fileName += '_' + common.pad(d.getUTCHours(), 2);
+      fileName = d.toISOString().substring(0, 13).replace(/[-T]/mg, '_');
+      // fileName += '_' + common.pad(d.getUTCHours(), 2);
     }
 
     fileName += '.dat';

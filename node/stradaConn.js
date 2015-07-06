@@ -1,24 +1,24 @@
 ﻿// stradaConn.js
 'use strict';
 var common = require('./common.js');
-module.exports = function(Strada, socket) {
-  var ntpDate = -1;
+module.exports = function (Strada) {
   var debug = false;
   // var debug = true;
-  
+
   /**
   * Przegląd kolejki wiadomości w celu sprawdzenia timeoutów
   * Wyslanie nastepnej wiadomosci z kolejki
   */
-  Strada.prototype.clearQueue = function(force) {
+  Strada.prototype.clearQueue = function (force) {
     var self = this;
     if (self.queue.length === 0) { return; }
     // console.log('queue.length: ' + self.queue.length);
     // if (force) console.log('clearQueue ' + self.queue.length);
     // czyszczenie timeoutow
     var i;
+    var el;
     for (i = 0; i < self.queue.length; i += 1) {
-      var el = self.queue[i];
+      el = self.queue[i];
       if (force || (Date.now() - el.time) > el.timeout) {
         self.queue.splice(i, 1)[0].callback({error: 'timeout'});
         if (debug) { console.log('self.queue.splice + timeout', force, (Date.now() - el.time), el.timeout); }
@@ -33,10 +33,10 @@ module.exports = function(Strada, socket) {
         console.log('queue.length = ', self.queue.length);
       }
     }
-  }
+  };
 
   // rekurencyjne odczytanie wielu obszarow
-  Strada.prototype.readAll = function(instrNo, dane2, callback, tempKonf) {
+  Strada.prototype.readAll = function (instrNo, dane2, callback, tempKonf) {
     // console.log('readAll', instrNo, dane2);
     var self = this;
     var uiCzytajObszarNr = dane2[0];
@@ -65,17 +65,17 @@ module.exports = function(Strada, socket) {
         }
       }
     });
-  }
-  
+  };
+
   /**
    *  @brief Dodanie rozkazu do kolejki
-   *  
+   *
    *  @param [in] instrNo Numer instrukcji
    *  @param [in] data Dane instrukcji
    *  @param [in] callback Funkcja wywolywana po odebraniu odpowiedzi
    *  @param [in] timeout Czas oczekiwania w kolejce
    */
-  Strada.prototype.stradaEnqueue = function(instrNo, data, callback, timeout) {
+  Strada.prototype.stradaEnqueue = function (instrNo, data, callback, timeout) {
     var self = this;
     if (!callback) { callback = console.log; }
     if (!timeout) { timeout = 1000; }
@@ -94,24 +94,24 @@ module.exports = function(Strada, socket) {
       return;
     }
     self.queue.push({
-      instrNo: instrNo, 
-      instrID: Number(self.instrID), 
-      data: data, 
+      instrNo: instrNo,
+      instrID: Number(self.instrID),
+      data: data,
       callback: callback,
-      timeout: timeout, 
+      timeout: timeout,
       time: Date.now()
     });
     self.clearQueue();
-  }
+  };
 
   /**
    *  @brief wywolanie callbacka przy otrzymaniu danych
-   *  @param [in] dane 
+   *  @param [in] dane
    *  @param [in] retry - ponowne wrzucenie do kolejki tego samego zapytania (przy zapytaniu asynchronicznym)
    */
-  Strada.prototype.response = function(dane, retry) {
+  Strada.prototype.response = function (dane, retry) {
     var self = this;
-    var el = self.queue.shift();;
+    var el = self.queue.shift();
     if (el) {
       // console.log('response()', el.instrNo.toString(16), el.instrID, retry ? true : false);
       // console.log(dane);
@@ -123,14 +123,14 @@ module.exports = function(Strada, socket) {
       }
     }
     self.clearQueue();
-  }
+  };
 
   /**
   * Wysłanie instrukcji do sterownika protokołem Strada
   * @param instrNo kod instrukcji
   * @param data dane do wyslania
   */
-  Strada.prototype.send = function(instrNo, instrID, data) {
+  Strada.prototype.send = function (instrNo, instrID, data) {
     var self = this;
     if (debug) { console.log('sendData', instrNo.toString(16), instrID); }
     var DstID = 1;
@@ -254,13 +254,13 @@ module.exports = function(Strada, socket) {
       tempOutBuff.writeUInt16LE(12, 2);
   //    console.log('uiCzytajObszarNr: '+data);
       tempOutBuff.writeUInt16LE(data, 4); //uiCzytajObszarNr
-      if (ntpDate === 1) {
-        console.log('Sterownik dostaje date');
+      if (self.ntpDate > 0) {
+        console.log('Sterownik dostaje date', self.ntpDate);
         tempOutBuff.writeUInt16LE(1, 6);
-        tempOutBuff.writeUInt32LE(Math.round((new Date()).getTime() / 1000), 8);
-        ntpDate = -2;
+        tempOutBuff.writeUInt32LE(Math.round(self.ntpDate / 1000), 8);
+        self.ntpDate = -2;
         setTimeout(function () {
-          ntpDate = -1;
+          self.ntpDate = -1;
         }, 1000);
       }
       break;
@@ -333,13 +333,13 @@ module.exports = function(Strada, socket) {
     self.lastSent = {DstID: DstID, SrcID: SrcID, Dir: Dir, instrNo : instrNo, instrID : instrID, time : new Date()};
     if (self.client) { self.client.write(outBuff); } else { console.log('client error'); }
     // console.log('wysłano ID=' + instrID + ' instrNo: ' + instrNo + ' self.lastSent.instrID = ' + self.lastSent.instrID);
-  }
+  };
 
   /**
   * Odebranie danych ze sterownika protokołem Strada
   * @param dane odebrane dane
   */
-  Strada.prototype.getData = function(dane) {
+  Strada.prototype.getData = function (dane) {
     var self = this;
     // console.log(self.interval);
     // console.log('getData');
@@ -405,8 +405,8 @@ module.exports = function(Strada, socket) {
       dataType : dane.readUInt16LE(6),
       dataLen  : dane.readUInt16LE(8),
       dataSegmentNo : dane.readUInt16LE(10),
-      rawHead : dane.slice(0, 12),
-    }
+      rawHead : dane.slice(0, 12)
+    };
     dane = dane.slice(12);  //przesłanie dalej tylko SerwerData
     sin.daneLen = dane.length;
     self.lastSent = null;
@@ -437,20 +437,7 @@ module.exports = function(Strada, socket) {
       self.response({error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead});
       break;
     }
-  }
+  };
 
-  //mechanizm do usuniecia (zastepuje go usluga systemowa)
-  // zastapic skryptem *.sh
-  // if (argv.clock) {
-  if (false) {
-    socket.on('strada_req_time', function () {
-      console.log('Sterownik rzada daty');
-      if (ntpDate === -1) {
-        console.log('data dla PLC: ', new Date());
-        ntpDate = 1;
-      }
-    });
-  }
-  
   return Strada;
-}
+};

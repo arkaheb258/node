@@ -46,7 +46,7 @@
 	  var out = [];
 	  var gpar = common.getGpar();
 	  var i = 0;
-    if (!dane) {return null;}
+    if (!dane) {return null; }
 	  while (i < dane.length) {
       var temp = {};
       temp.nr = dane.readUInt16LE(i) & 0x7FFF;
@@ -129,7 +129,7 @@
   function decodeStrada307(buf, outPar) {
     // console.log('decodeStrada307');
     var len, ptr = 0, temp, tempStr;
-    if (typeof outPar == 'string') { outPar = JSON.parse(outPar); }
+    if (typeof outPar === 'string') { outPar = JSON.parse(outPar); }
     if (outPar && outPar.DANE) {
       len = outPar.DANE.length;
     } else {
@@ -213,7 +213,7 @@
   function DecodeStrada302(data) {
     // console.log('DecodeStrada302', typeof data);
     // console.log(data);
-    if (typeof data == 'string') {
+    if (typeof data === 'string') {
       console.log('DecodeStrada302', data);
       return null;
     }

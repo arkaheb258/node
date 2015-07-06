@@ -8,13 +8,13 @@
 
   var client = new EverSocket({
     reconnectWait: 1000,  // wait after close event before reconnecting
-    timeout: 1000,    // set the idle timeout
-    reconnectOnTimeout: false    // reconnect if the connection is idle
+    timeout: 1000,        // set the idle timeout
+    reconnectOnTimeout: true    // reconnect if the connection is idle
   });
 
   var Strada = require('./strada.js');
   var strada = new Strada(socket, client);
   require('./stradaRozk.js')(strada, socket);
-  if (argv.interval !== undefined) { strada.interval = argv.interval; }
+  if (argv.interval !== undefined) { strada.setInterval(argv.interval); }
   client.connect(20021, '192.168.3.30');
 }());

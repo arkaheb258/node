@@ -170,7 +170,7 @@
 
   //Broadcast danych i parametrow
   io.on('connection', function (socket) {
-    console.log('Nowy socket: ', socket.conn.id);
+    if (argv.debug) { console.log('Nowy socket: ', socket.conn.id); }
     //dane do wyslania dla nowo-podlaczonych
     // socket.emit('dane', {error: 'Dane nie gotowe - oczekiwanie na PLC'});
     var gpar = common.getGpar();
@@ -184,7 +184,7 @@
       .on('io_emit', function (msg) { io.emit(msg[0], msg[1]); })
       .on('broadcast', function (msg) { socket.broadcast.emit(msg[0], msg[1]); })
       .on('get_gpar', function (msg) {
-        console.log('web on get_gpar', msg);
+        if (argv.debug) { console.log('web on get_gpar', msg); }
         var gpar = common.getGpar();
         if (gpar) {
           socket.emit('gpar', gpar);
@@ -194,7 +194,7 @@
         }
       })
       .on('gpar', function (gpar) {
-        console.log('webServer on gpar');
+        if (argv.debug) { console.log('webServer on gpar'); }
         common.storeGpar(gpar);
         socket.broadcast.emit('gpar', gpar);
       });

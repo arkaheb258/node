@@ -51,7 +51,7 @@
       opts.timeout = 2000;
       if (callback) { callback(Date.now()); }
       return;
-      break;
+      // break;
     default:
       break;
     }
@@ -226,10 +226,54 @@
     return buf.toString('utf8', start, i).substr(0, len);
   }
 
+  /**
+   * Description
+   * @method MyInterval
+   * @param {function} fun
+   * @param {Number} interval
+   */
+  function MyInterval(interval, fun) {
+    this.interval = interval;
+    // console.log('MyInterval start interval:', this.interval);
+    var temp = Date.now();
+    //zaokrglenie czasu startu
+    this.nextAt = temp - (temp % this.interval);
+    this.fun = fun;
+
+    this.nextTick();
+  }
+
+  MyInterval.prototype.nextTick = function () {
+    var self = this;
+    this.nextAt += this.interval;
+    var delay = this.nextAt - Date.now();
+    // console.log('delay = '+delay + 'ms', this.interval);
+    if (delay < -1000) {
+      console.log('MyInterval delay error');
+      var temp = Date.now();
+      //zaokrglenie czasu startu
+      this.nextAt = temp - (temp % this.interval);
+      delay = 1000;
+    }
+    setTimeout(function () {
+      self.nextTick();
+    }, delay);
+    this.fun();
+  };
+
+  MyInterval.prototype.setInterval = function (interval) {
+    this.interval = interval;
+    // console.log('MyInterval new interval:', this.interval);
+    var temp = Date.now();
+    //zaokrglenie czasu startu
+    this.nextAt = temp - (temp % this.interval);
+  };
+
   // module.exports.set_time = set_time;
   // module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
   // module.exports.pad = pad;
 
+  module.exports.MyInterval = MyInterval;
   module.exports.pobierzPlikFTP = pobierzPlikFTP;
   module.exports.msToCodesysTime = msToCodesysTime;
   module.exports.codesysTimeToMs = codesysTimeToMs;

@@ -18,6 +18,9 @@ module.exports = function (Strada) {
     var self = this;
     if (!temp) {
       console.log('Błąd parametrów - brak zapisu');
+      setTimeout(function () {
+        self.socket.emit('io_emit', ['get_gpar', true]);
+      }, 1000);
       return;
     }
     temp.DATA = (new Date()).toISOString().substring(0, 10);
@@ -35,7 +38,7 @@ module.exports = function (Strada) {
     self.socket.emit('gpar', temp);
     setTimeout(function () {
       freshPar = 0;
-    }, 1000);
+    }, 2000);
   };
 
   // dopisac cykliczna funkcje (interval) ktora przy braku paramatrow bedzie probowac je odczytac
@@ -46,12 +49,12 @@ module.exports = function (Strada) {
    * @param {} force
    */
   Strada.prototype.odswierzParametry = function (force) {
-    if (freshPar === 1) { return; }
+    // console.log('odswierzParametry ', (force) ? 'force' : '', (freshPar) ? 'fresh' : '');
+    if (!force && freshPar) { return; }
     freshPar = 1;   //parametry w trakcie odswierzania
     var self = this;
-    console.log('odswierzParametry ', (force) ? 'force' : '');
     var gpar = common.getGpar();
-    console.log('Pobranie parametrow Strada (0x307)');
+    // console.log('Pobranie parametrow Strada (0x307)');
     self.readAll(0x307, [0, 0], function (stradaDane) {
       if (!stradaDane || stradaDane.error) {
         console.log('blad odczytu - odswierzParametry (readAll)', stradaDane ? stradaDane.error : '');
@@ -65,7 +68,7 @@ module.exports = function (Strada) {
       }
       // console.log('Struktura parametrów niepoprawna');
       fs.readFile(self.parFilename, 'utf8', function (err, data) {
-        console.log('Wczytano parametry JSON');
+        // console.log('Wczytano parametry JSON');
         gpar = decode.decodeStrada307(stradaDane.dane, data);
         if (gpar) {
           self.zapiszParametry(gpar);

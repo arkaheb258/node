@@ -1,13 +1,19 @@
 ﻿// strada.js
 'use strict';
 var common = require('./common.js');
+var decode = require('./decode.js');
 var debug = false;
 
+/**
+ *  @brief Konstruktor klasy
+ *  @param [in] socket Socket.io
+ *  @param [in] client TCP Socket
+ */
 function Strada(socket, client) {
   var self = this;
   this.client = client;
   this.socket = socket;
-  this.interval = 200;
+  this.interval = 1000;
   this.parFilename = 'default.json';
   this.PLCConnected = false;
   this.lastSent = null;
@@ -16,7 +22,6 @@ function Strada(socket, client) {
   this.ntpDate = -1;
 
   require('./stradaPar.js')(Strada);
-  require('./stradaDane.js')(Strada);
   require('./stradaConn.js')(Strada);
 
   client
@@ -26,33 +31,288 @@ function Strada(socket, client) {
     .on('connect', function () {
       console.log('Strada Polaczono ....');
       self.PLCConnected = true;
-      self.odswierzParametry();
-      self.startInterval();
-      self.ntpDate = -1;
+      self.odswierzParametry(true);
+      self.myInterval.setInterval(self.interval);
     })
     .on('error', function (err) {
-      console.log('Strada ErRoR: ' + err.code);
-      socket.emit('dane', {error: 'Strada client ErRoR: ' + err.code });
-      self.PLCConnected = false;
-      self.stopInterval();
-      //czyszczenie kolejki wiadomosci
-      self.clearQueue(true);
+      self.disconnect(err);
     })
-    .on('close', function () {
-      // console.log('client close');
-      client.destroy();
-      socket.emit('dane', {error: 'Strada Connection closed'});
-      self.PLCConnected = false;
-      self.stopInterval();
-      //czyszczenie kolejki wiadomosci
-      self.clearQueue(true);
+    .on('close', function (err) {
+      self.disconnect(err);
     });
 
-  self.stopInterval();
+  self.myInterval = new common.MyInterval(self.interval, function () {
+    self.stradaEnqueue(0x302, 0, function (dane) {
+      if (!dane.error) {
+        dane = new decode.DecodeStrada302(dane.dane);
+        if (!dane) {console.log('DecodeStrada302 null'); return; }
+        if (dane.wDataControl === 1) {
+          // console.log('Sterownik rząda daty 1');
+          console.log('Sterownik rzada daty');
+          if (self.ntpDate === -1) {
+            self.ntpDate = -2;
+            common.runScript('getTime', null, function (data) {
+              console.log('data dla PLC: ', data);
+              self.ntpDate = data;
+            });
+          }
+        }
+      }
+      common.storeDane(dane);
+      if (self.emitEnable) { self.socket.emit('dane', dane); }
+    });
+  });
+
   socket.on('get_gpar', function (msg) {
-    console.log(' on get_gpar');
+    // console.log(' on get_gpar', self.PLCConnected);
     if (self.PLCConnected) { self.odswierzParametry(msg); }
   });
 }
+
+Strada.prototype.setInterval = function (interval) {
+  this.interval = interval;
+  this.emitEnable = (this.interval !== 0);
+  if (!this.emitEnable) {
+    console.log('Emitowanie danych wyłączone');
+    this.interval = 200;
+  }
+  if (this.interval < 50) {
+    console.log('Błędny interwał -> ustawiono 200ms');
+    this.interval = 200;
+  }
+  if (this.PLCConnected) { this.myInterval.setInterval(this.interval); }
+};
+
+Strada.prototype.disconnect = function (err) {
+  // console.log('Stop interval');
+  var self = this;
+  if (!err) {
+    // console.log('client close', err);
+    // self.client.destroy();
+    self.socket.emit('dane', {error: 'Strada Connection closed'});
+  } else {
+    console.log('Strada ErRoR: ' + err.code);
+    self.socket.emit('dane', {error: 'Strada client ErRoR: ' + err.code });
+  }
+  if (self.PLCConnected) {
+    console.log('PLC nie połączony');
+    self.myInterval.setInterval(1000);
+    self.PLCConnected = false;
+  }
+  self.lastSent = null;
+  //czyszczenie kolejki wiadomosci
+  self.clearQueue(true);
+};
+
+
+/**
+* Wysłanie instrukcji do sterownika protokołem Strada
+* @param instrNo kod instrukcji
+* @param data dane do wyslania
+*/
+Strada.prototype.send = function (instrNo, instrID, data) {
+  var self = this;
+  if (debug) { console.log('sendData', instrNo.toString(16), instrID); }
+  var DstID = 1;
+  var SrcID = 4;
+  var Dir = 0x01;
+  var outBuff = new Buffer(16);
+  var temp;
+  var tempOutBuff;
+
+  if (instrNo.length === 2) {
+    Dir = 0x101;
+    instrNo = instrNo[0];
+  }
+
+  outBuff.writeUInt32LE(DstID, 0);
+  outBuff.writeUInt32LE(SrcID, 4);
+  outBuff.writeUInt16LE(Dir, 8);
+  outBuff.writeUInt16LE(instrNo, 10);
+  outBuff.writeUInt16LE(instrID, 12);
+  outBuff.writeUInt16LE(0, 14);
+  if (instrNo === 0x204) { data[0] = data[0] * 100; }
+  if (instrNo === 0x20C) { data = data * 10; }
+
+  switch (instrNo) {
+  case 0x0: //External instrNo
+    instrNo = data[0];
+    outBuff.writeUInt16LE(instrNo, 10);
+    tempOutBuff = data[1];
+    data = null;
+    break;
+  case 0x201: //Zapisz datę i czas.
+    tempOutBuff = new Buffer(8);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(4, 2);
+    tempOutBuff.writeUInt32LE(data, 4);
+    break;
+  case 0x202: //Zapisz aktualne blokady.
+    if (!data || !data.length) { data = [0, 0, 0, 0]; }
+    tempOutBuff = new Buffer(4);    //naglowek Iver >=4bajty
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(data.length, 2);
+    break;
+  case 0x203: //Zapisz aktualny język.
+  case 0x204: //Zapisz aktualny numer sekcji.
+  case 0x207: //Zapisz miejsce sterowanie posuwem.
+  case 0x208: //Zapisz tryb pracy posuwu.
+  case 0x209: //Zapisz tryb pracy ciągników.
+  case 0x20A: //Zapisz całkowity czas pracy kombajnu.
+  case 0x20B: //Zapisz całkowity czas jazdy kombajnu.
+  case 0x20C: //Zapisz całkowity dystans kombajnu.
+  case 0x216: //Zapisz kanał radiowy SSRK. (1-69)
+  case 0x21B: //Zapisz typ skrawu wzorcowego.
+  case 0x21C: //Zapisz fazę skrawu wzorcowego.
+  case 0x21D: //Zapisz auto fazę skrawu wzorcowego.
+  case 0x221: //Zapisz miejsce sterowania kombajnu przez zewnętrzny system sterowania
+  case 0x222: //Zapisz tryb pracy pomp hydrauliki.
+  case 0x307: //Odczytanie obszaru danych konfiguracyjnych
+  case 0x308: //Podaj historię zdarzeń.
+  case 0x401: //Testuj hamulec.
+  case 0x402: //Sterowanie reflektorami.
+  case 0x404: //Kalibracja czujnika położenia napędów hydraulicznych
+  case 0x502: //Obsluga plików parametrów
+  case 0x601: //Podaj nazwy plików Skrawu Wzorcowego.
+  case 0x603: //Podaj nazwę aktualnego pliku Skrawu Wzorcowego.
+    tempOutBuff = new Buffer(8);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(4, 2);
+    tempOutBuff.writeUInt16LE(data[0], 4);
+    tempOutBuff.writeUInt16LE(data[1], 6);
+    // console.log(data);
+    // console.log(tempOutBuff);
+    data = null;
+    break;
+  case 0x701: //Kalibracja czujników położenia napędów hydraulicznych kombajnów chodnikowych
+    tempOutBuff = new Buffer(8);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(4, 2);
+    tempOutBuff.writeUInt16LE(data[0], 4);
+    tempOutBuff.writeInt16LE(data[1], 6); // !! Int zamiast UInt
+    data = null;
+    break;
+  case 0x702: //Ustawianie liczników czasu pracy dla kombajnów chodnikowych.
+    tempOutBuff = new Buffer(12);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(8, 2);
+    tempOutBuff.writeUInt16LE(data[0], 4);
+    tempOutBuff.writeUInt16LE(0, 6);
+    tempOutBuff.writeInt32LE(data[1], 8);
+    data = null;
+    break;
+  case 0x403: //Zeruj liczniki dzienne.
+  case 0x602: //Skasuj aktywny plik Skrawu Wzorcowego i usuń dane Skrawu z pamięci.
+    tempOutBuff = new Buffer(4);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(0, 2);
+    data = null;
+    break;
+  case 0x600: //Zapisz nazwę pliku Skrawu Wzorcowego wybranego przez użytkownika.
+  case 0x604: //Skasuj plik Skrawu Wzorcowego (inny niż aktywny).
+  case 0x606: //Stwórz nowy plik Skrawu Wzorcowego
+    tempOutBuff = new Buffer(26);
+    tempOutBuff.fill(0);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(24, 2);
+    tempOutBuff.write(data, 4);
+    data = null;
+    break;
+  case 0x605: //Zmień nazwę pliku Skrawu Wzorcowego
+    tempOutBuff = new Buffer(50);
+    tempOutBuff.fill(0);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(24, 2);
+    tempOutBuff.write(data[0], 4);
+    tempOutBuff.write(data[1], 28);
+    data = null;
+    break;
+  case 0x302: //Odczytanie obszaru danych wizualizacyjnych kombajnu
+    tempOutBuff = new Buffer(16);
+    tempOutBuff.fill(0);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(12, 2);
+//    console.log('uiCzytajObszarNr: '+data);
+    tempOutBuff.writeUInt16LE(data, 4); //uiCzytajObszarNr
+    if (self.ntpDate > 0) {
+      console.log('Sterownik dostaje date', self.ntpDate);
+      tempOutBuff.writeUInt16LE(1, 6);
+      tempOutBuff.writeUInt32LE(Math.round(self.ntpDate / 1000), 8);
+      self.ntpDate = -3;
+      setTimeout(function () {
+        self.ntpDate = -1;
+      }, 1000);
+    }
+    break;
+  case 0x310: //Podaj status wejść/wyjść wybranego bloku.
+    console.log(data);
+    tempOutBuff = new Buffer(32);
+    tempOutBuff.fill(0);
+    tempOutBuff.writeUInt16LE(1, 0);  //instrVer
+    tempOutBuff.writeUInt16LE(28, 2); //ClientDataLen
+    tempOutBuff.writeUInt16LE(data[0], 4);  //uiCzytajObszarNr
+    tempOutBuff.writeUInt16LE(0, 6);  //Rezerwa
+    tempOutBuff.write(data[1], 8);
+    data = null;
+    break;
+  case 0x500: //Zapisz parametr
+    tempOutBuff = new Buffer(100);
+    tempOutBuff.fill(0);
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(96, 2);
+    if (data.NAZ.length > 31) {
+      console.log('0x500 - za długa NAZWA (' + data.NAZ.length + ')');
+      data.NAZ = data.NAZ.substr(0, 31);
+    }
+    tempOutBuff.write(data.NAZ, 4);
+    tempOutBuff.write(data.TYP, 36);
+//console.log(data.TYP);
+    if (data.TYP === 'STRING') {
+      if (data.WART.length > 29) {
+        console.log('0x500 - za długi STRING (' + data.WART.length + ')');
+        data.WART = data.WART.substr(0, 29);
+      }
+      tempOutBuff.write('\"' + data.WART + '\"', 68);
+    // } else if (data.TYP === 'LISTA') {
+      // tempOutBuff.write(data.WART.toFixed(1), 68);
+    } else if (data.TYP === 'REAL' || (data.TYP === 'LISTA')) {
+      temp = data.WART.toString();
+      if (temp.indexOf('.') === -1) {
+        data.WART = temp + '.0';
+      } else if (temp.length - temp.indexOf('.') < 3) {
+        data.WART = parseFloat(temp).toFixed(1);//.toString();
+      } else {
+        data.WART = temp;
+      }
+      tempOutBuff.write(data.WART, 68);
+    } else if (data.TYP === 'TIME') {
+//        tempOutBuff.write('"T#' + common.msToCodesysTime(data.WART) + 'ms"', 68);
+// console.log('"T#' + (data.WART*1000) + 'ms"');
+      // tempOutBuff.write('"T#' + (data.WART * 1000) + 'ms"', 68);
+      tempOutBuff.write('"' + common.msToCodesysTime(data.WART * 1000) + '"', 68);
+    } else {
+      console.log('0x500 - Błąd TYPU');
+      tempOutBuff.write(data.WART, 68);
+    }
+    break;
+  default:  //domyślnie jako parametr przyjmuje tablicę
+    if (instrNo < 0x200 || instrNo === 0x301) { break; }  //dla rozkazow SSN, SSO i Tiefenbach
+    if (!data || !data.length) { data = [0, 0, 0, 0]; }
+    tempOutBuff = new Buffer(4);    //naglowek Iver >=4bajty
+    tempOutBuff.writeUInt16LE(1, 0);
+    tempOutBuff.writeUInt16LE(data.length, 2);
+    break;
+  }
+
+  if (tempOutBuff && tempOutBuff.length) {
+    outBuff = Buffer.concat([outBuff, tempOutBuff]);
+  }
+  if (data && data.length) { outBuff = Buffer.concat([outBuff, new Buffer(data)]); }
+  outBuff.writeUInt16LE(outBuff.length - 16, 14); //długość StradaData
+  if (self.lastSent) { console.log('nadpisanie lastSent'); }
+  self.lastSent = {DstID: DstID, SrcID: SrcID, Dir: Dir, instrNo : instrNo, instrID : instrID, time : new Date()};
+  if (self.client) { self.client.write(outBuff); } else { console.log('client error'); }
+  // console.log('wysłano ID=' + instrID + ' instrNo: ' + instrNo + ' self.lastSent.instrID = ' + self.lastSent.instrID);
+};
 
 module.exports = Strada;

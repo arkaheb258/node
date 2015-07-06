@@ -102,7 +102,7 @@ module.exports = function (strada) {
           console.log(dane);
           emitSIN(dane, msg, 'PAR_OK');
           if (!dane.error) {
-            strada.odswierzParametry();
+            strada.odswierzParametry(true);
           }
         }, 10000);
       break;

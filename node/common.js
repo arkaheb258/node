@@ -28,10 +28,10 @@
 
   function runScript(script, args, callback) {
     // docelowo skrypt *.sh
-    var opts = {cwd: './scripts'};
+    // var opts = {cwd: './scripts'};
+    var opts = {cwd: './node/scripts'};
     switch (script) {
     case 'git-revision':
-      opts = {cwd: './'};  //gdy uruchamiany z pm2 './', gdy bezposrednio '../'
       script = 'git-revision.sh';
       exec('git-revision.sh', opts, function (error, stdout, stderr) {
         // console.log(script, args);
@@ -173,11 +173,11 @@
   function msToCodesysTime(ms) {
     var out = 'T#0ms';
     if (parseInt(ms, 10) > 0) {
-      out = 'T#' + (Math.floor(ms / 86400000) ? (Math.floor(ms / 86400000)) + 'd' : '')
-        + (((Math.floor(ms / 3600000)) % 24) ? ((Math.floor(ms / 3600000)) % 24) + 'h' : '')
-        + (((Math.floor(ms / 60000)) % 60) ? ((Math.floor(ms / 60000)) % 60) + 'm' : '')
-        + (((Math.floor(ms / 1000)) % 60) ? ((Math.floor(ms / 1000)) % 60) + 's' : '')
-        + (ms % 1000 ? (ms % 1000) + 'ms' : '');
+      out = 'T#' + (Math.floor(ms / 86400000) ? (Math.floor(ms / 86400000)) + 'd' : '');
+      out += (((Math.floor(ms / 3600000)) % 24) ? ((Math.floor(ms / 3600000)) % 24) + 'h' : '');
+      out += (((Math.floor(ms / 60000)) % 60) ? ((Math.floor(ms / 60000)) % 60) + 'm' : '');
+      out += (((Math.floor(ms / 1000)) % 60) ? ((Math.floor(ms / 1000)) % 60) + 's' : '');
+      out += (ms % 1000 ? (ms % 1000) + 'ms' : '');
     }
     return out;
   }

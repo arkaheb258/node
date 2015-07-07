@@ -27,7 +27,7 @@ module.exports = function (Strada) {
     if (toFile) {
       fs.writeFile(self.parFilename,
         //podmiana wartości całkowitych x na x.0 wyrażeniem regularnym
-        JSON.stringify(temp).replace(/"WART":([-]?)(\d+),/g, '"WART":$1$2.0,'),
+        JSON.stringify(temp).replace(/"WART":([\-]?)(\d+),/g, '"WART":$1$2.0,'),
         function (err) {
           if (err) { console.log(err); } else { console.log('Zapisano parametry domyślne'); }
         });

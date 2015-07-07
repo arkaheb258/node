@@ -1,6 +1,5 @@
 ﻿// stradaConn.js
 'use strict';
-var common = require('./common.js');
 module.exports = function (Strada) {
   var debug = false;
   // debug = true;
@@ -151,15 +150,14 @@ module.exports = function (Strada) {
       } else if (DirR !== 0x10) {
         console.log('Błąd Dir');
         if (DirR === 0x110) {
-          console.log('BOT nr=' + dane.readInt16LE(16) + ': ' + dane.slice(20) + ' (' + dane.slice(20).length + ')');
+          console.log('BOT nr=', dane.readInt16LE(16), ':', dane.slice(20), '(', dane.slice(20).length, ')');
         } else {
-          console.log('Dir = ' + DirR);
+          console.log('Dir =', DirR);
         }
       } else if (instrNoR !== self.lastSent.instrNo) {
         console.log('Błąd instrNo');
-      } else if (instrIDR !== self.lastSent.instrID
-          && instrNoR > 0x200
-          && instrNoR !== 0x301) {  //ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
+      } else if (instrIDR !== self.lastSent.instrID && instrNoR > 0x200 && instrNoR !== 0x301) {
+        //ignorowanie błędu STRADA w rozkazach 0x001- 0x1FF oraz 0x301
         console.log('Błąd instrID jest:', instrIDR, 'powinno być:', self.lastSent.instrID, self.lastSent.instrNo);
         // if (instrIDR < self.lastSent.instrID) {
           // console.log('Wyjscie z funkcji - pominiecie odebranych danych');

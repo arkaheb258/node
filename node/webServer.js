@@ -53,15 +53,9 @@
     var get = url.parse(req.url, true).query;
     instrID = (instrID + 1) % 0x10000;
     get.instrID = instrID;
-    switch (get.rozkaz) {
-    case 'ustawCzas':
-      if (isNaN(get.wartosc)) {
-        res.jsonp('NaN');
-        return;
-      }
-      break;
-    default:
-      break;
+    if (get.rozkaz === 'ustawCzas' && isNaN(get.wartosc)) {
+      res.jsonp('NaN');
+      return;
     }
     socketIo.emit('rozkaz', get);
     socketIo.on('odpowiedz', function (msg) {

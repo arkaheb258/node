@@ -3,51 +3,51 @@
   'use strict';
   var common = require('./common.js');
 
-	/**
-	 * Description
-	 * @method encodeStrada202
-	 * @param {Object} data
-	 * @return outBuff
-	 */
-	function encodeStrada202(data) {
-	  var BlockRW = require('./blockrw.js');
-	  var outBuff;
-	  var bw;
-	  if (!data.BlockUsr) {
+  /**
+   * Description
+   * @method encodeStrada202
+   * @param {Object} data
+   * @return outBuff
+   */
+  function encodeStrada202(data) {
+    var BlockRW = require('./blockrw.js');
+    var outBuff;
+    var bw;
+    if (!data.BlockUsr) {
       console.log('Brak BlockUsr');
       data.BlockUsr = [];
-	  }
-	  if (!data.BlockSrvc) {
+    }
+    if (!data.BlockSrvc) {
       console.log('Brak BlockSrvc');
       data.BlockSrvc = [];
-	  }
-	  if (!data.BlockAdv) {
+    }
+    if (!data.BlockAdv) {
       console.log('Brak BlockAdv');
       data.BlockAdv = [];
-	  }
-	  bw = new BlockRW();
-	  outBuff = bw.write(data.BlockUsr, false);
-	  outBuff = Buffer.concat([outBuff, bw.write(data.BlockSrvc, false)]);
-	  outBuff = Buffer.concat([outBuff, bw.write(data.BlockAdv, false)]);
+    }
+    bw = new BlockRW();
+    outBuff = bw.write(data.BlockUsr, false);
+    outBuff = Buffer.concat([outBuff, bw.write(data.BlockSrvc, false)]);
+    outBuff = Buffer.concat([outBuff, bw.write(data.BlockAdv, false)]);
 
-	  if (outBuff.length % 4) {
+    if (outBuff.length % 4) {
       outBuff = Buffer.concat([outBuff, new Buffer([0, 0])]);
-	  }
-	  return outBuff;
-	}
+    }
+    return outBuff;
+  }
 
-	/**
-	 * Description
-	 * @method decodeStrada308
-	 * @param {Buffer} dane
-	 * @return out
-	 */
-	function decodeStrada308(dane) {
-	  var out = [];
-	  var gpar = common.getGpar();
-	  var i = 0;
+  /**
+   * Description
+   * @method decodeStrada308
+   * @param {Buffer} dane
+   * @return out
+   */
+  function decodeStrada308(dane) {
+    var out = [];
+    var gpar = common.getGpar();
+    var i = 0;
     if (!dane) {return null; }
-	  while (i < dane.length) {
+    while (i < dane.length) {
       var temp = {};
       temp.nr = dane.readUInt16LE(i) & 0x7FFF;
       if (dane.readUInt16LE(i) > 0x8000) {
@@ -74,9 +74,9 @@
         }
       }
       out.push(temp);
-	  }
-	  return out;
-	}
+    }
+    return out;
+  }
 
   /**
    * Description

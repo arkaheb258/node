@@ -1,4 +1,7 @@
-﻿// zapisDoPliku.js
+﻿/**
+ *  @file zapisDoPliku.js
+ *  @brief Brief
+ */
 (function () {
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));

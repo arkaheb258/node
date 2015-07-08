@@ -1,68 +1,61 @@
-﻿// common.js
+﻿/**
+ *  @file common.js
+ *  @brief Brief
+ */
 (function () {
   'use strict';
-  // var http = require('http');
-  // var fs = require('fs');
-  var NTP_HWCLOCK = false;
   var exec = require('child_process').exec;
-  // var walk = require('walk');
-  // var NTP_IP_i = 0;
   var Ftp = require('ftp');
   var gpar = null;
   var dane = null;
 
-  //dodanie zer wiodących
-  // function pad(num, size) {
-    // var s = num.toString();
-    // while (s.length < size) { s = '0' + s; }
-    // return s;
-  // }
-
-  //funkcja usuwajaca duplikaty z tablicy
-  // var arrayUnique = function (a) {
-    // return a.reduce(function (p, c) {
-      // if (p.indexOf(c) < 0) {p.push(c); }
-      // return p;
-    // }, []);
-  // };
-
-  function runScript(script, args, callback) {
-    // docelowo skrypt *.sh
-    // var opts = {cwd: './scripts'};
-    var opts = {cwd: './node/scripts'};
-    switch (script) {
-    case 'git-revision':
-      script = 'git-revision.sh';
-      exec('git-revision.sh', opts, function (error, stdout, stderr) {
-        // console.log(script, args);
-        var gitVer = '0.9.x';
-        if (!error) { gitVer = stdout.replace(/[ \n\r]*/mg, ''); }
-        if (callback) {callback(gitVer); }
-      });
-      return;
-    // TODO:
-    case 'setTime':
-      var str = args.toISOString().split('T');
-      var sDate = str[0];
-      var sTime = str[1].replace(/\..+/, '');
-      set_time(args);
-      return;
-    case 'getTime':
-      opts.timeout = 2000;
-      if (callback) { callback(Date.now()); }
-      return;
-      // break;
-    default:
-      break;
+  function runScript(script_name, args, callback) {
+    var opts = {cwd: __dirname + '/../scripts'};
+    var script = script_name + '.sh';
+    if (process.platform === 'linux') { script = 'chmod +x * && ./' + script; }
+    switch (script_name) {
+      // TODO:
+      case 'getTime': {
+        opts.timeout = 2000;
+        // if (callback) { callback(Date.now()); }
+        break;
+      }
+      case 'jsonZPLC':
+      case 'jsonNaPLC': {
+        args = '/flash/json ../json';
+        break;
+      }
+      default:
+        break;
     }
-    // if (process.platform === 'linux') { script += '.sh'; }
-    if (args) { args = ' ' + args; } else {args = ''; }
-    exec(script + args, opts, function (error, stdout, stderr) {
-      console.log(script, args);
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      console.log('error: ' + error);
-      if (callback) {callback('OK'); }
+      
+    if (args) { script += ' ' + args; }
+    exec(script, opts, function (error, stdout, stderr) {
+      switch (script_name) {
+        case 'git-revision': {
+          var gitVer = '0.9.x';
+          if (!error) { gitVer = stdout.replace(/[ \n\r]*/mg, ''); }
+          if (callback) {callback(gitVer); }
+          break;
+        }
+        case 'getTime': {
+          var data = 0;
+          console.log(script, args);
+          if (!error) { 
+            data = stdout.replace(/[ \n\r]*/mg, '')+'000'; 
+          }
+          if (callback) {callback(data); }
+          break;
+        }
+        default: {
+          console.log(script, args);
+          console.log('stdout: ' + stdout);
+          console.log('stderr: ' + stderr);
+          console.log('error: ' + error);
+          if (callback) {callback((error) ? stderr : 'OK'); }
+        }
+        break;
+      }
     });
   }
 
@@ -83,19 +76,10 @@
           console.log(err);
           callback(null);
           return;
-          // throw err;
         }
-        // console.log('ftp');
-        // c.on('readable', function () {
-          // var chunk;
-          // while (null !== (chunk = c.read())) {
-            // console.log('got %d bytes of data', chunk.length);
-          // }
-        // });
         var string = '';
         stream.on('data', function (response) {
           string += response;
-          //console.log(response);
         });
         stream.once('close', function () {
           console.log('FTP: pobrano plik ', file);
@@ -115,53 +99,6 @@
     c.connect({host: con_par.host,
       user: con_par.user, password: con_par.password,
       connTimeout: 2000, pasvTimeout: 2000});
-  }
-
-  /**
-   * Description
-   * @method set_time
-   * @param {} dataa
-   */
-  function set_time(dataa) {
-    var str = dataa.toISOString().split('T');
-    var sDate = str[0];
-    var sTime = str[1].replace(/\..+/, '');
-    // var sDate = dataa.getUTCFullYear() + '-' + pad(dataa.getUTCMonth() + 1, 2) + '-' + pad(dataa.getUTCDate(), 2);
-    // var sTime = pad(dataa.getUTCHours(), 2) + ':' + pad(dataa.getUTCMinutes(), 2) + ':' + pad(dataa.getUTCSeconds(), 2);
-    if (process.platform === 'linux') {
-      // console.log('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime);
-      exec('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime, function (error, stdout, stderr) {
-        console.log('sudo date -u --set ' + sDate + ' && sudo date -u --set ' + sTime);
-        // console.log('date 2');
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        console.log('error: ' + error);
-        // console.log(sDate);
-        // console.log(sTime);
-        exec('sudo hwclock -w', function (error, stdout, stderr) {
-          console.log('sudo hwclock -w');
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
-          console.log('error: ' + error);
-          if (NTP_HWCLOCK) {
-            exec('sudo hwclock -w -f /dev/rtc1', function (error, stdout, stderr) {
-              console.log('sudo hwclock -w -f /dev/rtc1');
-              console.log('stdout: ' + stdout);
-              console.log('stderr: ' + stderr);
-              console.log('error: ' + error);
-            });
-          }
-        });
-      });
-    // } else if (process.platform === 'win32') {
-          // child = exec('date ' + dataa.getUTCFullYear() + '/' + dataa.getUTCMonth() + '/' + dataa.getUTCDate(), function (error, stdout, stderr) {
-  //          console.log('stdout: ' + stdout);
-  //          console.log('stderr: ' + stderr);
-  //          if (error !== null) { console.log('exec error: ' + error);  }
-          // });
-          // child = exec('time ' + dataa.getUTCHours() + ':' + dataa.getUTCMinutes() + ':' + dataa.getUTCSeconds(), function (error, stdout, stderr) {});
-    }
-    //TODO: obsługa błędu zapisu
   }
 
   /**
@@ -235,27 +172,28 @@
   function MyInterval(interval, fun) {
     this.interval = interval;
     // console.log('MyInterval start interval:', this.interval);
-    var temp = Date.now();
-    //zaokrglenie czasu startu
-    this.nextAt = temp - (temp % this.interval);
     this.fun = fun;
-
-    this.nextTick();
+    this.nextAt = Date.now();
+    this.nextTick(true);
   }
 
-  MyInterval.prototype.nextTick = function () {
+  MyInterval.prototype.nextTick = function (restart) {
     var self = this;
-    this.nextAt += this.interval;
     var delay = this.nextAt - Date.now();
     // console.log('delay = '+delay + 'ms', this.interval);
-    if (delay < -1000) {
+    if (delay < -1000 || delay > 60000) {
       console.log('MyInterval delay error');
+      // delay = 1000;
+      restart = true;
+    }
+    if (restart) {
       var temp = Date.now();
       //zaokrglenie czasu startu
       this.nextAt = temp - (temp % this.interval);
-      delay = 1000;
+      delay = this.nextAt - Date.now();
     }
-    setTimeout(function () {
+    this.nextAt += this.interval;
+    this.timeout = setTimeout(function () {
       self.nextTick();
     }, delay);
     this.fun();
@@ -263,15 +201,13 @@
 
   MyInterval.prototype.setInterval = function (interval) {
     this.interval = interval;
-    // console.log('MyInterval new interval:', this.interval);
+    console.log('MyInterval new interval:', this.interval);
     var temp = Date.now();
     //zaokrglenie czasu startu
     this.nextAt = temp - (temp % this.interval);
+    if (this.timeout) clearTimeout(this.timeout);
+    this.nextTick(true);
   };
-
-  // module.exports.set_time = set_time;
-  // module.exports.kopiujJsonNaPLC = kopiujJsonNaPLC;
-  // module.exports.pad = pad;
 
   module.exports.MyInterval = MyInterval;
   module.exports.pobierzPlikFTP = pobierzPlikFTP;

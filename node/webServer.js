@@ -1,4 +1,7 @@
-﻿// webServer.js
+﻿/**
+ *  @file webServer.js
+ *  @brief Brief
+ */
 (function () {
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));
@@ -18,7 +21,6 @@
   var url = require('url');
   var common = require('./common.js');
   var jsonFiles = require('./jsonFiles.js');
-  var web_dir = argv.dir || '../build';
   var instrID = 0;
 
   // argv.debug = true;
@@ -36,20 +38,16 @@
   // });
 
   //test.html
-  // app.use('/test', express.static(__dirname + '/../test'));
+  app.use('/test', express.static(__dirname + '/../test'));
 
   //tresc statyczna na poczatku routowania
-  app.use(express.static(__dirname + '/' + web_dir));
-  // app.use(serveStatic(__dirname + '/' + web_dir));
-
-  //mapowanie plikow JSON
-  // app.use('/json', json_routes);
-
+  app.use(express.static(__dirname + '/' + (argv.dir || '../build')));
+  
   //mapowanie FTP sterownika
   // app.use('/ftp', ftp_routes);
 
   //obsluga rozkazow dla PLC
-  app.get('/rozkaz', function (req, res) {
+  app.get('/rozkaz', function (req, res, next) {
     var get = url.parse(req.url, true).query;
     instrID = (instrID + 1) % 0x10000;
     get.instrID = instrID;
@@ -59,22 +57,22 @@
     }
     socketIo.emit('rozkaz', get);
     socketIo.on('odpowiedz', function (msg) {
+    //TODO: last_get jako zmienna globalna (mechanizm kolejkowania jak w strada)
+    // socketIo.once('odpowiedz', function (msg) {
       if (msg.instrID == get.instrID) { res.jsonp(msg.dane); }
     });
   });
 
+  // Pliki z parametrami z folderu /json
   app.use('/json', function (req, res, next) {
     // var file = req.url.match(/\/(.*)\.json/); //pętla przekierowań
     var file = req.url.match(/\/([a-zA-Z]+)\.json/);
     // console.log('/json/* match', file, req.url);
-    //TODO: sprawdzic czy poprawny index zawsze jest równy 0
     if (!file || file.index) {
       next();
-      console.log('next()');
       return;
     }
-    switch (file[1]) {
-    case 'hardware':
+    if (file[1] == 'hardware') {
       var ip = '192.168.x.x';
       if (process.platform === 'linux') {
         // execute('cat /etc/dogtag', console.log);
@@ -85,78 +83,79 @@
           ip = os.networkInterfaces().eth0[0].address;
         }
       }
-      common.runScript('git-revision', null, function (gitVer) {
-        res.jsonp(({os: process.platform, verSerwer: gitVer,
-          ip: ip, host: os.hostname(), hw: argv.hw || 'PC'}));
-        // console.log('gitVer:', gitVer);
-      });
+      fs.readFile(__dirname + '/../json/soft.json',
+        'utf8',
+        function (err, text) {
+          var js = {};
+          if (!err) {
+            js = JSON.parse(text);
+          }
+          common.runScript('git-revision', null, function (gitVer) {
+            js.os = process.platform;
+            js.verSerwer = gitVer;
+            js.ip = ip;
+            js.host = os.hostname();
+            res.jsonp(js);
+          });
+        });
       return;
-    default:
-      break;
     }
     var gpar = common.getGpar();
     if (!gpar) {
       res.jsonp('Brak połączenia z PLC -> brak parametrów');
       return;
     }
-    var fileToRead = file[1];
-    var dir = '/json';
+    var fileToRead = '/../json';
     var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(' ', '_').toLowerCase();
     if (sKonfTypKombajnu !== '') {
-      dir += '/' + sKonfTypKombajnu;
+      fileToRead += '/' + sKonfTypKombajnu;
     }
-    fileToRead = dir + '/' + fileToRead;
+    fileToRead += '/' + file[1];
     if (gpar.rKonfWersjaJezykowa !== undefined) {
-      fileToRead +=  '_' + gpar.rKonfWersjaJezykowa + '.json';
-    } else {
-      fileToRead += '.json';
+      fileToRead +=  '_' + gpar.rKonfWersjaJezykowa;
     }
+    fileToRead += '.json';
     switch (file[1]) {
-    case 'sygnaly':
-      fs.readFile(__dirname + '/' + web_dir + fileToRead,
-        'utf8',
-        function (err, text) {
-          if (err) {
-            res.jsonp('error: ' + fileToRead);
-          } else {
-            res.jsonp(jsonFiles.czytajPlikSygnalow(text, common.getGpar()));
-          }
+      case 'sygnaly': {
+        jsonFiles.czytajPlikSygnalow(fileToRead, common.getGpar(), function(dane){
+          res.jsonp(dane);
         });
-      break;
-    case 'parametry':
-      fs.readFile(__dirname + '/' + web_dir + fileToRead,
-        'utf8',
-        function (err, text) {
-          if (err) {
-            res.jsonp('error: ' + fileToRead);
-          } else {
-            res.jsonp(jsonFiles.czytajPlikParametrowWiz(text, common.getGpar()));
-          }
+        break;
+      }
+      case 'parametry': {
+        jsonFiles.czytajPlikParametrowWiz(fileToRead, common.getGpar(), function(dane){
+          res.jsonp(dane);
         });
-      break;
-    case 'komunikaty':
-      //jezeli jest plik *.EXP to generuje komunikaty z niego,
-      //inaczej przekierowuje do odpowiedniego folderu
-      fs.readFile(__dirname + '/' + web_dir + '/json/' + 'STR_KOMUNIKATY.EXP',
-        'utf8',
-        function (err, text) {
-          if (err) {
-            res.redirect(fileToRead);
-          } else {
-            res.jsonp(jsonFiles.czytajPlikKomunikatow(text, false));
-          }
-        });
-      break;
-    case 'diagnostykaBlokow':
-      //przekierowanie do odpowiedniego folderu bez wersji językowych
-      res.redirect(dir + '/diagnostykaBlokow.json');
-      break;
-    default:
-      res.redirect(fileToRead);
-      break;
+        break;
+      }
+      case 'komunikaty': {
+        //jezeli jest plik *.EXP to generuje komunikaty z niego,
+        //inaczej przekierowuje do odpowiedniego folderu
+        fs.readFile(__dirname + '/../json/STR_KOMUNIKATY.EXP',
+          'utf8',
+          function (err, text) {
+            if (err) {
+              res.redirect(fileToRead);
+            } else {
+              res.jsonp(jsonFiles.czytajPlikKomunikatow(text, false));
+            }
+          });
+        break;
+      }
+      case 'diagnostykaBlokow': {
+        //przekierowanie do odpowiedniego folderu bez wersji językowych
+        res.redirect('/../json/' + sKonfTypKombajnu + '/diagnostykaBlokow.json');
+        break;
+      }
+      default:
+        res.redirect(fileToRead);
+        break;
     }
   });
 
+  // Pliki statyczne z folderu /json
+  app.use('/json', express.static(__dirname + '/../json'));
+  
   //wystartowanie serwera
   server.listen(port, function () {
     console.log('HTTP Server listening on port ' + port);
@@ -191,6 +190,16 @@
         if (argv.debug) { console.log('webServer on gpar'); }
         common.storeGpar(gpar);
         socket.broadcast.emit('gpar', gpar);
+      })
+      .on('getDefSyg', function(msg) {
+        jsonFiles.czytajPlikSygnalow(__dirname + '/' + (argv.dir || '../build') + '/default/sygnaly.json', common.getGpar(), function(dane){
+          socket.emit('defSyg', dane);
+        });
+      })
+      .on('getDefPar', function(msg) {
+        jsonFiles.czytajPlikParametrowWiz(__dirname + '/' + (argv.dir || '../build') + '/default/parametry.json', common.getGpar(), function(dane){
+          socket.emit('defPar', dane);
+        });
       });
   });
 }());

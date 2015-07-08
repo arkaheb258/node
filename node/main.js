@@ -1,5 +1,8 @@
-﻿// main.js
-(function () {
+﻿/**
+ *  @file main.js
+ *  @brief Brief
+ */
+(function() {
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));
   var port = argv.port || 8888;
@@ -7,9 +10,10 @@
   var EverSocket = require('eversocket').EverSocket;
 
   var client = new EverSocket({
-    reconnectWait: 1000,  // wait after close event before reconnecting
-    timeout: 1000,        // set the idle timeout
-    reconnectOnTimeout: true    // reconnect if the connection is idle
+    reconnectWait: 1000,      // Wait after close event before reconnecting
+    timeout: 1000,            // Set the idle timeout
+    reconnectOnTimeout: true  // Reconnect if the connection is idle
+    // reconnectOnTimeout: false  // Reconnect if the connection is idle
   });
 
   var Strada = require('./strada.js');

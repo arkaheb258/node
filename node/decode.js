@@ -1,4 +1,7 @@
-// decode.js
+/**
+ *  @file decode.js
+ *  @brief Brief
+ */
 (function () {
   'use strict';
   var common = require('./common.js');
@@ -95,23 +98,23 @@
         if (js.DANE.hasOwnProperty(i)) {
           var temp = js.DANE[i];
           switch (temp.NAZ) {
-          // case 'sKonfTypKombajnu':
-          // case 'sKonfNrKomisji':
-          // case 'sKonfNazwaKopalni':
-          // case 'sKonfNrSciany':
-          // case 'sKonfWersjaProgramu':
-          case 'rKonfWersjaJezykowa':
-          case 'rKonfCzasLetni':
-          case 'rKonfCzasStrefa':
-          case 'rZapisTyp':
-            out[temp.NAZ] = temp.WART;
-            // console.log(temp.NAZ, temp.WART);
-            break;
-          case 'tZapisCzasZrzutu':
-            out[temp.NAZ] = common.codesysTimeToMs(temp.WART.toString());
-            break;
-          default:
-            break;
+            // case 'sKonfTypKombajnu':
+            // case 'sKonfNrKomisji':
+            // case 'sKonfNazwaKopalni':
+            // case 'sKonfNrSciany':
+            // case 'sKonfWersjaProgramu':
+            case 'rKonfWersjaJezykowa':
+            case 'rKonfCzasLetni':
+            case 'rKonfCzasStrefa':
+            case 'rZapisTyp':
+              out[temp.NAZ] = temp.WART;
+              // console.log(temp.NAZ, temp.WART);
+              break;
+            case 'tZapisCzasZrzutu':
+              out[temp.NAZ] = common.codesysTimeToMs(temp.WART.toString());
+              break;
+            default:
+              break;
           }
         }
       }

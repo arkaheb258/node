@@ -1,3 +1,6 @@
 {
-  "preset": "node-style-guide"
+  "preset": "node-style-guide",
+  "requireCapitalizedComments": { "allExcept": ["jshint"] },
+  "maximumLineLength": 90,
+  "maxErrors": 30
 }

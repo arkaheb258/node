@@ -2,13 +2,14 @@
   "name": "kopex",
   "description": "Serwer wizualizacji",
   "author": "Arkadiusz <kopex.machinery@gmail.com>",
-  "version": "2.0.0",
+  "version": "0.9.57",
   "private": true,
   "main": "node/main.js",
   "scripts": {
-      "start": "nodemon node/main.js",
+      "start": "forever node/main.js",
       "test" : "mocha supertest.js",
-      "web" : "nodemon node/webServer.js"
+      "web" : "forever node/webServer.js --dir=../source",
+      "zapis" : "forever node/zapisDoPliku.js"
   },  
   "repository": {
     "type": "git",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "cache-require-paths": "0.1.x",
+    "forever": "0.14.x",
     "eversocket": "0.0.4",
     "express": "4.12.x",
     "ftp": "0.3.x",

@@ -1,13 +1,14 @@
 ﻿/**
  *  @file zapisDoPliku.js
- *  @brief Brief
+ *  @brief Logowanie danych z pracy maszyny
  */
 (function () {
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));
+  argv.port = argv.port || 8888;
+  if (argv.cache) { require('cache-require-paths'); }
   var fs = require('fs');
-  var port = argv.port || 8888;
-  var socket = require('socket.io-client')('http://127.0.0.1:' + port);
+  var socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
   var common = require('./common.js');
   var cp = require('child_process');
   var logger_dir = argv.dir || null;
@@ -15,7 +16,7 @@
 
   /**
    * Description
-   * @method createDir
+   * @method Tworzenie folderu (moznaby zamienic na skrypt)
    * @param {} dirName
    * @param {} callback
    */
@@ -33,6 +34,17 @@
     });
   }
 
+  /**
+   *  Description
+   *  @method Tworzenie pustego pliku do zapisu danych (z nagłówkiem)
+   *  @brief Brief
+   *  
+   *  @param [in] fileName Parameter_Description
+   *  @param [in] czas Parameter_Description
+   *  @return Return_Description
+   *  
+   *  @details Details
+   */
   function createFile(fileName, czas) {
     console.log('Tworzenie pustego pliku danych: ' + fileName);
     createDir(logger_dir, function () {

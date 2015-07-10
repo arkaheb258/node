@@ -14,12 +14,15 @@ else
   ncftpls -u admin -p admin ftp://192.168.3.30/$r_dir/* > $l_dir/f_list.txt
 
   while read p; do
-    echo $p
-    rm $l_dir/$p -r
-    mkdir $l_dir/$p
-    cd $l_dir/$p
-    ncftpget -u admin -p admin ftp://192.168.3.30/$r_dir/$p/*
-    cd ..
+    if [[ $p != *"."* ]]; then
+      echo Pobieranie folderu \"$p\"
+      # rm $l_dir/$p -r
+      mkdir $l_dir/$p
+      cd $l_dir/$p
+      ncftpget -d stdout -u admin -p admin ftp://192.168.3.30/$r_dir/$p/*
+      # ncftpget -u admin -p admin ftp://192.168.3.30/$r_dir/$p/*
+      cd ..
+    fi  
   done < $l_dir/f_list.txt
   rm $l_dir/f_list.txt
 fi

@@ -1,8 +1,8 @@
 ﻿/**
  *  @file stradaRozk.js
- *  @brief Brief
+ *  @brief Obsługa rozkazów z socket.io
  */
-(function () {
+// (function () {
   'use strict';
   var common = require('./common.js');
   var BlockRW = require('./blockrw.js');
@@ -59,7 +59,8 @@
           } else {
             console.log('Ustawienie nowego czasu: ', dataa);
             var str = dataa.toISOString().split('T');
-            common.runScript('setTime', str[0] + ' ' + str[1].substring(0,8));
+            //TODO: obsluga bledow skryptu
+            common.runScript(['setTime.sh', str[0], str[1].substring(0,8)], function(){});
             strada.stradaEnqueue(0x201, temp, function (dane) {
               console.log('dane 201', dane);
               if (!dane.error) {
@@ -314,20 +315,6 @@
             });
           break;
         }
-        case 'zarzadzaniePlikami': {
-          console.log(get.rozkaz);
-          console.log(get.sWartosc);
-          // if (process.platform === 'linux') {
-            common.runScript(get.sWartosc, '', function (dane) {
-              msg.dane = dane;
-              strada.socket.emit('odpowiedz', msg);
-            });
-          // } else {
-            // msg.dane = 'Platforma nieobsługiwana';
-            // strada.socket.emit('odpowiedz', msg);
-          // }
-          break;
-        }
         default: {
           msg.dane = 'Nieznany rozkaz';
           strada.socket.emit('odpowiedz', msg);
@@ -336,4 +323,4 @@
       }
     });
   };
-}());
+// }());

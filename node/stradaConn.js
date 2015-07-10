@@ -1,8 +1,8 @@
 ﻿/**
  *  @file stradaConn.js
- *  @brief Brief
+ *  @brief Kolejkowanie wiadomosci Strada
  */
-(function () {
+// (function () {
   'use strict';
   module.exports = function (Strada) {
     var debug = false;
@@ -11,6 +11,7 @@
     /**
     * Przegląd kolejki wiadomości w celu sprawdzenia timeoutów
     * Wyslanie nastepnej wiadomosci z kolejki
+    * @memberof! Strada#
     */
     Strada.prototype.clearQueue = function (force) {
       var self = this;
@@ -38,7 +39,10 @@
       }
     };
 
-    // rekurencyjne odczytanie wielu obszarow
+    /**
+     *  @brief Rekurencyjne odczytanie wielu obszarow
+     *  @memberof! Strada#
+     */
     Strada.prototype.readAll = function (instrNo, dane2, callback, tempKonf) {
       // console.log('readAll', instrNo, dane2);
       var self = this;
@@ -72,7 +76,7 @@
 
     /**
      *  @brief Dodanie rozkazu do kolejki
-     *
+     *  @memberof! Strada#
      *  @param [in] instrNo Numer instrukcji
      *  @param [in] data Dane instrukcji
      *  @param [in] callback Funkcja wywolywana po odebraniu odpowiedzi
@@ -109,6 +113,7 @@
 
     /**
      *  @brief wywolanie callbacka przy otrzymaniu danych
+     *  @memberof! Strada#
      *  @param [in] dane
      *  @param [in] retry - ponowne wrzucenie do kolejki tego samego zapytania (przy zapytaniu asynchronicznym)
      */
@@ -130,6 +135,7 @@
 
     /**
     * Odebranie danych ze sterownika protokołem Strada
+    * @memberof! Strada#
     * @param dane odebrane dane
     */
     Strada.prototype.getData = function (dane) {
@@ -236,4 +242,4 @@
 
     return Strada;
   };
-}());
+// }());

@@ -21,6 +21,7 @@ make
 make install
 
 #process manager
+npm install -g cache-require-paths
 npm install -g forever
 #npm install pm2 -g
 #pm2 startup ubuntu
@@ -32,6 +33,9 @@ git clone -b wydawka_borynia git://github.com/arkaheb258/node.git node
 #git clone http://192.168.30.12:81/Bonobo.Git.Server/wizu.git build
 #cd /home/debian/kopex/node
 #npm install
+
+chmod +x /home/debian/kopex/node/scripts
+chmod +s /home/debian/kopex/node/scripts
 
 #cd /boot/uboot/
 #git clone git://github.com/arkaheb258/node.git

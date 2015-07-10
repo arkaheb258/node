@@ -1,8 +1,8 @@
 ﻿/**
  *  @file stradaPar.js
- *  @brief Brief
+ *  @brief Odświerzania parametrów
  */
-(function () {
+// (function () {
   'use strict';
   var common = require('./common.js');
   var decode = require('./decode.js');
@@ -14,6 +14,7 @@
     /**
      * Description
      * @method zapiszParametry
+     * @memberof! Strada#
      * @param {} filename
      * @param {} temp
      */
@@ -47,6 +48,7 @@
 
     /**
      * Description
+     * @memberof! Strada#
      * @method odswierzParametry
      * @param {} callback
      * @param {} force
@@ -96,4 +98,4 @@
 
     return Strada;
   };
-}());
+// }());

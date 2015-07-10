@@ -1,11 +1,12 @@
 ﻿/**
  *  @file webServer.js
- *  @brief Brief
+ *  @brief Serwer HTTP dla wizualizacji
  */
 (function () {
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));
-  var port = argv.port || 8888;
+  argv.port = argv.port || 8888;
+  if (argv.cache) { require('cache-require-paths'); }
   var http = require('http');
   var express = require('express');
   // var connect = require('connect');
@@ -14,7 +15,7 @@
   // var server = http.createServer(app);
   var app = express();
   var server = http.Server(app);
-  var socketIo = require('socket.io-client')('http://127.0.0.1:' + port);
+  var socketIo = require('socket.io-client')('http://127.0.0.1:' + argv.port);
   var io = require('socket.io')(server);
   var fs = require('fs');
   var os = require('os');
@@ -23,6 +24,7 @@
   var jsonFiles = require('./jsonFiles.js');
   var instrID = 0;
 
+  argv.dir = argv.dir || '../build';
   // argv.debug = true;
 
   if (argv.debug) {
@@ -32,16 +34,11 @@
     });
   }
 
-  //przekierowanie
-  // app.get('/', function (req, res) {
-    // res.redirect('/index.html');
-  // });
-
   //test.html
-  app.use('/test', express.static(__dirname + '/../test'));
+  app.use('/test', express.static(__dirname + '/..'));
 
   //tresc statyczna na poczatku routowania
-  app.use(express.static(__dirname + '/' + (argv.dir || '../build')));
+  app.use(express.static(__dirname + '/' + argv.dir));
   
   //mapowanie FTP sterownika
   // app.use('/ftp', ftp_routes);
@@ -90,7 +87,11 @@
           if (!err) {
             js = JSON.parse(text);
           }
-          common.runScript('git-revision', null, function (gitVer) {
+          common.runScript(['git-revision.sh'], function (data) {
+            var gitVer = '0.9.x';
+            if (data.error === 0) {
+              gitVer = data.stdout.replace(/[ \n\r]*/mg, '');
+            }
             js.os = process.platform;
             js.verSerwer = gitVer;
             js.ip = ip;
@@ -157,20 +158,18 @@
   app.use('/json', express.static(__dirname + '/../json'));
   
   //wystartowanie serwera
-  server.listen(port, function () {
-    console.log('HTTP Server listening on port ' + port);
+  server.listen(argv.port, function () {
+    console.log('HTTP Server listening on', argv.port);
   });
 
   //Broadcast danych i parametrow
   io.on('connection', function (socket) {
     if (argv.debug) { console.log('Nowy socket: ', socket.conn.id); }
-    //dane do wyslania dla nowo-podlaczonych
-    // socket.emit('dane', {error: 'Dane nie gotowe - oczekiwanie na PLC'});
+    // Wyslania gpar dla nowo-podlaczonych
     var gpar = common.getGpar();
     if (gpar) { socket.emit('gpar', gpar); } else { io.emit('get_gpar'); }
 
     socket
-    // .on('strada', function (msg) { console.log('strada: ' + msg); })
       .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
       .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
       .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
@@ -192,14 +191,31 @@
         socket.broadcast.emit('gpar', gpar);
       })
       .on('getDefSyg', function(msg) {
-        jsonFiles.czytajPlikSygnalow(__dirname + '/' + (argv.dir || '../build') + '/default/sygnaly.json', common.getGpar(), function(dane){
+        jsonFiles.czytajPlikSygnalow('/' + argv.dir + '/jsonDefault/sygnaly.json', common.getGpar(), function(dane){
           socket.emit('defSyg', dane);
         });
       })
       .on('getDefPar', function(msg) {
-        jsonFiles.czytajPlikParametrowWiz(__dirname + '/' + (argv.dir || '../build') + '/default/parametry.json', common.getGpar(), function(dane){
+        jsonFiles.czytajPlikParametrowWiz('/' + argv.dir + '/jsonDefault/parametry.json', common.getGpar(), function(dane){
           socket.emit('defPar', dane);
         });
+      })
+      .on('zarzadzaniePlikami', function(msg) {
+        console.log('zarzadzaniePlikami', msg);
+        var args = [msg + '.sh'];
+        if (msg == 'jsonZPLC' || msg == 'jsonNaPLC') {
+          args.push('/flash/json');
+          args.push('../json');
+        }
+        common.runScript(args,
+          function(data){
+            socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
+          }).stdout.on('data', function (chunk) {
+            chunk = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
+            if (chunk) {
+              socket.emit('zarzadzaniePlikamiOdp', 'Pobieranie: ' + chunk[0].substring(9));
+            }
+          });
       });
   });
 }());

@@ -1,8 +1,8 @@
 /**
  *  @file decode.js
- *  @brief Brief
+ *  @brief Funkcje dekodujące rozkazy Strada
  */
-(function () {
+// (function () {
   'use strict';
   var common = require('./common.js');
 
@@ -104,6 +104,7 @@
             // case 'sKonfNrSciany':
             // case 'sKonfWersjaProgramu':
             case 'rKonfWersjaJezykowa':
+            case 'rKonfWersjaWyposazeniaElektr':
             case 'rKonfCzasLetni':
             case 'rKonfCzasStrefa':
             case 'rZapisTyp':
@@ -260,4 +261,4 @@
   module.exports.decodeStrada308 = decodeStrada308;
   module.exports.encodeStrada202 = encodeStrada202;
   module.exports.DecodeStrada302 = DecodeStrada302;
-}());
+// }());

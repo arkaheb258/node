@@ -1,62 +1,36 @@
 ﻿/**
  *  @file common.js
- *  @brief Brief
+ *  @brief Funkcje wykorzystywane przez wiele modułów
  */
-(function () {
+// (function () {
   'use strict';
   var exec = require('child_process').exec;
+  var spawn = require('child_process').spawn;
   var Ftp = require('ftp');
   var gpar = null;
   var dane = null;
 
-  function runScript(script_name, args, callback) {
+  /**
+   *  @param [in] args Parameter_Description
+   *  @param [in] callback_end Parameter_Description
+   *  @return ChildProcess object
+   */
+  function runScript(args, callback_end) {
     var opts = {cwd: __dirname + '/../scripts'};
-    var script = script_name + '.sh';
-    if (process.platform === 'linux') { script = 'chmod +x * && ./' + script; }
-    switch (script_name) {
-      // TODO:
-      case 'getTime': {
-        opts.timeout = 2000;
-        // if (callback) { callback(Date.now()); }
-        break;
-      }
-      case 'jsonZPLC':
-      case 'jsonNaPLC': {
-        args = '/flash/json ../json';
-        break;
-      }
-      default:
-        break;
-    }
-      
-    if (args) { script += ' ' + args; }
-    exec(script, opts, function (error, stdout, stderr) {
-      switch (script_name) {
-        case 'git-revision': {
-          var gitVer = '0.9.x';
-          if (!error) { gitVer = stdout.replace(/[ \n\r]*/mg, ''); }
-          if (callback) {callback(gitVer); }
-          break;
-        }
-        case 'getTime': {
-          var data = 0;
-          console.log(script, args);
-          if (!error) { 
-            data = stdout.replace(/[ \n\r]*/mg, '')+'000'; 
-          }
-          if (callback) {callback(data); }
-          break;
-        }
-        default: {
-          console.log(script, args);
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
-          console.log('error: ' + error);
-          if (callback) {callback((error) ? stderr : 'OK'); }
-        }
-        break;
-      }
+    // opts.timeout = 2000;
+    var proc = spawn('sh', args, opts);
+    var stdout = '';
+    var stderr = '';
+    proc.stdout.on('data', function (data) { stdout += data; });
+    proc.stderr.on('data', function (data) { stderr += data; });
+    proc.on('close', function (code) {
+      callback_end({
+        stderr: stderr,
+        stdout: stdout,
+        error: code
+      });
     });
+    return proc;
   }
 
   /**
@@ -164,10 +138,11 @@
   }
 
   /**
-   * Description
-   * @method MyInterval
-   * @param {function} fun
-   * @param {Number} interval
+   * Interwał utrzymujący stałą średnią ilość wywołań
+   * @class MyInterval
+   * @constructor
+   * @param {function} fun Funkcja wywoływana cyklicznie
+   * @param {Number} interval Interwał wywoływania funkcji
    */
   function MyInterval(interval, fun) {
     this.interval = interval;
@@ -177,6 +152,9 @@
     this.nextTick(true);
   }
 
+  /**
+  * @memberof! MyInterval#
+  */
   MyInterval.prototype.nextTick = function (restart) {
     var self = this;
     var delay = this.nextAt - Date.now();
@@ -199,6 +177,9 @@
     this.fun();
   };
 
+  /**
+  * @memberof! MyInterval#
+  */
   MyInterval.prototype.setInterval = function (interval) {
     this.interval = interval;
     console.log('MyInterval new interval:', this.interval);
@@ -228,4 +209,4 @@
     // console.log('getGpar');
     return gpar;
   };
-}());
+// }());

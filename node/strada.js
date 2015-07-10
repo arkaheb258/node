@@ -1,8 +1,8 @@
 ﻿/**
  *  @file strada.js
- *  @brief Brief
+ *  @brief Komunikacja z PLC
  */
-(function () {
+// (function () {
   'use strict';
   var common = require('./common.js');
   var decode = require('./decode.js');
@@ -11,6 +11,9 @@
 
   /**
    *  @brief Konstruktor klasy
+   *  Creates a new Person.
+   *  @class
+   *  @constructor
    *  @param [in] socket Socket.io
    *  @param [in] client TCP Socket
    */
@@ -40,10 +43,12 @@
             console.log('Sterownik rzada daty');
             if (self.ntpDate === -1) {
               self.ntpDate = -2;
-              common.runScript('getTime', null, function(data) {
-                if (!data) { data = -1; }
-                // console.log('data dla PLC: ', data);
-                self.ntpDate = data;
+              common.runScript(['getTime.sh'], function(data) {
+                if (data.error === 0) {
+                  self.ntpDate = data.stdout.replace(/[ \n\r]*/mg, '')+'000';
+                } else {
+                  self.ntpDate = -1;
+                }
               });
             }
           }
@@ -76,6 +81,9 @@
     });
   }
 
+  /**
+  * @memberof! Strada#
+  */
   Strada.prototype.setInterval = function(interval) {
     this.interval = interval;
     this.emitEnable = (this.interval !== 0);
@@ -92,6 +100,9 @@
     if (this.PLCConnected) { this.myInterval.setInterval(this.interval); }
   };
 
+  /**
+  * @memberof! Strada#
+  */
   Strada.prototype.disconnect = function(err) {
     // console.log('Stop interval');
     var self = this;
@@ -116,6 +127,7 @@
 
   /**
   * Wysłanie instrukcji do sterownika protokołem Strada
+  * @memberof! Strada#
   * @param instrNo kod instrukcji
   * @param data dane do wyslania
   */
@@ -343,4 +355,4 @@
   };
 
   module.exports = Strada;
-}());
+// }());

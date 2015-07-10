@@ -1,8 +1,8 @@
 ﻿/**
  *  @file jsonFiles.js
- *  @brief Brief
+ *  @brief Podstawianie wartości parametró w plikach JSON
  */
-(function () {
+// (function () {
   'use strict';
   var fs = require('fs');
 
@@ -32,7 +32,7 @@
   function czytajPlikParametrowWiz(fileToRead, gpar, callback) {
     fs.readFile(__dirname + fileToRead, 'utf8', function (err, data) {
       if (err) {
-        callback('error: ' + fileToRead);
+        callback('error: ' + __dirname + fileToRead);
         return;
       } 
       var temp = null;
@@ -163,4 +163,4 @@
   module.exports.czytajPlikParametrowWiz = czytajPlikParametrowWiz;
   module.exports.czytajPlikSygnalow = czytajPlikSygnalow;
   module.exports.czytajPlikKomunikatow = czytajPlikKomunikatow;
-}());
+// }());

@@ -11,6 +11,6 @@ else
   # echo $sDate
   # echo $sTime
   date -u --set $sDate && date -u --set $sTime
-  # hwclock -w
-  # hwclock -w -f /dev/rtc1
+  hwclock -w
+  hwclock -w -f /dev/rtc1
 fi

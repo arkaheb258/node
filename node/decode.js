@@ -157,7 +157,6 @@
       }
     }
 
-
     //jeżeli błąd w rozmiarze czasu lub różna długość parametrów to przerwać i zwrócić null
     ptr = 5 * 32;
     for (i = 5; i < len; i += 1) {

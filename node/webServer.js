@@ -106,16 +106,10 @@
       res.jsonp('Brak połączenia z PLC -> brak parametrów');
       return;
     }
+
     var fileToRead = '/../json';
-    var sKonfTypKombajnu = gpar.sKonfTypKombajnu.trim().replace(' ', '_').toLowerCase();
-    if (sKonfTypKombajnu !== '') {
-      fileToRead += '/' + sKonfTypKombajnu;
-    }
-    fileToRead += '/' + file[1];
-    if (gpar.rKonfWersjaJezykowa !== undefined) {
-      fileToRead +=  '_' + gpar.rKonfWersjaJezykowa;
-    }
-    fileToRead += '.json';
+    var dirLang = common.dirLangPar(gpar, file[1]);
+    fileToRead += dirLang.file + '.json';
     switch (file[1]) {
       case 'sygnaly': {
         jsonFiles.czytajPlikSygnalow(fileToRead, common.getGpar(), function(dane){
@@ -145,7 +139,7 @@
       }
       case 'diagnostykaBlokow': {
         //przekierowanie do odpowiedniego folderu bez wersji językowych
-        res.redirect('/../json/' + sKonfTypKombajnu + '/diagnostykaBlokow.json');
+        res.redirect('/../json' + dirLang.dir + '/diagnostykaBlokow.json');
         break;
       }
       default:
@@ -200,6 +194,20 @@
           socket.emit('defPar', dane);
         });
       })
+      .on('getPar', function(msg) {
+        var gpar = common.getGpar();
+        var dirLang = common.dirLangPar(gpar, 'parametry');
+        jsonFiles.czytajPlikParametrowWiz('/../json' + dirLang.file + '.json', gpar, function(dane){
+          socket.emit('actPar', dane);
+        });
+      })
+      .on('getSyg', function(msg) {
+        var gpar = common.getGpar();
+        var dirLang = common.dirLangPar(gpar, 'sygnaly');
+        jsonFiles.czytajPlikSygnalow('/../json' + dirLang.file + '.json', gpar, function(dane){
+          socket.emit('actSyg', dane);
+        });
+      })
       .on('zarzadzaniePlikami', function(msg) {
         console.log('zarzadzaniePlikami', msg);
         var args = [msg + '.sh'];
@@ -212,8 +220,11 @@
             socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
           }).stdout.on('data', function (chunk) {
             chunk = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
+            if (!chunk) {
+              chunk = chunk.toString().match(/.*Cmd: CWD(.*)/g);
+            }
             if (chunk) {
-              socket.emit('zarzadzaniePlikamiOdp', 'Pobieranie: ' + chunk[0].substring(9));
+              socket.emit('zarzadzaniePlikamiOdp', chunk[0].substring(9));
             }
           });
       });

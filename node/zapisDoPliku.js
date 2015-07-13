@@ -149,6 +149,7 @@
       return;
     }
 
+    //TODO: zamienic na skrypt .sh
     if (logger_dir === 'USB') {
       console.log('usb logger ' + logger_dir);
       logger_dir = null;
@@ -174,16 +175,9 @@
     }
 
     d.setTime(data.TimeStamp_js);
-    fileName = d.toISOString().substring(0, 10).replace(/\-/mg, '_');
-    // fileName = d.toISOString().substring(0, 10).replace('-', '_');
-    // fileName = d.getUTCFullYear() + '_' + common.pad(d.getUTCMonth() + 1, 2) + '_' + common.pad(d.getUTCDate(), 2);
-
-    if (parametry.rZapisTyp === 0) {
-      fileName = d.toISOString().substring(0, 13).replace(/[\-T]/mg, '_');
-      // fileName += '_' + common.pad(d.getUTCHours(), 2);
-    }
-
-    fileName += '.dat';
+    fileName = d.toISOString()
+      .substring(0, (parametry.rZapisTyp === 0) ? 13 : 10)
+      .replace(/[\-T]/mg, '_') + '.dat';
 
     if (logger_dir) { fileName = logger_dir + '/' + fileName; }
 

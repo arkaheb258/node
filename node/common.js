@@ -189,6 +189,18 @@
     if (this.timeout) clearTimeout(this.timeout);
     this.nextTick(true);
   };
+  
+  module.exports.dirLangPar = function(gpar, fileName) {
+    var ret = {dir: '', lang: '', file: ''};
+    var sKonfTypKombajnu = gpar.TYP.trim().replace(' ', '_').toLowerCase();
+    if (sKonfTypKombajnu !== '') { ret.dir = '/' + sKonfTypKombajnu; }
+    if (gpar.rKonfWersjaJezykowa !== undefined) {
+      ret.lang = '_' + gpar.rKonfWersjaJezykowa;
+    }
+    if (fileName) { ret.file = ret.dir + '/' + fileName + ret.lang; }
+    return ret;
+  }
+
 
   module.exports.MyInterval = MyInterval;
   module.exports.pobierzPlikFTP = pobierzPlikFTP;

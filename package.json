@@ -6,9 +6,9 @@
   "private": true,
   "main": "node/main.js",
   "scripts": {
-      "start": "forever node/main.js",
+      "start": "forever node/main.js --cache=1",
       "test" : "mocha supertest.js",
-      "web" : "forever node/webServer.js --dir=../source",
+      "web" : "forever node/webServer.js --dir=../source --cache=1",
       "zapis" : "forever node/zapisDoPliku.js"
   },  
   "repository": {
@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "cache-require-paths": "0.1.x",
-    "forever": "0.14.x",
     "eversocket": "0.0.4",
     "express": "4.12.x",
     "ftp": "0.3.x",

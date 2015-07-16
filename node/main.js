@@ -2,7 +2,7 @@
  *  @file main.js
  *  @brief Brief
  */
-(function() {
+(function () {
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));
   argv.port = argv.port || 8888;

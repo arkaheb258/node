@@ -1,0 +1,23 @@
+.ramkaGlowna {
+    display: inline-block;
+    background: #FECA40;
+    border: 0.2em solid;
+    border-color: black;
+    border-radius: 1em;
+    margin: 1em;
+    padding: 1em;
+}
+
+.ramkaDiag {
+    display: inline-block;
+    background: #40e1fe;
+    border: 0.2em solid;
+    border-color: black;
+    border-radius: 1em;
+    margin: 1em;
+    padding: 1em;
+}
+
+.klInput {
+    width: 5em;
+}

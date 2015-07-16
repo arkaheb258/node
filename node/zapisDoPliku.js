@@ -15,11 +15,12 @@
   var prev_data = null;
 
   /**
-   * Description
-   * @method Tworzenie folderu (moznaby zamienic na skrypt)
-   * @param {} dirName
-   * @param {} callback
+   * Tworzenie folderu 
+   * @method createDir 
+   * @param {string} dirName
+   * @param {Callback} callback
    */
+  //(docelowo zamienic na skrypt)
   function createDir(dirName, callback) {
     fs.readdir(dirName, function (err) {
       if (err) {
@@ -35,15 +36,10 @@
   }
 
   /**
-   *  Description
-   *  @method Tworzenie pustego pliku do zapisu danych (z nagłówkiem)
-   *  @brief Brief
-   *  
-   *  @param [in] fileName Parameter_Description
-   *  @param [in] czas Parameter_Description
-   *  @return Return_Description
-   *  
-   *  @details Details
+   *  Tworzenie pustego pliku do zapisu danych (z nagłówkiem)
+   *  @method createFile
+   *  @param {string} fileName Nazwa pliku
+   *  @param {Number} czas Epoch w sekundach
    */
   function createFile(fileName, czas) {
     console.log('Tworzenie pustego pliku danych: ' + fileName);
@@ -57,7 +53,7 @@
         adr += 15 + 31;
         outBuff.write('\r\nNr komisji:\t\t' + parametry.sKonfNrKomisji, adr);
         adr += 15 + 31;
-        outBuff.write('\r\nNazwa kopalni:\t\t'+ parametry.sKonfNazwaKopalni, adr);
+        outBuff.write('\r\nNazwa kopalni:\t\t' + parametry.sKonfNazwaKopalni, adr);
         adr += 18 + 31;
         outBuff.write('\r\nNr sciany:\t\t' + parametry.sKonfNrSciany, adr);
         adr += 14 + 31;

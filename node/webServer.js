@@ -6,7 +6,10 @@
   'use strict';
   var argv = require('minimist')(process.argv.slice(2));
   argv.port = argv.port || 8888;
-  if (argv.cache) { require('cache-require-paths'); }
+  if (argv.cache) { 
+    require('cache-require-paths');
+    if (argv.debug) { console.log('cache enabled'); }
+  }
   var http = require('http');
   var express = require('express');
   // var connect = require('connect');
@@ -35,11 +38,11 @@
   }
 
   //test.html
-  app.use('/test', express.static(__dirname + '/..'));
+  app.use('/test', express.static(__dirname + '/../test'));
 
   //tresc statyczna na poczatku routowania
   app.use(express.static(__dirname + '/' + argv.dir));
-  
+
   //mapowanie FTP sterownika
   // app.use('/ftp', ftp_routes);
 
@@ -69,7 +72,7 @@
       next();
       return;
     }
-    if (file[1] == 'hardware') {
+    if (file[1] === 'hardware') {
       var ip = '192.168.x.x';
       if (process.platform === 'linux') {
         // execute('cat /etc/dogtag', console.log);
@@ -111,46 +114,46 @@
     var dirLang = common.dirLangPar(gpar, file[1]);
     fileToRead += dirLang.file + '.json';
     switch (file[1]) {
-      case 'sygnaly': {
-        jsonFiles.czytajPlikSygnalow(fileToRead, common.getGpar(), function(dane){
-          res.jsonp(dane);
+    case 'sygnaly': {
+      jsonFiles.czytajPlikSygnalow(fileToRead, common.getGpar(), function (dane) {
+        res.jsonp(dane);
+      });
+      break;
+    }
+    case 'parametry': {
+      jsonFiles.czytajPlikParametrowWiz(fileToRead, common.getGpar(), function (dane) {
+        res.jsonp(dane);
+      });
+      break;
+    }
+    case 'komunikaty': {
+      //jezeli jest plik *.EXP to generuje komunikaty z niego,
+      //inaczej przekierowuje do odpowiedniego folderu
+      fs.readFile(__dirname + '/../json/STR_KOMUNIKATY.EXP',
+        'utf8',
+        function (err, text) {
+          if (err) {
+            res.redirect(fileToRead);
+          } else {
+            res.jsonp(jsonFiles.czytajPlikKomunikatow(text, false));
+          }
         });
-        break;
-      }
-      case 'parametry': {
-        jsonFiles.czytajPlikParametrowWiz(fileToRead, common.getGpar(), function(dane){
-          res.jsonp(dane);
-        });
-        break;
-      }
-      case 'komunikaty': {
-        //jezeli jest plik *.EXP to generuje komunikaty z niego,
-        //inaczej przekierowuje do odpowiedniego folderu
-        fs.readFile(__dirname + '/../json/STR_KOMUNIKATY.EXP',
-          'utf8',
-          function (err, text) {
-            if (err) {
-              res.redirect(fileToRead);
-            } else {
-              res.jsonp(jsonFiles.czytajPlikKomunikatow(text, false));
-            }
-          });
-        break;
-      }
-      case 'diagnostykaBlokow': {
-        //przekierowanie do odpowiedniego folderu bez wersji językowych
-        res.redirect('/../json' + dirLang.dir + '/diagnostykaBlokow.json');
-        break;
-      }
-      default:
-        res.redirect(fileToRead);
-        break;
+      break;
+    }
+    case 'diagnostykaBlokow': {
+      //przekierowanie do odpowiedniego folderu bez wersji językowych
+      res.redirect('/../json' + dirLang.dir + '/diagnostykaBlokow.json');
+      break;
+    }
+    default:
+      res.redirect(fileToRead);
+      break;
     }
   });
 
   // Pliki statyczne z folderu /json
   app.use('/json', express.static(__dirname + '/../json'));
-  
+
   //wystartowanie serwera
   server.listen(argv.port, function () {
     console.log('HTTP Server listening on', argv.port);
@@ -166,7 +169,7 @@
     socket
       .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
       .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
-      .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
+      // .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
       .on('io_emit', function (msg) { io.emit(msg[0], msg[1]); })
       .on('broadcast', function (msg) { socket.broadcast.emit(msg[0], msg[1]); })
       .on('get_gpar', function (msg) {
@@ -184,27 +187,27 @@
         common.storeGpar(gpar);
         socket.broadcast.emit('gpar', gpar);
       })
-      .on('getDefSyg', function(msg) {
-        jsonFiles.czytajPlikSygnalow('/' + argv.dir + '/jsonDefault/sygnaly.json', common.getGpar(), function(dane){
+      .on('getDefSyg', function () {
+        jsonFiles.czytajPlikSygnalow('/' + argv.dir + '/jsonDefault/sygnaly.json', common.getGpar(), function (dane) {
           socket.emit('defSyg', dane);
         });
       })
-      .on('getDefPar', function(msg) {
-        jsonFiles.czytajPlikParametrowWiz('/' + argv.dir + '/jsonDefault/parametry.json', common.getGpar(), function(dane){
+      .on('getDefPar', function () {
+        jsonFiles.czytajPlikParametrowWiz('/' + argv.dir + '/jsonDefault/parametry.json', common.getGpar(), function (dane) {
           socket.emit('defPar', dane);
         });
       })
-      .on('getPar', function(msg) {
+      .on('getPar', function () {
         var gpar = common.getGpar();
         var dirLang = common.dirLangPar(gpar, 'parametry');
-        jsonFiles.czytajPlikParametrowWiz('/../json' + dirLang.file + '.json', gpar, function(dane){
+        jsonFiles.czytajPlikParametrowWiz('/../json' + dirLang.file + '.json', gpar, function (dane) {
           socket.emit('actPar', dane);
         });
       })
-      .on('getSyg', function(msg) {
+      .on('getSyg', function () {
         var gpar = common.getGpar();
         var dirLang = common.dirLangPar(gpar, 'sygnaly');
-        jsonFiles.czytajPlikSygnalow('/../json' + dirLang.file + '.json', gpar, function(dane){
+        jsonFiles.czytajPlikSygnalow('/../json' + dirLang.file + '.json', gpar, function (dane) {
           socket.emit('actSyg', dane);
         });
       })
@@ -216,17 +219,18 @@
           args.push('../json');
         }
         common.runScript(args,
-          function(data){
+          function (data) {
             socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
-          }).stdout.on('data', function (chunk) {
-            chunk = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
-            if (!chunk) {
-              chunk = chunk.toString().match(/.*Cmd: CWD(.*)/g);
-            }
-            if (chunk) {
-              socket.emit('zarzadzaniePlikamiOdp', chunk[0].substring(9));
-            }
-          });
+          })
+        .stdout.on('data', function (chunk) {
+          var chunk2 = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
+          if (!chunk2) {
+            chunk2 = chunk.toString().match(/.*Cmd: CWD(.*)/g);
+          }
+          if (chunk2) {
+            socket.emit('zarzadzaniePlikamiOdp', chunk2[0].substring(9));
+          }
+        });
       });
   });
 }());

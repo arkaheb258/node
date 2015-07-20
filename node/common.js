@@ -191,6 +191,14 @@ MyInterval.prototype.setInterval = function (interval) {
   this.nextTick(true);
 };
 
+module.exports.summerTimeOffset = function (epoch) {
+  var d = new Date(epoch);
+  var n = d.getTimezoneOffset();
+  d.setMonth(0);
+  n -= d.getTimezoneOffset();
+  return n;
+}
+
 module.exports.dirLangPar = function (gpar, fileName) {
   var ret = {dir: '', lang: '', file: ''};
   var sKonfTypKombajnu = gpar.TYP.trim().replace(' ', '_').toLowerCase();

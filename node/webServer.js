@@ -30,7 +30,7 @@
   argv.dir = argv.dir || '../build';
   // argv.debug = true;
 
-  if (argv.debug) {
+  if (argv.debug > 1) {
     app.use(function (req, res, next) {
       console.log(req.connection.remoteAddress + ' -> ' + req.url);
       next();
@@ -220,9 +220,11 @@
         }
         common.runScript(args,
           function (data) {
+            if (argv.debug) { console.log('data', data); }
             socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
           })
         .stdout.on('data', function (chunk) {
+          if (argv.debug) { console.log(chunk.toString('utf8')); }
           var chunk2 = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
           if (!chunk2) {
             chunk2 = chunk.toString().match(/.*Cmd: CWD(.*)/g);

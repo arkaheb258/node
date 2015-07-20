@@ -18,6 +18,10 @@
   });
 
   var strada = new Strada(socket, client);
+  if (argv.master) {
+    console.log('master= ',argv.master);
+    strada.setMaster(require('socket.io-client')(argv.master));
+  }
   require('./stradaRozk.js')(strada, socket);
   if (argv.interval !== undefined) { strada.setInterval(argv.interval); }
   client.connect(20021, '192.168.3.30');

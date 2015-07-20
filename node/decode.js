@@ -63,16 +63,18 @@ function decodeStrada308(dane) {
     if (temp.czas === 0 && temp.nr === 0) {
       break;
     }
-    var d = new Date(temp.czas);
-    var n = d.getTimezoneOffset();
-    d.setMonth(0);
-    n -= d.getTimezoneOffset();
+    var off = common.summerTimeOffset(temp.czas);
+    // var d = new Date(temp.czas);
+    // var n = d.getTimezoneOffset();
+    // d.setMonth(0);
+    // n -= d.getTimezoneOffset();
     if (gpar) {
       if (gpar.rKonfCzasStrefa !== undefined) {
         temp.czas += (gpar.rKonfCzasStrefa - 12) * 3600000;
       }
       if (gpar.rKonfCzasLetni) {
-        temp.czas -= n * 60000;
+        // temp.czas -= n * 60000;
+        temp.czas -= off * 60000;
       }
     }
     out.push(temp);
@@ -227,16 +229,18 @@ function DecodeStrada302(data) {
   this.TimeStamp_js = (this.TimeStamp_s * 1000 + this.TimeStamp_ms % 1000);
 
   //konwersja UTC -> czas lokalny
-  var d = new Date(this.TimeStamp_js);
-  var n = d.getTimezoneOffset();
-  d.setMonth(0);
-  n -= d.getTimezoneOffset();
+  var off = common.summerTimeOffset(this.TimeStamp_js);
+  // var d = new Date(this.TimeStamp_js);
+  // var n = d.getTimezoneOffset();
+  // d.setMonth(0);
+  // n -= d.getTimezoneOffset();
   var gpar = common.getGpar();
   if (gpar) {
     if (gpar.rKonfCzasStrefa !== undefined) {
       this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000;
     }
-    if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
+    // if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
+    if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= off * 60000; }
     if (gpar.sKonfNrKomisji) { this.komisja = gpar.sKonfNrKomisji; }
   }
   var SpecData = br.read(data);

@@ -27,8 +27,19 @@ module.exports = function (strada) {
   }
 
   strada.socket.on('rozkaz', function (get) {
+    // console.log('on rozkaz', get);
+    // console.log(strada.master);
+    if (strada.master && strada.master.connected) {
+      strada.master.emit('rozkaz', get);
+      strada.master.once('odpowiedz', function(msg){
+          console.log('master on odpowiedz', msg);
+          strada.socket.emit('odpowiedz', msg);
+      });
+      return;
+    }
     var msg = {};
     msg.instrID = get.instrID;
+    
     switch (get.rozkaz) {
       case 'podajHistorie': {
         strada.readAll(0x308, [0, 0], function (dane) {
@@ -39,26 +50,28 @@ module.exports = function (strada) {
         break;
       }
       case 'ustawCzas': {
+        var off = common.summerTimeOffset(get.wartosc);
         var temp = get.wartosc / 1000;
-        //konwersja czas lokalny -> UTC
-        var d = new Date(temp * 1000);
-        var n = d.getTimezoneOffset();
         var dataa = new Date();
+        //konwersja czas lokalny -> UTC
+        // var d = new Date(temp * 1000);
+        // var n = d.getTimezoneOffset();
 
-        d.setMonth(0);
-        n -= d.getTimezoneOffset();
+        // d.setMonth(0);
+        // n -= d.getTimezoneOffset();
         var gpar = common.getGpar();
         if (gpar) {
           if (gpar.rKonfCzasStrefa !== undefined) {
             temp -= (gpar.rKonfCzasStrefa - 12) * 3600;
           }
-          if (gpar.rKonfCzasLetni) { temp += n * 60; }
+          // if (gpar.rKonfCzasLetni) { temp += n * 60; }
+          if (gpar.rKonfCzasLetni) { temp += off * 60; }
         }
-        dataa.setTime(temp * 1000);
         if (temp < 0) {
           msg.dane = 'NaN';
           strada.socket.emit('odpowiedz', msg);
         } else {
+          dataa.setTime(temp * 1000);
           console.log('Ustawienie nowego czasu: ', dataa);
           var str = dataa.toISOString().split('T');
           //TODO: obsluga bledow skryptu

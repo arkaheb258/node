@@ -77,7 +77,13 @@ function Strada(socket, client) {
 
   self.socket.on('get_gpar', function (msg) {
     // console.log(' on get_gpar', self.PLCConnected);
-    if (self.PLCConnected) { self.odswierzParametry(msg); }
+    if (self.master && self.master.connected) {
+      self.master.on('gpar', function(msg){
+          self.socket.emit('gpar', msg);
+      });
+    } else {
+      if (self.PLCConnected) { self.odswierzParametry(msg); }
+    }
   });
 }
 
@@ -98,6 +104,19 @@ Strada.prototype.setInterval = function (interval) {
     this.interval = 200;
   }
   if (this.PLCConnected) { this.myInterval.setInterval(this.interval); }
+};
+
+/**
+* @memberof! Strada#
+*/
+Strada.prototype.setMaster = function (master) {
+  var self = this;
+  self.master = master;
+  if (master) {
+    self.master.on('gpar', function(msg){
+        self.socket.emit('gpar', msg);
+    });
+  }
 };
 
 /**

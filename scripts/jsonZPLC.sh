@@ -15,7 +15,7 @@ else
   echo listowanie folderow
   ncftpls -t 5 -r 1 -u admin -p admin ftp://192.168.3.30/$r_dir/* > $l_dir/f_list.txt
   rc=$?; if [ $rc != 0 ]; then 
-    echo listowanie nieudane
+    echo listowanie nieudane $rc
     exit $rc; 
   fi
 
@@ -23,7 +23,6 @@ else
   #(tylko 1 poziom zaglebienia)
   while read p; do
     if [[ "$p" == *"$substring"* ]]; then
-    # if [ $p == *"."* ]; then
       rm $l_dir/$p
       echo pomijamy plik \"$p\"
     else
@@ -33,8 +32,8 @@ else
       cd $l_dir/$p
       ncftpget -r 1 -d stdout -u admin -p admin ftp://192.168.3.30/$r_dir/$p/*
       rc=$?; if [ $rc != 0 ]; then 
-        echo kopiowanie nieudane
-        exit $rc; 
+        echo kopiowanie nieudane $rc
+        exit $rc
       fi
       # ncftpget -u admin -p admin ftp://192.168.3.30/$r_dir/$p/*
       cd ..
@@ -43,8 +42,9 @@ else
   #rm $l_dir/f_list.txt
   echo kopiowanie plikow z folderu nadrzednego
   ncftpget -r 1 -d stdout -u admin -p admin ftp://192.168.3.30/$r_dir/*
-  # rc=$?; if [ $rc != 0 ]; then 
-    # echo kopiowanie nieudane $rc
-    # exit $rc; 
-  # fi
+  rc=$?; if [ $rc != 0 ]; then 
+    echo kopiowanie nieudane $rc
+    exit $rc
+  fi
+  exit 0
 fi

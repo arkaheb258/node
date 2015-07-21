@@ -1,7 +1,16 @@
 #!/bin/sh
+### BEGIN INIT INFO
+# Provides:          kopex_web_server
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Serwer dla wizualizacji
+# Description:       Serwer dla wizualizacji node.js 
+### END INIT INFO
 
 date >> /tmp/my_log_w
-node /home/debian/kopex/node/node/webServer.js >> /tmp/my_log_w &
+node /home/debian/kopex/node/webServer.js >> /tmp/my_log_w &
 
 #sudo cpufreq-set -g performance
 #node /home/debian/kopex/tcp_cl3.js >> /tmp/my_log_b &

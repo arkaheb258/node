@@ -6,10 +6,10 @@
   "private": true,
   "main": "node/main.js",
   "scripts": {
-      "start": "forever node/main.js --cache=1",
-      "test" : "mocha supertest.js",
-      "web" : "forever node/webServer.js --dir=../source --cache=1",
-      "zapis" : "forever node/zapisDoPliku.js"
+      "start" : "node node/forever.js node/strada.js",
+      "test"  : "mocha supertest.js",
+      "web"   : "node node/forever.js node/webServer.js --dir=../source",
+      "zapis" : "node node/forever.js node/zapisDoPliku.js"
   },  
   "repository": {
     "type": "git",

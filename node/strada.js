@@ -3,6 +3,8 @@
 *  @brief Komunikacja z PLC
 */
 'use strict';
+require('cache-require-paths');
+var EverSocket = require('eversocket').EverSocket;
 var common = require('./common.js');
 var decode = require('./decode.js');
 var debug = false;
@@ -16,9 +18,19 @@ var debug = false;
  *  @param [in] socket Socket.io
  *  @param [in] client TCP Socket
  */
-function Strada(socket, client) {
+function Strada() {
   var self = this;
+  var argv = require('minimist')(process.argv.slice(2));
+  argv = argv || {};
+  argv.port = argv.port || 8888;
+  var client = new EverSocket({
+    reconnectWait: 1000,      // Wait after close event before reconnecting
+    timeout: 1000,            // Set the idle timeout
+    reconnectOnTimeout: true  // Reconnect if the connection is idle
+  });
   this.client = client;
+  var socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
+  
   this.socket = socket;
   this.interval = 200;
   this.parFilename = 'default.json';
@@ -85,6 +97,14 @@ function Strada(socket, client) {
       if (self.PLCConnected) { self.odswierzParametry(msg); }
     }
   });
+
+  require('./stradaRozk.js')(self);
+  if (argv.master) {
+    console.log('master= ',argv.master);
+    self.setMaster(require('socket.io-client')(argv.master));
+  }
+  if (argv.interval !== undefined) { self.setInterval(argv.interval); }
+  self.client.connect(20021, '192.168.3.30');
 }
 
 /**
@@ -144,7 +164,6 @@ Strada.prototype.disconnect = function (err) {
   // czyszczenie kolejki wiadomosci
   self.clearQueue(true);
 };
-
 
 /**
 * Wysłanie instrukcji do sterownika protokołem Strada
@@ -376,3 +395,5 @@ Strada.prototype.send = function (instrNo, instrID, data) {
 };
 
 module.exports = Strada;
+
+new Strada();

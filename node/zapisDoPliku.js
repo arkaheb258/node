@@ -4,9 +4,9 @@
  */
 (function () {
   'use strict';
+  require('cache-require-paths');
   var argv = require('minimist')(process.argv.slice(2));
   argv.port = argv.port || 8888;
-  if (argv.cache) { require('cache-require-paths'); }
   var fs = require('fs');
   var socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
   var common = require('./common.js');

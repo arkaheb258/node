@@ -9,6 +9,6 @@ chromium -kiosk -incognito http://127.0.0.1:8888/ --disable-translate &
 #node /home/debian/kopex/node/x_agent.js > /tmp/log_x.txt &
 #forever start /home/debian/kopex/node/main.js &
 #forever start /home/debian/kopex/node/zapisDoPliku.js &
-cd /home/debian/kopex/node/
+cd /home/debian/kopex/
 npm start &
 npm run zapis &

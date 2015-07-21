@@ -1,28 +1,15 @@
 ﻿/**
  *  @file main.js
- *  @brief Brief
+ *  @brief zarządzanie uruchomieniem programu i logowanie do plikow
  */
 (function () {
   'use strict';
-  var argv = require('minimist')(process.argv.slice(2));
-  argv.port = argv.port || 8888;
-  if (argv.cache) { require('cache-require-paths'); }
-  var socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
-  var EverSocket = require('eversocket').EverSocket;
-  var Strada = require('./strada.js');
-
-  var client = new EverSocket({
-    reconnectWait: 1000,      // Wait after close event before reconnecting
-    timeout: 1000,            // Set the idle timeout
-    reconnectOnTimeout: true  // Reconnect if the connection is idle
-  });
-
-  var strada = new Strada(socket, client);
-  if (argv.master) {
-    console.log('master= ',argv.master);
-    strada.setMaster(require('socket.io-client')(argv.master));
-  }
-  require('./stradaRozk.js')(strada, socket);
-  if (argv.interval !== undefined) { strada.setInterval(argv.interval); }
-  client.connect(20021, '192.168.3.30');
+  require('cache-require-paths');
+  var spawn = require('child_process').spawn;
+  var opts = {cwd: __dirname + '/../scripts'};
+  // opts.timeout = 2000;
+  var proc = spawn('../npm', ['run','strada'], opts);  
+  console.log('test log');
+  console.error('test err');
+  // require('./strada.js');
 }());

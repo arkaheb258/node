@@ -4,12 +4,9 @@
  */
 (function () {
   'use strict';
+  require('cache-require-paths');
   var argv = require('minimist')(process.argv.slice(2));
   argv.port = argv.port || 8888;
-  if (argv.cache) { 
-    require('cache-require-paths');
-    if (argv.debug) { console.log('cache enabled'); }
-  }
   var http = require('http');
   var express = require('express');
   // var connect = require('connect');
@@ -28,7 +25,7 @@
   var instrID = 0;
 
   argv.dir = argv.dir || '../build';
-  // argv.debug = true;
+  argv.debug = true;
 
   if (argv.debug > 1) {
     app.use(function (req, res, next) {
@@ -199,6 +196,7 @@
       })
       .on('getPar', function () {
         var gpar = common.getGpar();
+        if (!gpar) { return; }
         var dirLang = common.dirLangPar(gpar, 'parametry');
         jsonFiles.czytajPlikParametrowWiz('/../json' + dirLang.file + '.json', gpar, function (dane) {
           socket.emit('actPar', dane);
@@ -206,6 +204,7 @@
       })
       .on('getSyg', function () {
         var gpar = common.getGpar();
+        if (!gpar) { return; }
         var dirLang = common.dirLangPar(gpar, 'sygnaly');
         jsonFiles.czytajPlikSygnalow('/../json' + dirLang.file + '.json', gpar, function (dane) {
           socket.emit('actSyg', dane);

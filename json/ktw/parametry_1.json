@@ -1,0 +1,521 @@
+{"TYPM":"KTW","WER":"0.20","DATA":"2015-01-30","DANE":{
+"grupa1":{"OPIS":"1. Конфигурация комбайна"
+, "podgrupa1":{"OPIS":"1.1 Описание комбайна"
+,"sKonfTypKombajnu":{"TYP":"pString", "ID":"1.1.1", "ROZM":16, "WART":"KTW-150", "DOST":"Adv", "OPIS":"Тип комбайна"}
+,"sKonfNrKomisji":{"TYP":"pString", "ID":"1.1.2", "ROZM":16, "WART":"01H900", "DOST":"Adv", "OPIS":"№ внутреннего заказа комбайна"}
+,"sKonfNazwaKopalni":{"TYP":"pString", "ID":"1.1.3", "ROZM":16, "WART":"KWK", "DOST":"Adv", "OPIS":"Наименование шахты"}
+,"sKonfNrSciany":{"TYP":"pString", "ID":"1.1.4", "ROZM":16, "WART":"xxx", "DOST":"Adv", "OPIS":"№ лавы"}
+,"sKonfWersjaProgramu":{"TYP":"pString", "ID":"1.1.5", "ROZM":16, "WART":"3.x", "DOST":"Adv", "OPIS":"№ версии программы"}
+},"podgrupa2":{"OPIS":"1.2 Остальные "
+,"rKonfWersjaJezykowa":{"TYP":"pLista", "ID":"1.2.1", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["Polski", "Rosyjski", "Angielski"], "OPIS":""}
+,"rKonfWersjaWyposazeniaElektr":{"TYP":"pLista", "ID":"1.2.2", "ROZM":1, "WART":0.0, "DOST":"Adv", "LISTA":["MZS590", "MZS590/1"], "OPIS":""}
+,"rKonfZapisEn":{"TYP":"pLista", "ID":"1.2.3", "ROZM":1, "WART":1.0, "DOST":"Adv", "LISTA":["nie", "tak"], "OPIS":"Активна ли архивизация данных на карте  flash <нет, д"}
+,"rKonfSterowSilnikM5_M6En":{"TYP":"pLista", "ID":"1.2.4", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Активное ли управление доставочным конвейером <нет"}
+,"rKonfSterowSilnikM7En":{"TYP":"pLista", "ID":"1.2.5", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Активное ли управление контактором резервного электродвигателя"}
+,"rKonfSterowSilnikM8En":{"TYP":"pLista", "ID":"1.2.6", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Активное ли управление контактором резервного электродвигателя"}
+,"rKonfPomiarKataKomb":{"TYP":"pLista", "ID":"1.2.7", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["brak", "POSITAL"], "OPIS":"Имеется ли измерение угла наклона комбайн"}
+,"rKonfRegObcOrgEn":{"TYP":"pLista", "ID":"1.2.8", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Активна ли функция ограничения нагрузки режущего органа"}
+,"rKonfSprezarkaKontrPotwZalEn":{"TYP":"pLista", "ID":"1.2.9", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Активный ли контроль подтверждения включения компрессора <нет"}
+,"rKonfCzasLetni":{"TYP":"pLista", "ID":"1.2.10", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Учесть ли летнее время <нет"}
+,"rKonfCzasStrefa":{"TYP":"pLista", "ID":"1.2.11", "ROZM":1, "WART":14.0, "DOST":"Srvc", "LISTA":["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", "UTC-03:00", "UTC-02:00", "UTC-01:00", "UTC+00:00", "UTC+01:00", "UTC+02:00", "UTC+03:00", "UTC+04:00", "UTC+05:00", "UTC+06:00", "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00", "UTC+12:00"], "OPIS":"Часовой пояс <U"}
+,"rKonfZraszanieTyp":{"TYP":"pLista", "ID":"1.2.12", "ROZM":1, "WART":13.0, "DOST":"Srvc", "LISTA":["brak", "G48D06", "G48D08", "G57D06", "G57D08", "kurtyna powietrzno-wodna", "kurtyna wodna", "G48D06KPW", "G48D08KPW", "G57D06KPW", "G57D08KPW", "G48D06KW", "G48D08KW", "G57D06KW", "G57D08KW", "G57D06KPW", "G57D06KW"], "OPIS":"Тип орошения:"}
+,"rKonfObudowaTyp":{"TYP":"pLista", "ID":"1.2.13", "ROZM":1, "WART":12.0, "DOST":"Srvc", "LISTA":["brak", "LP1", "LP2", "LP3", "LP4", "LP5", "LP6", "LP7", "LP8", "LP9", "LP10", "LP11", "LP12", "LP13", "LP14", "LP15", "LP16", "LP17", "LP18", "LP19"], "OPIS":"Тип крепи: <"}
+,"rKonfManipulatorJazdyTyp":{"TYP":"pLista", "ID":"1.2.14", "ROZM":1, "WART":2.0, "DOST":"Srvc", "LISTA":["brak", "L0U1 v1", "L0U1 v2", "JC6000"], "OPIS":"Тип манипулятора передв"}
+,"rKonfManipulatorWysiegnikaTyp":{"TYP":"pLista", "ID":"1.2.15", "ROZM":1, "WART":2.0, "DOST":"Srvc", "LISTA":["brak", "L0U1 v1", "L0U1 v2", "JC6000"], "OPIS":"Тип манипулятора стрелы <нет"}
+,"rKonfKpsAo1Typ":{"TYP":"pLista", "ID":"1.2.16", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["Wersja 0", "Wesja 1 Nowa"], "OPIS":""}
+,"rKonfKpsAo2Typ":{"TYP":"pLista", "ID":"1.2.17", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["Wersja 0", "Wesja 1 Nowa"], "OPIS":""}
+,"rKonfMetanomierzTyp":{"TYP":"pLista", "ID":"1.2.18", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["Wersja 0 - styk", "Wesja 1 - Analog"], "OPIS":""}
+,"rKonfUkladPozycjonowaniaTyp":{"TYP":"pLista", "ID":"1.2.19", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["Wersja 0 - brak", "Wesja 1 - GIG"], "OPIS":""}
+}},"grupa2":{"OPIS":"2. Определение местонахождения и геометрия"
+, "podgrupa1":{"OPIS":"2.1 Антиколлизия"
+,"rGeomDorgMax":{"TYP":"pLiczba", "ID":"2.1.1", "ROZM":1, "WART":850.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Максимальный диаметр режущего органа [мм]"}
+,"rGeomDorgMin":{"TYP":"pLiczba", "ID":"2.1.2", "ROZM":1, "WART":350.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Минимальный диаметр режущего органа [мм]"}
+,"rGeomLorg":{"TYP":"pLiczba", "ID":"2.1.3", "ROZM":1, "WART":810.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Ширина одного режущего органа до оси стрелы [мм]"}
+,"rGeomLorgMax":{"TYP":"pLiczba", "ID":"2.1.4", "ROZM":1, "WART":345.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние от оси вращения поворотного редуктора  до максимального диаметра режущего органа  [мм]"}
+,"rGeomL_Wys":{"TYP":"pLiczba", "ID":"2.1.5", "ROZM":1, "WART":3194.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние от оси вращения стрелы до оси режущего органа  [мм]"}
+,"rGeomL_OsWys":{"TYP":"pLiczba", "ID":"2.1.6", "ROZM":1, "WART":190.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние между плоскостью стрелы и параллельной прямой пересекающей ось оборота стрелы [мм] "}
+,"rGeomL_OsOrg":{"TYP":"pLiczba", "ID":"2.1.7", "ROZM":1, "WART":43.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние между прямой пересекающей ось органа и параллельной прямой пересекающей ось оборота стрелы [мм]"}
+,"rGeomL_Rk":{"TYP":"pLiczba", "ID":"2.1.8", "ROZM":1, "WART":2776.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние от оси вращения стрелы до конца коллизионной плоскости стрелы  [мм]"}
+,"rGeomL_Stolu":{"TYP":"pLiczba", "ID":"2.1.9", "ROZM":1, "WART":3094.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние от оси вращения до точки коллизии питателя [мм]"}
+,"rGeomXso1":{"TYP":"pLiczba", "ID":"2.1.10", "ROZM":1, "WART":680.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние от оси вращения питателя до оси врщения стрелы по оси X [мм]"}
+,"rGeomXso2":{"TYP":"pLiczba", "ID":"2.1.11", "ROZM":1, "WART":630.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Расстояние по осям X и Y вращения стрелы [мм]"}
+,"rGeomHobr":{"TYP":"pLiczba", "ID":"2.1.12", "ROZM":1, "WART":327.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Высота оси вращения питателя над почвой [мм]"}
+,"rGeomHso":{"TYP":"pLiczba", "ID":"2.1.13", "ROZM":1, "WART":1071.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Высота от оси вращения питателя до оси вращения стрелы по оси Y [мм]"}
+,"rGeomStrefaAntyKolizjiAl":{"TYP":"pLiczba", "ID":"2.1.14", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Srvc", "OPIS":"Зона безопасности генерирования тревоги при расчете коллизии [мм]"}
+,"rGeomStrefaAntyKolizjiWr":{"TYP":"pLiczba", "ID":"2.1.15", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Srvc", "OPIS":"Зона безопасности генерирования предупреждения при расчете коллизии [мм]"}
+},"podgrupa2":{"OPIS":"2.2 "
+,"rGeomWysiegnikKatMaxSpag":{"TYP":"pLiczba", "ID":"2.2.1", "ROZM":1, "WART":57.04, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Максимальный угол стрелы относительно почвы [°]"}
+,"rGeomWysiegnikKatMinSpag":{"TYP":"pLiczba", "ID":"2.2.2", "ROZM":1, "WART":-23.75, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Минимальный угол стрелы относительно почвы [°]"}
+,"rGeomWysiegnikKatMaxWyrob":{"TYP":"pLiczba", "ID":"2.2.3", "ROZM":1, "WART":35.0, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Максимальный угол стрелы относительно выработки [°]"}
+,"rGeomWysiegnikKatMinWyrob":{"TYP":"pLiczba", "ID":"2.2.4", "ROZM":1, "WART":-35.0, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Минимальный угол стрелы относительно выработки [°]"}
+,"rGeomWysiegnikKatKolizjiStol":{"TYP":"pLiczba", "ID":"2.2.5", "ROZM":1, "WART":-17.6, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Минимальный угол стрелы относительно выработки [°]"}
+,"rGeomStolKatMax":{"TYP":"pLiczba", "ID":"2.2.6", "ROZM":1, "WART":1.99, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Максимальный угол питателя относительно почвы [°]"}
+,"rGeomStolKatMin":{"TYP":"pLiczba", "ID":"2.2.7", "ROZM":1, "WART":-11.9, "PREC":2, "MIN":-90.0, "MAX":90.0, "DOST":"Adv", "OPIS":"Минимальный угол питателя относительно почвы [°]"}
+},"podgrupa3":{"OPIS":"2.3 Лазер вперед"
+,"rBL1_LaserPrzod_ZakrMin":{"TYP":"pLiczba", "ID":"2.3.1", "ROZM":2, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":4000.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения расстояния комбайна от забоя - лазер перед [мм]"}
+,"rBL1_LaserPrzod_ZakrMax":{"TYP":"pLiczba", "ID":"2.3.2", "ROZM":2, "WART":4000.0, "PREC":1, "MIN":0.0, "MAX":4000.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения расстояния комбайна сот забоя - лазер перед [мм]"}
+,"tBL1_LaserPrzod_StatusFiltr":{"TYP":"pCzas", "ID":"2.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения расстояния комбайна от забоя -  задний зад. [с]"}
+},"podgrupa4":{"OPIS":"2.4 Лазер зад."
+,"rBL2_LaserTyl_ZakrMin":{"TYP":"pLiczba", "ID":"2.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":4000.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения расстояния комбайна от забоя - лазер зад. [мм]"}
+,"rBL2_LaserTyl_ZakrMax":{"TYP":"pLiczba", "ID":"2.4.2", "ROZM":1, "WART":4000.0, "PREC":0, "MIN":0.0, "MAX":4000.0, "DOST":"Srvc", "OPIS":"Верхний передел измерения расстояния комбайна от забоя - лазер зад. [мм]"}
+,"tBL2_LaserTyl_StatusFiltr":{"TYP":"pCzas", "ID":"2.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время для выявления аварии измерения расстояния комбайна от забоя -  лазер зад. [с]"}
+},"podgrupa5":{"OPIS":"2.5 Погрузочная головка"
+,"rBK3_GloLadPol_ZakrMin":{"TYP":"pLiczba", "ID":"2.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":360.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения угля наклона погрузочной головки- по оси Y  [мм]"}
+,"rBK3_GloLadPol_ZakrMax":{"TYP":"pLiczba", "ID":"2.5.2", "ROZM":1, "WART":360.0, "PREC":0, "MIN":0.0, "MAX":360.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения угля наклона погрузочной головки - по оси Y  [мм]"}
+,"tBK3_GloLadPol_StatusFiltr":{"TYP":"pCzas", "ID":"2.5.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения угля наклона погрузочной головки - по оси Y  [с]"}
+},"podgrupa6":{"OPIS":"2.6 Прочие"
+,"tBZ5_PolozenieStropnicy":{"TYP":"pCzas", "ID":"2.6.1", "ROZM":2, "WART":3000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия подтверждения закрытия верхняка - датчик BZ5 [с]"}
+,"tBZ6_PolozeniePodestLewy":{"TYP":"pCzas", "ID":"2.6.2", "ROZM":2, "WART":3000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия подтверждения сборки правой рабочей площадки- датчик BZ6 [с]"}
+,"tBZ7_PolozeniePodestPrawy":{"TYP":"pCzas", "ID":"2.6.3", "ROZM":2, "WART":3000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия подтверждения сборки левой рабочей площадки- датчик BZ7 [с]"}
+},"podgrupa7":{"OPIS":"2.7 "
+,"rSysPozycjonowania_ZakrMin":{"TYP":"pLiczba", "ID":"2.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":300.0, "DOST":"Srvc", "OPIS":""}
+,"rSysPozycjonowania_ZakrMax":{"TYP":"pLiczba", "ID":"2.7.2", "ROZM":1, "WART":300.0, "PREC":0, "MIN":0.0, "MAX":300.0, "DOST":"Srvc", "OPIS":""}
+,"tSysPozycjonowania_StatusFiltr":{"TYP":"pCzas", "ID":"2.7.3", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":""}
+,"rSysPozycjonowania_HiWr":{"TYP":"pLiczba", "ID":"2.7.4", "ROZM":1, "WART":250.0, "PREC":1, "MIN":0.0, "MAX":300.0, "DOST":"Srvc", "OPIS":""}
+,"rSysPozycjonowania_HiWrHist":{"TYP":"pLiczba", "ID":"2.7.5", "ROZM":1, "WART":20.0, "PREC":1, "MIN":0.0, "MAX":300.0, "DOST":"Srvc", "OPIS":""}
+,"tSysPozycjonowania_HiWrFiltr":{"TYP":"pCzas", "ID":"2.7.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":""}
+,"rSysPozycjonowania_HiAl":{"TYP":"pLiczba", "ID":"2.7.7", "ROZM":1, "WART":280.0, "PREC":1, "MIN":0.0, "MAX":300.0, "DOST":"Srvc", "OPIS":""}
+,"rSysPozycjonowania_HiAlHist":{"TYP":"pLiczba", "ID":"2.7.8", "ROZM":1, "WART":20.0, "PREC":1, "MIN":0.0, "MAX":300.0, "DOST":"Srvc", "OPIS":""}
+,"tSysPozycjonowania_HiALFiltr":{"TYP":"pCzas", "ID":"2.7.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":""}
+}},"grupa3":{"OPIS":"3. Ограничение нагрузки режущего органа"
+, "podgrupa1":{"OPIS":"3.1 "
+,"rRegSilyPosSetPradOrgProc":{"TYP":"pLiczba", "ID":"3.1.1", "ROZM":1, "WART":110.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Adv", "OPIS":"Настройка тока режущих органов для регулятора нагрузки в зависимости от подачи"}
+,"rRegSilyPosKp":{"TYP":"pLiczba", "ID":"3.1.2", "ROZM":1, "WART":0.6, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Коэффициент усиления регулятора нагрузки режущего органа в зависимости от подачи"}
+,"rRegSilyPosTi":{"TYP":"pLiczba", "ID":"3.1.3", "ROZM":1, "WART":0.6, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Время интегрирования регулятора нагрузки режущего органа в зависимости от подачи [c]"}
+,"rRegSilyPosTd":{"TYP":"pLiczba", "ID":"3.1.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Время опережения регулятора нагрузки для подачи [c]"}
+,"rRegSilyPosPradOrgMaxProc":{"TYP":"pLiczba", "ID":"3.1.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Adv", "OPIS":"Максимальное допускаемое значение тока режущего органа для регулятора нагрузки в зависимости от подачи [%]"}
+,"tRegSilyPosPradOrgMax":{"TYP":"pCzas", "ID":"3.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Допускае время работы с превышенным максимальным значением тока режущего органа для регулятора нагрузки в зависимости от подачи [%]"}
+,"rRegSilyPosStrMartWartZrodSter":{"TYP":"pLiczba", "ID":"3.1.7", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":10.0, "DOST":"Adv", "OPIS":"Диапазон нечувствительности по манипулятору передвижения [%]"}
+},"podgrupa2":{"OPIS":"3.2 От передвижения стрелы - лево, право"
+,"rRegSilyObrSetPradOrgProc":{"TYP":"pLiczba", "ID":"3.2.1", "ROZM":1, "WART":110.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Adv", "OPIS":"Настройка тока режущих органов  для регулятора нагрузки от движения в лево, право стрелы [%]"}
+,"rRegSilyObrKp":{"TYP":"pLiczba", "ID":"3.2.2", "ROZM":1, "WART":0.6, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Коэффициент усиления регулятора нагрузки режущего органа от движения лево, право стрелы"}
+,"rRegSilyObrTi":{"TYP":"pLiczba", "ID":"3.2.3", "ROZM":1, "WART":0.6, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Время интегрирования регулятора нагрузки для движения лево, право стрелы [c]"}
+,"rRegSilyObrTd":{"TYP":"pLiczba", "ID":"3.2.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Время опережения регулятора нагрузки для передвижения стрелы в лево/право[с]"}
+,"rRegSilyObrPradOrgMaxProc":{"TYP":"pLiczba", "ID":"3.2.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Adv", "OPIS":"Максимальное допускаемое значение тока режущего органа для регулятора нагрузки от движения лево, право стрелы  [%]"}
+,"tRegSilyObrPradOrgMax":{"TYP":"pCzas", "ID":"3.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Допускаемое время работы с превышением максимального значения тока режущего органа для регулятора нагрузки от движения лево, право стрелы [c]"}
+,"rRegSilyObrStrMartWartZrodSter":{"TYP":"pLiczba", "ID":"3.2.7", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":10.0, "DOST":"Adv", "OPIS":"Диапазон нечувствительности по манипулятору лево, право стрелы  [%]"}
+},"podgrupa3":{"OPIS":"3.3 От передвижения стрелы - верх, низ"
+,"rRegSilyPodnSetPradOrgProc":{"TYP":"pLiczba", "ID":"3.3.1", "ROZM":1, "WART":110.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Adv", "OPIS":"Настройка тока режущих органов для регулятора нагрузки от передвижения верх, низ стрелы [%]"}
+,"rRegSilyPodnKp":{"TYP":"pLiczba", "ID":"3.3.2", "ROZM":1, "WART":0.6, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Коэффициент усиления регулятора нагрузки режущего органа от переедвижения верх, низ стрелы"}
+,"rRegSilyPodnTi":{"TYP":"pLiczba", "ID":"3.3.3", "ROZM":1, "WART":0.6, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Время интегрирования регулятора нагрузки для передвижения верх, низ стрелы [c]"}
+,"rRegSilyPodnTd":{"TYP":"pLiczba", "ID":"3.3.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Время опережения регулятора нагрузки для передвижения верх, низ стрелы [c]"}
+,"rRegSilyPodnPradOrgMaxProc":{"TYP":"pLiczba", "ID":"3.3.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Adv", "OPIS":"Максимальное допускаемое значение тока режущего органа для регулятора нагрузки от передвижения верх, низ стрелы [c]"}
+,"tRegSilyPodnPradOrgMax":{"TYP":"pCzas", "ID":"3.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Допускаемое время работы с превышением максимального значения тока режущего органа для регулятора нагрузки от передвижения верх, низ стрелы [c]"}
+,"rRegSilyPodnStrMartWartZrodSter":{"TYP":"pLiczba", "ID":"3.3.7", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":10.0, "DOST":"Adv", "OPIS":"Диапазон нечувствительности для манипулятора верх, низ стрелы [%]"}
+},"podgrupa4":{"OPIS":"3.4 Прочие"
+,"rRegZaworM4ProcZam":{"TYP":"pLiczba", "ID":"3.4.1", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Процент отрегулировки клапана М4 для сплошного закрытия [%]"}
+,"rRegZaworM4ProcOtw":{"TYP":"pLiczba", "ID":"3.4.2", "ROZM":1, "WART":70.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Процент отрегулировки клапана М4 для сплошного открытия [%]"}
+}},"grupa4":{"OPIS":"4. Гидроустановка"
+, "podgrupa1":{"OPIS":"4.1 BP46 Течение на вводе"
+,"rBP46_PrzepWoWlot_ZakrMin":{"TYP":"pLiczba", "ID":"4.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения течения воды на вводе в комбайн  [л/мин]"}
+,"rBP46_PrzepWoWlot_ZakrMax":{"TYP":"pLiczba", "ID":"4.1.2", "ROZM":1, "WART":120.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения течения воды на вводе в комбайн  [л/мин]"}
+,"tBP46_PrzepWoWlot_StatusFiltr":{"TYP":"pCzas", "ID":"4.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии  измерения течения воды на вводе в комбайн  [с]"}
+,"rBP46_PrzepWoWlot_LoWr":{"TYP":"pLiczba", "ID":"4.1.4", "ROZM":1, "WART":80.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения пониженного течения воды на вводе в комбайн  [л/мин]"}
+,"rBP46_PrzepWoWlot_LoWrHist":{"TYP":"pLiczba", "ID":"4.1.5", "ROZM":1, "WART":2.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения пониженного течения воды на вводе в комбайн   [л/мин]"}
+,"tBP46_PrzepWoWlot_LoWrFiltr":{"TYP":"pCzas", "ID":"4.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления пониженного течения воды на вводе в комбайн  [с]"}
+},"podgrupa2":{"OPIS":"4.2 BC39 Давление на вводе"
+,"rBC39_CisWodyWlot_ZakrMin":{"TYP":"pLiczba", "ID":"4.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления воды на вводе в комбайн [бар]"}
+,"rBC39_CisWodyWlot_ZakrMax":{"TYP":"pLiczba", "ID":"4.2.2", "ROZM":1, "WART":60.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления воды на вводе в комбайн [бар]"}
+,"tBC39_CisWodyWlot_StatusFiltr":{"TYP":"pCzas", "ID":"4.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления тревоги измерения давления воды на вводе в комбайн [бар]"}
+,"rBC39_CisWodyWlot_LoWr":{"TYP":"pLiczba", "ID":"4.2.4", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения пониженного давления воды на вводе в комбайн [бар]"}
+,"rBC39_CisWodyWlot_LoWrHist":{"TYP":"pLiczba", "ID":"4.2.5", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения пониженного давления воды на впуске в комбайн [бар]"}
+,"tBC39_CisWodyWlot_LoWrFiltr":{"TYP":"pCzas", "ID":"4.2.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время для обноружения пониженного давления воды на впуске в комбайн [бар]"}
+,"rBC39_CisWodyWlot_HiAL":{"TYP":"pLiczba", "ID":"4.2.10", "ROZM":1, "WART":25.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления воды на впуске в комбайн [бар]"}
+,"rBC39_CisWodyWlot_HiALHist":{"TYP":"pLiczba", "ID":"4.2.11", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления воды на впуске в комбайн [бар]"}
+,"tBC39_CisWodyWlot_HiALFiltr":{"TYP":"pCzas", "ID":"4.2.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время для обноружения превышенного давления воды на впуске в комбайн [бар]"}
+},"podgrupa3":{"OPIS":"4.3 BC40 Давление на фильтре"
+,"rBC40_CisnWoFiltrSamo_ZakrMin":{"TYP":"pLiczba", "ID":"4.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний передел измерения давления воды на самопромывном фильтре [бар]"}
+,"rBC40_CisnWoFiltrSamo_ZakrMax":{"TYP":"pLiczba", "ID":"4.3.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"верхний передел измерения давления воды на самопромывном фильтре [бар]"}
+,"tBC40_CisnWoFiltrSamo_StFiltr":{"TYP":"pCzas", "ID":"4.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время для обноружения аварии измерения давления воды на самопромывном фильтре [бар]"}
+},"podgrupa4":{"OPIS":"4.4 BC42 Давление перед насосом"
+,"rBC42_CisWoPrzPom_ZakrMin":{"TYP":"pLiczba", "ID":"4.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний передел измерения давления воды перед насосом воды [бар]"}
+,"rBC42_CisWoPrzPom_ZakrMax":{"TYP":"pLiczba", "ID":"4.4.2", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний передел измерения давления воды перед насосом воды [бар]"}
+,"tBC42_CisWoPrzPom_StatusFiltr":{"TYP":"pCzas", "ID":"4.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления воды перед насосом воды [бар]"}
+,"rBC42_CisWoPrzPom_LoAL1":{"TYP":"pLiczba", "ID":"4.4.7", "ROZM":1, "WART":2.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень минимального давлениа воды перед насосом воды для его запуска [бар]"}
+,"rBC42_CisWoPrzPom_LoAL2":{"TYP":"pLiczba", "ID":"4.4.8", "ROZM":1, "WART":0.2, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень минимального давлениа воды  перед  насосом воды после его запуска [бар]"}
+,"rBC42_CisWoPrzPom_LoALHist1":{"TYP":"pLiczba", "ID":"4.4.9", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис минимального давления воды перед насосом воды для его запуска [бар] "}
+,"rBC42_CisWoPrzPom_LoALHist2":{"TYP":"pLiczba", "ID":"4.4.10", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис минимального давления воды перед насосом  воды после его запуска [бар]"}
+,"tBC42_CisWoPrzPom_LoALFiltr1":{"TYP":"pCzas", "ID":"4.4.11", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Требуемое время для достижения минимального давления воды перед  насосом воды [с]"}
+,"tBC42_CisWoPrzPom_LoALFiltr2":{"TYP":"pCzas", "ID":"4.4.12", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления недостаточного давления воды перед насосом воды после его запуска"}
+},"podgrupa5":{"OPIS":"4.5 BC10 Давление воздуха "
+,"rBC10_CisnPow_ZakrMin":{"TYP":"pLiczba", "ID":"4.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":25.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления воздуха [бар]"}
+,"rBC10_CisnPow_ZakrMax":{"TYP":"pLiczba", "ID":"4.5.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":25.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления воздуха [бар]"}
+,"rBC10_CisnPow_LoAl":{"TYP":"pLiczba", "ID":"4.5.3", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":25.0, "DOST":"Srvc", "OPIS":"Уровень тревоги недостаточного давления воздуха"}
+},"podgrupa6":{"OPIS":"4.6 BC17 Давление орошения рамки "
+,"rBC17_CisnWoZraszRamki_ZakrMin":{"TYP":"pLiczba", "ID":"4.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления воды орошения рамки [бар]"}
+,"rBC17_CisnWoZraszRamki_ZakrMax":{"TYP":"pLiczba", "ID":"4.6.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления воды орошения рамки [бар]"}
+,"rBC17_CisnWoZraszRamki_LoAl":{"TYP":"pLiczba", "ID":"4.6.3", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Уровень тревоги недостаточного давления воды орошения рамки [бар]"}
+},"podgrupa7":{"OPIS":"4.7 BC45 Давление орошения сектора"
+,"rBC45_CisnWoZraszSekt_ZakrMin":{"TYP":"pLiczba", "ID":"4.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления воды орошения сектора [бар]"}
+,"rBC45_CisnWoZraszSekt_ZakrMax":{"TYP":"pLiczba", "ID":"4.7.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления воды орошения сектора [бар]"}
+,"rBC45_CisnWoZraszSekt_LoAl":{"TYP":"pLiczba", "ID":"4.7.3", "ROZM":1, "WART":8.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Уровень тревоги недостаточного давления вдоы орошения сектора [бар]"}
+},"podgrupa8":{"OPIS":"4.8 BT53 Температура на вводе"
+,"rBT53_TemWoWlot_ZakrMin":{"TYP":"pLiczba", "ID":"4.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения температуры воды на вводе [°C]"}
+,"rBT53_TemWoWlot_ZakrMax":{"TYP":"pLiczba", "ID":"4.8.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения температуры воды на вводе [°C]"}
+,"tBT53_TemWoWlot_StatusFiltr":{"TYP":"pCzas", "ID":"4.8.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения температуры воды на вводе [с]"}
+,"rBT53_TemWoWlot_HiWr":{"TYP":"pLiczba", "ID":"4.8.4", "ROZM":1, "WART":30.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения  повышенной температуры воды на вводе  [°C]"}
+,"rBT53_TemWoWlot_HiWrHist":{"TYP":"pLiczba", "ID":"4.8.5", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенной температуры воды на вводе  [°C]"}
+,"tBT53_TemWoWlot_HiWrFiltr":{"TYP":"pCzas", "ID":"4.8.6", "ROZM":2, "WART":2000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенной температуры воды на вводе  [с]"}
+},"podgrupa9":{"OPIS":"4.9 Чистка фильтра"
+,"tWoda_CzasTrwaniaRozr":{"TYP":"pCzas", "ID":"4.9.1", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время открытия клапана YL70 перед включением промывки самоочищающегося фильтра [с]"}
+,"tWoda_CzasTrwaniaFazy1":{"TYP":"pCzas", "ID":"4.9.2", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время открытия клапана YL57 промывки первого канала  самоочищающегося фильтра [c]"}
+,"tWoda_CzasTrwaniaFazy2":{"TYP":"pCzas", "ID":"4.9.3", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время премежутка между промывкой первого и второго каналов самоочищающегося фильтра"}
+,"tWoda_CzasTrwaniaFazy3":{"TYP":"pCzas", "ID":"4.9.4", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время открытия клапана YL58 промывки второго канала самоочищающегося фильтра"}
+,"tWoda_CzasTrwaniaFazy4":{"TYP":"pCzas", "ID":"4.9.5", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время премежутка после промывки второго канала самоочищающегося фильтра"}
+,"tWoda_CzasTrwaniaFazy5":{"TYP":"pCzas", "ID":"4.9.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время открытия клапана YL70 после окончания промывки самоочищающегося фильтра"}
+,"tWoda_CzasOknaLicznikaPlukan":{"TYP":"pCzas", "ID":"4.9.7", "ROZM":2, "WART":600000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Продолжительность окна подсчета кол-ва промывок фильтра к моменту появления сообщения о замене фильтра [с]"}
+,"rWoda_MaxLiczbaPlukanFiltra":{"TYP":"pLiczba", "ID":"4.9.8", "ROZM":1, "WART":3.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Максимальное кол-во промывок фильтра в заданном окне (весовая функция)"}
+,"rWoda_CisnieniePlukaniaFiltra":{"TYP":"pLiczba", "ID":"4.9.9", "ROZM":1, "WART":3.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Значение разницы давлений датчиков BC39 и BC40 , при которой начинается функция промывки фильтра [бар]"}
+,"tWoda_PlukaniaFiltra":{"TYP":"pCzas", "ID":"4.9.10", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время задержки начала функции промывки фильтра [c]"}
+},"podgrupa10":{"OPIS":"4.10 Прочие"
+,"tBP21_PrzepWodyChlodzSilnikaM1":{"TYP":"pCzas", "ID":"4.10.1", "ROZM":2, "WART":60000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления заниженного течения воды охлаждающей электродвигатель режущего органа  [с]"}
+,"tBT22_TempObudowy_PompaWody":{"TYP":"pCzas", "ID":"4.10.2", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры корпуса насоса воды  [с]"}
+}},"grupa5":{"OPIS":"5. Ток и напряжение"
+, "podgrupa1":{"OPIS":"5.1 M1 Ток электродвигателя режущего органа "
+,"rPradSilnikM1_ZakrMin":{"TYP":"pLiczba", "ID":"5.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока электродвигателя режущего органа [A]"}
+,"rPradSilnikM1_ZakrMax":{"TYP":"pLiczba", "ID":"5.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока электродвигателя  режущего органа [A]"}
+,"tPradSilnikM1_StatusFiltr":{"TYP":"pCzas", "ID":"5.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения тока электродвигателя режущего органа [с]"}
+,"rPradZnam_SilnikM1":{"TYP":"pLiczba", "ID":"5.1.4", "ROZM":1, "WART":99.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Номинальный ток электродвигателя режущего органа [A]"}
+},"podgrupa2":{"OPIS":"5.2 M2 Ток электродвигателя насоса гидравлики "
+,"rPradSilnikM2_ZakrMin":{"TYP":"pLiczba", "ID":"5.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока электродвигателя насоса гидравлики [A]"}
+,"rPradSilnikM2_ZakrMax":{"TYP":"pLiczba", "ID":"5.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока электродвигателя насоса гидравлики [A]"}
+,"tPradSilnikM2_StatusFiltr":{"TYP":"pCzas", "ID":"5.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения тока электродвигателя насоса гидравлики [A]"}
+,"rPradZnam_SilnikM2":{"TYP":"pLiczba", "ID":"5.2.4", "ROZM":1, "WART":68.7, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Номинальный ток электродвигателя насоса гидравлики [A]"}
+},"podgrupa3":{"OPIS":"5.3 M3 Ток двигателя PZ S1"
+,"rPradSilnikM3_ZakrMin":{"TYP":"pLiczba", "ID":"5.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока электродвигателя скребкового конвейера S1 [A]"}
+,"rPradSilnikM3_ZakrMax":{"TYP":"pLiczba", "ID":"5.3.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока электродвигателя скребкового конвейера S1  [A]"}
+,"tPradSilnikM3_StatusFiltr":{"TYP":"pCzas", "ID":"5.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения тока электродвигателя скребкового конвейера S1  [с]"}
+,"rPradZnam_SilnikM3":{"TYP":"pLiczba", "ID":"5.3.4", "ROZM":1, "WART":10.7, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Номинальный ток электродвигателя скребкового конвейера S1  [A]"}
+},"podgrupa4":{"OPIS":"5.4 M4 Ток двигателя PZ S1"
+,"rPradSilnikM4_ZakrMin":{"TYP":"pLiczba", "ID":"5.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока электродвигателя скребкового конвейера S2 [A]"}
+,"rPradSilnikM4_ZakrMax":{"TYP":"pLiczba", "ID":"5.4.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока электродвигателя скребкового конвейера S2 [A]"}
+,"tPradSilnikM4_StatusFiltr":{"TYP":"pCzas", "ID":"5.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения тока электродвигателя скребкового конвейера S1  [с]"}
+,"rPradZnam_SilnikM4":{"TYP":"pLiczba", "ID":"5.4.4", "ROZM":1, "WART":10.7, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Номинальный ток электродвигателя скребкового конвейера S1  [A]"}
+},"podgrupa5":{"OPIS":"5.5 M5 Ток двигателя PO S1"
+,"rPradSilnikM5_ZakrMin":{"TYP":"pLiczba", "ID":"5.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока электродвигателя доставочного конвейера  S1 [A]"}
+,"rPradSilnikM5_ZakrMax":{"TYP":"pLiczba", "ID":"5.5.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока электродвигателя доставочного конвейера  S1 [A]"}
+,"tPradSilnikM5_StatusFiltr":{"TYP":"pCzas", "ID":"5.5.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения тока электродвигателя доставочного конвейера  S1 [с]"}
+,"rPradZnam_SilnikM5":{"TYP":"pLiczba", "ID":"5.5.4", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Номинальный ток электродвигателя доставочного конвейера S1 [A]"}
+},"podgrupa6":{"OPIS":"5.6 M6 Ток двигателя PO S1"
+,"rPradSilnikM6_ZakrMin":{"TYP":"pLiczba", "ID":"5.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока электродвигателя доставочного конвейера  S2 [A]"}
+,"rPradSilnikM6_ZakrMax":{"TYP":"pLiczba", "ID":"5.6.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока электродвигателя доставочного конвейера S2 [A]"}
+,"tPradSilnikM6_StatusFiltr":{"TYP":"pCzas", "ID":"5.6.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до обноружения аварии измерения тока электродвигателя доставочного конвейера  S2 [с]"}
+,"rPradZnam_SilnikM6":{"TYP":"pLiczba", "ID":"5.6.4", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Номинальный ток электродвигателя доставочного конвейера S2 [A]"}
+},"podgrupa7":{"OPIS":"5.7 M7 Ток резервного двигателя 1"
+,"rPradSilnikM7_ZakrMin":{"TYP":"pLiczba", "ID":"5.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока резервного электродвигателя 1 [A]"}
+,"rPradSilnikM7_ZakrMax":{"TYP":"pLiczba", "ID":"5.7.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока резервного электродвигателя 1 [A]"}
+,"tPradSilnikM7_StatusFiltr":{"TYP":"pCzas", "ID":"5.7.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до  аварии измерения тока резервного электродвигателя 1 [с]"}
+,"rPradZnam_SilnikM7":{"TYP":"pLiczba", "ID":"5.7.4", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Номинальный ток резервного электродвигателя 1 [A]"}
+},"podgrupa8":{"OPIS":"5.8 M8 Ток резервного двигателя 2"
+,"rPradSilnikM8_ZakrMin":{"TYP":"pLiczba", "ID":"5.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения тока резервного электродвигателя 2 [A]"}
+,"rPradSilnikM8_ZakrMax":{"TYP":"pLiczba", "ID":"5.8.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения тока резервного электродвигателя 2 [A]"}
+,"tPradSilnikM8_StatusFiltr":{"TYP":"pCzas", "ID":"5.8.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения тока резервного электродвигателя 2 [A]"}
+,"rPradZnam_SilnikM8":{"TYP":"pLiczba", "ID":"5.8.4", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Номинальный ток резервного электродвигателя 2 [A]"}
+},"podgrupa9":{"OPIS":"5.9 Напряжение питания комбайна "
+,"rNapiecieZasilania_ZakrMin":{"TYP":"pLiczba", "ID":"5.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения напряжения питания комбайна [V]"}
+,"rNapiecieZasilania_ZakrMax":{"TYP":"pLiczba", "ID":"5.9.2", "ROZM":1, "WART":2610.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения напряжения питания комбайна [V]"}
+,"tNapiecieZasilania_StatusFiltr":{"TYP":"pCzas", "ID":"5.9.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения напряжения питания комбайна [V]"}
+,"rNapiecieZasilania_LoWr":{"TYP":"pLiczba", "ID":"5.9.4", "ROZM":1, "WART":207.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения пониженного напряжения питания комбайна [V]"}
+,"rNapiecieZasilania_LoWrHist":{"TYP":"pLiczba", "ID":"5.9.5", "ROZM":1, "WART":3.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения пониженного напряжения питания комбайна [V]"}
+,"tNapiecieZasilania_LoWrFiltr":{"TYP":"pCzas", "ID":"5.9.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления пониженного напряжения питания комбайна [с]"}
+,"rNapiecieZasilania_LoAl":{"TYP":"pLiczba", "ID":"5.9.7", "ROZM":1, "WART":195.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Уровень тревоги недостаточного напряжения питания комбайна [V]"}
+,"rNapiecieZasilania_LoAlHist":{"TYP":"pLiczba", "ID":"5.9.8", "ROZM":1, "WART":3.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги недостаточного напряжения питания комбайна [V]"}
+,"tNapiecieZasilania_LoALFiltr":{"TYP":"pCzas", "ID":"5.9.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления недостаточного напряжения питания комбайна [V]"}
+}},"grupa6":{"OPIS":"6. Приводы"
+, "podgrupa1":{"OPIS":"6.1 Пусковой сигнал "
+,"tNapHyd_CzasTrwaniaSygRozr":{"TYP":"pCzas", "ID":"6.1.1", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":5000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Продолжительность пускового сигнала привода гидравлической системы [с]"}
+,"tNapOrg_CzasTrwaniaSygRozrPompy":{"TYP":"pCzas", "ID":"6.1.2", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":5000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Продолжительность  пускового сигнала до включениа водяного насоса и централной смазки [с]"}
+,"tNapOrg_CzasTrwaniaSygRozrOrgan":{"TYP":"pCzas", "ID":"6.1.3", "ROZM":2, "WART":7000.0, "PREC":3, "MIN":5000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":" Продолжительность пускового сигнала до включениа режущего органа - после запуска насосов  [с]"}
+,"tNapPZ_CzasTrwaniaSygRozr":{"TYP":"pCzas", "ID":"6.1.4", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":5000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Продолжительность  пускового сигнала привода скребкового конвейера [с]"}
+,"tNapPO_CzasTrwaniaSygRozr":{"TYP":"pCzas", "ID":"6.1.5", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":5000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Продолжительность  пускового сигнала привода доставочного конвейера  [с]"}
+},"podgrupa2":{"OPIS":"6.2 Остальные "
+,"tNapPZ_CzasPracyBezOdst":{"TYP":"pCzas", "ID":"6.2.1", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":1000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время работы скребкового конвейера без включенной доставки [с]"}
+,"tNapPZ_CzasPracyPoWylOdst":{"TYP":"pCzas", "ID":"6.2.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время работы скребкового конвейера после выключения доставки [с]"}
+}},"grupa7":{"OPIS":"7. Гидравлическая установка и смазка"
+, "podgrupa1":{"OPIS":"7.1 BP27 Течение масла в редукторе рабочего органа "
+,"rBP27_PrzepOlPrzOrg_ZakrMin":{"TYP":"pLiczba", "ID":"7.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения течения масла в редукторе режущего органа [л/мин]"}
+,"rBP27_PrzepOlPrzOrg_ZakrMax":{"TYP":"pLiczba", "ID":"7.1.2", "ROZM":1, "WART":16.0, "PREC":0, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения течения масла в редукторе режущего органа [л/мин]"}
+,"tBP27_PrzepOlPrzOrg_StatusFiltr":{"TYP":"pCzas", "ID":"7.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения течения масла в редукторе режущего органа [с]"}
+,"rBP27_PrzepOlPrzOrg_LoAL1":{"TYP":"pLiczba", "ID":"7.1.4", "ROZM":1, "WART":0.7, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Уровень тревоги недостаточного течения масла в редукторе режущего органа [л/мин]"}
+,"rBP27_PrzepOlPrzOrg_LoALHist1":{"TYP":"pLiczba", "ID":"7.1.5", "ROZM":1, "WART":0.1, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги недостаточного течения масла в редукторе режущего органа [л/мин]"}
+,"tBP27_PrzepOlPrzOrg_LoALFiltr1":{"TYP":"pCzas", "ID":"7.1.6", "ROZM":2, "WART":60000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления недостаточного течения масла в редукторе режущего органа [с]"}
+,"rBP27_PrzepOlPrzOrg_LoAL2":{"TYP":"pLiczba", "ID":"7.1.7", "ROZM":1, "WART":0.7, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Уровень тревоги минимального течения масла в редукторе режущего органа [л/мин]"}
+,"rBP27_PrzepOlPrzOrg_LoALHist2":{"TYP":"pLiczba", "ID":"7.1.8", "ROZM":1, "WART":0.1, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги минимального течения масла в редукторе режущего органа [л/мин]"}
+,"tBP27_PrzepOlPrzOrg_LoALFiltr2":{"TYP":"pCzas", "ID":"7.1.9", "ROZM":2, "WART":180000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления минимального течения масла в редукторе режущего органа [с]"}
+},"podgrupa2":{"OPIS":"7.2 BC33 Давление масла за высоконапорным фильтром 1"
+,"rBC33_CisOlZaFilP1_ZakrMin":{"TYP":"pLiczba", "ID":"7.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла за высоконапорным фильтром 1 [бар]"}
+,"rBC33_CisOlZaFilP1_ZakrMax":{"TYP":"pLiczba", "ID":"7.2.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла за высоконапорным фильтром 1 [бар]"}
+,"tBC33_CisOlZaFilP1_StatusFiltr":{"TYP":"pCzas", "ID":"7.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления масла за высоконапорным фильтром 1 [с]"}
+,"rBC33_CisOlZaFilP1_HiWr":{"TYP":"pLiczba", "ID":"7.2.4", "ROZM":1, "WART":280.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги повышенного давления масла за высоконапорным фильтром 1 [с]"}
+,"rBC33_CisOlZaFilP1_HiWrHist":{"TYP":"pLiczba", "ID":"7.2.5", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенного давления масла за высоконапорным фильтром 1 [с]"}
+,"tBC33_CisOlZaFilP1_HiWrFiltr":{"TYP":"pCzas", "ID":"7.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенного давления масла за высоконапорным фильтром 1 [с]"}
+,"rBC33_CisOlZaFilP1_HiAL":{"TYP":"pLiczba", "ID":"7.2.7", "ROZM":1, "WART":300.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления масла за высоконапорным фильтром 1 [с]"}
+,"rBC33_CisOlZaFilP1_HiALHist":{"TYP":"pLiczba", "ID":"7.2.8", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла за высоконапорным фильтром 1 [с]"}
+,"tBC33_CisOlZaFilP1_HiALFiltr":{"TYP":"pCzas", "ID":"7.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления масла за высоконапорным фильтром 1 [с]"}
+},"podgrupa3":{"OPIS":"7.3 BC34 Давление масла перед высоконапорным фильтром 1"
+,"rBC34_CisOlPrzFilP1_ZakrMin":{"TYP":"pLiczba", "ID":"7.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла перед высоконапорным фильтром 1 [бар]"}
+,"rBC34_CisOlPrzFilP1_ZakrMax":{"TYP":"pLiczba", "ID":"7.3.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла перед высоконапорным фильтром 1 [бар]"}
+,"tBC34_CisOlPrzFilP1_StatusFiltr":{"TYP":"pCzas", "ID":"7.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления масла перед высоконапорным фильтром 1 [с]"}
+,"rBC34_CisOlZaFilP2_HiWr":{"TYP":"pLiczba", "ID":"7.3.4", "ROZM":1, "WART":280.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенного давления масла перед высоконапорным фильтром 1 [с]"}
+,"rBC34_CisOlZaFilP2_HiWrHist":{"TYP":"pLiczba", "ID":"7.3.5", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенного давления масла перед высоконапорным фильтром 1 [с]"}
+,"tBC34_CisOlZaFilP2_HiWrFiltr":{"TYP":"pCzas", "ID":"7.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления  повышенного давления масла перед высоконапорным фильтром 1 [с]"}
+,"rBC34_CisOlZaFilP2_HiAL":{"TYP":"pLiczba", "ID":"7.3.7", "ROZM":1, "WART":300.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги повышенного давления масла перед высоконапорным фильтром 1 [с]"}
+,"rBC34_CisOlZaFilP2_HiALHist":{"TYP":"pLiczba", "ID":"7.3.8", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла перед высоконапорным фильтром 1 [с]"}
+,"tBC34_CisOlZaFilP2_HiALFiltr":{"TYP":"pCzas", "ID":"7.3.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления масла перед высоконапорным фильтром 1 [с]"}
+},"podgrupa4":{"OPIS":"7.4 BC34-BC33 Загрязнение высоконапорного фильтра 1"
+,"rBC34_BC33_CisnRozn_HiWr":{"TYP":"pLiczba", "ID":"7.4.1", "ROZM":1, "WART":4.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенного уровня разницы давлений масла на высоконапорном фильтре 1 [бар]"}
+,"rBC34_BC33_CisnRozn_HiWrHist":{"TYP":"pLiczba", "ID":"7.4.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенного уровня разницы давлений масла на высоконапорном фильтре 1 [бар]"}
+,"tBC34_BC33_CisnRozn_HiWrFiltr":{"TYP":"pCzas", "ID":"7.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до обнаружения повышенного уровня разницы давлений масла на высоконапорном фильтре 1 [с]"}
+,"rBC34_BC33_CisnRozn_HiAl":{"TYP":"pLiczba", "ID":"7.4.4", "ROZM":1, "WART":6.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного уровня разницы давлений масла на высоконапорном фильтре 1 [бар]"}
+,"rBC34_BC33_CisnRozn_HiAlHist":{"TYP":"pLiczba", "ID":"7.4.5", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного уровня разницы давлений масла на высоконапорном фильтре 1 [бар]"}
+,"tBC34_BC33_CisnRozn_HiAlFiltr":{"TYP":"pCzas", "ID":"7.4.6", "ROZM":2, "WART":2000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного уровня разници давлений масла на высоконапорном фильтре 1 [с]"}
+},"podgrupa5":{"OPIS":"7.5 BC31 Давление масла за высоконапорным фильтром 2"
+,"rBC31_CisOlZaFilP2_ZakrMin":{"TYP":"pLiczba", "ID":"7.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла за высоконапорным фильтром 2 [бар]"}
+,"rBC31_CisOlZaFilP2_ZakrMax":{"TYP":"pLiczba", "ID":"7.5.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла за высоконапорным фильтром 2 [бар]"}
+,"tBC31_CisOlZaFilP2_StatFiltr":{"TYP":"pCzas", "ID":"7.5.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления варии измерения давления масла за высоконапорным фильтром 2 [с]"}
+,"rBC31_CisOlZaFilP2_HiWr":{"TYP":"pLiczba", "ID":"7.5.4", "ROZM":1, "WART":280.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги повышенного давления масла за высоконапорным фильтром 2 [бар]"}
+,"rBC31_CisOlZaFilP2_HiWrHist":{"TYP":"pLiczba", "ID":"7.5.5", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенного давления масла за высоконапорным фильтром 2 [бар]"}
+,"tBC31_CisOlZaFilP2_HiWrFiltr":{"TYP":"pCzas", "ID":"7.5.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенного давления масла за высоконапорным фильтром 2 [с]"}
+,"rBC31_CisOlZaFilP2_HiAL":{"TYP":"pLiczba", "ID":"7.5.7", "ROZM":1, "WART":300.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления масла за высоконапорным фильтром 2[бар]"}
+,"rBC31_CisOlZaFilP2_HiALHist":{"TYP":"pLiczba", "ID":"7.5.8", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла за высоконапорным фильтром 2 [бар]"}
+,"tBC31_CisOlZaFilP2_HiALFiltr":{"TYP":"pCzas", "ID":"7.5.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления масла за высоконапорным фильтром 1 [с]"}
+},"podgrupa6":{"OPIS":"7.6 BC32  Давление масла перед высоконапорным фильтром 2"
+,"rBC32_CisOlPrzFilP2_ZakrMin":{"TYP":"pLiczba", "ID":"7.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла перед высоконапорным фильтром 2 [бар]"}
+,"rBC32_CisOlPrzFilP2_ZakrMax":{"TYP":"pLiczba", "ID":"7.6.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла перед высоконапорным фильтром 2 [бар]"}
+,"tBC32_CisOlPrzFilP2_StatusFiltr":{"TYP":"pCzas", "ID":"7.6.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления масла перед высоконапорным фильтром2[с]"}
+,"rBC32_CisOlPrzFilP2_HiWr":{"TYP":"pLiczba", "ID":"7.6.4", "ROZM":1, "WART":280.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенного давления масла перед высоконапорным фильтром 2[бар]"}
+,"rBC32_CisOlPrzFilP2_HiWrHist":{"TYP":"pLiczba", "ID":"7.6.5", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенного давления масла перед высоконапорным фильтром 2 [бар]"}
+,"tBC32_CisOlPrzFilP2_HiWrFiltr":{"TYP":"pCzas", "ID":"7.6.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления  повышенного давления масла перед высоконапорным фильтром 2 [с]"}
+,"rBC32_CisOlPrzFilP2_HiAL":{"TYP":"pLiczba", "ID":"7.6.7", "ROZM":1, "WART":300.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления масла перед высоконапорным фильтром 2 [бар]"}
+,"rBC32_CisOlPrzFilP2_HiALHist":{"TYP":"pLiczba", "ID":"7.6.8", "ROZM":1, "WART":10.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла перед высоконапорным фильтром 2 [бар]"}
+,"tBC32_CisOlPrzFilP2_HiALFiltr":{"TYP":"pCzas", "ID":"7.6.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления масла перед высоконапорным фильтром 2 [с]"}
+},"podgrupa7":{"OPIS":"7.7 BC32-BC31 Загрязнение высоконапорного фильтра 2"
+,"rBC32_BC31_CisnRozn_HiWr":{"TYP":"pLiczba", "ID":"7.7.1", "ROZM":1, "WART":4.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенного уровня разницы давлений масла на высоконапорном фильтре 2 [бар]"}
+,"rBC32_BC31_CisnRozn_HiWrHist":{"TYP":"pLiczba", "ID":"7.7.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенного уровня разницы давлений масла на высоконапорном фильтре 2 [бар]"}
+,"tBC32_BC31_CisnRozn_HiWrFiltr":{"TYP":"pCzas", "ID":"7.7.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенного уровня разницы давлений масла на высоконапорном фильтре 2 [с]"}
+,"rBC32_BC31_CisnRozn_HiAl":{"TYP":"pLiczba", "ID":"7.7.4", "ROZM":1, "WART":6.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного уровня разницы давлений масла на высоконапорном фильтре 2 [бар]"}
+,"rBC32_BC31_CisnRozn_HiAlHist":{"TYP":"pLiczba", "ID":"7.7.5", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного уровня разницы давлений масла на высоконапорном фильтре 2 [бар]"}
+,"tBC32_BC31_CisnRozn_HiAlFiltr":{"TYP":"pCzas", "ID":"7.7.6", "ROZM":2, "WART":2000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного уровня разници давлений масла на высоконапорном фильтре 2 [с]"}
+},"podgrupa8":{"OPIS":"7.8 BC35 Давление масла Управление 1 "
+,"rBC35_CisOlejZaFilP3_ZakrMin":{"TYP":"pLiczba", "ID":"7.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла Управление 1 [бар]"}
+,"rBC35_CisOlejZaFilP3_ZakrMax":{"TYP":"pLiczba", "ID":"7.8.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла Управление 1[бар]"}
+,"tBC35_CisOlejZaFilP3_StFiltr":{"TYP":"pCzas", "ID":"7.8.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления масла Управление 1 [с]"}
+,"rBC35_CisOlejZaFilP3_HiAL":{"TYP":"pLiczba", "ID":"7.8.4", "ROZM":1, "WART":60.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления масла Управление 1 [бар]"}
+,"rBC35_CisOlejZaFilP3_HiALHist":{"TYP":"pLiczba", "ID":"7.8.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла Управление 1  [бар]"}
+,"tBC35_CisOlejZaFilP3_HiALFiltr":{"TYP":"pCzas", "ID":"7.8.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления масла Управление 1 [с]"}
+},"podgrupa9":{"OPIS":"7.9 BC36 Давление масла Управление 2"
+,"rBC36_CisOlPrzFilP3_ZakrMin":{"TYP":"pLiczba", "ID":"7.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла Управление 2 [бар]"}
+,"rBC36_CisOlPrzFilP3_ZakrMax":{"TYP":"pLiczba", "ID":"7.9.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла Управление 2 [бар]"}
+,"tBC36_CisOlPrzFilP3_StatusFiltr":{"TYP":"pCzas", "ID":"7.9.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления масла Управление 2 [с]"}
+,"rBC36_CisOlejZaFilP3_HiAL":{"TYP":"pLiczba", "ID":"7.9.4", "ROZM":1, "WART":60.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления масла Управление 2[бар]"}
+,"rBC36_CisOlejZaFilP3_HiALHist":{"TYP":"pLiczba", "ID":"7.9.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла Управление 2 [бар]"}
+,"tBC36_CisOlejZaFilP3_HiALFiltr":{"TYP":"pCzas", "ID":"7.9.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Времядо выявления превышенного давления масла Управление 2 [с]"}
+},"podgrupa10":{"OPIS":"7.10 BC37 Давление масла Управление 3"
+,"rBC37_CisOlSter3_ZakrMin":{"TYP":"pLiczba", "ID":"7.10.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления масла Управление 3 [бар]"}
+,"rBC37_CisOlSter3_ZakrMax":{"TYP":"pLiczba", "ID":"7.10.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения давления масла Управление 3 [бар]"}
+,"tBC37_CisOlSter3_StatusFiltr":{"TYP":"pCzas", "ID":"7.10.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время для обноружения аварии измерения давления масла Управления 3 [с]"}
+,"rBC37_CisOlejZaFilP3_HiAL":{"TYP":"pLiczba", "ID":"7.10.4", "ROZM":1, "WART":60.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления масла Управление 3 [бар]"}
+,"rBC37_CisOlejZaFilP3_HiALHist":{"TYP":"pLiczba", "ID":"7.10.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенного давления масла Управление 3 [бар]"}
+,"tBC37_CisOlejZaFilP3_HiALFiltr":{"TYP":"pCzas", "ID":"7.10.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления масла Управление 3 [с]"}
+},"podgrupa11":{"OPIS":"7.11 BC47 Давление растормаживания электродвигателя передвижения левой гусеницы "
+,"rBC47_CisOdSilGasL_ZakrMin":{"TYP":"pLiczba", "ID":"7.11.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления растормаживания двигателя передвижения левой гусеницы [бар] "}
+,"rBC47_CisOdSilGasL_ZakrMax":{"TYP":"pLiczba", "ID":"7.11.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Верхний передел измерения давления растормаживания двигателя передвижения левой гусеницы [бар] "}
+,"tBC47_CisOdSilGasL_StatusFiltr":{"TYP":"pCzas", "ID":"7.11.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления растормаживания двигателя передвижения левой гусеницы [бар] "}
+,"rBC47_CisOdSilGasL_HiAL":{"TYP":"pLiczba", "ID":"7.11.4", "ROZM":1, "WART":8.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Уровень тревоги перевышенного давления растормаживания двигателя передвижения левой гусеницы [бар] "}
+,"rBC47_CisOdSilGasL_HiALHist":{"TYP":"pLiczba", "ID":"7.11.5", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Гистерезис  тревоги превышенного давления растормаживания двигателя передвижения левой гусеницы [бар]"}
+,"tBC47_CisOdSilGasL_HiALFiltr":{"TYP":"pCzas", "ID":"7.11.6", "ROZM":2, "WART":8000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления растормаживания двигателя передвижения левой гусеницы [бар]"}
+},"podgrupa12":{"OPIS":"7.12 BC48 Давление растормаживания двигателя передвижения правой гусеницы "
+,"rBC48_CisOdhSilGasP_ZakrMin":{"TYP":"pLiczba", "ID":"7.12.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения давления оттормаживания двигателя передвижения правой гусеници [бар] "}
+,"rBC48_CisOdhSilGasP_ZakrMax":{"TYP":"pLiczba", "ID":"7.12.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Верхний передел измерения давления растормаживания двигателя передвижения правой гусеницы [бар] "}
+,"tBC48_CisOdhSilGasP_StatusFiltr":{"TYP":"pCzas", "ID":"7.12.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения давления растормаживания двигателя передвижения правой гусеницы [бар] "}
+,"rBC48_CisOdhSilGasP_HiAL":{"TYP":"pLiczba", "ID":"7.12.4", "ROZM":1, "WART":8.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенного давления растормаживания двигателя передвижения правой гусеницы [бар] "}
+,"rBC48_CisOdhSilGasP_HiALHist":{"TYP":"pLiczba", "ID":"7.12.5", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Гистерезис  тревоги превышенного давления растормаживания двигателя передвижения правой гусеницы [бар]"}
+,"tBC48_CisOdhSilGasP_HiALFiltr":{"TYP":"pCzas", "ID":"7.12.6", "ROZM":2, "WART":8000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного давления растормаживания двигателя передвижения правой гусеницы [бар]"}
+},"podgrupa13":{"OPIS":"7.13 BC52 Давление натяжки цепи скребкового конвейера "
+,"rBC52_CisUkNaLaPZ_ZakrMin":{"TYP":"pLiczba", "ID":"7.13.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":400.0, "DOST":"Srvc", "OPIS":"Нижний передел измерения давления натяжением цепи скребкового конвейера [бар]"}
+,"rBC52_CisUkNaLaPZ_ZakrMax":{"TYP":"pLiczba", "ID":"7.13.2", "ROZM":1, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":400.0, "DOST":"Srvc", "OPIS":"Верхний передел измерения давления натяжением цепи скребкового конвейера [бар]"}
+,"tBC52_CisUkNaLaPZ_StatusFiltr":{"TYP":"pCzas", "ID":"7.13.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время для обноружения аварии измерения давления натяжением цепи скребкового конвейера [бар]"}
+},"podgrupa14":{"OPIS":"7.14 BT14  Температура масла в баке"
+,"rBT14_TemOlejuZbHyd_ZakrMin":{"TYP":"pLiczba", "ID":"7.14.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения температуры масла в баке [°C]"}
+,"rBT14_TemOlejuZbHyd_ZakrMax":{"TYP":"pLiczba", "ID":"7.14.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения температуры масла в баке [°C]"}
+,"tBT14_TemOlejuZbHyd_StatusFiltr":{"TYP":"pCzas", "ID":"7.14.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения температуры масла в баке [°C]"}
+,"rBT14_TemOlejuZbHyd_HiWr":{"TYP":"pLiczba", "ID":"7.14.4", "ROZM":1, "WART":65.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенной температуры масла в баке [°C]"}
+,"rBT14_TemOlejuZbHyd_HiWrHist":{"TYP":"pLiczba", "ID":"7.14.5", "ROZM":1, "WART":2.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенной температуры масла в баке [°C]"}
+,"tBT14_TemOlejuZbHyd_HiWrFiltr":{"TYP":"pCzas", "ID":"7.14.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенной температуры масла в баке [с]"}
+,"rBT14_TemOlejuZbHyd_HiAL":{"TYP":"pLiczba", "ID":"7.14.7", "ROZM":1, "WART":70.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенной температуры масла в баке [°C]"}
+,"rBT14_TemOlejuZbHyd_HiALHist":{"TYP":"pLiczba", "ID":"7.14.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенной температуры масла в баке [°C]"}
+,"tBT14_TemOlejuZbHyd_HiALFiltr":{"TYP":"pCzas", "ID":"7.14.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры масла в баке [c]"}
+,"rBT14_TemOlejuZbHyd_Filtry":{"TYP":"pLiczba", "ID":"7.14.10", "ROZM":1, "WART":35.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Значение температуры масла в баке при которой начинается контроль давления в фильтрах масла [°C]"}
+},"podgrupa15":{"OPIS":"7.15 BT29 Температура масла режущего органа "
+,"rBT29_TemOlPrzOrgAn_ZakrMin":{"TYP":"pLiczba", "ID":"7.15.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения температуры масла в редукторе режущего органа [°C]"}
+,"rBT29_TemOlPrzOrgAn_ZakrMax":{"TYP":"pLiczba", "ID":"7.15.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения температуры масла в редукторе режущего органа [°C]"}
+,"tBT29_TemOlPrzOrgAn_StatusFiltr":{"TYP":"pCzas", "ID":"7.15.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения температуры масла в редукторе режущего органа [°C]"}
+,"rBT29_TemOlPrzOrgAn_HiWr":{"TYP":"pLiczba", "ID":"7.15.4", "ROZM":1, "WART":85.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенной  температуры масла в редукторе режущего органа [°C]"}
+,"rBT29_TemOlPrzOrgAn_HiWrHist":{"TYP":"pLiczba", "ID":"7.15.5", "ROZM":1, "WART":2.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенной  температуры масла в редукторе режущего органа [°C]"}
+,"tBT29_TemOlPrzOrgAn_HiWrFiltr":{"TYP":"pCzas", "ID":"7.15.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенной  температуры масла в редукторе режущего органа [с]"}
+,"rBT29_TemOlPrzOrgAn_HiAL":{"TYP":"pLiczba", "ID":"7.15.7", "ROZM":1, "WART":95.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенной температуры масла в редукторе режущего органа [°C]"}
+,"rBT29_TemOlPrzOrgAn_HiALHist":{"TYP":"pLiczba", "ID":"7.15.8", "ROZM":1, "WART":25.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенной температуры масла в редукторе режущего органа [°C]"}
+,"tBT29_TemOlPrzOrgAn_HiALFiltr":{"TYP":"pCzas", "ID":"7.15.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры масла в редукторе режущего органа [°C]"}
+},"podgrupa16":{"OPIS":"7.16 BL15 Уровень масла в баке"
+,"tBL15_PoziomOleju_Min":{"TYP":"pCzas", "ID":"7.16.1", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления недостаточного уровня масла в баке [с]"}
+,"tBL15_PoziomOleju_Max":{"TYP":"pCzas", "ID":"7.16.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенного уровня масла в баке [с]"}
+},"podgrupa17":{"OPIS":"7.17 BZ51 Уровень смазки "
+,"tBZ51_MinPoziomSmaruPCS":{"TYP":"pCzas", "ID":"7.17.1", "ROZM":2, "WART":600000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления недостаточного  уровня смазки  [с]"}
+},"podgrupa18":{"OPIS":"7.18 Остальные"
+,"tBT25_TemOlejuPrzekNapStrPrawa":{"TYP":"pCzas", "ID":"7.18.1", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры масла в редукторе привода передвижения - правая сторона [с]"}
+,"tBT26_TempOleju_PrzekNapStrLewa":{"TYP":"pCzas", "ID":"7.18.2", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры масла в редукторе привода передвижения - левая сторона [с]"}
+,"tBT29_TempOleju_PrzekOrganu":{"TYP":"pCzas", "ID":"7.18.3", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры масла в редукторе режущего органа  [с]"}
+,"tBT23_TempObudowy_PompaOleju":{"TYP":"pCzas", "ID":"7.18.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры корпуса  насоса масла [с]"}
+}},"grupa8":{"OPIS":"8. Температура электрооборудования"
+, "podgrupa1":{"OPIS":"8.1 M1 Обмотка электродвигателя режущего органа"
+,"rTempUzwojenSilnikaM1_ZakrMin":{"TYP":"pLiczba", "ID":"8.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения температуры обмоток электродвигателя режущего органа [°C]"}
+,"rTempUzwojenSilnikaM1_ZakrMax":{"TYP":"pLiczba", "ID":"8.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения температуры обмоток электродвигателя режущего органа [°C]"}
+,"tTempUzwojenSilnikaM1_StFiltr":{"TYP":"pCzas", "ID":"8.1.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения температуры обмоток электродвигателя режущего органа [°C]"}
+,"rTempUzwojenSilnikaM1_HiWr":{"TYP":"pLiczba", "ID":"8.1.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенной температуры обмоток электродвигателя режущего органа [°C]"}
+,"rTempUzwojenSilnikaM1_HiWrHist":{"TYP":"pLiczba", "ID":"8.1.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенной температуры обмоток электродвигателя режущего органа [°C]"}
+,"tTempUzwojenSilnikaM1_HiWrFiltr":{"TYP":"pCzas", "ID":"8.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенной температуры обмоток электродвигателя режущего органа [с]"}
+,"rTempUzwojenSilnikaM1_HiAl":{"TYP":"pLiczba", "ID":"8.1.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенной температуры обмоток электродвигателя режущего органа [°C]"}
+,"rTempUzwojenSilnikaM1_HiAlHist":{"TYP":"pLiczba", "ID":"8.1.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенной температуры обмоток электродвигателя режущего органа [°C]"}
+,"tTempUzwojenSilnikaM1_HiALFiltr":{"TYP":"pCzas", "ID":"8.1.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры обмоток электродвигателя режущего органа [°C]"}
+},"podgrupa2":{"OPIS":"8.2 M2 Обмотка электродвигателя насоса гидравлики "
+,"rTempUzwojenSilnikaM2_ZakrMin":{"TYP":"pLiczba", "ID":"8.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"rTempUzwojenSilnikaM2_ZakrMax":{"TYP":"pLiczba", "ID":"8.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"tTempUzwojenSilnikaM2_StFiltr":{"TYP":"pCzas", "ID":"8.2.3", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии измерения температуры обмоток электродвигателя насоса гидравлики [с]"}
+,"rTempUzwojenSilnikaM2_HiWr":{"TYP":"pLiczba", "ID":"8.2.4", "ROZM":1, "WART":125.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Уровень предупреждения повышенной температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"rTempUzwojenSilnikaM2_HiWrHist":{"TYP":"pLiczba", "ID":"8.2.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Гистерезис предупреждения повышенной температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"tTempUzwojenSilnikaM2_HiWrFiltr":{"TYP":"pCzas", "ID":"8.2.6", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления повышенной температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"rTempUzwojenSilnikaM2_HiAl":{"TYP":"pLiczba", "ID":"8.2.7", "ROZM":1, "WART":135.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Уровень тревоги превышенной температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"rTempUzwojenSilnikaM2_HiAlHist":{"TYP":"pLiczba", "ID":"8.2.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Гистерезис тревоги превышенной температуры обмоток электродвигателя насоса гидравлики [°C]"}
+,"tTempUzwojenSilnikaM2_HiALFiltr":{"TYP":"pCzas", "ID":"8.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления  превышенной температуры обмоток электродвигателя насоса гидравлики [с]"}
+}},"grupa9":{"OPIS":"9. Защиты"
+, "podgrupa1":{"OPIS":"9.1 Защита от перегрузки"
+,"tZabxLTMR_SilnikaM1":{"TYP":"pCzas", "ID":"9.1.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты электродвигателя режущего органа [с]"}
+,"tZabxLTMR_SilnikaM2":{"TYP":"pCzas", "ID":"9.1.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты электродвигателя насоса гидравлики [с]"}
+,"tZabxLTMR_SilnikaM3":{"TYP":"pCzas", "ID":"9.1.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты электродвигателя скребкового конвейера S1 [c]"}
+,"tZabxLTMR_SilnikaM4":{"TYP":"pCzas", "ID":"9.1.4", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты электродвигателя скребкового конвейера S2 [c] "}
+,"tZabxLTMR_SilnikaM5":{"TYP":"pCzas", "ID":"9.1.5", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты электродвигателя доставочного конвейера S1 [c]"}
+,"tZabxLTMR_SilnikaM6":{"TYP":"pCzas", "ID":"9.1.6", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты электродвигателя доставочного конвейера S2 [c]"}
+,"tZabxLTMR_SilnikaM7":{"TYP":"pCzas", "ID":"9.1.7", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты резервного электродвигателя 1 [с]"}
+,"tZabxLTMR_SilnikaM8":{"TYP":"pCzas", "ID":"9.1.8", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Временной интервал до выявления сработания защиты резервного электродвигателя 2 [с]"}
+},"podgrupa2":{"OPIS":"9.2 Непрерывность экрана"
+,"tZabxCK_SilnikaM3":{"TYP":"pCzas", "ID":"9.2.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления разрыва непрерывности кабеля питающиего электродвигатель скребкового конвейера S1 [с]"}
+,"tZabxCK_SilnikaM4":{"TYP":"pCzas", "ID":"9.2.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления разрыва непрерывности кабеля питающиего электродвигатель скребкового конвейера S1 [с]"}
+,"tZabxCK_SilnikaM5":{"TYP":"pCzas", "ID":"9.2.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления разрыва непрерывности кабеля питающиего электродвигатель доставочного конвейера S1 [с]"}
+,"tZabxCK_SilnikaM6":{"TYP":"pCzas", "ID":"9.2.4", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления разрыва непрерывности кабеля питающиего электродвигатель доставочного конвейера S2 [с]"}
+,"tZabxCK_SilnikaM7":{"TYP":"pCzas", "ID":"9.2.5", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления разрыва непрерывности кабеля питающего резервный электродвигатель 1 [с]"}
+,"tZabxCK_SilnikaM8":{"TYP":"pCzas", "ID":"9.2.6", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления разрыва непрерывности кабеля питающего резервный электродвигатель 2[с]"}
+},"podgrupa3":{"OPIS":"9.3 Защита от утечки BZU"
+,"tZabxBZU_SilnikaM1":{"TYP":"pCzas", "ID":"9.3.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления  замыкания на землю питательной цепи электродвигателя режущего органа  [s]"}
+,"tZabxBZU_SilnikaM2":{"TYP":"pCzas", "ID":"9.3.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю цепи питания электродвигателя насоса гидравлики  [s]"}
+,"tZabxBZU_SilnikaM3M4":{"TYP":"pCzas", "ID":"9.3.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землюцепи питания электродвигателя скребкового конвейера S1 и S2 [с]      "}
+,"tZabxBZU_SilnikaM5M6":{"TYP":"pCzas", "ID":"9.3.4", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю цепи питания электродвигателя доставочного конвейера S1 и S2 [с]"}
+,"tZabxBZU_SilnikaM7":{"TYP":"pCzas", "ID":"9.3.5", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю цепи питания резервного электродвигателя 1 [с]"}
+,"tZabxBZU_SilnikaM8":{"TYP":"pCzas", "ID":"9.3.6", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю цепи питания резервного электродвигателя 2 [с]"}
+},"podgrupa4":{"OPIS":"9.4 Защита от утечки  CZU"
+,"tZabxCBZU_24VAC":{"TYP":"pCzas", "ID":"9.4.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю сети 24VAC [с]"}
+,"tZabxCBZU_42VAC":{"TYP":"pCzas", "ID":"9.4.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю сети 42VAC [с]"}
+,"tZabxCBZU_230VAC":{"TYP":"pCzas", "ID":"9.4.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления замыкания на землю сети 230VAC [с]"}
+},"podgrupa5":{"OPIS":"9.5 Защита от температуры "
+,"tZabxTL_SilnikaM1":{"TYP":"pCzas", "ID":"9.5.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников электродвигателя режущего органа [с]"}
+,"tZabxTL_SilnikaM2":{"TYP":"pCzas", "ID":"9.5.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников электродвигателя насоса гидравлики [с]"}
+,"tZabxTL_SilnikaM3":{"TYP":"pCzas", "ID":"9.5.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников электродвигателя скребкового конвейера S1 [с]"}
+,"tZabxTL_SilnikaM4":{"TYP":"pCzas", "ID":"9.5.4", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников электродвигателя скребкового конвейера S2 [с]"}
+,"tZabxTL_SilnikaM5":{"TYP":"pCzas", "ID":"9.5.5", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников электродвигателя доставочного конвейера S1 [с]"}
+,"tZabxTL_SilnikaM6":{"TYP":"pCzas", "ID":"9.5.6", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников электродвигателя доставочного конвейера  S2 [с]"}
+,"tZabxTL_SilnikaM7":{"TYP":"pCzas", "ID":"9.5.7", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников резервного электродвигателя S1 [с]"}
+,"tZabxTL_SilnikaM8":{"TYP":"pCzas", "ID":"9.5.8", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления превышенной температуры подшипников резервного электродвигателя S2 [с]"}
+}},"grupa10":{"OPIS":"10. Сохранение данных"
+, "podgrupa1":{"OPIS":"10.1 Сохранение данных"
+,"rZapisTyp":{"TYP":"pLista", "ID":"10.1.1", "ROZM":1, "WART":1.0, "DOST":"Adv", "LISTA":["0-godzinowy", "1-dzienny"], "OPIS":"Тип сохранения файлов архивизации данн"}
+,"rZapisIlDni":{"TYP":"pLiczba", "ID":"10.1.2", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Количество дней архивизованных данных"}
+,"rZapisBuforIlosc":{"TYP":"pLiczba", "ID":"10.1.3", "ROZM":1, "WART":4.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Adv", "OPIS":"Максимальное количество создаваемых буферов для архивизауии данных"}
+,"rZapisBuforRozm":{"TYP":"pLiczba", "ID":"10.1.4", "ROZM":1, "WART":20000.0, "PREC":0, "MIN":0.0, "MAX":30000.0, "DOST":"Adv", "OPIS":"Величина буфера для архивизации данных [байт]"}
+,"tZapisCzasZrzutu":{"TYP":"pCzas", "ID":"10.1.5", "ROZM":2, "WART":600000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Время по истечении которого наступит полностью сброс данных в буфер [с]"}
+,"tZapisTimeout":{"TYP":"pCzas", "ID":"10.1.6", "ROZM":2, "WART":30000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Максимальное разрешаемое время сохранения буфера в файл  [с]"}
+}},"grupa11":{"OPIS":"11. Кнопки и селекторы"
+, "podgrupa1":{"OPIS":"11.1 "
+,"tPulpit_MaxCzasTrzymaniaSP1_SP2":{"TYP":"pCzas", "ID":"11.1.1", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопок SP1 и SP2 после включения контактора режущего органа [с] "}
+,"tPulpit_MaxCzasJedenSP1_SP2":{"TYP":"pCzas", "ID":"11.1.2", "ROZM":2, "WART":3000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания одной кнопки SP1 или SP2 перед включением контактора рабочего органа [с] "}
+,"tPulpit_MaxCzasTrzymaniaSP3":{"TYP":"pCzas", "ID":"11.1.3", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP3 после включения контоктора насоса гидравлики  [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP4":{"TYP":"pCzas", "ID":"11.1.4", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP4 после включения воды [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP5":{"TYP":"pCzas", "ID":"11.1.5", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP5 после включения пылеуловителя [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP6":{"TYP":"pCzas", "ID":"11.1.6", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP6 после включения компрессора [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP7":{"TYP":"pCzas", "ID":"11.1.7", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP7 после включения анкероустановщика"}
+,"tPulpit_MaxCzasTrzymaniaSP9":{"TYP":"pCzas", "ID":"11.1.8", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP9 после включения передвижения [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP10":{"TYP":"pCzas", "ID":"11.1.9", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP10 после включения быстрого передвижения [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP16":{"TYP":"pCzas", "ID":"11.1.10", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP16 после включения охлаждения масла  [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP17":{"TYP":"pCzas", "ID":"11.1.11", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP17 после включения внешнего приёмника  [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP30":{"TYP":"pCzas", "ID":"11.1.12", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP30 после включения вспомогательного инструмента 1 [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP31":{"TYP":"pCzas", "ID":"11.1.13", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP31 после включения вспомогательного инструмента 2 [с]"}
+,"tPulpit_MaxCzasTrzymaniaSP37":{"TYP":"pCzas", "ID":"11.1.14", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время удержания кнопки SP37 после включения reset"}
+},"podgrupa2":{"OPIS":"11.2 Селекторы"
+,"tPulpitPrzelTrzyPozycje_Filtr":{"TYP":"pCzas", "ID":"11.2.1", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время стабилизации позиции при переключении 3-позиционных селекторов [с]"}
+,"tPulpitPrzelTrzyPozycje_Timeout":{"TYP":"pCzas", "ID":"11.2.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время для достижения допускаемого состояния 3-позиционных селекторов [с]"}
+,"tPulpitPrzelTrybPracy_Filtr":{"TYP":"pCzas", "ID":"11.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время стабилизации позиции при переключении селектора режима работы [с]"}
+,"tPulpitPrzelTrybPracy_Timeout":{"TYP":"pCzas", "ID":"11.2.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Допускаемое время для достижения допускаемого состояния селектора режима работы [с]"}
+}},"grupa12":{"OPIS":"12. Манипуляторы"
+, "podgrupa1":{"OPIS":"12.1 Передвижение - лево/ право"
+,"rMJ_LewoPrawoOsX_ZakrMin":{"TYP":"pLiczba", "ID":"12.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения отклонения на оси X манипулятора передвижения лево- право [%]"}
+,"rMJ_LewoPrawoOsX_ZakrMax":{"TYP":"pLiczba", "ID":"12.1.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения отклонения на оси X манипулятора передвижения лево- право [%]"}
+,"tMJ_LewoPrawoOsX_StFiltr":{"TYP":"pCzas", "ID":"12.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии  измерения отклонения на оси X манипулятора передвижения лево- право [%]"}
+,"rMJ_LewoPrawoOsX_Mnoz":{"TYP":"pLiczba", "ID":"12.1.4", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.1, "MAX":100.0, "DOST":"Srvc", "OPIS":""}
+,"rMJ_LewoPrawoOsX_Techn":{"TYP":"pLiczba", "ID":"12.1.5", "ROZM":1, "WART":2000.0, "PREC":0, "MIN":1.0, "MAX":9999.9, "DOST":"Srvc", "OPIS":""}
+,"rMJ_LewoPrawoOsX_StrMar":{"TYP":"pLiczba", "ID":"12.1.6", "ROZM":1, "WART":0.1, "PREC":0, "MIN":0.0, "MAX":0.5, "DOST":"Srvc", "OPIS":""}
+},"podgrupa2":{"OPIS":"12.2 Передвижение - вперед/назад"
+,"rMJ_PrzodTylOsY_ZakrMin":{"TYP":"pLiczba", "ID":"12.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения отклонения на оси Y манипулятора передвижения вперед-назад [%]"}
+,"rMJ_PrzodTylOsY_ZakrMax":{"TYP":"pLiczba", "ID":"12.2.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения отклонения на оси Y манипулятора передвижения вперед-назад [%]"}
+,"tMJ_PrzodTylOsY_StatusFiltr":{"TYP":"pCzas", "ID":"12.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии  измерения отклонения на оси Y манипулятора передвижения вперед-назад  [%]"}
+,"rMJ_PrzodTylOsY_Mnoz":{"TYP":"pLiczba", "ID":"12.2.4", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.1, "MAX":100.0, "DOST":"Srvc", "OPIS":""}
+,"rMJ_PrzodTylOsY_Techn":{"TYP":"pLiczba", "ID":"12.2.5", "ROZM":1, "WART":2000.0, "PREC":0, "MIN":1.0, "MAX":9999.9, "DOST":"Srvc", "OPIS":""}
+,"rMJ_PrzodTylOsY_StrMar":{"TYP":"pLiczba", "ID":"12.2.6", "ROZM":1, "WART":0.1, "PREC":0, "MIN":0.0, "MAX":0.5, "DOST":"Srvc", "OPIS":""}
+},"podgrupa3":{"OPIS":"12.3 Стрела - лево, право"
+,"rMW_LePrOsX_ZakrMin":{"TYP":"pLiczba", "ID":"12.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения отклонения на оси X манипулятора стрелы лево- право [%]"}
+,"rMW_LePrOsX_ZakrMax":{"TYP":"pLiczba", "ID":"12.3.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения отклонения на оси X манипулятора стрелы лево- право [%]"}
+,"tMW_LePrOsX_StatusFiltr":{"TYP":"pCzas", "ID":"12.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии  измерения отклонения на оси  X манипулятора передвижения лево- право  [с]"}
+,"rMW_LePrOsX_Mnoz":{"TYP":"pLiczba", "ID":"12.3.4", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.1, "MAX":100.0, "DOST":"Srvc", "OPIS":""}
+,"rMW_LePrOsX_Techn":{"TYP":"pLiczba", "ID":"12.3.5", "ROZM":1, "WART":2000.0, "PREC":0, "MIN":1.0, "MAX":9999.9, "DOST":"Srvc", "OPIS":""}
+,"rMW_LePrOsX_StrMar":{"TYP":"pLiczba", "ID":"12.3.6", "ROZM":1, "WART":0.1, "PREC":0, "MIN":0.0, "MAX":0.5, "DOST":"Srvc", "OPIS":""}
+},"podgrupa4":{"OPIS":"12.4 Стрела  - вперед,назад"
+,"rMW_GoDoOsY_ZakrMin":{"TYP":"pLiczba", "ID":"12.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения отклонения на оси Y манипулятора стрелы вперед-назад [%]"}
+,"rMW_GoDoOsY_ZakrMax":{"TYP":"pLiczba", "ID":"12.4.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Верхний предел измерения отклонения на оси Y манипулятора стрелы вперед-назад [%]"}
+,"tMW_GoDoOsY_StatusFiltr":{"TYP":"pCzas", "ID":"12.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии  измерения отклонения на оси  Y манипулятора передвижения вперед-назад  [с]"}
+,"rMW_GoDoOsY_Mnoz":{"TYP":"pLiczba", "ID":"12.4.4", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.1, "MAX":100.0, "DOST":"Srvc", "OPIS":""}
+,"rMW_GoDoOsY_Techn":{"TYP":"pLiczba", "ID":"12.4.5", "ROZM":1, "WART":2000.0, "PREC":0, "MIN":1.0, "MAX":9999.9, "DOST":"Srvc", "OPIS":""}
+,"rMW_GoDoOsY_StrMar":{"TYP":"pLiczba", "ID":"12.4.6", "ROZM":1, "WART":0.1, "PREC":0, "MIN":0.0, "MAX":0.5, "DOST":"Srvc", "OPIS":""}
+}},"grupa13":{"OPIS":"13. Вибродиагностика"
+, "podgrupa1":{"OPIS":"13.1 Колебания редуктора режущего органа "
+,"rBD30_DrgPrzOrg_ZakrMin":{"TYP":"pLiczba", "ID":"13.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":1.0, "DOST":"Srvc", "OPIS":"Нижний предел измерения колебаний редуктора режущего органа [g]"}
+,"rBD30_DrgPrzOrg_ZakrMax":{"TYP":"pLiczba", "ID":"13.1.2", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.0, "MAX":1.0, "DOST":"Srvc", "OPIS":" Верхний предел измерения колебаний редуктора режущего органа [g]"}
+,"tBD30_DrgPrzOrg_StatusFiltr":{"TYP":"pCzas", "ID":"13.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления аварии  измерения колебаний редуктора режущего органа [g]"}
+}},"grupa14":{"OPIS":"14. "
+, "podgrupa1":{"OPIS":"14.1 "
+,"rCH4_StezenieMetanu_ZakrMin":{"TYP":"pLiczba", "ID":"14.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":""}
+,"rCH4_StezenieMetanu_ZakrMax":{"TYP":"pLiczba", "ID":"14.1.2", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":""}
+,"tCH4_StezenieMetanu_StatusFiltr":{"TYP":"pCzas", "ID":"14.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":""}
+,"rCH4_StezenieMetanu_HiWr":{"TYP":"pLiczba", "ID":"14.1.4", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":""}
+,"rCH4_StezenieMetanu_HiWrHist":{"TYP":"pLiczba", "ID":"14.1.5", "ROZM":1, "WART":0.2, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":""}
+,"tCH4_StezenieMetanu_HiWrFiltr":{"TYP":"pCzas", "ID":"14.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":""}
+,"rCH4_StezenieMetanu_HiAl":{"TYP":"pLiczba", "ID":"14.1.7", "ROZM":1, "WART":2.0, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":""}
+,"rCH4_StezenieMetanu_HiAlHist":{"TYP":"pLiczba", "ID":"14.1.8", "ROZM":1, "WART":0.2, "PREC":1, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":""}
+,"tCH4_StezenieMetanu_HiALFiltr":{"TYP":"pCzas", "ID":"14.1.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":""}
+}},"grupa15":{"OPIS":"15. Разные"
+, "podgrupa1":{"OPIS":"15.1 Подтверждение включения контактора "
+,"tPotZalStycznikaSilnikaM1":{"TYP":"pCzas", "ID":"15.1.1", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора электродвигателя режущего органа [с]"}
+,"tPotZalStycznikaSilnikaM2":{"TYP":"pCzas", "ID":"15.1.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора электродвигателя гидравлического насоса [с]"}
+,"tPotZalStycznikaSilnikaM3":{"TYP":"pCzas", "ID":"15.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора электродвигателя скребкого конвейера S1 [с]"}
+,"tPotZalStycznikaSilnikaM4":{"TYP":"pCzas", "ID":"15.1.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора электродвигателя скребкого конвейера S2 [с]"}
+,"tPotZalStycznikaSilnikaM5":{"TYP":"pCzas", "ID":"15.1.5", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора электродвигателя доставочного конвейера  S1 [с]"}
+,"tPotZalStycznikaSilnikaM6":{"TYP":"pCzas", "ID":"15.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора электродвигателя доставочного конвейера   S2[с]"}
+,"tPotZalStycznikaSilnikaM7":{"TYP":"pCzas", "ID":"15.1.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора резервногоэлектродвигателя  1 [с]"}
+,"tPotZalStycznikaSilnikaM8":{"TYP":"pCzas", "ID":"15.1.8", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":500.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время до выявления отсутствия включения контактора резервного электродвигателя  2 [с]"}
+},"podgrupa2":{"OPIS":"15.2 Not Aus"
+,"tNotAusPulpit":{"TYP":"pCzas", "ID":"15.2.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999.0, "DOST":"Srvc", "OPIS":"Время задержки реакции на нажатие аварийного выключателя пульта [с]"}
+,"tNotAusRadio":{"TYP":"pCzas", "ID":"15.2.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999.0, "DOST":"Srvc", "OPIS":"Время задержки реакции на нажатие аварийного выключателя радиоуправления [с]"}
+,"tNotAusKotwiarka":{"TYP":"pCzas", "ID":"15.2.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999.0, "DOST":"Srvc", "OPIS":"Время задержки реакции на нажатие аварийного выключателя анкероустановщика [с]"}
+},"podgrupa3":{"OPIS":"15.3 Прочие"
+,"tBO49_ObrotyGwiazdyLewej":{"TYP":"pCzas", "ID":"15.3.1", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время задержки реакции на неуполномоченное движение левой звезды  [с]"}
+,"tBO50_ObrotyGwiazdyPrawej":{"TYP":"pCzas", "ID":"15.3.2", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время задержки реакции на неуполномоченное движение правой звезды  [с]"}
+,"tObrotyGwiazdyDetekcjaRuchu":{"TYP":"pCzas", "ID":"15.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время детекции движения левой и правой звезд  [с]"}
+,"rObrotyGwiazdyDetekcjaImpMin":{"TYP":"pLiczba", "ID":"15.3.4", "ROZM":1, "WART":8.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Минимальное количество импульсов для детекции движения звезды"}
+,"tObrotyGwiazdyDetekcjaKasLicz":{"TYP":"pCzas", "ID":"15.3.5", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Время по истечении которого наступит сброс счетчика импульсов детекции движения звезды  [с]"}
+}}}}

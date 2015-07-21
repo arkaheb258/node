@@ -1,0 +1,624 @@
+{"TYPM":"GUŁ350/500","WER":"0.1","DATA":"2015-06-18","DANE":{
+"grupa1":{"OPIS":"1. Konfiguracja kombajnu"
+, "podgrupa1":{"OPIS":"1.1 Opis kombajnu"
+,"sKonfTypKombajnu":{"TYP":"pString", "ID":"1.1.1", "ROZM":16, "WART":"GUŁ", "DOST":"Adv", "OPIS":"Typ kombajnu"}
+,"sKonfNrKomisji":{"TYP":"pString", "ID":"1.1.2", "ROZM":16, "WART":"01H900", "DOST":"Adv", "OPIS":"Nr komisji kombajnu"}
+,"sKonfNazwaKopalni":{"TYP":"pString", "ID":"1.1.3", "ROZM":16, "WART":"KWK JasMos", "DOST":"Adv", "OPIS":"Nazwa kopalni"}
+,"sKonfNrSciany":{"TYP":"pString", "ID":"1.1.4", "ROZM":16, "WART":"xxx", "DOST":"Adv", "OPIS":"Numer ściany"}
+,"sKonfWersjaProgramu":{"TYP":"pString", "ID":"1.1.5", "ROZM":16, "WART":"4.0.1", "DOST":"Adv", "OPIS":"Nr wersji programu"}
+},"podgrupa2":{"OPIS":"1.2 Pozostałe"
+,"rKonfWersjaJezykowa":{"TYP":"pLista", "ID":"1.2.1", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["Polski", "Rosyjski", "Angielski"], "OPIS":"Wybór wersji językowej"}
+,"rKonfWersjaWyposazeniaElektr":{"TYP":"pLista", "ID":"1.2.2", "ROZM":1, "WART":1.0, "DOST":"Adv", "LISTA":["MZS590", "MZS590/1"], "OPIS":"Wybór wersji wyposażenia elektrycznego"}
+,"rKonfZapisEn":{"TYP":"pLista", "ID":"1.2.3", "ROZM":1, "WART":1.0, "DOST":"Adv", "LISTA":["nie", "tak"], "OPIS":"Czy jest aktywna archiwizacja danych na karcie flash"}
+,"rKonfRegObcOrgEn":{"TYP":"pLista", "ID":"1.2.4", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Czy jest aktywna funkcja ograniczenia obciążenia organu"}
+,"rKonfCzasLetni":{"TYP":"pLista", "ID":"1.2.5", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Czy uwzględniać czas letni"}
+,"rKonfCzasStrefa":{"TYP":"pLista", "ID":"1.2.6", "ROZM":1, "WART":14.0, "DOST":"Srvc", "LISTA":["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", "UTC-03:00", "UTC-02:00", "UTC-01:00", "UTC+00:00", "UTC+01:00", "UTC+02:00", "UTC+03:00", "UTC+04:00", "UTC+05:00", "UTC+06:00", "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00", "UTC+12:00"], "OPIS":"Strefa czasowa"}
+,"rKonfZraszanieTyp":{"TYP":"pLista", "ID":"1.2.7", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["brak", "jedna nitka", "dwie nitki"], "OPIS":"Typ zraszania"}
+,"rKonfFalownikTyp":{"TYP":"pLista", "ID":"1.2.8", "ROZM":1, "WART":2.0, "DOST":"Srvc", "LISTA":["0-brak", "1-Pempek", "2-Vacon"], "OPIS":"Czy jest zainstalowany falownik"}
+,"tMZSG_OpoznZalStycz":{"TYP":"pCzas", "ID":"1.2.9", "ROZM":2, "WART":2000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Czas opożnienia załączenia styczników T1, SNP, FAL - dla wersji wyposażenia 0 [s]"}
+,"tMZSG_OpoznZalSNPPoT1":{"TYP":"pCzas", "ID":"1.2.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Czas opożnienia załączenia stycznika SNP po T1 - dla a wersji wyposażenia 0 [s]"}
+,"tMZSG_OpoznZalFALPoSNP":{"TYP":"pCzas", "ID":"1.2.11", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Adv", "OPIS":"Czas opożnienia załączenia stycznika FAL po SNP - dla wersji wyposażenia 0 [s]"}
+,"rMZSG_ZrodloSterSzafaMZSG":{"TYP":"pLista", "ID":"1.2.12", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0 - Sygnały I/O", "1 - Sieć CAN", "2 - Sieć ETH"], "OPIS":"Wybór źródła sterowania szafą MZSG"}
+,"rKonfRolkaZabudowanaPoLewej":{"TYP":"pLista", "ID":"1.2.13", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Rolka po stronie prawej", "1 - Rolka po stronie lewej"], "OPIS":"Miejsce zabudowy rolki"}
+,"rKonfPredkPosuwuMin":{"TYP":"pLiczba", "ID":"1.2.14", "ROZM":1, "WART":1.25, "PREC":2, "MIN":0.0, "MAX":2.0, "DOST":"Srvc", "OPIS":"Prędkość minimalna napędu posuwu [m/min]"}
+,"rKonfPredkPosuwuMax":{"TYP":"pLiczba", "ID":"1.2.15", "ROZM":1, "WART":27.0, "PREC":2, "MIN":0.0, "MAX":30.0, "DOST":"Srvc", "OPIS":"Prędkość maksymalna napędu posuwu [m/min]"}
+,"rKonfPredkRolkiMin":{"TYP":"pLiczba", "ID":"1.2.16", "ROZM":1, "WART":1.25, "PREC":2, "MIN":0.0, "MAX":2.0, "DOST":"Srvc", "OPIS":"Prędkość minimalna napędu rolki [m/min]"}
+,"rKonfPredkRolkiMax":{"TYP":"pLiczba", "ID":"1.2.17", "ROZM":1, "WART":27.0, "PREC":2, "MIN":0.0, "MAX":30.0, "DOST":"Srvc", "OPIS":"Prędkość maksymalna napędu rolki [m/min]"}
+}},"grupa2":{"OPIS":"2. Regulatory"
+, "podgrupa1":{"OPIS":"2.1 Regulator prądu organu"
+,"rRegPradOrgSetProc":{"TYP":"pLiczba", "ID":"2.1.1", "ROZM":1, "WART":110.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Nastawa prądu organów dla regulatora obciążenia od posuwu [%]"}
+,"rRegPradOrgKp":{"TYP":"pLiczba", "ID":"2.1.2", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Współczynnik wzmocnienia regulatora "}
+,"rRegPradOrgTi":{"TYP":"pLiczba", "ID":"2.1.3", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas całkowania regulatora [s]"}
+,"rRegPradOrgTd":{"TYP":"pLiczba", "ID":"2.1.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas wyprzedzenia regulatora [s]"}
+,"rRegPradOrgMaxProc":{"TYP":"pLiczba", "ID":"2.1.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Srvc", "OPIS":"Maksymalna dopuszczalna wartość prądu organu dla regulatora [%]"}
+,"tRegPradOrgMax":{"TYP":"pCzas", "ID":"2.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Dopuszczalny czas pracy z przekroczeniem maksymalnej wartości prądu organu [s]"}
+,"rRegPradOrgWartMinWyj":{"TYP":"pLiczba", "ID":"2.1.7", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość minimalna sygnału wyjściowego [%]"}
+,"rRegPradOrgWartMaxWyj":{"TYP":"pLiczba", "ID":"2.1.8", "ROZM":1, "WART":100.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość maksymalna sygnału wyjściowego [%]"}
+,"rRegPradOrgLiczbaProbek":{"TYP":"pLiczba", "ID":"2.1.9", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Liczba próbek dla dla funkcji uśredniającej"}
+,"rRegPradOrgWartOffset":{"TYP":"pLiczba", "ID":"2.1.10", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Przesunięcie wartości wyjściowej regulatora [%]"}
+},"podgrupa2":{"OPIS":"2.2 Regulator posuwu"
+,"rRegPosuwuSetProc":{"TYP":"pLiczba", "ID":"2.2.1", "ROZM":1, "WART":110.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Nastawa prądu organów dla regulatora obciążenia od posuwu [%]"}
+,"rRegPosuwuKp":{"TYP":"pLiczba", "ID":"2.2.2", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Współczynnik wzmocnienia regulatora "}
+,"rRegPosuwuTi":{"TYP":"pLiczba", "ID":"2.2.3", "ROZM":1, "WART":1.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas całkowania regulatora [s]"}
+,"rRegPosuwuTd":{"TYP":"pLiczba", "ID":"2.2.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas wyprzedzenia regulatora [s]"}
+,"rRegPosuwuMaxProc":{"TYP":"pLiczba", "ID":"2.2.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Srvc", "OPIS":"Maksymalna dopuszczalna wartość prądu organu dla regulatora [%]"}
+,"tRegPosuwuMax":{"TYP":"pCzas", "ID":"2.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Dopuszczalny czas pracy z przekroczeniem maksymalnej wartości prądu organu [s]"}
+,"rRegPosuwuWartMinWyj":{"TYP":"pLiczba", "ID":"2.2.7", "ROZM":1, "WART":-130.0, "PREC":1, "MIN":-150.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość minimalna sygnału wyjściowego [%]"}
+,"rRegPosuwuWartMaxWyj":{"TYP":"pLiczba", "ID":"2.2.8", "ROZM":1, "WART":100.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość maksymalna sygnału wyjściowego [%]"}
+,"rRegPosuwuLiczbaProbek":{"TYP":"pLiczba", "ID":"2.2.9", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Liczba próbek dla dla funkcji uśredniającej"}
+,"rRegPosuwuWartOffset":{"TYP":"pLiczba", "ID":"2.2.10", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Przesunięcie wartości wyjściowej regulatora [%]"}
+},"podgrupa3":{"OPIS":"2.3 Regulator wspomagajacy"
+,"rRegWspomagSetProc":{"TYP":"pLiczba", "ID":"2.3.1", "ROZM":1, "WART":110.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Nastawa prądu organów dla regulatora obciążenia od posuwu [%]"}
+,"rRegWspomagKp":{"TYP":"pLiczba", "ID":"2.3.2", "ROZM":1, "WART":0.1, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Współczynnik wzmocnienia regulatora "}
+,"rRegWspomagTi":{"TYP":"pLiczba", "ID":"2.3.3", "ROZM":1, "WART":2.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas całkowania regulatora [s]"}
+,"rRegWspomagTd":{"TYP":"pLiczba", "ID":"2.3.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas wyprzedzenia regulatora [s]"}
+,"rRegWspomagMaxProc":{"TYP":"pLiczba", "ID":"2.3.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Srvc", "OPIS":"Maksymalna dopuszczalna wartość prądu organu dla regulatora [%]"}
+,"tRegWspomagMax":{"TYP":"pCzas", "ID":"2.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Dopuszczalny czas pracy z przekroczeniem maksymalnej wartości prądu organu [s]"}
+,"rRegWspomagWartMinWyj":{"TYP":"pLiczba", "ID":"2.3.7", "ROZM":1, "WART":-20.0, "PREC":1, "MIN":-100.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość minimalna sygnału wyjściowego [%]"}
+,"rRegWspomagWartMaxWyj":{"TYP":"pLiczba", "ID":"2.3.8", "ROZM":1, "WART":20.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość maksymalna sygnału wyjściowego [%]"}
+,"rRegWspomagLiczbaProbek":{"TYP":"pLiczba", "ID":"2.3.9", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Liczba próbek dla dla funkcji uśredniającej"}
+,"rRegWspomagWartOffset":{"TYP":"pLiczba", "ID":"2.3.10", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Przesunięcie wartości wyjściowej regulatora [%]"}
+}},"grupa3":{"OPIS":"3. Prądy i napięcia"
+, "podgrupa1":{"OPIS":"3.1 Prąd silnika organu"
+,"rPradSilnikaOrganu_ZakrMin":{"TYP":"pLiczba", "ID":"3.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy prądu silnika organu [A]"}
+,"rPradSilnikaOrganu_ZakrMax":{"TYP":"pLiczba", "ID":"3.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy prądu silnika organu [A]"}
+,"tPradSilnikaOrganu_StFiltr":{"TYP":"pCzas", "ID":"3.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru prądu silnika organu [s]"}
+,"rPradZnam_SilnikaOrganu":{"TYP":"pLiczba", "ID":"3.1.4", "ROZM":1, "WART":99.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Prąd znamionowy silnika silnika organu [A]"}
+},"podgrupa2":{"OPIS":"3.2 Prąd silnika napędu prawego"
+,"rPradSilnikNP_ZakrMin":{"TYP":"pLiczba", "ID":"3.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy prądu silnika napędu prawego [A]"}
+,"rPradSilnikNP_ZakrMax":{"TYP":"pLiczba", "ID":"3.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy prądu silnika napędu prawego [A]"}
+,"tPradSilnikNP_StFiltr":{"TYP":"pCzas", "ID":"3.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru prądu silnika napędu prawego [s]"}
+,"rPradZnam_SilnikNP":{"TYP":"pLiczba", "ID":"3.2.4", "ROZM":1, "WART":68.7, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Prąd znamionowy silnika napędu prawego [A]"}
+},"podgrupa3":{"OPIS":"3.3 Prąd silnika napędu lewego"
+,"rPradSilnikNL_ZakrMin":{"TYP":"pLiczba", "ID":"3.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy prądu silnika napędu lewego [A]"}
+,"rPradSilnikNL_ZakrMax":{"TYP":"pLiczba", "ID":"3.3.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy prądu silnika napędu lewego [A]"}
+,"tPradSilnikNL_StFiltr":{"TYP":"pCzas", "ID":"3.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru prądu napędu lewego [s]"}
+,"rPradZnam_SilnikNL":{"TYP":"pLiczba", "ID":"3.3.4", "ROZM":1, "WART":10.7, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Prąd znamionowy silnika napędu lewego [A]"}
+},"podgrupa4":{"OPIS":"3.4 Prąd silnika napędu rolki"
+,"rPradSilnikNR_ZakrMin":{"TYP":"pLiczba", "ID":"3.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy prądu silnika napędu rolki [A]"}
+,"rPradSilnikNR_ZakrMax":{"TYP":"pLiczba", "ID":"3.4.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy prądu silnika napędu rolki [A]"}
+,"tPradSilnikNR_StFiltr":{"TYP":"pCzas", "ID":"3.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru prądu silnika napędu rolki [s]"}
+,"rPradZnam_SilnikNR":{"TYP":"pLiczba", "ID":"3.4.4", "ROZM":1, "WART":10.7, "PREC":1, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Prąd znamionowy silnika napędu rolki [A]"}
+},"podgrupa5":{"OPIS":"3.5 Napięcie zasilania kombajnu"
+,"rNapiecieZasilania_ZakrMin":{"TYP":"pLiczba", "ID":"3.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy napięcia zasilania kombajnu [V]"}
+,"rNapiecieZasilania_ZakrMax":{"TYP":"pLiczba", "ID":"3.5.2", "ROZM":1, "WART":2610.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy napięcia zasilania kombajnu [V]"}
+,"tNapiecieZasilania_StFiltr":{"TYP":"pCzas", "ID":"3.5.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru napięcia zasilania kombajnu [s]"}
+,"rNapiecieZasilania_LoWr":{"TYP":"pLiczba", "ID":"3.5.4", "ROZM":1, "WART":207.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego napięcia zasilania kombajnu [V]"}
+,"rNapiecieZasilania_LoWrHist":{"TYP":"pLiczba", "ID":"3.5.5", "ROZM":1, "WART":3.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego napięcia zasilania kombajnu [V]"}
+,"tNapiecieZasilania_LoWrFiltr":{"TYP":"pCzas", "ID":"3.5.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonego napięcia zasilania kombajnu [s]"}
+,"rNapiecieZasilania_LoAl":{"TYP":"pLiczba", "ID":"3.5.7", "ROZM":1, "WART":195.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiego napięcia zasilania kombajnu [V]"}
+,"rNapiecieZasilania_LoAlHist":{"TYP":"pLiczba", "ID":"3.5.8", "ROZM":1, "WART":3.0, "PREC":0, "MIN":0.0, "MAX":2610.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiego napięcia zasilania kombajnu [V]"}
+,"tNapiecieZasilania_LoALFiltr":{"TYP":"pCzas", "ID":"3.5.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiego napięcia zasilania kombajnu [s]"}
+}},"grupa4":{"OPIS":"4. Napędy"
+, "podgrupa1":{"OPIS":"4.1 Napęd prawy - ciśnienie oleju w przekładni planetarnej"
+,"rNP_PrzeklCisnOleju_ZakrMin":{"TYP":"pLiczba", "ID":"4.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rNP_PrzeklCisnOleju_ZakrMax":{"TYP":"pLiczba", "ID":"4.1.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tNP_PrzeklCisnOleju_StFiltr":{"TYP":"pCzas", "ID":"4.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rNP_PrzeklCisnOleju_LoWr":{"TYP":"pLiczba", "ID":"4.1.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_PrzeklCisnOleju_LoWrHist":{"TYP":"pLiczba", "ID":"4.1.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_PrzeklCisnOleju_LoWrFiltr":{"TYP":"pCzas", "ID":"4.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rNP_PrzeklCisnOleju_LoAl":{"TYP":"pLiczba", "ID":"4.1.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_PrzeklCisnOleju_LoAlHist":{"TYP":"pLiczba", "ID":"4.1.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_PrzeklCisnOleju_LoAlFiltr":{"TYP":"pCzas", "ID":"4.1.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rNP_PrzeklCisnOleju_HiWr":{"TYP":"pLiczba", "ID":"4.1.10", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_PrzeklCisnOleju_HiWrHist":{"TYP":"pLiczba", "ID":"4.1.11", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_PrzeklCisnOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"4.1.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego ciśnienia w przekładni planetarnej [s]"}
+,"rNP_PrzeklCisnOleju_HiAl":{"TYP":"pLiczba", "ID":"4.1.13", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_PrzeklCisnOleju_HiAlHist":{"TYP":"pLiczba", "ID":"4.1.14", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_PrzeklCisnOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"4.1.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa2":{"OPIS":"4.2 Napęd lewy - ciśnienie oleju w przekładni planetarnej"
+,"rNL_PrzeklCisnOleju_ZakrMin":{"TYP":"pLiczba", "ID":"4.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rNL_PrzeklCisnOleju_ZakrMax":{"TYP":"pLiczba", "ID":"4.2.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tNL_PrzeklCisnOleju_StFiltr":{"TYP":"pCzas", "ID":"4.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rNL_PrzeklCisnOleju_LoWr":{"TYP":"pLiczba", "ID":"4.2.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_PrzeklCisnOleju_LoWrHist":{"TYP":"pLiczba", "ID":"4.2.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_PrzeklCisnOleju_LoWrFiltr":{"TYP":"pCzas", "ID":"4.2.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rNL_PrzeklCisnOleju_LoAl":{"TYP":"pLiczba", "ID":"4.2.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_PrzeklCisnOleju_LoAlHist":{"TYP":"pLiczba", "ID":"4.2.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_PrzeklCisnOleju_LoAlFiltr":{"TYP":"pCzas", "ID":"4.2.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rNL_PrzeklCisnOleju_HiWr":{"TYP":"pLiczba", "ID":"4.2.10", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_PrzeklCisnOleju_HiWrHist":{"TYP":"pLiczba", "ID":"4.2.11", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_PrzeklCisnOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"4.2.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego ciśnienia w przekładni planetarnej [s]"}
+,"rNL_PrzeklCisnOleju_HiAl":{"TYP":"pLiczba", "ID":"4.2.13", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_PrzeklCisnOleju_HiAlHist":{"TYP":"pLiczba", "ID":"4.2.14", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_PrzeklCisnOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"4.2.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa3":{"OPIS":"4.3 Napęd prawy - temperatura oleju w przekładni planetarnej"
+,"rNP_PrzeklTempOleju_ZakrMin":{"TYP":"pLiczba", "ID":"4.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rNP_PrzeklTempOleju_ZakrMax":{"TYP":"pLiczba", "ID":"4.3.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tNP_PrzeklTempOleju_StFiltr":{"TYP":"pCzas", "ID":"4.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rNP_PrzeklTempOleju_HiWr":{"TYP":"pLiczba", "ID":"4.3.4", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_PrzeklTempOleju_HiWrHist":{"TYP":"pLiczba", "ID":"4.3.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_PrzeklTempOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"4.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego ciśnienia w przekładni planetarnej [s]"}
+,"rNP_PrzeklTempOleju_HiAl":{"TYP":"pLiczba", "ID":"4.3.7", "ROZM":1, "WART":90.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_PrzeklTempOleju_HiAlHist":{"TYP":"pLiczba", "ID":"4.3.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_PrzeklTempOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"4.3.9", "ROZM":2, "WART":3000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa4":{"OPIS":"4.4 Napęd lewy - temperatura oleju w przekładni planetarnej"
+,"rNL_PrzeklTempOleju_ZakrMin":{"TYP":"pLiczba", "ID":"4.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rNL_PrzeklTempOleju_ZakrMax":{"TYP":"pLiczba", "ID":"4.4.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tNL_PrzeklTempOleju_StFiltr":{"TYP":"pCzas", "ID":"4.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rNL_PrzeklTempOleju_HiWr":{"TYP":"pLiczba", "ID":"4.4.4", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_PrzeklTempOleju_HiWrHist":{"TYP":"pLiczba", "ID":"4.4.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_PrzeklTempOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"4.4.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego ciśnienia w przekładni planetarnej [s]"}
+,"rNL_PrzeklTempOleju_HiAl":{"TYP":"pLiczba", "ID":"4.4.7", "ROZM":1, "WART":90.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_PrzeklTempOleju_HiAlHist":{"TYP":"pLiczba", "ID":"4.4.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_PrzeklTempOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"4.4.9", "ROZM":2, "WART":3000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa5":{"OPIS":"4.5 Napęd prawy - przepływ wody chłodzenia"
+,"rNP_ChloPrzepWody_ZakrMin":{"TYP":"pLiczba", "ID":"4.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rNP_ChloPrzepWody_ZakrMax":{"TYP":"pLiczba", "ID":"4.5.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tNP_ChloPrzepWody_StFiltr":{"TYP":"pCzas", "ID":"4.5.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rNP_ChloPrzepWody_LoWr":{"TYP":"pLiczba", "ID":"4.5.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_ChloPrzepWody_LoWrHist":{"TYP":"pLiczba", "ID":"4.5.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_ChloPrzepWody_LoWrFiltr":{"TYP":"pCzas", "ID":"4.5.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rNP_ChloPrzepWody_LoAl":{"TYP":"pLiczba", "ID":"4.5.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNP_ChloPrzepWody_LoAlHist":{"TYP":"pLiczba", "ID":"4.5.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNP_ChloPrzepWody_LoAlFiltr":{"TYP":"pCzas", "ID":"4.5.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa6":{"OPIS":"4.6 Napęd lewy - przepływ wody chłodzenia"
+,"rNL_ChloPrzepWody_ZakrMin":{"TYP":"pLiczba", "ID":"4.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rNL_ChloPrzepWody_ZakrMax":{"TYP":"pLiczba", "ID":"4.6.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tNL_ChloPrzepWody_StFiltr":{"TYP":"pCzas", "ID":"4.6.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rNL_ChloPrzepWody_LoWr":{"TYP":"pLiczba", "ID":"4.6.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_ChloPrzepWody_LoWrHist":{"TYP":"pLiczba", "ID":"4.6.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_ChloPrzepWody_LoWrFiltr":{"TYP":"pCzas", "ID":"4.6.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rNL_ChloPrzepWody_LoAl":{"TYP":"pLiczba", "ID":"4.6.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rNL_ChloPrzepWody_LoAlHist":{"TYP":"pLiczba", "ID":"4.6.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tNL_ChloPrzepWody_LoAlFiltr":{"TYP":"pCzas", "ID":"4.6.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa7":{"OPIS":"4.7 Napęd lewy - Falownik silnikowy aktualna częstotliwość"
+,"rNL_FalSilnikAktCzes_ZakrMin":{"TYP":"pLiczba", "ID":"4.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy częstotliwość falownika silnikowego [Hz]"}
+,"rNL_FalSilnikAktCzes_ZakrMax":{"TYP":"pLiczba", "ID":"4.7.2", "ROZM":1, "WART":120.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy częstotliwość falownika silnikowego [Hz]"}
+,"tNL_FalSilnikAktCzes_StFiltr":{"TYP":"pCzas", "ID":"4.7.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+},"podgrupa8":{"OPIS":"4.8 Napęd prawy - Falownik silnikowy aktualna częstotliwość"
+,"rNP_FalSilnikAktCzes_ZakrMin":{"TYP":"pLiczba", "ID":"4.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy częstotliwość falownika silnikowego [Hz]"}
+,"rNP_FalSilnikAktCzes_ZakrMax":{"TYP":"pLiczba", "ID":"4.8.2", "ROZM":1, "WART":120.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy częstotliwość falownika silnikowego [Hz]"}
+,"tNP_FalSilnikAktCzes_StFiltr":{"TYP":"pCzas", "ID":"4.8.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+},"podgrupa9":{"OPIS":"4.9 Napęd rolki - Falownik silnikowy aktualna częstotliwość"
+,"rNR_FalSilnikAktCzes_ZakrMin":{"TYP":"pLiczba", "ID":"4.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy częstotliwość falownika silnikowego [Hz]"}
+,"rNR_FalSilnikAktCzes_ZakrMax":{"TYP":"pLiczba", "ID":"4.9.2", "ROZM":1, "WART":120.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy częstotliwość falownika silnikowego [Hz]"}
+,"tNR_FalSilnikAktCzes_StFiltr":{"TYP":"pCzas", "ID":"4.9.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+},"podgrupa10":{"OPIS":"4.10 Konfiguracja napędów"
+,"rNapedySekwZalNap1":{"TYP":"pLista", "ID":"4.10.1", "ROZM":1, "WART":2.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu załączanego jako pierwszy w sekwencji"}
+,"rNapedySekwZalNap2":{"TYP":"pLista", "ID":"4.10.2", "ROZM":1, "WART":3.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu załączanego jako drugi w sekwencji"}
+,"rNapedySekwZalNap3":{"TYP":"pLista", "ID":"4.10.3", "ROZM":1, "WART":4.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu załączanego jako trzeci w sekwencji"}
+,"rNapedySekwZalNap4":{"TYP":"pLista", "ID":"4.10.4", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu załączanego jako czwarty w sekwencji"}
+,"rNapedySekwWylNap1":{"TYP":"pLista", "ID":"4.10.5", "ROZM":1, "WART":2.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu wyłączanego jako pierwszy w sekwencji"}
+,"rNapedySekwWylNap2":{"TYP":"pLista", "ID":"4.10.6", "ROZM":1, "WART":3.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu wyłączanego jako drugi w sekwencji"}
+,"rNapedySekwWylNap3":{"TYP":"pLista", "ID":"4.10.7", "ROZM":1, "WART":4.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu wyłączanego jako trzeci w sekwencji"}
+,"rNapedySekwWylNap4":{"TYP":"pLista", "ID":"4.10.8", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0-brak", "1-ORG", "2-NL", "3-NP", "4-NR"], "OPIS":"Nr napędu wyłączanego jako czwarty w sekwencji"}
+,"tNapedyOpoznPoZalORG":{"TYP":"pCzas", "ID":"4.10.9", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie załączania kolejnego napędu po załączeniu organu lewego"}
+,"tNapedyOpoznPoZalNL":{"TYP":"pCzas", "ID":"4.10.10", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie załączania kolejnego napędu po załączeniu organu prawego"}
+,"tNapedyOpoznPoZalNP":{"TYP":"pCzas", "ID":"4.10.11", "ROZM":2, "WART":4000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie załączania kolejnego napędu po załączeniu organu stycznika pompy i falowników"}
+,"tNapedyOpoznPoZalNR":{"TYP":"pCzas", "ID":"4.10.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opoznienie zalaczania kolejnego napedu po zalczeniu stycznika pompy i falownika strona lewa"}
+,"tNapedyOpoznPoWylORG":{"TYP":"pCzas", "ID":"4.10.13", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie wyłączania kolejnego napędu po wyłączeniu organu lewego"}
+,"tNapedyOpoznPoWylNL":{"TYP":"pCzas", "ID":"4.10.14", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie wyłączania kolejnego napędu po wyłączeniu organu prawego"}
+,"tNapedyOpoznPoWYlNP":{"TYP":"pCzas", "ID":"4.10.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie wyłączania kolejnego napędu po wyłączeniu stycznika pompy i falowników"}
+,"tNapedyOpoznPoWYlNR":{"TYP":"pCzas", "ID":"4.10.16", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opoznienie wylaczania kolejnego napedu po wylczeniu stycznika pompy i falownika strona lewa"}
+,"rNapedyDolaczAutoORG":{"TYP":"pLista", "ID":"4.10.17", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0-nie", "1-tak"], "OPIS":"Czy jest aktywna funkcja automatycznego załączania stycznika organu lewego przy uruchamianiu napędów"}
+,"rNapedyDolaczAutoNL":{"TYP":"pLista", "ID":"4.10.18", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0-nie", "1-tak"], "OPIS":"Czy jest aktywna funkcja automatycznego załączania stycznika organu prawego przy uruchamianiu napędów"}
+,"rNapedyDolaczAutoNP":{"TYP":"pLista", "ID":"4.10.19", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0-nie", "1-tak"], "OPIS":"Czy jest aktywna funkcja automatycznego załączania stycznika pompy i falowników przy uruchamianiu napędów"}
+,"rNapedyDolaczAutoNR":{"TYP":"pLista", "ID":"4.10.20", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0-nie", "1-tak"], "OPIS":"Czy jest aktywna funkcja automatycznego zalaczania stycznika pompy i falownika lewego przy uruchamianu napedow"}
+,"tNapedyCzekajNaEnableORG":{"TYP":"pCzas", "ID":"4.10.21", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas oczekiwania na zezwolenie załączenia stycznika organu lewego w trakcie sekwencji rozruchu napędów"}
+,"tNapedyCzekajNaEnableNL":{"TYP":"pCzas", "ID":"4.10.22", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas oczekiwania na zezwolenie załączenia stycznika organu prawego w trakcie sekwencji rozruchu napędów"}
+,"tNapedyCzekajNaEnableNP":{"TYP":"pCzas", "ID":"4.10.23", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas oczekiwania na zezwolenie załączenia stycznika pompy i falowników w trakcie sekwencji rozruchu napędów"}
+,"tNapedyCzekajNaEnableNR":{"TYP":"pCzas", "ID":"4.10.24", "ROZM":2, "WART":10000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas oczekiwania na zezwolenie zalaczenia stycznika pompy i falownika w trakcie sekwencji rozruchu napedow strona lewa"}
+,"tNapedyZalNapSygnOstrz":{"TYP":"pCzas", "ID":"4.10.25", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas trwania sygnału wyprzedzającego przed załączeniem pierwszego napędu"}
+},"podgrupa11":{"OPIS":"4.11 Falowniki"
+,"tFalownikKasujFalowniki":{"TYP":"pCzas", "ID":"4.11.1", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas trwania wysokiego sygnału reset dla falownika"}
+,"tFalownikTimeoutGotowosc":{"TYP":"pCzas", "ID":"4.11.2", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku gotowości jednostki silnikowej lub sieciowej"}
+,"tFalownikTimeoutPracaOn":{"TYP":"pCzas", "ID":"4.11.3", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia do pracy jednostki silnikowej lub sieciowej"}
+,"tFalownikTimeoutPracaOff":{"TYP":"pCzas", "ID":"4.11.4", "ROZM":2, "WART":4000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia do pracy jednostki silnikowej lub sieciowej"}
+,"tFalownikTimeoutKierunek":{"TYP":"pCzas", "ID":"4.11.5", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia niezgodności kierunku aktualnego w stosunku do zadanego"}
+,"tFalownikTimeoutWstLad":{"TYP":"pCzas", "ID":"4.11.6", "ROZM":2, "WART":10000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku gotowości jednostki sieciowej"}
+,"rFalownikCzestMin":{"TYP":"pLiczba", "ID":"4.11.7", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":150.0, "DOST":"Srvc", "OPIS":"Częstotliwość minimalna falownika dla 0% wysterowania [Hz]"}
+,"rFalownikCzestMax":{"TYP":"pLiczba", "ID":"4.11.8", "ROZM":1, "WART":120.0, "PREC":0, "MIN":0.0, "MAX":150.0, "DOST":"Srvc", "OPIS":"Częstotliwość maksymalna falownika dla 100% wysterowania [Hz]"}
+,"rFalownikObrZnSiln":{"TYP":"pLiczba", "ID":"4.11.9", "ROZM":1, "WART":1460.0, "PREC":0, "MIN":0.0, "MAX":3600.0, "DOST":"Srvc", "OPIS":"Obroty znamionowe silnika dla częstotliwości 50Hz"}
+,"tFalownikRampaMotopoti":{"TYP":"pCzas", "ID":"4.11.10", "ROZM":2, "WART":30000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas przyspieszania kombajnu do prędkości maksymalnej [s]"}
+,"tFalownikLadWstNL_TimDelay":{"TYP":"pCzas", "ID":"4.11.11", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia załączenia stycznika głównego po naładowaniu wstępnym falownika lewego"}
+,"tFalownikLadWstNL_TimOn":{"TYP":"pCzas", "ID":"4.11.12", "ROZM":2, "WART":15000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku naładowania wstępnego falownika lewego"}
+,"tFalownikLadWstNL_TimOff":{"TYP":"pCzas", "ID":"4.11.13", "ROZM":2, "WART":20000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku rozładowania obwodu pośredniczącego falownika lewego"}
+,"tFalownikLadWstKNL_TimOn":{"TYP":"pCzas", "ID":"4.11.14", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia przekaźnika ładowania wstępnego falownika lewego"}
+,"tFalownikLadWstKNL_TimOff":{"TYP":"pCzas", "ID":"4.11.15", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia przekaźnika ładowania wstępnego falownika lewego"}
+,"tFalownikLadWstNP_TimDelay":{"TYP":"pCzas", "ID":"4.11.16", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia załączenia stycznika głównego po naładowaniu wstępnym falownika prawego"}
+,"tFalownikLadWstNP_TimOn":{"TYP":"pCzas", "ID":"4.11.17", "ROZM":2, "WART":15000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku naładowania wstępnego falownika prawego"}
+,"tFalownikLadWstNP_TimOff":{"TYP":"pCzas", "ID":"4.11.18", "ROZM":2, "WART":20000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku rozładowania obwodu pośredniczącego falownika prawego"}
+,"tFalownikLadWstKNP_TimOn":{"TYP":"pCzas", "ID":"4.11.19", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia przekaźnika ładowania wstępnego falownika prawego"}
+,"tFalownikLadWstKNP_TimOff":{"TYP":"pCzas", "ID":"4.11.20", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia przekaźnika ładowania wstępnego falownika prawego"}
+,"tFalownikLadWstNR_TimDelay":{"TYP":"pCzas", "ID":"4.11.21", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia załączenia stycznika głównego po naładowaniu wstępnym falownika prawego"}
+,"tFalownikLadWstNR_TimOn":{"TYP":"pCzas", "ID":"4.11.22", "ROZM":2, "WART":15000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku naładowania wstępnego falownika prawego"}
+,"tFalownikLadWstNR_TimOff":{"TYP":"pCzas", "ID":"4.11.23", "ROZM":2, "WART":20000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku rozładowania obwodu pośredniczącego falownika prawego"}
+,"tFalownikLadWstKNR_TimOn":{"TYP":"pCzas", "ID":"4.11.24", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia przekaźnika ładowania wstępnego falownika prawego"}
+,"tFalownikLadWstKNR_TimOff":{"TYP":"pCzas", "ID":"4.11.25", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia przekaźnika ładowania wstępnego falownika prawego"}
+,"tFalownikMaxCzasZatrzymania":{"TYP":"pCzas", "ID":"4.11.26", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Maksymalny czas zatrzymania posuwu."}
+}},"grupa5":{"OPIS":"5. Głowica urabiająca"
+, "podgrupa1":{"OPIS":"5.1 Przekładnia lewa - ciśnienie oleju"
+,"rGU_PrzLewaCisnOleju_ZakrMin":{"TYP":"pLiczba", "ID":"5.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rGU_PrzLewaCisnOleju_ZakrMax":{"TYP":"pLiczba", "ID":"5.1.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tGU_PrzLewaCisnOleju_StFiltr":{"TYP":"pCzas", "ID":"5.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rGU_PrzLewaCisnOleju_LoWr":{"TYP":"pLiczba", "ID":"5.1.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzLewaCisnOleju_LoWrHist":{"TYP":"pLiczba", "ID":"5.1.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzLewaCisnOleju_LoWrFiltr":{"TYP":"pCzas", "ID":"5.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzLewaCisnOleju_LoAl":{"TYP":"pLiczba", "ID":"5.1.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzLewaCisnOleju_LoAlHist":{"TYP":"pLiczba", "ID":"5.1.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzLewaCisnOleju_LoAlFiltr":{"TYP":"pCzas", "ID":"5.1.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzLewaCisnOleju_HiWr":{"TYP":"pLiczba", "ID":"5.1.10", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzLewaCisnOleju_HiWrHist":{"TYP":"pLiczba", "ID":"5.1.11", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzLewaCisnOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"5.1.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzLewaCisnOleju_HiAl":{"TYP":"pLiczba", "ID":"5.1.13", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzLewaCisnOleju_HiAlHist":{"TYP":"pLiczba", "ID":"5.1.14", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzLewaCisnOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"5.1.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa2":{"OPIS":"5.2 Przekładnia środkowa - ciśnienie oleju"
+,"rGU_PrzSrodCisnOleju_ZakrMin":{"TYP":"pLiczba", "ID":"5.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rGU_PrzSrodCisnOleju_ZakrMax":{"TYP":"pLiczba", "ID":"5.2.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tGU_PrzSrodCisnOleju_StFiltr":{"TYP":"pCzas", "ID":"5.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rGU_PrzSrodCisnOleju_LoWr":{"TYP":"pLiczba", "ID":"5.2.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzSrodCisnOleju_LoWrHist":{"TYP":"pLiczba", "ID":"5.2.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzSrodCisnOleju_LoWrFiltr":{"TYP":"pCzas", "ID":"5.2.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzSrodCisnOleju_LoAl":{"TYP":"pLiczba", "ID":"5.2.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzSrodCisnOleju_LoAlHist":{"TYP":"pLiczba", "ID":"5.2.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzSrodCisnOleju_LoAlFiltr":{"TYP":"pCzas", "ID":"5.2.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzSrodCisnOleju_HiWr":{"TYP":"pLiczba", "ID":"5.2.10", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzSrodCisnOleju_HiWrHist":{"TYP":"pLiczba", "ID":"5.2.11", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzSrodCisnOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"5.2.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzSrodCisnOleju_HiAl":{"TYP":"pLiczba", "ID":"5.2.13", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzSrodCisnOleju_HiAlHist":{"TYP":"pLiczba", "ID":"5.2.14", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzSrodCisnOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"5.2.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa3":{"OPIS":"5.3 Przekładnia prawa - ciśnienie oleju"
+,"rGU_PrzPrawaCisnOleju_ZakrMin":{"TYP":"pLiczba", "ID":"5.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rGU_PrzPrawaCisnOleju_ZakrMax":{"TYP":"pLiczba", "ID":"5.3.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tGU_PrzPrawaCisnOleju_StFiltr":{"TYP":"pCzas", "ID":"5.3.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rGU_PrzPrawaCisnOleju_LoWr":{"TYP":"pLiczba", "ID":"5.3.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzPrawaCisnOleju_LoWrHist":{"TYP":"pLiczba", "ID":"5.3.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzPrawaCisnOleju_LoWrFiltr":{"TYP":"pCzas", "ID":"5.3.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzPrawaCisnOleju_LoAl":{"TYP":"pLiczba", "ID":"5.3.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzPrawaCisnOleju_LoAlHist":{"TYP":"pLiczba", "ID":"5.3.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzPrawaCisnOleju_LoAlFiltr":{"TYP":"pCzas", "ID":"5.3.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzPrawaCisnOleju_HiWr":{"TYP":"pLiczba", "ID":"5.3.10", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzPrawaCisnOleju_HiWrHist":{"TYP":"pLiczba", "ID":"5.3.11", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzPrawaCisnOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"5.3.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_PrzPrawaCisnOleju_HiAl":{"TYP":"pLiczba", "ID":"5.3.13", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzPrawaCisnOleju_HiAlHist":{"TYP":"pLiczba", "ID":"5.3.14", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzPrawaCisnOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"5.3.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa4":{"OPIS":"5.4 Przekładnia lewa - temperatura oleju"
+,"rGU_PrzLewaTempOleju_ZakrMin":{"TYP":"pLiczba", "ID":"5.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury oleju w przekładni planetarnej [bar]"}
+,"rGU_PrzLewaTempOleju_ZakrMax":{"TYP":"pLiczba", "ID":"5.4.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury oleju w przekładni planetarnej [bar]"}
+,"tGU_PrzLewaTempOleju_StFiltr":{"TYP":"pCzas", "ID":"5.4.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury oleju w przekładni planetarnej [s]"}
+,"rGU_PrzLewaTempOleju_HiWr":{"TYP":"pLiczba", "ID":"5.4.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzLewaTempOleju_HiWrHist":{"TYP":"pLiczba", "ID":"5.4.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzLewaTempOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"5.4.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego temperatury w przekładni planetarnej [s]"}
+,"rGU_PrzLewaTempOleju_HiAl":{"TYP":"pLiczba", "ID":"5.4.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzLewaTempOleju_HiAlHist":{"TYP":"pLiczba", "ID":"5.4.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzLewaTempOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"5.4.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego temperatury w przekładni planetarnej [s]"}
+},"podgrupa5":{"OPIS":"5.5 Przekładnia środkowa - temperatura oleju"
+,"rGU_PrzSrodTempOleju_ZakrMin":{"TYP":"pLiczba", "ID":"5.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury oleju w przekładni planetarnej [bar]"}
+,"rGU_PrzSrodTempOleju_ZakrMax":{"TYP":"pLiczba", "ID":"5.5.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury oleju w przekładni planetarnej [bar]"}
+,"tGU_PrzSrodTempOleju_StFiltr":{"TYP":"pCzas", "ID":"5.5.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury oleju w przekładni planetarnej [s]"}
+,"rGU_PrzSrodTempOleju_HiWr":{"TYP":"pLiczba", "ID":"5.5.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzSrodTempOleju_HiWrHist":{"TYP":"pLiczba", "ID":"5.5.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzSrodTempOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"5.5.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego temperatury w przekładni planetarnej [s]"}
+,"rGU_PrzSrodTempOleju_HiAl":{"TYP":"pLiczba", "ID":"5.5.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzSrodTempOleju_HiAlHist":{"TYP":"pLiczba", "ID":"5.5.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzSrodTempOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"5.5.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego temperatury w przekładni planetarnej [s]"}
+},"podgrupa6":{"OPIS":"5.6 Przekładnia prawa - temperatura oleju"
+,"rGU_PrzPrawaTempOleju_ZakrMin":{"TYP":"pLiczba", "ID":"5.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury oleju w przekładni planetarnej [bar]"}
+,"rGU_PrzPrawaTempOleju_ZakrMax":{"TYP":"pLiczba", "ID":"5.6.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury oleju w przekładni planetarnej [bar]"}
+,"tGU_PrzPrawaTempOleju_StFiltr":{"TYP":"pCzas", "ID":"5.6.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury oleju w przekładni planetarnej [s]"}
+,"rGU_PrzPrawaTempOleju_HiWr":{"TYP":"pLiczba", "ID":"5.6.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzPrawaTempOleju_HiWrHist":{"TYP":"pLiczba", "ID":"5.6.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzPrawaTempOleju_HiWrFiltr":{"TYP":"pCzas", "ID":"5.6.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego temperatury w przekładni planetarnej [s]"}
+,"rGU_PrzPrawaTempOleju_HiAl":{"TYP":"pLiczba", "ID":"5.6.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"rGU_PrzPrawaTempOleju_HiAlHist":{"TYP":"pLiczba", "ID":"5.6.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury oleju w przkładni planetarnej [bar]"}
+,"tGU_PrzPrawaTempOleju_HiAlFiltr":{"TYP":"pCzas", "ID":"5.6.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego temperatury w przekładni planetarnej [s]"}
+},"podgrupa7":{"OPIS":"5.7 Przekładnia planetarna lewa - temperatura"
+,"rGU_PrzPlanLewaTemp_ZakrMin":{"TYP":"pLiczba", "ID":"5.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury przekładni planetarnej [bar]"}
+,"rGU_PrzPlanLewaTemp_ZakrMax":{"TYP":"pLiczba", "ID":"5.7.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury przekładni planetarnej [bar]"}
+,"tGU_PrzPlanLewaTemp_StFiltr":{"TYP":"pCzas", "ID":"5.7.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury przekładni planetarnej [s]"}
+,"rGU_PrzPlanLewaTemp_HiWr":{"TYP":"pLiczba", "ID":"5.7.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury przkładni planetarnej [bar]"}
+,"rGU_PrzPlanLewaTemp_HiWrHist":{"TYP":"pLiczba", "ID":"5.7.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury przkładni planetarnej [bar]"}
+,"tGU_PrzPlanLewaTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"5.7.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego temperatury przekładni planetarnej [s]"}
+,"rGU_PrzPlanLewaTemp_HiAl":{"TYP":"pLiczba", "ID":"5.7.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury przkładni planetarnej [bar]"}
+,"rGU_PrzPlanLewaTemp_HiAlHist":{"TYP":"pLiczba", "ID":"5.7.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury przkładni planetarnej [bar]"}
+,"tGU_PrzPlanLewaTemp_HiAlFiltr":{"TYP":"pCzas", "ID":"5.7.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego temperatury przekładni planetarnej [s]"}
+},"podgrupa8":{"OPIS":"5.8 Przekładnia planetarna prawa - temperatura"
+,"rGU_PrzPlanPrawaTemp_ZakrMin":{"TYP":"pLiczba", "ID":"5.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury przekładni planetarnej [bar]"}
+,"rGU_PrzPlanPrawaTemp_ZakrMax":{"TYP":"pLiczba", "ID":"5.8.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury przekładni planetarnej [bar]"}
+,"tGU_PrzPlanPrawaTemp_StFiltr":{"TYP":"pCzas", "ID":"5.8.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury przekładni planetarnej [s]"}
+,"rGU_PrzPlanPrawaTemp_HiWr":{"TYP":"pLiczba", "ID":"5.8.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury przkładni planetarnej [bar]"}
+,"rGU_PrzPlanPrawaTemp_HiWrHist":{"TYP":"pLiczba", "ID":"5.8.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury przkładni planetarnej [bar]"}
+,"tGU_PrzPlanPrawaTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"5.8.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego temperatury przekładni planetarnej [s]"}
+,"rGU_PrzPlanPrawaTemp_HiAl":{"TYP":"pLiczba", "ID":"5.8.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury przkładni planetarnej [bar]"}
+,"rGU_PrzPlanPrawaTemp_HiAlHist":{"TYP":"pLiczba", "ID":"5.8.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury przkładni planetarnej [bar]"}
+,"tGU_PrzPlanPrawaTemp_HiAlFiltr":{"TYP":"pCzas", "ID":"5.8.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego temperatury przekładni planetarnej [s]"}
+},"podgrupa9":{"OPIS":"5.9 Siła naciągu przewodu zasilającego"
+,"rGU_SilaNacPrzew_ZakrMin":{"TYP":"pLiczba", "ID":"5.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"rGU_SilaNacPrzew_ZakrMax":{"TYP":"pLiczba", "ID":"5.9.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia oleju w przekładni planetarnej [bar]"}
+,"tGU_SilaNacPrzew_StFiltr":{"TYP":"pCzas", "ID":"5.9.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia oleju w przekładni planetarnej [s]"}
+,"rGU_SilaNacPrzew_LoWr":{"TYP":"pLiczba", "ID":"5.9.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_SilaNacPrzew_LoWrHist":{"TYP":"pLiczba", "ID":"5.9.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_SilaNacPrzew_LoWrFiltr":{"TYP":"pCzas", "ID":"5.9.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_SilaNacPrzew_LoAl":{"TYP":"pLiczba", "ID":"5.9.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_SilaNacPrzew_LoAlHist":{"TYP":"pLiczba", "ID":"5.9.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_SilaNacPrzew_LoAlFiltr":{"TYP":"pCzas", "ID":"5.9.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_SilaNacPrzew_HiWr":{"TYP":"pLiczba", "ID":"5.9.10", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_SilaNacPrzew_HiWrHist":{"TYP":"pLiczba", "ID":"5.9.11", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_SilaNacPrzew_HiWrFiltr":{"TYP":"pCzas", "ID":"5.9.12", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonego obniżonego ciśnienia w przekładni planetarnej [s]"}
+,"rGU_SilaNacPrzew_HiAl":{"TYP":"pLiczba", "ID":"5.9.13", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"rGU_SilaNacPrzew_HiAlHist":{"TYP":"pLiczba", "ID":"5.9.14", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu ciśnienia oleju w przkładni planetarnej [bar]"}
+,"tGU_SilaNacPrzew_HiAlFiltr":{"TYP":"pCzas", "ID":"5.9.15", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego ciśnienia w przekładni planetarnej [s]"}
+},"podgrupa10":{"OPIS":"5.10 Zraszanie - strona lewa - ciśnienie wody"
+,"rGU_ZraLeweCisnWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.10.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia wody zraszania [bar]"}
+,"rGU_ZraLeweCisnWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.10.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia wody zraszania [bar]"}
+,"tGU_ZraLeweCisnWody_StFiltr":{"TYP":"pCzas", "ID":"5.10.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia wody zraszania [s]"}
+,"rGU_ZraLeweCisnWody_LoWr":{"TYP":"pLiczba", "ID":"5.10.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"rGU_ZraLeweCisnWody_LoWrHist":{"TYP":"pLiczba", "ID":"5.10.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"tGU_ZraLeweCisnWody_LoWrFiltr":{"TYP":"pCzas", "ID":"5.10.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia wody zraszania [s]"}
+,"rGU_ZraLeweCisnWody_LoAl":{"TYP":"pLiczba", "ID":"5.10.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"rGU_ZraLeweCisnWody_LoAlHist":{"TYP":"pLiczba", "ID":"5.10.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"tGU_ZraLeweCisnWody_LoAlFiltr":{"TYP":"pCzas", "ID":"5.10.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia wody zraszania [s]"}
+},"podgrupa11":{"OPIS":"5.11 Zraszanie - strona prawa - ciśnienie wody"
+,"rGU_ZraPraweCisnWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.11.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy ciśnienia wody zraszania [bar]"}
+,"rGU_ZraPraweCisnWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.11.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy ciśnienia wody zraszania [bar]"}
+,"tGU_ZraPraweCisnWody_StFiltr":{"TYP":"pCzas", "ID":"5.11.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru ciśnienia wody zraszania [s]"}
+,"rGU_ZraPraweCisnWody_LoWr":{"TYP":"pLiczba", "ID":"5.11.4", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"rGU_ZraPraweCisnWody_LoWrHist":{"TYP":"pLiczba", "ID":"5.11.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"tGU_ZraPraweCisnWody_LoWrFiltr":{"TYP":"pCzas", "ID":"5.11.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego ciśnienia wody zraszania [s]"}
+,"rGU_ZraPraweCisnWody_LoAl":{"TYP":"pLiczba", "ID":"5.11.7", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"rGU_ZraPraweCisnWody_LoAlHist":{"TYP":"pLiczba", "ID":"5.11.8", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu ciśnienia wody zraszania [bar]"}
+,"tGU_ZraPraweCisnWody_LoAlFiltr":{"TYP":"pCzas", "ID":"5.11.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego ciśnienia wody zraszania [s]"}
+},"podgrupa12":{"OPIS":"5.12 Zraszanie - przepływ wody - opcja z jednym czujnikiem przepływu"
+,"rGU_ZraPrzepWody_Typ":{"TYP":"pLista", "ID":"5.12.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak czujnika", "1 - Grunewald", "2 - Kirschgaesser"], "OPIS":"Typ zabudowanego czujnika"}
+,"rGU_ZraPrzepWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.12.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy przepływu wody zraszania [bar]"}
+,"rGU_ZraPrzepWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.12.3", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy przepływu wody zraszania [bar]"}
+,"tGU_ZraPrzepWody_StFiltr":{"TYP":"pCzas", "ID":"5.12.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru przepływu wody zraszania [s]"}
+,"rGU_ZraPrzepWody_LoWr":{"TYP":"pLiczba", "ID":"5.12.5", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu przepływu wody zraszania [bar]"}
+,"rGU_ZraPrzepWody_LoWrHist":{"TYP":"pLiczba", "ID":"5.12.6", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu przepływu wody zraszania [bar]"}
+,"tGU_ZraPrzepWody_LoWrFiltr":{"TYP":"pCzas", "ID":"5.12.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego poziomu przepływu wody zraszania [s]"}
+,"rGU_ZraPrzepWody_LoAl":{"TYP":"pLiczba", "ID":"5.12.8", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu przepływu wody zraszania [bar]"}
+,"rGU_ZraPrzepWody_LoAlHist":{"TYP":"pLiczba", "ID":"5.12.9", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu przepływu wody zraszania [bar]"}
+,"tGU_ZraPrzepWody_LoAlFiltr":{"TYP":"pCzas", "ID":"5.12.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego poziomu przepływu wody zraszania [s]"}
+},"podgrupa13":{"OPIS":"5.13 Zraszanie - temperatura wody - opcja z jednym czujnikiem przepływu"
+,"rGU_ZraTempWody_Typ":{"TYP":"pLista", "ID":"5.13.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak czujnika", "1 - Grunewald", "2 - Kirschgaesser"], "OPIS":"Typ zabudowanego czujnika"}
+,"rGU_ZraTempWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.13.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury wody zraszania [bar]"}
+,"rGU_ZraTempWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.13.3", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury wody zraszania [bar]"}
+,"tGU_ZraTempWody_StFiltr":{"TYP":"pCzas", "ID":"5.13.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury wody zraszania [s]"}
+,"rGU_ZraTempWody_HiWr":{"TYP":"pLiczba", "ID":"5.13.5", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury wody zraszania [bar]"}
+,"rGU_ZraTempWody_HiWrHist":{"TYP":"pLiczba", "ID":"5.13.6", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury wody zraszania [bar]"}
+,"tGU_ZraTempWody_HiWrFiltr":{"TYP":"pCzas", "ID":"5.13.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego poziomu temperatury wody zraszania [s]"}
+,"rGU_ZraTempWody_HiAl":{"TYP":"pLiczba", "ID":"5.13.8", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury wody zraszania [bar]"}
+,"rGU_ZraTempWody_HiAlHist":{"TYP":"pLiczba", "ID":"5.13.9", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury wody zraszania [bar]"}
+,"tGU_ZraTempWody_HiAlFiltr":{"TYP":"pCzas", "ID":"5.13.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego poziomu temperatury wody zraszania [s]"}
+},"podgrupa14":{"OPIS":"5.14 Zraszanie lewe - przepływ wody - opcja z dwoma czujnikami przepływu"
+,"rGU_ZraLewePrzepWody_Typ":{"TYP":"pLista", "ID":"5.14.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak czujnika", "1 - Grunewald", "2 - Kirschgaesser"], "OPIS":"Typ zabudowanego czujnika"}
+,"rGU_ZraLewePrzepWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.14.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy przepływu wody zraszania [bar]"}
+,"rGU_ZraLewePrzepWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.14.3", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy przepływu wody zraszania [bar]"}
+,"tGU_ZraLewePrzepWody_StFiltr":{"TYP":"pCzas", "ID":"5.14.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru przepływu wody zraszania [s]"}
+,"rGU_ZraLewePrzepWody_LoWr":{"TYP":"pLiczba", "ID":"5.14.5", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu przepływu wody zraszania [bar]"}
+,"rGU_ZraLewePrzepWody_LoWrHist":{"TYP":"pLiczba", "ID":"5.14.6", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu przepływu wody zraszania [bar]"}
+,"tGU_ZraLewePrzepWody_LoWrFiltr":{"TYP":"pCzas", "ID":"5.14.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego poziomu przepływu wody zraszania [s]"}
+,"rGU_ZraLewePrzepWody_LoAl":{"TYP":"pLiczba", "ID":"5.14.8", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu przepływu wody zraszania [bar]"}
+,"rGU_ZraLewePrzepWody_LoAlHist":{"TYP":"pLiczba", "ID":"5.14.9", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu przepływu wody zraszania [bar]"}
+,"tGU_ZraLewePrzepWody_LoAlFiltr":{"TYP":"pCzas", "ID":"5.14.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego poziomu przepływu wody zraszania [s]"}
+},"podgrupa15":{"OPIS":"5.15 Zraszanie lewe - temperatura wody - opcja z dwoma czujnikami przepływu"
+,"rGU_ZraLeweTempWody_Typ":{"TYP":"pLista", "ID":"5.15.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak czujnika", "1 - Grunewald", "2 - Kirschgaesser"], "OPIS":"Typ zabudowanego czujnika"}
+,"rGU_ZraLeweTempWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.15.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury wody zraszania [bar]"}
+,"rGU_ZraLeweTempWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.15.3", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury wody zraszania [bar]"}
+,"tGU_ZraLeweTempWody_StFiltr":{"TYP":"pCzas", "ID":"5.15.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury wody zraszania [s]"}
+,"rGU_ZraLeweTempWody_HiWr":{"TYP":"pLiczba", "ID":"5.15.5", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury wody zraszania [bar]"}
+,"rGU_ZraLeweTempWody_HiWrHist":{"TYP":"pLiczba", "ID":"5.15.6", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury wody zraszania [bar]"}
+,"tGU_ZraLeweTempWody_HiWrFiltr":{"TYP":"pCzas", "ID":"5.15.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego poziomu temperatury wody zraszania [s]"}
+,"rGU_ZraLeweTempWody_HiAl":{"TYP":"pLiczba", "ID":"5.15.8", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury wody zraszania [bar]"}
+,"rGU_ZraLeweTempWody_HiAlHist":{"TYP":"pLiczba", "ID":"5.15.9", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury wody zraszania [bar]"}
+,"tGU_ZraLeweTempWody_HiAlFiltr":{"TYP":"pCzas", "ID":"5.15.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego poziomu temperatury wody zraszania [s]"}
+},"podgrupa16":{"OPIS":"5.16 Zraszanie prawe - przepływ wody - opcja z dwoma czujnikami przepływu"
+,"rGU_ZraPrawePrzepWody_Typ":{"TYP":"pLista", "ID":"5.16.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak czujnika", "1 - Grunewald", "2 - Kirschgaesser"], "OPIS":"Typ zabudowanego czujnika"}
+,"rGU_ZraPrawePrzepWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.16.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy przepływu wody zraszania [bar]"}
+,"rGU_ZraPrawePrzepWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.16.3", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy przepływu wody zraszania [bar]"}
+,"tGU_ZraPrawePrzepWody_StFiltr":{"TYP":"pCzas", "ID":"5.16.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru przepływu wody zraszania [s]"}
+,"rGU_ZraPrawePrzepWody_LoWr":{"TYP":"pLiczba", "ID":"5.16.5", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonego poziomu przepływu wody zraszania [bar]"}
+,"rGU_ZraPrawePrzepWody_LoWrHist":{"TYP":"pLiczba", "ID":"5.16.6", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonego poziomu przepływu wody zraszania [bar]"}
+,"tGU_ZraPrawePrzepWody_LoWrFiltr":{"TYP":"pCzas", "ID":"5.16.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia obniżonego poziomu przepływu wody zraszania [s]"}
+,"rGU_ZraPrawePrzepWody_LoAl":{"TYP":"pLiczba", "ID":"5.16.8", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu obniżonego poziomu przepływu wody zraszania [bar]"}
+,"rGU_ZraPrawePrzepWody_LoAlHist":{"TYP":"pLiczba", "ID":"5.16.9", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu obniżonego poziomu przepływu wody zraszania [bar]"}
+,"tGU_ZraPrawePrzepWody_LoAlFiltr":{"TYP":"pCzas", "ID":"5.16.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu obniżonego poziomu przepływu wody zraszania [s]"}
+},"podgrupa17":{"OPIS":"5.17 Zraszanie prawe - temperatura wody - opcja z dwoma czujnikami przepływu"
+,"rGU_ZraPraweTempWody_Typ":{"TYP":"pLista", "ID":"5.17.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak czujnika", "1 - Grunewald", "2 - Kirschgaesser"], "OPIS":"Typ zabudowanego czujnika"}
+,"rGU_ZraPraweTempWody_ZakrMin":{"TYP":"pLiczba", "ID":"5.17.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury wody zraszania [bar]"}
+,"rGU_ZraPraweTempWody_ZakrMax":{"TYP":"pLiczba", "ID":"5.17.3", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury wody zraszania [bar]"}
+,"tGU_ZraPraweTempWody_StFiltr":{"TYP":"pCzas", "ID":"5.17.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury wody zraszania [s]"}
+,"rGU_ZraPraweTempWody_HiWr":{"TYP":"pLiczba", "ID":"5.17.5", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonego poziomu temperatury wody zraszania [bar]"}
+,"rGU_ZraPraweTempWody_HiWrHist":{"TYP":"pLiczba", "ID":"5.17.6", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonego poziomu temperatury wody zraszania [bar]"}
+,"tGU_ZraPraweTempWody_HiWrFiltr":{"TYP":"pCzas", "ID":"5.17.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia ostrzeżenia podwyższonego poziomu temperatury wody zraszania [s]"}
+,"rGU_ZraPraweTempWody_HiAl":{"TYP":"pLiczba", "ID":"5.17.8", "ROZM":1, "WART":20.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonego poziomu temperatury wody zraszania [bar]"}
+,"rGU_ZraPraweTempWody_HiAlHist":{"TYP":"pLiczba", "ID":"5.17.9", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":10.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonego poziomu temperatury wody zraszania [bar]"}
+,"tGU_ZraPraweTempWody_HiAlFiltr":{"TYP":"pCzas", "ID":"5.17.10", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia alarmu przekroczonego poziomu temperatury wody zraszania [s]"}
+},"podgrupa18":{"OPIS":"5.18 Kontrola czujników stykowych"
+,"rGU_KontrCzujStyk_ZakrMin":{"TYP":"pLiczba", "ID":"5.18.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":0.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy kontroli czujników stykowych [mA]"}
+,"rGU_KontrCzujStyk_ZakrMax":{"TYP":"pLiczba", "ID":"5.18.2", "ROZM":1, "WART":50.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy kontroli czujników stykowych [mA]"}
+,"tGU_KontrCzujStyk_StFiltr":{"TYP":"pCzas", "ID":"5.18.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":" "}
+}},"grupa6":{"OPIS":"6. Temperatury urządzeń elektrycznych"
+, "podgrupa1":{"OPIS":"6.1 Silnik organu PT100 UPT CH1"
+,"rGU_SilOrg_TempCH1_ZakrMin":{"TYP":"pLiczba", "ID":"6.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rGU_SilOrg_TempCH1_ZakrMax":{"TYP":"pLiczba", "ID":"6.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tGU_SilOrg_TempCH1_StFiltr":{"TYP":"pCzas", "ID":"6.1.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rGU_SilOrg_TempCH1_HiWr":{"TYP":"pLiczba", "ID":"6.1.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rGU_SilOrg_TempCH1_HiWrHist":{"TYP":"pLiczba", "ID":"6.1.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tGU_SilOrg_TempCH1_HiWrFiltr":{"TYP":"pCzas", "ID":"6.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rGU_SilOrg_TempCH1_HiAl":{"TYP":"pLiczba", "ID":"6.1.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rGU_SilOrg_TempCH1_HiAlHist":{"TYP":"pLiczba", "ID":"6.1.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartości [°C]"}
+,"tGU_SilOrg_TempCH1_HiALFiltr":{"TYP":"pCzas", "ID":"6.1.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa2":{"OPIS":"6.2 Silnik organu UPT CH2"
+,"rGU_SilOrg_TempCH2_ZakrMin":{"TYP":"pLiczba", "ID":"6.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rGU_SilOrg_TempCH2_ZakrMax":{"TYP":"pLiczba", "ID":"6.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tGU_SilOrg_TempCH2_StFiltr":{"TYP":"pCzas", "ID":"6.2.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rGU_SilOrg_TempCH2_HiWr":{"TYP":"pLiczba", "ID":"6.2.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rGU_SilOrg_TempCH2_HiWrHist":{"TYP":"pLiczba", "ID":"6.2.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tGU_SilOrg_TempCH2_HiWrFiltr":{"TYP":"pCzas", "ID":"6.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rGU_SilOrg_TempCH2_HiAl":{"TYP":"pLiczba", "ID":"6.2.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rGU_SilOrg_TempCH2_HiAlHist":{"TYP":"pLiczba", "ID":"6.2.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartości [°C]"}
+,"tGU_SilOrg_TempCH2_HiALFiltr":{"TYP":"pCzas", "ID":"6.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa3":{"OPIS":"6.3 Transformator T1 PT100"
+,"rTempTrafoT1_ZakrMin":{"TYP":"pLiczba", "ID":"6.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury uzwojeń transformatora T1 [°C]"}
+,"rTempTrafoT1_ZakrMax":{"TYP":"pLiczba", "ID":"6.3.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury uzwojeń transformatora T1 [°C]"}
+,"tTempTrafoT1_StFiltr":{"TYP":"pCzas", "ID":"6.3.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury uzwojeń transformatora T1 [s]"}
+,"rTempTrafoT1_HiWr":{"TYP":"pLiczba", "ID":"6.3.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej temperatury uzwojeń transformatora T1 [°C]"}
+,"rTempTrafoT1_HiWrHist":{"TYP":"pLiczba", "ID":"6.3.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej temperatury uzwojeń transformatora T1 [°C]"}
+,"tTempTrafoT1_HiWrFiltr":{"TYP":"pCzas", "ID":"6.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej temperatury uzwojeń transformatora T1 [s]"}
+,"rTempTrafoT1_HiAl":{"TYP":"pLiczba", "ID":"6.3.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej temperatury uzwojeń transformatora T1 [°C]"}
+,"rTempTrafoT1_HiAlHist":{"TYP":"pLiczba", "ID":"6.3.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej temperatury uzwojeń transformatora T1 [°C]"}
+,"tTempTrafoT1_HiALFiltr":{"TYP":"pCzas", "ID":"6.3.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury uzwojeń transformatora T1 [s]"}
+}},"grupa7":{"OPIS":"7. Zabezpieczenia"
+, "podgrupa1":{"OPIS":"7.1 Przeciążeniowe"
+,"tZabxLTMR_SilnikaOrganu":{"TYP":"pCzas", "ID":"7.1.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zadziałania zabezpieczenia silnikowego organu [s]"}
+},"podgrupa2":{"OPIS":"7.2 Ciągłość ekranu"
+,"tZabxCE_SilnikaOrganu":{"TYP":"pCzas", "ID":"7.2.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zerwania ekranu kabla zasilającego silnika organu [s]"}
+,"tZabxPE_SilnikaOrganu":{"TYP":"pCzas", "ID":"7.2.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zerwania ciągłości kabla zasilającego silnika organu [s]"}
+,"tZabxPE_SilnikaNP":{"TYP":"pCzas", "ID":"7.2.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zerwania ciągłości kabla zasilającego silnika napędu prawego [s]"}
+,"tZabxPE_SilnikaNL":{"TYP":"pCzas", "ID":"7.2.4", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zerwania ciągłości kabla zasilającego silnika napędu lewego [s]"}
+,"tZabxPE_SilnikaNR":{"TYP":"pCzas", "ID":"7.2.5", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zerwania ciągłości kabla zasilającego silnika napędu rolki [s]"}
+},"podgrupa3":{"OPIS":"7.3 Upływowe BZU"
+,"tZabxBZU_SilnikaNP":{"TYP":"pCzas", "ID":"7.3.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia doziemienia obwodu zasilania silnika napędu prawego [s]"}
+,"tZabxBZU_SilnikaNL":{"TYP":"pCzas", "ID":"7.3.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia doziemienia obwodu zasilania silnika napędu lewego [s]"}
+,"tZabxBZU_SilnikaNR":{"TYP":"pCzas", "ID":"7.3.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia doziemienia obwodu zasilania silnika napędu rolki [s]"}
+},"podgrupa4":{"OPIS":"7.4 Upływowe CZU"
+,"tZabxCBZU_440VAC":{"TYP":"pCzas", "ID":"7.4.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia doziemienia sieci sieci 440VAC [s]"}
+},"podgrupa5":{"OPIS":"7.5 Temperaturowe"
+,"tZabxTL_SilnikaOrganu":{"TYP":"pCzas", "ID":"7.5.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury łożysk silnika organu [s]"}
+,"tZabxTL_SilnikaNP":{"TYP":"pCzas", "ID":"7.5.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury łożysk silnika napędu prawego [s]"}
+,"tZabxTL_SilnikaNL":{"TYP":"pCzas", "ID":"7.5.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury łożysk silnika napędu lewego [s]"}
+,"tZabxTL_SilnikaNR":{"TYP":"pCzas", "ID":"7.5.4", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury łożysk silnika napędu rolki [s]"}
+,"tZabxTL_TrafoT1":{"TYP":"pCzas", "ID":"7.5.5", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury transformatora T1 [s]"}
+}},"grupa8":{"OPIS":"8. Zapis danych"
+, "podgrupa1":{"OPIS":"8.1 Zapis danych"
+,"rZapisTyp":{"TYP":"pLista", "ID":"8.1.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0-godzinowy", "1-dzienny"], "OPIS":"Typ zapisu plików archiwizacji danych"}
+,"rZapisIlDni":{"TYP":"pLiczba", "ID":"8.1.2", "ROZM":1, "WART":30.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ilość dni archiwizowanych danych"}
+,"rZapisBuforIlosc":{"TYP":"pLiczba", "ID":"8.1.3", "ROZM":1, "WART":4.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Maksymalna ilość tworzonych buforów dla archiwizacji danych"}
+,"rZapisBuforRozm":{"TYP":"pLiczba", "ID":"8.1.4", "ROZM":1, "WART":20000.0, "PREC":0, "MIN":0.0, "MAX":30000.0, "DOST":"Srvc", "OPIS":"Wielkość bufora dla archiwizacji danych [bajt]"}
+,"tZapisCzasZrzutu":{"TYP":"pCzas", "ID":"8.1.5", "ROZM":2, "WART":600000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas po którym nastąpi pełny zrzut danych do bufora [s]"}
+,"tZapisTimeout":{"TYP":"pCzas", "ID":"8.1.6", "ROZM":2, "WART":30000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Maksymalny dozwolony czas zapisu bufora do pliku [s]"}
+}},"grupa9":{"OPIS":"9. System Sterowania Nadrzędnego"
+, "podgrupa1":{"OPIS":"9.1 Prędkość GUŁ"
+,"rGULPredkoscMax":{"TYP":"pLiczba", "ID":"9.1.1", "ROZM":1, "WART":27.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Prędkośc maksymalna GUŁ. [m/min]"}
+},"podgrupa2":{"OPIS":"9.2 Prędkość zadana"
+,"rPredkoscZadana_ZakrMin":{"TYP":"pLiczba", "ID":"10.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Prędkość zadana z systemu nadrzędnego - wartość minimalna. [m/min]"}
+,"rPredkoscZadana_ZakrMax":{"TYP":"pLiczba", "ID":"10.1.2", "ROZM":1, "WART":27.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Prędkość zadana z systemu nadrzędnego - wartość maksymalna. [m/min]"}
+,"tPredkoscZadana_StFiltr":{"TYP":"pCzas", "ID":"10.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":1000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii w obwodzie pomiarowym [s]"}
+},"podgrupa3":{"OPIS":"9.3 Konfiguracja rolki"
+,"rNRPredkoscJazda":{"TYP":"pLiczba", "ID":"10.2.1", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ograniczenie prędkości napędu rolki w trakcie jazdy. [%]"}
+,"rNRPredkoscNapinanieWstepne":{"TYP":"pLiczba", "ID":"10.2.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ograniczenie prędkości napędu rolki w trakcie napinania wstępnego [%]"}
+,"rNRMomentJazdaOdRolki":{"TYP":"pLiczba", "ID":"10.2.3", "ROZM":1, "WART":2.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki przy jeżdzie głowicy w kierunku od rolki [%]"}
+,"rNRMomentJazdaDoRolki":{"TYP":"pLiczba", "ID":"10.2.4", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki przy jeżdzie głowicy w kierunku do rolki [%]"}
+,"rNRMomentNapinanieWstepne":{"TYP":"pLiczba", "ID":"10.2.5", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki w trakcie napinania wstępnego [%]"}
+}},"grupa10":{"OPIS":"10. MZSG"
+, "podgrupa1":{"OPIS":"10.1 Temperatura komory automatyki"
+,"rSA_Temperatura_ZakrMin":{"TYP":"pLiczba", "ID":"11.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_Temperatura_ZakrMax":{"TYP":"pLiczba", "ID":"11.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_Temperatura_StFiltr":{"TYP":"pCzas", "ID":"11.1.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_Temperatura_HiWr":{"TYP":"pLiczba", "ID":"11.1.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_Temperatura_HiWrHist":{"TYP":"pLiczba", "ID":"11.1.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_Temperatura_HiWrFiltr":{"TYP":"pCzas", "ID":"11.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_Temperatura_HiAl":{"TYP":"pLiczba", "ID":"11.1.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_Temperatura_HiAlHist":{"TYP":"pLiczba", "ID":"11.1.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_Temperatura_HiALFiltr":{"TYP":"pCzas", "ID":"11.1.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa2":{"OPIS":"10.2 Temperatura uzwojeń transformatora T1"
+,"rSA_TrafoT1TempUzw_ZakrMin":{"TYP":"pLiczba", "ID":"11.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_TrafoT1TempUzw_ZakrMax":{"TYP":"pLiczba", "ID":"11.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_TrafoT1TempUzw_StFiltr":{"TYP":"pCzas", "ID":"11.2.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_TrafoT1TempUzw_HiWr":{"TYP":"pLiczba", "ID":"11.2.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_TrafoT1TempUzw_HiWrHist":{"TYP":"pLiczba", "ID":"11.2.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_TrafoT1TempUzw_HiWrFiltr":{"TYP":"pCzas", "ID":"11.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_TrafoT1TempUzw_HiAl":{"TYP":"pLiczba", "ID":"11.2.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_TrafoT1TempUzw_HiAlHist":{"TYP":"pLiczba", "ID":"11.2.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_TrafoT1TempUzw_HiALFiltr":{"TYP":"pCzas", "ID":"11.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa3":{"OPIS":"10.3 Rezystancja sieci 440VAC"
+,"rSA_Siec440VACRezyst_ZakrMin":{"TYP":"pLiczba", "ID":"11.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_Siec440VACRezyst_ZakrMax":{"TYP":"pLiczba", "ID":"11.3.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_Siec440VACRezyst_StFiltr":{"TYP":"pCzas", "ID":"11.3.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_Siec440VACRezyst_LoWr":{"TYP":"pLiczba", "ID":"11.3.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [°C]"}
+,"rSA_Siec440VACRezyst_LoWrHist":{"TYP":"pLiczba", "ID":"11.3.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [°C]"}
+,"tSA_Siec440VACRezyst_LoWrFiltr":{"TYP":"pCzas", "ID":"11.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_Siec440VACRezyst_LoAl":{"TYP":"pLiczba", "ID":"11.3.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [°C]"}
+,"rSA_Siec440VACRezyst_LoAlHist":{"TYP":"pLiczba", "ID":"11.3.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [°C]"}
+,"tSA_Siec440VACRezyst_LoALFiltr":{"TYP":"pCzas", "ID":"11.3.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+},"podgrupa4":{"OPIS":"10.4 Chłodzenie falowników - przepływ"
+,"rSA_ChlodzFalPrzepl_ZakrMin":{"TYP":"pLiczba", "ID":"11.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [l/min]"}
+,"rSA_ChlodzFalPrzepl_ZakrMax":{"TYP":"pLiczba", "ID":"11.4.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [l/min]"}
+,"tSA_ChlodzFalPrzepl_StFiltr":{"TYP":"pCzas", "ID":"11.4.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzFalPrzepl_LoWr":{"TYP":"pLiczba", "ID":"11.4.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [l/min]"}
+,"rSA_ChlodzFalPrzepl_LoWrHist":{"TYP":"pLiczba", "ID":"11.4.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [l/min]"}
+,"tSA_ChlodzFalPrzepl_LoWrFiltr":{"TYP":"pCzas", "ID":"11.4.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzFalPrzepl_LoAl":{"TYP":"pLiczba", "ID":"11.4.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [l/min]"}
+,"rSA_ChlodzFalPrzepl_LoAlHist":{"TYP":"pLiczba", "ID":"11.4.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [l/min]"}
+,"tSA_ChlodzFalPrzepl_LoALFiltr":{"TYP":"pCzas", "ID":"11.4.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+},"podgrupa5":{"OPIS":"10.5 Chłodzenie falowników - temperatura"
+,"rSA_ChlodzFalTemp_ZakrMin":{"TYP":"pLiczba", "ID":"11.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_ChlodzFalTemp_ZakrMax":{"TYP":"pLiczba", "ID":"11.5.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_ChlodzFalTemp_StFiltr":{"TYP":"pCzas", "ID":"11.5.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzFalTemp_HiWr":{"TYP":"pLiczba", "ID":"11.5.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_ChlodzFalTemp_HiWrHist":{"TYP":"pLiczba", "ID":"11.5.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_ChlodzFalTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"11.5.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzFalTemp_HiAl":{"TYP":"pLiczba", "ID":"11.5.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_ChlodzFalTemp_HiAlHist":{"TYP":"pLiczba", "ID":"11.5.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_ChlodzFalTemp_HiALFiltr":{"TYP":"pCzas", "ID":"11.5.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa6":{"OPIS":"10.6 Chłodzenie falowników - ciśnienie"
+,"rSA_ChlodzFalCisn_ZakrMin":{"TYP":"pLiczba", "ID":"11.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [bar]"}
+,"rSA_ChlodzFalCisn_ZakrMax":{"TYP":"pLiczba", "ID":"11.6.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [bar]"}
+,"tSA_ChlodzFalCisn_StFiltr":{"TYP":"pCzas", "ID":"11.6.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzFalCisn_LoWr":{"TYP":"pLiczba", "ID":"11.6.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [bar]"}
+,"rSA_ChlodzFalCisn_LoWrHist":{"TYP":"pLiczba", "ID":"11.6.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [bar]"}
+,"tSA_ChlodzFalCisn_LoWrFiltr":{"TYP":"pCzas", "ID":"11.6.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzFalCisn_LoAl":{"TYP":"pLiczba", "ID":"11.6.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [bar]"}
+,"rSA_ChlodzFalCisn_LoAlHist":{"TYP":"pLiczba", "ID":"11.6.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [bar]"}
+,"tSA_ChlodzFalCisn_LoALFiltr":{"TYP":"pCzas", "ID":"11.6.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_ChlodzFalCisn_HiWr":{"TYP":"pLiczba", "ID":"11.6.10", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [bar]"}
+,"rSA_ChlodzFalCisn_HiWrHist":{"TYP":"pLiczba", "ID":"11.6.11", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [bar]"}
+,"tSA_ChlodzFalCisn_HiWrFiltr":{"TYP":"pCzas", "ID":"11.6.12", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzFalCisn_HiAl":{"TYP":"pLiczba", "ID":"11.6.13", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [bar]"}
+,"rSA_ChlodzFalCisn_HiAlHist":{"TYP":"pLiczba", "ID":"11.6.14", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [bar]"}
+,"tSA_ChlodzFalCisn_HiALFiltr":{"TYP":"pCzas", "ID":"11.6.15", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa7":{"OPIS":"10.7 Chłodzenie transformatora T1 - przepływ"
+,"rSA_ChlodzTransPrzepl_ZakrMin":{"TYP":"pLiczba", "ID":"11.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [l/min]"}
+,"rSA_ChlodzTransPrzepl_ZakrMax":{"TYP":"pLiczba", "ID":"11.7.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [l/min]"}
+,"tSA_ChlodzTransPrzepl_StFiltr":{"TYP":"pCzas", "ID":"11.7.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzTransPrzepl_LoWr":{"TYP":"pLiczba", "ID":"11.7.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [l/min]"}
+,"rSA_ChlodzTransPrzepl_LoWrHist":{"TYP":"pLiczba", "ID":"11.7.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [l/min]"}
+,"tSA_ChlodzTransPrzepl_LoWrFiltr":{"TYP":"pCzas", "ID":"11.7.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzTransPrzepl_LoAl":{"TYP":"pLiczba", "ID":"11.7.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [l/min]"}
+,"rSA_ChlodzTransPrzepl_LoAlHist":{"TYP":"pLiczba", "ID":"11.7.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [l/min]"}
+,"tSA_ChlodzTransPrzepl_LoALFiltr":{"TYP":"pCzas", "ID":"11.7.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+},"podgrupa8":{"OPIS":"10.8 Chłodzenie transformatora T1 - temperatura"
+,"rSA_ChlodzTransTemp_ZakrMin":{"TYP":"pLiczba", "ID":"11.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_ChlodzTransTemp_ZakrMax":{"TYP":"pLiczba", "ID":"11.8.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_ChlodzTransTemp_StFiltr":{"TYP":"pCzas", "ID":"11.8.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzTransTemp_HiWr":{"TYP":"pLiczba", "ID":"11.8.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_ChlodzTransTemp_HiWrHist":{"TYP":"pLiczba", "ID":"11.8.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_ChlodzTransTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"11.8.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzTransTemp_HiAl":{"TYP":"pLiczba", "ID":"11.8.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_ChlodzTransTemp_HiAlHist":{"TYP":"pLiczba", "ID":"11.8.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_ChlodzTransTemp_HiALFiltr":{"TYP":"pCzas", "ID":"11.8.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+},"podgrupa9":{"OPIS":"10.9 Chłodzenie transformatora T1 - ciśnienie"
+,"rSA_ChlodzTransCisn_ZakrMin":{"TYP":"pLiczba", "ID":"11.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [bar]"}
+,"rSA_ChlodzTransCisn_ZakrMax":{"TYP":"pLiczba", "ID":"11.9.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [bar]"}
+,"tSA_ChlodzTransCisn_StFiltr":{"TYP":"pCzas", "ID":"11.9.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzTransCisn_LoWr":{"TYP":"pLiczba", "ID":"11.9.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [bar]"}
+,"rSA_ChlodzTransCisn_LoWrHist":{"TYP":"pLiczba", "ID":"11.9.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [bar]"}
+,"tSA_ChlodzTransCisn_LoWrFiltr":{"TYP":"pCzas", "ID":"11.9.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzTransCisn_LoAl":{"TYP":"pLiczba", "ID":"11.9.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [bar]"}
+,"rSA_ChlodzTransCisn_LoAlHist":{"TYP":"pLiczba", "ID":"11.9.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [bar]"}
+,"tSA_ChlodzTransCisn_LoALFiltr":{"TYP":"pCzas", "ID":"11.9.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_ChlodzTransCisn_HiWr":{"TYP":"pLiczba", "ID":"11.9.10", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [bar]"}
+,"rSA_ChlodzTransCisn_HiWrHist":{"TYP":"pLiczba", "ID":"11.9.11", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [bar]"}
+,"tSA_ChlodzTransCisn_HiWrFiltr":{"TYP":"pCzas", "ID":"11.9.12", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzTransCisn_HiAl":{"TYP":"pLiczba", "ID":"11.9.13", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [bar]"}
+,"rSA_ChlodzTransCisn_HiAlHist":{"TYP":"pLiczba", "ID":"11.9.14", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [bar]"}
+,"tSA_ChlodzTransCisn_HiALFiltr":{"TYP":"pCzas", "ID":"11.9.15", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+}},"grupa11":{"OPIS":"11. Różne"
+, "podgrupa1":{"OPIS":"11.1 Potwierdzenie załączenia stycznika"
+,"tPotZalStySilnikaOrganu":{"TYP":"pCzas", "ID":"13.1.1", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika silnika organu [s]"}
+,"tPotZalStyWstLadFalownikaF1":{"TYP":"pCzas", "ID":"13.1.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F1 [s]"}
+,"tPotZalStyFalownikaF1":{"TYP":"pCzas", "ID":"13.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F1 [s]"}
+,"tPotZalStyWstLadFalownikaF2":{"TYP":"pCzas", "ID":"13.1.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F2 [s]"}
+,"tPotZalStyFalownikaF2":{"TYP":"pCzas", "ID":"13.1.5", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F2 [s]"}
+,"tPotZalStyWstLadFalownikaF3":{"TYP":"pCzas", "ID":"13.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F3 [s]"}
+,"tPotZalStyFalownikaF3":{"TYP":"pCzas", "ID":"13.1.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F3 [s]"}
+},"podgrupa2":{"OPIS":"11.2 Not Aus"
+,"tNotAusSkrzynia":{"TYP":"pCzas", "ID":"13.2.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na naciśnięcie wyłącznika awaryjnego skrzynia [s]"}
+,"tNotAusSystemNadrzedny":{"TYP":"pCzas", "ID":"13.2.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na naciśnięcie wyłącznika awaryjnego system nadrzędny [s]"}
+,"tUGSSystemNadrzedny":{"TYP":"pCzas", "ID":"13.2.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na UGS [s]"}
+}}}}

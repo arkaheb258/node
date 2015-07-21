@@ -2,12 +2,13 @@
   "name": "kopex",
   "description": "Serwer wizualizacji",
   "author": "Arkadiusz <kopex.machinery@gmail.com>",
-  "version": "0.9.57",
+  "version": "0.9.62",
   "private": true,
   "main": "node/main.js",
   "scripts": {
       "start" : "node node/forever.js node/strada.js",
       "test"  : "mocha supertest.js",
+      "strada" : "node node/forever.js node/strada.js",
       "web"   : "node node/forever.js node/webServer.js --dir=../source",
       "zapis" : "node node/forever.js node/zapisDoPliku.js"
   },  

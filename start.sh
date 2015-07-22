@@ -9,6 +9,8 @@
 # Description:       Serwer dla wizualizacji node.js 
 ### END INIT INFO
 
+cd /home/debian/kopex/
+#nice -n10 node node/forever.js node/webServer.js --dir=../source &
 node node/forever.js node/webServer.js --dir=../source &
 node node/forever.js node/strada.js &
 node node/forever.js node/zapisDoPliku.js &

@@ -5,6 +5,7 @@ date >> /tmp/my_log_x
 export GOOGLE_API_KEY="no"
 export GOOGLE_DEFAULT_CLIENT_ID="no"
 export GOOGLE_DEFAULT_CLIENT_SECRET="no"
+sleep 5
 chromium -kiosk -incognito http://127.0.0.1:8888/ --disable-translate &
 xdotool mousemove --sync 0 0 &
 #node /home/debian/kopex/node/x_agent.js > /tmp/log_x.txt &

@@ -156,6 +156,7 @@
     if (!socketIo) { socketIo = require('socket.io-client')('http://127.0.0.1:' + argv.port); }
     socketIo
       .on('connect', function (dane) {
+        console.log('socketIo connect');
         socketIo.emit('nazwa', 'webServer');
       })
     //Broadcast danych i parametrow

@@ -5,47 +5,74 @@
 (function () {
   'use strict';
   require('cache-require-paths');
-  var spawn = require('child_process').spawn;
-  var fs = require('fs');
-  var argv = process.argv.slice(2);
   var child;
-  var fileName = argv[0].match(/.*[\/\\]+(.*).js/);
-  if (!fileName) { fileName = 'undefined'; } else { fileName = fileName[1]; }
+  var logLast = {val:0};
+  var errLast = {val:0};
+  var logStream;
+  var errStream;
+  var logBuff = '';
+  var errBuff = '';
+  var spawn = require('child_process').spawn;
+  var argv = process.argv.slice(2);
 
-  try {
-    fs.mkdirSync(__dirname + '/../log/');
-  } catch(e) {
-    if ( e.code != 'EEXIST' ) throw e;
+  function formatOutput(s, last) {
+    var d =  new Date();
+    if (!last) { last = {val: d.getTime()}; }
+    if (last.val == 0) { last.val = d.getTime(); }
+    var out = d.toISOString() + ' (' + (d.getTime() - last.val)/1000 + 's): ' + s;
+    last.val = d.getTime();
+    process.stdout.write(out);
+    return out;
   }
 
-  var logStream = fs.createWriteStream(__dirname + '/../log/' + fileName + '.log', {flags : 'w'});
-  var errStream = fs.createWriteStream(__dirname + '/../log/' + fileName + '.err', {flags : 'a'});
-  // console.log(argv);
-  // console.log(fileName);
-  
-  function formatOutput(s) {
-    var d =  new Date().toISOString();
-    process.stdout.write(d + ': ' + s);
-    return d + ': ' + s;
+  function writeStream(type, msg) {
+    if (type === 'err') {
+      if (errStream) {
+        errStream.write(errBuff + formatOutput(msg, errLast));
+        errBuff = '';
+      } else {
+        errBuff += formatOutput(msg, errLast);
+      }
+    } else {
+      if (logStream) {
+        logStream.write(logBuff + formatOutput(msg, logLast));
+        logBuff = '';
+      } else {
+        logBuff += formatOutput(msg, logLast);
+      }
+    }
   }
-  
+
+  writeStream('log', 'start\n');
 	function startApp() {
+    writeStream('log', 'startApp()\n');
     child = spawn('node',  argv);
 		child.stdout.setEncoding('utf8');
 		child.stderr.setEncoding('utf8');
 		child.stdout.on('data', function (d) {
-      logStream.write(formatOutput(d));
+      writeStream('log', d);
     });
 		child.stderr.on('data', function (d) {
-      logStream.write(formatOutput(d));
+      writeStream('err', d);
     });
     child.on('close', function (code) {
-      errStream.write(formatOutput('child process exited with code ' + code + '\n'));
-      setTimeout(function(){
+      writeStream('err', 'child process exited with code ' + code + '\n');
+      setTimeout(function () {
         startApp();
       }, 500);
     });
   }
 
   startApp();
+  var fs = require('fs');
+  fs.mkdir(__dirname + '/../log/', function (e) {
+    if (e.code !== 'EEXIST') {
+      console.log('mkdir error');
+      return;
+    }
+    var fileName = argv[0].match(/.*[\/\\]+(.*)\.js/);
+    if (!fileName) { fileName = 'undefined'; } else { fileName = fileName[1]; }
+    logStream = fs.createWriteStream(__dirname + '/../log/' + fileName + '.log', {flags : 'w'});
+    errStream = fs.createWriteStream(__dirname + '/../log/' + fileName + '.err', {flags : 'a'});
+  });
 }());

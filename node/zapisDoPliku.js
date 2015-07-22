@@ -3,6 +3,7 @@
  *  @brief Logowanie danych z pracy maszyny
  */
 (function () {
+  console.log('start zapisDoPliku.js');
   'use strict';
   require('cache-require-paths');
   var argv = require('minimist')(process.argv.slice(2));
@@ -234,6 +235,9 @@
   prev_data = new EmptyData();
 
   socket
+    .on('connect', function (dane) {
+      socket.emit('nazwa', 'zapis');
+    })
     .on('dane', function (dane) {
       // console.log('dane zapis');
       if (!dane.error) {

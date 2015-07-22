@@ -3,27 +3,20 @@
  *  @brief Serwer HTTP dla wizualizacji
  */
 (function () {
+  console.log('start webServer.js');
   'use strict';
   require('cache-require-paths');
-  var argv = require('minimist')(process.argv.slice(2));
-  argv.port = argv.port || 8888;
   var http = require('http');
   var express = require('express');
-  // var connect = require('connect');
-  // var serveStatic = require('serve-static')
-  // var app = connect();
-  // var server = http.createServer(app);
   var app = express();
   var server = http.Server(app);
-  var socketIo = require('socket.io-client')('http://127.0.0.1:' + argv.port);
-  var io = require('socket.io')(server);
-  var fs = require('fs');
-  var os = require('os');
-  var url = require('url');
+  
   var common = require('./common.js');
-  var jsonFiles = require('./jsonFiles.js');
   var instrID = 0;
+  var fs, os, url, jsonFiles, socketIo;
 
+  var argv = require('minimist')(process.argv.slice(2));
+  argv.port = argv.port || 8888;
   argv.dir = argv.dir || '../build';
   argv.debug = true;
 
@@ -45,6 +38,8 @@
 
   //obsluga rozkazow dla PLC
   app.get('/rozkaz', function (req, res, next) {
+    if (!socketIo) { socketIo = require('socket.io-client')('http://127.0.0.1:' + argv.port); }
+    if (!url) { url = require('url'); }
     var get = url.parse(req.url, true).query;
     instrID = (instrID + 1) % 0x10000;
     get.instrID = instrID;
@@ -63,6 +58,10 @@
   // Pliki z parametrami z folderu /json
   app.use('/json', function (req, res, next) {
     // var file = req.url.match(/\/(.*)\.json/); //pętla przekierowań
+    if (!fs) { fs = require('fs'); }
+    if (!os) { os = require('os'); }
+    if (!jsonFiles) { jsonFiles = require('./jsonFiles.js'); }
+
     var file = req.url.match(/\/([a-zA-Z]+)\.json/);
     // console.log('/json/* match', file, req.url);
     if (!file || file.index) {
@@ -154,84 +153,91 @@
   //wystartowanie serwera
   server.listen(argv.port, function () {
     console.log('HTTP Server listening on', argv.port);
-  });
+    if (!socketIo) { socketIo = require('socket.io-client')('http://127.0.0.1:' + argv.port); }
+    socketIo
+      .on('connect', function (dane) {
+        socketIo.emit('nazwa', 'webServer');
+      })
+    //Broadcast danych i parametrow
+    var io = require('socket.io')(server);
+    io.on('connection', function (socket) {
+      if (!jsonFiles) { jsonFiles = require('./jsonFiles.js'); }
+      if (argv.debug) { console.log('Nowy socket: ', socket.conn.id); }
+      // Wyslania gpar dla nowo-podlaczonych
+      var gpar = common.getGpar();
+      if (gpar) { socket.emit('gpar', gpar); } else { io.emit('get_gpar'); }
 
-  //Broadcast danych i parametrow
-  io.on('connection', function (socket) {
-    if (argv.debug) { console.log('Nowy socket: ', socket.conn.id); }
-    // Wyslania gpar dla nowo-podlaczonych
-    var gpar = common.getGpar();
-    if (gpar) { socket.emit('gpar', gpar); } else { io.emit('get_gpar'); }
-
-    socket
-      .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
-      .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
-      // .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
-      .on('io_emit', function (msg) { io.emit(msg[0], msg[1]); })
-      .on('broadcast', function (msg) { socket.broadcast.emit(msg[0], msg[1]); })
-      .on('get_gpar', function (msg) {
-        if (argv.debug) { console.log('web on get_gpar', msg); }
-        var gpar = common.getGpar();
-        if (gpar) {
-          socket.emit('gpar', gpar);
-        } else {
-          socket.broadcast.emit('get_gpar', msg);
-          // io.emit('get_gpar', msg);
-        }
-      })
-      .on('gpar', function (gpar) {
-        if (argv.debug) { console.log('webServer on gpar'); }
-        common.storeGpar(gpar);
-        socket.broadcast.emit('gpar', gpar);
-      })
-      .on('getDefSyg', function () {
-        jsonFiles.czytajPlikSygnalow('/' + argv.dir + '/jsonDefault/sygnaly.json', common.getGpar(), function (dane) {
-          socket.emit('defSyg', dane);
-        });
-      })
-      .on('getDefPar', function () {
-        jsonFiles.czytajPlikParametrowWiz('/' + argv.dir + '/jsonDefault/parametry.json', common.getGpar(), function (dane) {
-          socket.emit('defPar', dane);
-        });
-      })
-      .on('getPar', function () {
-        var gpar = common.getGpar();
-        if (!gpar) { return; }
-        var dirLang = common.dirLangPar(gpar, 'parametry');
-        jsonFiles.czytajPlikParametrowWiz('/../json' + dirLang.file + '.json', gpar, function (dane) {
-          socket.emit('actPar', dane);
-        });
-      })
-      .on('getSyg', function () {
-        var gpar = common.getGpar();
-        if (!gpar) { return; }
-        var dirLang = common.dirLangPar(gpar, 'sygnaly');
-        jsonFiles.czytajPlikSygnalow('/../json' + dirLang.file + '.json', gpar, function (dane) {
-          socket.emit('actSyg', dane);
-        });
-      })
-      .on('zarzadzaniePlikami', function(msg) {
-        console.log('zarzadzaniePlikami', msg);
-        var args = [msg + '.sh'];
-        if (msg == 'jsonZPLC' || msg == 'jsonNaPLC') {
-          args.push('/flash/json');
-          args.push('../json');
-        }
-        common.runScript(args,
-          function (data) {
-            if (argv.debug) { console.log('data', data); }
-            socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
-          })
-        .stdout.on('data', function (chunk) {
-          if (argv.debug) { console.log(chunk.toString('utf8')); }
-          var chunk2 = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
-          if (!chunk2) {
-            chunk2 = chunk.toString().match(/.*Cmd: CWD(.*)/g);
+      socket
+        .on('nazwa', function (msg) { console.log('Nazwa: ', socket.conn.id, msg); })
+        .on('rozkaz', function (msg) { socket.broadcast.emit('rozkaz', msg); })
+        .on('odpowiedz', function (msg) { socket.broadcast.emit('odpowiedz', msg); })
+        // .on('dane', function (msg) { socket.broadcast.emit('dane', msg); })
+        .on('io_emit', function (msg) { io.emit(msg[0], msg[1]); })
+        .on('broadcast', function (msg) { socket.broadcast.emit(msg[0], msg[1]); })
+        .on('get_gpar', function (msg) {
+          if (argv.debug) { console.log('web on get_gpar', msg); }
+          var gpar = common.getGpar();
+          if (gpar) {
+            socket.emit('gpar', gpar);
+          } else {
+            socket.broadcast.emit('get_gpar', msg);
+            // io.emit('get_gpar', msg);
           }
-          if (chunk2) {
-            socket.emit('zarzadzaniePlikamiOdp', chunk2[0].substring(9));
+        })
+        .on('gpar', function (gpar) {
+          if (argv.debug) { console.log('webServer on gpar'); }
+          common.storeGpar(gpar);
+          socket.broadcast.emit('gpar', gpar);
+        })
+        .on('getDefSyg', function () {
+          jsonFiles.czytajPlikSygnalow('/' + argv.dir + '/jsonDefault/sygnaly.json', common.getGpar(), function (dane) {
+            socket.emit('defSyg', dane);
+          });
+        })
+        .on('getDefPar', function () {
+          jsonFiles.czytajPlikParametrowWiz('/' + argv.dir + '/jsonDefault/parametry.json', common.getGpar(), function (dane) {
+            socket.emit('defPar', dane);
+          });
+        })
+        .on('getPar', function () {
+          var gpar = common.getGpar();
+          if (!gpar) { return; }
+          var dirLang = common.dirLangPar(gpar, 'parametry');
+          jsonFiles.czytajPlikParametrowWiz('/../json' + dirLang.file + '.json', gpar, function (dane) {
+            socket.emit('actPar', dane);
+          });
+        })
+        .on('getSyg', function () {
+          var gpar = common.getGpar();
+          if (!gpar) { return; }
+          var dirLang = common.dirLangPar(gpar, 'sygnaly');
+          jsonFiles.czytajPlikSygnalow('/../json' + dirLang.file + '.json', gpar, function (dane) {
+            socket.emit('actSyg', dane);
+          });
+        })
+        .on('zarzadzaniePlikami', function(msg) {
+          console.log('zarzadzaniePlikami', msg);
+          var args = [msg + '.sh'];
+          if (msg == 'jsonZPLC' || msg == 'jsonNaPLC') {
+            args.push('/flash/json');
+            args.push('../json');
           }
+          common.runScript(args,
+            function (data) {
+              if (argv.debug) { console.log('data', data); }
+              socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
+            })
+          .stdout.on('data', function (chunk) {
+            if (argv.debug) { console.log(chunk.toString('utf8')); }
+            var chunk2 = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
+            if (!chunk2) {
+              chunk2 = chunk.toString().match(/.*Cmd: CWD(.*)/g);
+            }
+            if (chunk2) {
+              socket.emit('zarzadzaniePlikamiOdp', chunk2[0].substring(9));
+            }
+          });
         });
-      });
+    });
   });
 }());

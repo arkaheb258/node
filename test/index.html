@@ -47,27 +47,32 @@
       
       var socket = io();
       socket.emit('strada', 'bla');
-      socket.on('dane', function(msg){
-        // console.log(msg);
-        dane = msg;
-        document.getElementById("e_dane").checked = false;
-        $('#dane').text(JSON.stringify(msg, null, 1));
-        $('#t_dane').text(JSON.stringify(new Date()));
-      });
-      socket.on('gpar', function(msg){
-        gpar = msg;
-        var dane = msg.DANE;
-        msg.DANE = null;
-        $('#gpar').text(JSON.stringify(msg, null, 1));
-        msg.DANE = dane;
-        $('#t_gpar').text(JSON.stringify(new Date()));
-      });
-      socket.on('daneDiag', function(msg){
-        // console.log('daneDiag', msg);
-        daneDiag = msg;
-        $('#daneDiag').text(JSON.stringify(msg, null, 1));
-        $('#t_diag').text(JSON.stringify(new Date()));
-      });
+      
+      socket
+        .on('connect', function (dane) {
+          socketIo.emit('nazwa', 'webServer');
+        })
+        .on('dane', function(msg){
+          // console.log(msg);
+          dane = msg;
+          document.getElementById("e_dane").checked = false;
+          $('#dane').text(JSON.stringify(msg, null, 1));
+          $('#t_dane').text(JSON.stringify(new Date()));
+        })
+        .on('gpar', function(msg){
+          gpar = msg;
+          var dane = msg.DANE;
+          msg.DANE = null;
+          $('#gpar').text(JSON.stringify(msg, null, 1));
+          msg.DANE = dane;
+          $('#t_gpar').text(JSON.stringify(new Date()));
+        })
+        .on('daneDiag', function(msg){
+          // console.log('daneDiag', msg);
+          daneDiag = msg;
+          $('#daneDiag').text(JSON.stringify(msg, null, 1));
+          $('#t_diag').text(JSON.stringify(new Date()));
+        });
       setInterval(function(){
         dane.TimeStamp_js = Date.now();
         dane.TimeStamp_s = Math.floor(dane.TimeStamp_js / 1000);

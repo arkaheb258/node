@@ -3,6 +3,7 @@
 *  @brief Komunikacja z PLC
 */
 'use strict';
+console.log('start strada.js');
 require('cache-require-paths');
 var EverSocket = require('eversocket').EverSocket;
 var common = require('./common.js');
@@ -23,24 +24,21 @@ function Strada() {
   var argv = require('minimist')(process.argv.slice(2));
   argv = argv || {};
   argv.port = argv.port || 8888;
-  var client = new EverSocket({
+  self.client = new EverSocket({
     reconnectWait: 1000,      // Wait after close event before reconnecting
     timeout: 1000,            // Set the idle timeout
     reconnectOnTimeout: true  // Reconnect if the connection is idle
   });
-  this.client = client;
-  var socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
-  
-  this.socket = socket;
-  this.interval = 200;
-  this.parFilename = 'default.json';
-  this.PLCConnected = false;
-  this.lastSent = null;
-  this.queue = [];
-  this.instrID = 0;
-  this.ntpDate = -1;
-  this.emitEnable = true;
-  this.dane = [];
+  self.socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
+  self.interval = 200;
+  self.parFilename = 'default.json';
+  self.PLCConnected = false;
+  self.lastSent = null;
+  self.queue = [];
+  self.instrID = 0;
+  self.ntpDate = -1;
+  self.emitEnable = true;
+  self.dane = [];
 
   require('./stradaPar.js')(Strada);
   require('./stradaConn.js')(Strada);
@@ -71,6 +69,9 @@ function Strada() {
   });
 
   self.client
+    .on('connect', function (dane) {
+      self.client.emit('nazwa', 'strada');
+    })
     .on('data', function (dane) {
       self.getData(dane);
     })

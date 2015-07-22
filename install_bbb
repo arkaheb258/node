@@ -69,10 +69,10 @@ npm install
 chmod +xs /home/debian/kopex/scripts/*
 
 # autostart node
-chmod +x /home/debian/kopex/start_x
-echo "/home/debian/kopex/start_x" > /etc/xdg/lxsession/LXDE/autostart 
-ln -s /home/debian/kopex/start /etc/init.d/kopex
-chmod +x /home/debian/kopex/start
+chmod +x /home/debian/kopex/start_x.sh
+echo "/home/debian/kopex/start_x.sh" > /etc/xdg/lxsession/LXDE/autostart 
+ln -s /home/debian/kopex/start.sh /etc/init.d/kopex
+chmod +x /home/debian/kopex/start.sh
 update-rc.d kopex defaults
 
 # prawa zapisu do folderu kopex dla wszystkich
@@ -115,15 +115,15 @@ exit 0
 #ln -s /boot/uboot/node/ /home/debian/kopex
 #ln -s /boot/uboot/ /var/lib/cloud9/usb
 #ln -s /boot/uboot/node/start.sh /etc/X11/Xsession.d/99x_nodejs_chrome	
-#ln -s /boot/uboot/node/start /etc/X11/Xsession.d/99x_nodejs_chrome	
+#ln -s /boot/uboot/node/start.sh /etc/X11/Xsession.d/99x_nodejs_chrome	
 
 
 # autostart node
 #http://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up
-#chmod +x /boot/uboot/node/start
+#chmod +x /boot/uboot/node/start.sh
 #echo '#!/bin/sh' > /etc/X11/Xsession.d/98x_mystart 
-#echo "/boot/uboot/node/start" >> /etc/X11/Xsession.d/98x_mystart 
-#echo "/boot/uboot/node/start_x" >> /etc/xdg/lxsession/LXDE/autostart 
+#echo "/boot/uboot/node/start.sh" >> /etc/X11/Xsession.d/98x_mystart 
+#echo "/boot/uboot/node/start_x.sh" >> /etc/xdg/lxsession/LXDE/autostart 
 
 
 

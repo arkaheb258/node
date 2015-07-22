@@ -9,11 +9,14 @@
 # Description:       Serwer dla wizualizacji node.js 
 ### END INIT INFO
 
-date >> /tmp/my_log_w
-cd /home/debian/kopex/
-npm run web &
-pwd >> /tmp/my_log_w
-hwclock -f /dev/rtc1 >> /tmp/my_log_w
+node node/forever.js node/webServer.js --dir=../source &
+node node/forever.js node/strada.js &
+node node/forever.js node/zapisDoPliku.js &
+# date >> /tmp/my_log_w
+# cd /home/debian/kopex/
+# npm run web &
+# pwd >> /tmp/my_log_w
+# hwclock -f /dev/rtc1 >> /tmp/my_log_w
 
 #node /home/debian/kopex/node/webServer.js >> /tmp/my_log_w &
 

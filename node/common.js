@@ -192,7 +192,7 @@ MyInterval.prototype.setInterval = function (interval) {
 };
 
 module.exports.summerTimeOffset = function (epoch) {
-  var d = new Date(epoch);
+  var d = new Date(Number(epoch));
   var n = d.getTimezoneOffset();
   d.setMonth(0);
   n -= d.getTimezoneOffset();

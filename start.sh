@@ -14,6 +14,7 @@ cd /home/debian/kopex/
 node node/forever.js node/webServer.js --dir=../source &
 node node/forever.js node/strada.js &
 node node/forever.js node/zapisDoPliku.js &
+
 # date >> /tmp/my_log_w
 # cd /home/debian/kopex/
 # npm run web &

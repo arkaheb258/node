@@ -27,14 +27,11 @@
     });
   }
 
-  //test.html
   app.use('/test', express.static(__dirname + '/../test'));
+  app.use('/logs', express.static(__dirname + '/../logs'));
 
   //tresc statyczna na poczatku routowania
   app.use(express.static(__dirname + '/' + argv.dir));
-
-  //mapowanie FTP sterownika
-  // app.use('/ftp', ftp_routes);
 
   //obsluga rozkazow dla PLC
   app.get('/rozkaz', function (req, res, next) {

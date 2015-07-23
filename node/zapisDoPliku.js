@@ -151,6 +151,29 @@
       console.log('usb logger ' + logger_dir);
       logger_dir = null;
       if (process.platform === 'linux') {
+        common.runScript(['usb.sh'], function(dane){
+          console.log(dane);
+          if (dane.stdout) {
+            var pen = dane.stdout;
+            var poz = pen.search('<');
+            if (poz < 5) {
+              console.log('Błąd PENDRIVE: ' + pen);
+              return;
+            }
+            pen = pen.substring(0, poz).trim();
+            console.log('Znaleziono PENDRIVE: ' + pen);
+            console.log('mkdir ' + pen + '/Rejestracja');
+            cp.exec('mkdir ' + pen + '/Rejestracja',
+              function (error, stdout, stderr) {
+                console.log(stdout);
+                logger_dir = pen + '/Rejestracja';
+                if (stderr) { console.log('stderr: ' + stderr); }
+                if (error) { console.log('error 1: ' + error); }
+              });
+          }
+          if (dane.stderr) { console.log('stderr: ' + dane.stderr); }
+          if (dane.error) { console.log('error 2: ' + dane.error); }
+        }, 'bash');
         cp.exec('df | grep ^/dev/sd', function (error, stdout, stderr) {
           var poz = stdout.search('%');
           if (poz !== -1) {

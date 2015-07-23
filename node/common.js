@@ -13,12 +13,13 @@ var dane = null;
  *  @param [in] callback_end Parameter_Description
  *  @return ChildProcess object
  */
-module.exports.runScript = function (args, callback_end) {
+module.exports.runScript = function (args, callback_end, interpreter) {
   if (!exec) { exec = require('child_process').exec; }
   if (!spawn) { spawn = require('child_process').spawn; }
   var opts = {cwd: __dirname + '/../scripts'};
   // opts.timeout = 2000;
-  var proc = spawn('sh', args, opts);
+  interpreter = interpreter || 'sh';
+  var proc = spawn(interpreter, args, opts);
   var stdout = '';
   var stderr = '';
   proc.stdout.on('data', function (data) { stdout += data; });

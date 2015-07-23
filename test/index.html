@@ -50,7 +50,7 @@
       
       socket
         .on('connect', function (dane) {
-          socketIo.emit('nazwa', 'webServer');
+          socket.emit('nazwa', 'webServer');
         })
         .on('dane', function(msg){
           // console.log(msg);

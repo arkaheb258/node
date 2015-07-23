@@ -5,10 +5,7 @@ apt-get -y install xdotool
 apt-get -y install unclutter
 apt-get -y --force-yes upgrade
 
-#npm install -g forever
 apt-get install ncftp 
-#apt-get install gawk 
-ln -s / /var/lib/cloud9/root
 ln -s /home/debian /var/lib/cloud9/debian_home
 
 # statyczne IP 192.168.3.51

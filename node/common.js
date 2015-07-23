@@ -193,11 +193,23 @@ MyInterval.prototype.setInterval = function (interval) {
 };
 
 module.exports.summerTimeOffset = function (epoch) {
-  var d = new Date(Number(epoch));
-  var n = d.getTimezoneOffset();
-  d.setMonth(0);
-  n -= d.getTimezoneOffset();
-  return n;
+  var lato = -60;
+  var zima = 0;
+  epoch = Number(epoch);
+  if (epoch < 1445738400000) return lato;       // 2015-10-25 03:00:00
+  else if (epoch < 1459040400000) return zima;  // 2016-03-27 02:00:00
+  else if (epoch < 1477357200000) return lato;  // 2016-10-25 03:00:00
+  else if (epoch < 1490572800000) return zima;  // 2017-03-27 02:00:00
+  else if (epoch < 1508893200000) return lato;  // 2017-10-25 03:00:00
+  else if (epoch < 1522108800000) return zima;  // 2018-03-27 02:00:00
+  else if (epoch < 1540429200000) return lato;  // 2018-10-25 03:00:00  
+  else return zima;
+
+  // var d = new Date(Number(epoch));
+  // var n = d.getTimezoneOffset();
+  // d.setMonth(0);
+  // n -= d.getTimezoneOffset();
+  // return n;
 }
 
 module.exports.dirLangPar = function (gpar, fileName) {

@@ -226,7 +226,7 @@ function DecodeStrada302(data) {
   var TimeStamp = br.read(data);
   this.TimeStamp_s = (TimeStamp[1] << 16) + TimeStamp[0];
   this.TimeStamp_ms = (TimeStamp[3] << 16) + TimeStamp[2];
-  this.TimeStamp_js = (this.TimeStamp_s * 1000 + this.TimeStamp_ms % 1000);
+  this.TimeStamp_js = (this.TimeStamp_s * 1000 + (this.TimeStamp_ms % 1000));
 
   //konwersja UTC -> czas lokalny
   var off = common.summerTimeOffset(this.TimeStamp_js);

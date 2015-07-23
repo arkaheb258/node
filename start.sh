@@ -9,6 +9,7 @@
 # Description:       Serwer dla wizualizacji node.js 
 ### END INIT INFO
 
+chmod +xs /home/debian/kopex/scripts/*
 cd /home/debian/kopex/
 #nice -n10 node node/forever.js node/webServer.js --dir=../source &
 node node/forever.js node/webServer.js --dir=../source &

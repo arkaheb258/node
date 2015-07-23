@@ -1,7 +1,7 @@
 #!/bin/sh
 sudo cpufreq-set -g performance
 #echo 'lxde' >> /tmp/my_log_x
-echo 'start x' > /home/debian/kopex/log/start.log
+echo 'x' > /home/debian/kopex/log/start.log
 date >> /home/debian/kopex/log/start.log
 #date >> /tmp/my_log_x
 export GOOGLE_API_KEY="no"

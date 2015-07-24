@@ -12,8 +12,10 @@
   var socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
   var common = require('./common.js');
   var cp = require('child_process');
-  var logger_dir = argv.dir || null;
+  var logger_dir = argv.dir || 'USB';
   var prev_data = null;
+
+  console.log('logger_dir', logger_dir);
 
   /**
    * Tworzenie folderu 

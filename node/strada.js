@@ -5,11 +5,11 @@
 'use strict';
 console.log('start strada.js');
 require('cache-require-paths');
-var EverSocket = require('eversocket').EverSocket;
+var net = require('net');
+var argv = require('minimist')(process.argv.slice(2));
 var common = require('./common.js');
 var decode = require('./decode.js');
-var debug = false;
-// debug = true;
+// argv.debug = true;
 
 /**
  *  @brief Konstruktor klasy
@@ -21,14 +21,8 @@ var debug = false;
  */
 function Strada() {
   var self = this;
-  var argv = require('minimist')(process.argv.slice(2));
   argv = argv || {};
   argv.port = argv.port || 8888;
-  self.client = new EverSocket({
-    reconnectWait: 1000,      // Wait after close event before reconnecting
-    timeout: 1000,            // Set the idle timeout
-    reconnectOnTimeout: true  // Reconnect if the connection is idle
-  });
   self.socket = require('socket.io-client')('http://127.0.0.1:' + argv.port);
   self.interval = 200;
   self.parFilename = 'default.json';
@@ -45,12 +39,13 @@ function Strada() {
 
   //TODO: wystartowanie interwału w osobnej metodzie, a nie w konstruktorze
   self.myInterval = new common.MyInterval(self.interval, function () {
+    // if (!strada.master || !strada.master.connected) {
     self.stradaEnqueue(0x302, 0, function (dane) {
       if (!dane.error) {
         dane = new decode.DecodeStrada302(dane.dane);
         if (!dane) {console.log('DecodeStrada302 null'); return; }
         if (dane.wDataControl === 1) {
-          console.log('Sterownik rzada daty');
+          if (argv.debug) { console.log('Sterownik rzada daty'); }
           if (self.ntpDate === -1) {
             self.ntpDate = -2;
             common.runScript(['getTime.sh'], function (data) {
@@ -66,27 +61,8 @@ function Strada() {
       self.dane = dane;
       if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
     });
+    // }
   });
-
-  self.client
-    .on('connect', function (dane) {
-      self.client.emit('nazwa', 'strada');
-    })
-    .on('data', function (dane) {
-      self.getData(dane);
-    })
-    .on('connect', function () {
-      console.log('Strada Polaczono ....');
-      self.PLCConnected = true;
-      self.odswierzParametry(true);
-      self.myInterval.setInterval(self.interval);
-    })
-    .on('error', function (err) {
-      self.disconnect(err);
-    })
-    .on('close', function (err) {
-      self.disconnect(err);
-    });
 
   self.socket.on('get_gpar', function (msg) {
     // console.log(' on get_gpar', self.PLCConnected);
@@ -101,11 +77,11 @@ function Strada() {
 
   require('./stradaRozk.js')(self);
   if (argv.master) {
+    if (argv.master.search('http://') !== 0) { argv.master = 'http://' + argv.master; }
     console.log('master= ',argv.master);
-    self.setMaster(require('socket.io-client')(argv.master));
+    self.setMaster(require('socket.io-client')(argv.master, {reconnectionDelay: 500, reconnectionDelayMax: 1000}));
   }
   if (argv.interval !== undefined) { self.setInterval(argv.interval); }
-  self.client.connect(20021, '192.168.3.30');
 }
 
 /**
@@ -133,38 +109,80 @@ Strada.prototype.setInterval = function (interval) {
 Strada.prototype.setMaster = function (master) {
   var self = this;
   self.master = master;
-  if (master) {
-    self.master.on('gpar', function(msg){
+  if (self.master) {
+    self.master
+      .on('gpar', function(msg){
         self.socket.emit('gpar', msg);
-    });
+      })
+      .on('dane', function(dane){
+        if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
+      })
+      .on('connect', function(){
+        console.log('master connected');
+      })
+      // .on('reconnect', function(val){
+        // console.log('master reconnected', val);
+      // })
+      // .on('reconnect_attempt', function(){
+        // console.log('master try');
+      // })
+      .on('disconnect', function(){
+        console.log('master disconnected =', !self.master.connected);
+      })
+      ;
   }
 };
 
 /**
 * @memberof! Strada#
 */
-Strada.prototype.disconnect = function (err) {
-  // console.log('Stop interval');
+Strada.prototype.connect = function (err) {
   var self = this;
-  var dane = '';
-  if (!err) {
-    // console.log('client close', err);
-    // self.client.destroy();
-    dane = {error: 'Strada Connection closed'};
-  } else {
-    dane = {error: 'Strada client ErRoR: ' + err.code };
+  if (self.client && !self.client.destroyed) {
+    self.client.destroy();
   }
-  if (debug) { console.log('Strada ErRoR: ', dane.error); }
-  if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
-  if (self.PLCConnected) {
-    console.log('PLC nie połączony');
-    self.myInterval.setInterval(1000);
-    self.PLCConnected = false;
-  }
-  self.lastSent = null;
-  // czyszczenie kolejki wiadomosci
-  self.clearQueue(true);
-};
+  self.client = new net.Socket();
+  self.client
+    .on('data', function (dane) {
+      self.getData(dane);
+    })
+    .on('connect', function () {
+      console.log('Strada Polaczono ....');
+      self.socket.emit('nazwa', 'strada');
+      self.PLCConnected = true;
+      self.odswierzParametry(true);
+      self.myInterval.setInterval(self.interval);
+    })
+    .on('error', function (err) {
+      if (argv.debug) { console.log('error', err); }
+    })
+    .on('close', function (err) {
+      // if (argv.debug) { console.log('close', err); }
+      if (err === true && self.client && !self.client.destroyed) {
+        self.client.destroy();
+      } 
+    });
+
+  self.client.setTimeout(1000, function () {
+    var dane = {error: 'Strada client error: ' + 'timeout' };
+    if (argv.debug) { console.log(dane.error); }
+    if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
+    if (self.PLCConnected) {
+      console.log('PLC nie połączony');
+      self.myInterval.setInterval(1000);
+      self.PLCConnected = false;
+    }
+    self.lastSent = null;
+    // czyszczenie kolejki wiadomosci
+    self.clearQueue(true);
+    setTimeout(function () {
+      self.connect();
+    }, 1000);
+  });
+  
+  self.client.connect(20021, '192.168.3.30');
+  return self.client;
+}
 
 /**
 * Wysłanie instrukcji do sterownika protokołem Strada
@@ -174,7 +192,7 @@ Strada.prototype.disconnect = function (err) {
 */
 Strada.prototype.send = function (instrNo, instrID, data) {
   var self = this;
-  if (debug) { console.log('sendData', instrNo.toString(16), instrID); }
+  if (argv.debug) { console.log('sendData', instrNo.toString(16), instrID); }
   var DstID = 1;
   var SrcID = 4;
   var Dir = 0x01;
@@ -304,7 +322,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
       // console.log('uiCzytajObszarNr: '+data);
       tempOutBuff.writeUInt16LE(data, 4); // uiCzytajObszarNr
       if (self.ntpDate > 0) {
-        console.log('Sterownik dostaje date', self.ntpDate);
+        if (argv.debug) { console.log('Sterownik dostaje date', self.ntpDate); }
         tempOutBuff.writeUInt16LE(1, 6);
         tempOutBuff.writeUInt32LE(Math.round(self.ntpDate / 1000), 8);
         self.ntpDate = -3;
@@ -397,4 +415,5 @@ Strada.prototype.send = function (instrNo, instrID, data) {
 
 module.exports = Strada;
 
-new Strada();
+var s = new Strada();
+s.connect();

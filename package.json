@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "cache-require-paths": "0.1.x",
-    "eversocket": "0.0.4",
     "express": "4.12.x",
     "ftp": "0.3.x",
 	  "minimist": "1.1.x",

@@ -13,6 +13,17 @@ xdotool mousemove --sync 0 0 &
 date >> /home/debian/kopex/log/start.log
 #node /home/debian/kopex/node/x_agent.js > /tmp/log_x.txt &
 
+#xdotool mousemove --sync 1024 300 &
+#rm /home/olimex/.mozilla/firefox/*.default/sessionstore.js
+#rm /home/olimex/.mozilla/firefox/*.default/sessionstore.bak
+#sleep 5 && iceweasel -fullscreen http://127.0.0.1:8888
+
+#sleep 16 && xdotool mousemove --sync 465 20 click 1 && sleep 1 && xdotool mousemove --sync 0 0 &
+
+#hostname -I
+#whoami 
+#export DISPLAY=':0'
+
 # /sbin/route add -net 0.0.0.0 gw 192.168.3.1 eth0
 # cd /home/debian/kopex/
 # git reset --hard HEAD

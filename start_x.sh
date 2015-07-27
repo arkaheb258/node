@@ -31,3 +31,7 @@ date >> /home/debian/kopex/log/start.log
 # chmod +x /home/debian/kopex/start_x.sh
 # chmod +x /home/debian/kopex/start.sh
 # chmod +xs /home/debian/kopex/scripts/*
+
+# ifconfig eth0 192.168.3.51 netmask 255.255.255.0 up
+# ip addr add 192.168.3.51 dev eth0
+# /etc/init.d/networking restart

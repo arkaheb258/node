@@ -28,8 +28,8 @@ module.exports = function (strada) {
 
   strada.socket.on('rozkaz', function (get) {
     console.log('on rozkaz', get);
-    if (strada.master) { console.log(strada.master.connected); }
-    if (strada.master && strada.master.connected) {
+    if (strada.master) { console.log(strada.master.connected2); }
+    if (strada.master && strada.master.connected2) {
       strada.master.emit('rozkaz', get);
       strada.master.once('odpowiedz', function(msg){
           console.log('master on odpowiedz', msg);

@@ -45,10 +45,15 @@
       return;
     }
     socketIo.emit('rozkaz', get);
-    socketIo.on('odpowiedz', function (msg) {
+    socketIo.once('odpowiedz', function (msg) {
     //TODO: last_get jako zmienna globalna (mechanizm kolejkowania jak w strada)
     // socketIo.once('odpowiedz', function (msg) {
-      if (msg.instrID == get.instrID) { res.jsonp(msg.dane); }
+      try {
+        if (msg.instrID == get.instrID) { res.jsonp(msg.dane); }
+      }
+      catch (err) {
+        console.log(err);
+      }
     });
   });
 

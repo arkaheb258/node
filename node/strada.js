@@ -79,7 +79,7 @@ function Strada() {
   if (argv.master) {
     if (argv.master.search('http://') !== 0) { argv.master = 'http://' + argv.master; }
     console.log('master= ',argv.master);
-    self.setMaster(require('socket.io-client')(argv.master, {reconnectionDelay: 500, reconnectionDelayMax: 1000}));
+    self.setMaster(require('socket.io-client')(argv.master, {reconnectionDelay: 500, reconnectionDelayMax: 1000, timeout: 500}));
   }
   if (argv.interval !== undefined) { self.setInterval(argv.interval); }
 }
@@ -113,19 +113,37 @@ Strada.prototype.setMaster = function (master) {
     self.master
       .on('gpar', function(msg){
         self.socket.emit('gpar', msg);
+        if (!self.master.connected2) {
+          console.log('master reconnected ??', self.master.connected2);
+          self.master.connected2 = true;
+        }
       })
       .on('dane', function(dane){
-        if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
+        self.lastMasterEmit = Date.now();
+        // console.log('d',self.lastMasterEmit, self.master.connected2); 
+        if (!self.master.connected2) {
+          console.log('master reconnected ??', self.master.connected2);
+          self.master.connected2 = true;
+        }
+        // if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
       })
       .on('connect', function(){
+        self.master.connected2 = true;
         console.log('master connected');
+        if (self.masterInterval) { clearInterval(self.masterInterval); }
+        self.masterInterval = setInterval(function(){
+          if (self.master.connected2 && Date.now() - self.lastMasterEmit > 1000) {
+            console.log('master not connected ??', self.master.connected2);
+            self.master.connected2 = false;
+          }
+        }, 1000);
       })
       // .on('reconnect', function(val){
         // console.log('master reconnected', val);
       // })
-      // .on('reconnect_attempt', function(){
+      .on('reconnect_attempt', function(){
         // console.log('master try');
-      // })
+      })
       .on('disconnect', function(){
         console.log('master disconnected =', !self.master.connected);
       })
@@ -138,16 +156,19 @@ Strada.prototype.setMaster = function (master) {
 */
 Strada.prototype.connect = function (err) {
   var self = this;
+  if (!self.numerator) { self.numerator = 1; }
   if (self.client && !self.client.destroyed) {
+    console.log('Client destroy', self.client.numer);
     self.client.destroy();
   }
   self.client = new net.Socket();
+  self.client.numer = self.numerator++;
   self.client
     .on('data', function (dane) {
       self.getData(dane);
     })
     .on('connect', function () {
-      console.log('Strada Polaczono ....');
+      console.log('Strada Polaczono ....', self.client.numer);
       self.socket.emit('nazwa', 'strada');
       self.PLCConnected = true;
       self.odswierzParametry(true);
@@ -157,13 +178,21 @@ Strada.prototype.connect = function (err) {
       if (argv.debug) { console.log('error', err); }
     })
     .on('close', function (err) {
-      // if (argv.debug) { console.log('close', err); }
+      // console.log('Client close', err, self.client.numer,self.client.destroyed);
+      if (argv.debug) { console.log('close', err); }
       if (err === true && self.client && !self.client.destroyed) {
         self.client.destroy();
-      } 
+      } else {
+        // console.log('client close', self.client.numer);
+        setTimeout(function () {
+          console.log('timeout self.connect');
+          self.connect();
+        }, 1000);
+      }
     });
 
   self.client.setTimeout(1000, function () {
+    // console.log('client timeout', self.client.numer);
     var dane = {error: 'Strada client error: ' + 'timeout' };
     if (argv.debug) { console.log(dane.error); }
     if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
@@ -175,9 +204,7 @@ Strada.prototype.connect = function (err) {
     self.lastSent = null;
     // czyszczenie kolejki wiadomosci
     self.clearQueue(true);
-    setTimeout(function () {
-      self.connect();
-    }, 1000);
+    self.client.destroy();
   });
   
   self.client.connect(20021, '192.168.3.30');

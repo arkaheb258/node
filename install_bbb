@@ -159,8 +159,8 @@ systemctl disable avahi-daemon.service
 systemctl disable gdm.service
 #music player
 systemctl disable mpd.service
-sudo update-rc.d apache2 disable
-sudo update-rc.d udhcpd disable
+update-rc.d apache2 disable
+update-rc.d udhcpd disable
 
 #!!! zapis do eMMC !!!
 #/boot/uEnv.txt

@@ -18,14 +18,14 @@
   var argv = require('minimist')(process.argv.slice(2));
   argv.port = argv.port || 8888;
   argv.dir = argv.dir || '../build';
-  argv.debug = true;
+  // argv.debug = 2;
 
-  if (argv.debug > 1) {
-    app.use(function (req, res, next) {
+  app.use(function (req, res, next) {
+    if (argv.debug > 1 || req.url === '/') {
       console.log(req.connection.remoteAddress + ' -> ' + req.url);
-      next();
-    });
-  }
+    }
+    next();
+  });
 
   app.use('/test', express.static(__dirname + '/../test'));
   app.use('/logs', express.static(__dirname + '/../logs'));

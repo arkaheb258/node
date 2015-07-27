@@ -12,7 +12,7 @@
 chmod +xs /home/debian/kopex/scripts/*
 cd /home/debian/kopex/
 #nice -n10 node node/forever.js node/webServer.js --dir=../source &
-node node/forever.js node/webServer.js --dir=../source &
+node node/forever.js node/webServer.js &
 node node/forever.js node/strada.js &
 node node/forever.js node/zapisDoPliku.js &
 

@@ -114,7 +114,7 @@ Strada.prototype.setMaster = function (master) {
       .on('gpar', function(msg){
         self.socket.emit('gpar', msg);
         if (!self.master.connected2) {
-          console.log('master reconnected ??', self.master.connected2);
+          console.log('master reconnected ??');
           self.master.connected2 = true;
         }
       })
@@ -122,7 +122,7 @@ Strada.prototype.setMaster = function (master) {
         self.lastMasterEmit = Date.now();
         // console.log('d',self.lastMasterEmit, self.master.connected2); 
         if (!self.master.connected2) {
-          console.log('master reconnected ??', self.master.connected2);
+          console.log('master reconnected ??');
           self.master.connected2 = true;
         }
         // if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
@@ -133,7 +133,7 @@ Strada.prototype.setMaster = function (master) {
         if (self.masterInterval) { clearInterval(self.masterInterval); }
         self.masterInterval = setInterval(function(){
           if (self.master.connected2 && Date.now() - self.lastMasterEmit > 1000) {
-            console.log('master not connected ??', self.master.connected2);
+            console.log('master not connected ??');
             self.master.connected2 = false;
           }
         }, 1000);
@@ -141,11 +141,12 @@ Strada.prototype.setMaster = function (master) {
       // .on('reconnect', function(val){
         // console.log('master reconnected', val);
       // })
-      .on('reconnect_attempt', function(){
+      // .on('reconnect_attempt', function(){
         // console.log('master try');
-      })
+      // })
       .on('disconnect', function(){
         console.log('master disconnected =', !self.master.connected);
+        self.master.connected2 = false;
       })
       ;
   }
@@ -230,6 +231,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
   if (instrNo.length === 2) {
     Dir = 0x101;
     instrNo = instrNo[0];
+    // console.log(instrNo, 'Dir', Dir);
   }
 
   outBuff.writeUInt32LE(DstID, 0);

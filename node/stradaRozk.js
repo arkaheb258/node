@@ -136,7 +136,7 @@ module.exports = function (strada) {
         strada.stradaEnqueue(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc},
           function (dane) {
             console.log('dane 500');
-            console.log(dane);
+            if (dane && dane.error) console.log(dane);
             emitSIN(dane, msg, 'PAR_OK');
             if (!dane.error) {
               strada.odswierzParametry(true);

@@ -134,7 +134,12 @@ function wyluskajParametry(js) {
 function decodeStrada307(buf, outPar) {
   // console.log('decodeStrada307');
   var len, ptr = 0, temp, tempStr;
-  if (typeof outPar === 'string') { outPar = JSON.parse(outPar); }
+  try {
+    if (typeof outPar === 'string') { outPar = JSON.parse(outPar); }
+  }
+  catch (err) {
+    return null;
+  }
   if (outPar && outPar.DANE) {
     len = outPar.DANE.length;
   } else {

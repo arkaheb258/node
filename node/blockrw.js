@@ -31,9 +31,7 @@ BlockRW.prototype.read = function (data, sign) {
   }
   var temp_Len = data.readUInt16LE(this.adr);
   if (temp_Len > data.length) {
-    console.error("temp_Len " + temp_Len);
-    console.error("data.length " + data.length);
-    console.error("this.adr " + this.adr);
+    console.error("temp_Len:", temp_Len, "data.length:", data.length, "this.adr:", this.adr);
     return temp;
   }
   this.adr += 2;

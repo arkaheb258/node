@@ -82,6 +82,7 @@ module.exports = function (Strada) {
    *  @param [in] timeout Czas oczekiwania w kolejce
    */
   Strada.prototype.stradaEnqueue = function (instrNo, data, callback, timeout) {
+    // if (instrNo.length == 2) console.log('stradaEnqueue', instrNo, data);
     var self = this;
     if (!callback) { callback = console.log; }
     if (!timeout) { timeout = 1000; }
@@ -120,11 +121,15 @@ module.exports = function (Strada) {
     var self = this;
     var el = self.queue.shift();
     if (el) {
-      // console.log('response()', el.instrNo.toString(16), el.instrID, retry ? true : false);
-      // console.log(dane);
+      if (debug) {
+        console.log('response()', el.instrNo.toString(16), el.instrID, retry ? true : false);
+        if (dane.error) console.log(dane);
+      }
       if (retry) {
         if (el.instrNo.length === 2) { el.instrNo = el.instrNo[0]; }
-        self.stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (Date.now() - el.time));
+        setTimeout(function () {
+          self.stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (Date.now() - el.time));
+        }, 100);
       } else {
         el.callback(dane);
       }
@@ -188,6 +193,7 @@ module.exports = function (Strada) {
     }
     // console.log(self.lastSent);
     if (error) {
+      // console.log('BOT');
       //BOT
       var error2 = dane.readInt16LE(0);  //numer błędu
       var ErrDesc = dane.slice(4);      //opis błędu
@@ -223,11 +229,8 @@ module.exports = function (Strada) {
       case -2:
       case -4:
       case -5: {
-        console.log('StatusInfNo: ' + sin.statusInfNo + ' - wyslanie ponowne');
-        setTimeout(function () {
-          self.response({error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead}, true);
-          // self.response({error: error, Dir: 0x101, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead}, true);
-        }, 100);
+        if (debug) { console.log('StatusInfNo: ' + sin.statusInfNo + ' - wyslanie ponowne'); }
+        self.response({error: error, Dir: DirR, dane: dane, DataLen: sin.dataLen, RawHead: sin.rawHead}, true);
         break;
       }
       default: {

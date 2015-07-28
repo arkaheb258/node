@@ -1,0 +1,371 @@
+{
+"WER":"0.0.0 - grunt build",
+"WER_NODE":"0.0.0",
+"OPCJE":{
+"czyNaviRamkaPLC":true
+},
+"MENU_TAB":[
+{"widocznosc":true,"OPIS":"F1 - Główny","zawartosc":[
+]},
+{"widocznosc":true,"OPIS":"F2 - Komunikaty","zawartosc":[
+]},
+{"widocznosc":true,"OPIS":"F3 - Pomiary","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep": "Brak","klasa":"gauge","OPIS":"Instalacja elektryczna"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"0","widocznosc":false,"id":"Elektryczne2","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Instalacja elektryczna 2 - temperatury, napięcie"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Hydraulika 1 - sterowanie, filtry"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"Hydraulika2","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Hydraulika 2 - odhamowania, temperatury, przepływ"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"Woda","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Instalacja wodna"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":"Liczniki"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep": "Brak","klasa":"gauge","OPIS":"Instalacja elektryczna"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL_U2-NP_U3-NR","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":"Falowniki"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Instalacja hydrauliczna"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"Woda","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Instalacja wodna"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":null,"dostep": "Brak","klasa":"diagKol","OPIS":"Liczniki"},
+{"typKombajnu":"GUL","widocznosc":false,"id":"E1_E2_E3","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":"Enkodery"},
+{"typKombajnu":"GUL","widocznosc":false,"id":"idWykresyD3","katalog":"wykresyRT","dostep": "Brak","klasa":null,"OPIS":"Wykresy"}
+]},
+{"widocznosc":true,"OPIS":"F4 - Urządzenia","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"id":"PLCS-AI_PLCS-DI_PLCS-DO","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":"Sterownik bezpieczeństwa"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"SA-AI_SA-BC_SA-BZ-BO_SA-BT-BP-BL_SA-DI_SA-DO","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Skrzynia automatyki"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"LTMR-PE_CBZU-PTC","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Zabezpieczenia"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Zabezpieczenia silników LTMR"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"A14-A32-DI_A14-A32-DO_A15-A33_A16-A34_A17-A35","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Pulpit sterowniczy"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"YL-DO-1_YL-DO-2_YL-AO","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Rozdzielacze"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"JOY-REZ_JOY-CAN_BK1-BK3_RADIO","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Joysticki, Enodery, Radio"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep": "Brak","klasa":"klDiagnBloki","OPIS":"Diagnostyka bloków"},
+{"typKombajnu":"KTW","widocznosc":false,"id":"noweUPT","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Testy nowego UPT"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id": "PLCS1_PLCS2_PLCS3_PLCS4_PLCS5_PLCS6","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":"Sterownik PLCS"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id": "PLCT3_PLCT4_PLCT5_PLCT6_PLCT7","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Sterownik PLCT"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"A14_A15_A16","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Pulpit IKW"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"AO1_AO2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"KPS sygnały wyjściowe: AO1, AO2"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"AI1a_AI1b_AI2a_AI2b","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"KPS sygnały wejściowe: AI1, AI2"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Zabezpieczenia silników LTMR"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"A11_MJ_MW_BK1_BK2_BK3","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Radio, manipulatory (CAN), enkodery"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"PLCS1_PLCS2_PLCS3_PLCS4_PLCS5_PLCS6_PLCS7","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":"Sterownik bezpieczeństwa PLCS"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"PLCT2_PLCT3_PLCT4_PLCT5_PLCT6_PLCT7_PLCT8_PLCT9_PLCT10","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Sterownik technologiczny PLCT"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"AI1a_AI1b_AI2a_AI2b","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"KPS sygnały wejściowe: AI1, AI2"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"AO1_AO2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"KPS sygnały wyjściowe: AO1, AO2"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"A32_A33_A34_A35","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Pulpit IKW"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Zabezpieczenia silników LTMR"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"A11_MJ_MW_BK1_BK2_BK3","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Radio, manipulatory (CAN), enkodery"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":false,"id":"noweUPT","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Testy nowego UPT"},
+{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep": "Brak","klasa":"klDiagnBloki","OPIS":"Diagnostyka bloków"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"GUL_CP-CNP","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":"Czujniki głowicy, napędów posuwu"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"E1-E3_SK-HUNAP","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Trasa"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"SA-AI_SA-DI_SA-DO_SA-LED","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Skrzynia automatyki"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"SN-IN1_SN-IN2_SN-OUT1_SN-OUT2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"System nadrzędny KES"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"4F2_PTC_BZU-CZU_PE-NOTAUS","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Zabezpieczenia"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"3F1-M1_3F2-M2-NL_3F3-M3-NP_3F4-M4-NR_3F5-T1","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Przetworniki temperatury UPT"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"UWIin1_UWIin2_UWIout1_UWIout2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"UWI"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep": "Brak","klasa":"klDiagnBloki","OPIS":"Diagnostyka bloków"}
+]},
+{"widocznosc":true,"OPIS":"F5 - Ustawienia","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idParametry","katalog": "parametry","dostep": "Brak","klasa": "parametry","OPIS":"Parametry"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"poziomDostepu","katalog":"poziomDostepu","dostep": "Brak","klasa": "pozDost","OPIS":"Ustaw poziom dostępu"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"dataCzas","katalog":"dataCzas","dostep":"Srvc","klasa": "ustawDate","OPIS":"Ustaw datę oraz czas"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"pelnaListaKomuniktow","katalog":"komunikatyPelnaLista","dostep": "Brak","klasa": "pelnaLista","OPIS":"Pełna lista komunikatów"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"rozkazyDoPLC","katalog":"rozkazy","dostep": "Brak","klasa":"rozkazyPLC","OPIS":"Rozkazy PLC"},
+{"typKombajnu":"KTW","widocznosc":false,"id":"elektrKsiazkaSerw","katalog":"ksiazkaSerwisowa","dostep": "Brak","klasa":"elektronicznaKsiazkaSerwisowa","OPIS":"Elektroniczna książka serwisowa"},
+{"typKombajnu":"ALL","widocznosc":false,"id":"idPodmianaSterownika","katalog":"podmianaPLC","dostep":"Srvc","klasa":null,"OPIS":"Operacje na plikach"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idPokazRamkeTcp","katalog":"ramkaTcp","dostep":"Srvc","klasa":null,"OPIS":"Ramka komunikacyjna"},
+{"typKombajnu":"GUL","widocznosc":true,"id":"idPlanszaTrybSerwisowy","katalog":"gulTrybSerwisowy","dostep":"Srvc","klasa":null,"OPIS":"Tryb serwisowy"}
+]},
+{"widocznosc":true,"OPIS":"F6 - Język","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykPolski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Polski"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykRosyjski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Rosyjski"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykAngielski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Angielski"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykChinski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Chiński"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykHiszpanski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Hiszpański"}
+]},
+{}],
+"TEKSTY":{
+"paramWys": "Wysyłam…",
+"parametr": "Parametr",
+"blad": "Błąd",
+"paramZakres": "Zakres wartości",
+"paramPrecyzja":"Precyzja",
+"paramPrecyzja2": "(miejsca po przecinku)",
+"paramZlaWartosc":"Zła wartość",
+"wartAktualna":"Aktualnie ustawiona wartość",
+"anuluj": "Escape - anuluj ",
+"zatwierdz": "Enter - zatwierdź",
+"pozDostTytul": "Podaj kod dostępu",
+"pozDost": "Poziom dostępu",
+"pozDostKodNOK":"Kod niepoprawny",
+"blokLiczbDost": "Liczba dostępnych blokad",
+"blokZaloz":"Załóż blokadę na komunikat:",
+"blokZdejmij": "Zdejmij blokadę na komunikat:",
+"tab1Nawi": "Przewijanie komunikatów",
+"tab1LiczbAlrm": "Alarmy",
+"tab1LiczbOstrz": "Ostrzeżenia",
+"tab1LiczbBlokad": "Blokady",
+"alarm":"Alarm",
+"ostrz":"Ostrzeżenie",
+"brakAlar": "Brak alarmów",
+"BladTekstu":"Błąd wczytania tekstu dla komunikatu",
+"brakPolTCP1":"Monitor  ---x---  Node  -------  PLC1",
+"brakPolTCP2": "Monitor  -------  Node  ---x---  PLC1",
+"infoPar":"Parametry",
+"brakDostepu": "Wymagany wyższy poziom dostępu",
+"pelnaLista": "Pełna lista komunikatów",
+"kod": "Kod",
+"wylogowano":"Wylogowano",
+"nieBlokowalny": "KOMUNIKAT NIE BLOKOWALNY",
+"bladPLC1": "Błąd sterownika PLC1 - połączenie FTP",
+"odswiez": "Restart za",
+"antykolizja": "Uszkodzenie antykolizji - praca pod szczególnym nadzorem użytkownika!!! Potwierdź klawiszem ENTER",
+"antykolizja2":"Uszkodzenie antykolizji - praca pod szczególnym nadzorem użytkownika!!! ",
+"pozycjaOrgX": "OrganX",
+"pozycjaOrgY":"OrganY",
+"katDoOsiWyrob": "Kąt",
+"laserPrzod": "Laser przód",
+"laserTyl": "Laser tył",
+"potwierdzenieEKS": "Potwierdzenie czynności serwisowej nr:",
+"przypomnienieEKS": "Przypomnienie o czynnościach serwisowych",
+"dniDoPrzegladu": "dni do przeglądu",
+"dniPoTerminie": "dni po terminie przeglądu",
+"OK": "OK",
+"potwierdzenie": "Potwierdzenie czynności",
+"miejsceSterowania":  ["Brak", "Lokalne", "Zdalne", "Radiowe"],
+"diagnostykaBlokad":  ["Brak Blokad", "Blokada włączona"],
+"typZraszania": ["Brak", "Sektor G48D06", "Sektor G48D08", "Sektor G57D06", "Sektor G57D08", "Kurtyna PowWod", "Kurtyna Wodna", "Sektor G48D06KPW", "Sektor G48D08KPW", "Sektor G57D06KPW", "Sektor G57D08KPW", "Sektor G48D06KW", "Sektor G48D08KW", "Sektor G57D06KW", "Sektor G57D08KW", "G57D06KPW", "G57D06KW"],
+"lacznikS5": ["Brak wyboru", "Praca",  "Test", "Pulpit zdalny", "Reset"],
+"typObudowyLP":  ["Brak", "ŁP 1", "ŁP 2", "ŁP 3", "ŁP 4", "ŁP 5", "ŁP 6", "ŁP 7", "ŁP 8", "ŁP 9", "ŁP 10", "ŁP 11", "ŁP 12", "ŁP 13", "ŁP 14", "ŁP 15", "ŁP 16", "ŁP 17", "ŁP 18", "ŁP 19"],
+"zadzialanieAntykolizji": ["Brak", "Kolizja"],
+"sprawnoscAntykolizji": ["OK", "Awaria"],
+"poziomDostepuUzytkownika": ["Brak", "Kopalnia", "Kopalnia2", "Serwis", "Adv"],
+"trwaPlukanieFiltra": ["-", "W trakcie"],
+"trwaTestZabezpieczen": ["NIE", "TRWA TEST"],
+"zezwoleniaNapedow":  ["Zezwolenia napędów", "Organ", "Hydraulika", "Zgrzebłowy", "Odstawa", "Woda"],
+"ustawAntykolizje1":"Podnieść głowicę ładującą (stół) maksymalnie do góry i następnie ustawić wysięgnik w pozycji kolizyjnej (stół ma mieć kontakt z organem)",
+"ustawAntykolizje2":"Ustawić wysięgnik w osi podłużnej kombajnu (oś X - wychylenie lewo/prawo) oraz ustawić wysięgnik równolegle do spągu (oś Y - wysokość)",
+"idTrybPracy": ["Brak", "Wydobywczy", "Rewizja", "Spinanie", "Lokalny"],
+"idPolaczenieKES": ["OK", "Brak połączenia"],
+"idSterowanieposuwGUL1": ["Brak", "Transmisja", "Wejścia IO", "Symulacja"],
+"idSterowanieposuwGUL2": ["Brak", "Moment M/F:NL", "Moment M/F:NP", "Częstotliwość M/F:NL", "Częstotliwość M/F:NP", "Momentowy ", "Częstotliwość", "Prędkościowy"],
+"idSterowanieposuwRolka1": ["Brak", "Transmisja", "Wejścia IO", "Symulacja"],
+"idSterowanieposuwRolka2": ["Brak", "Momentowy ", "Częstotliwość ", "Prędkościowy"],
+"zmianaKonfiguracji":"Zmiana konfiguracji",
+"bladKomunikacji":"Błąd komunikacji",
+"brakWolnychBlokad":"Brak wolnych blokad",
+"idFal1_kierunek": ["Stop", "Lewo", "Prawo"],
+"idFal2_kierunek": ["Stop", "Lewo", "Prawo"],
+"idFal3_kierunek": ["Stop", "Lewo", "Prawo"],
+"restart":"Restart …",
+"ustaw":"Ustaw",
+"brakPolPulpit":"Brak połączenia z pulpitem",
+"uruchomPonownie":"Uruchom ponownie kombajn",
+"TEKSTYkoniec": ""},
+"ROZKAZY":[
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Kalibracja czujników położenia napędów hydraulicznych (antykolizja)","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"id":"ustawAntykolizje1","dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 4, "pozycja": 0},"OPIS":"Zatwierdzenie pozycji kolizji wysięgnik-stół "},
+{"typKombajnu":"KTW","widocznosc":true,"id":"ustawAntykolizje2","dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 5, "pozycja": 0},"OPIS":"Zatwierdzenie pozycji wysięgnika w osi korpusu kombajnu"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 1, "pozycja": 0},"MIN": -160.0,"MAX":160.0,"PREC":2,"OPIS":"Opcja: Podaj kąt głowicy ładującej (stołu)"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 2, "pozycja": 0},"MIN": -160.0,"MAX":160.0,"PREC":2,"OPIS":"Opcja: Podaj kąt wysięgnika oś Y (podnoszenie)"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 3, "pozycja": 0},"MIN": -160.0,"MAX":160.0,"PREC":2,"OPIS":"Opcja: Podaj kąt wysięgnika oś X (obrót)"}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Resetuj wszystkie liczniki czasu pracy dzienne","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 20, "wartosc": 0},"OPIS":"Resetuj"}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Licznik czasu pracy kombajnu","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 1, "wartosc": 0},"OPIS":"Resetuj czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 1, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Ustaw czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 11, "wartosc": 0},"OPIS":"Resetuj czas dzienny"}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Licznik czasu pracy organu","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 2, "wartosc": 0},"OPIS":"Resetuj czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 2, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Ustaw czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 12, "wartosc": 0},"OPIS":"Resetuj czas dzienny"}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Licznik czasu pracy hydrauliki","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 3, "wartosc": 0},"OPIS":"Resetuj czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 3, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Ustaw czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 13, "wartosc": 0},"OPIS":"Resetuj czas dzienny"}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Licznik czasu pracy przenośnika zgrzebłowego","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 4, "wartosc": 0},"OPIS":"Resetuj czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 4, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Ustaw czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 14, "wartosc": 0},"OPIS":"Resetuj czas dzienny"}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"Licznik czasu pracy przenośnika odstawy","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 5, "wartosc": 0},"OPIS":"Resetuj czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 5, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Ustaw czas całkowity"},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 15, "wartosc": 0},"OPIS":"Resetuj czas dzienny"}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"Zapisz aktualny numer sekcji","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "wWartosc","wID": 0, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":2,"OPIS":"Zapisz aktualny numer sekcji GUL oraz rolki"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "wWartosc","wID": 0, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":2,"OPIS":"Zapisz aktualny numer sekcji rolki"}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"Liczniki","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 20, "wartosc": 0},"OPIS":"Resetuj wszystkie liczniki czasu pracy dzienne"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasPracy_20A",   "wID": 0, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Zapisz całkowity czas pracy – kombajn"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasPracy_20A",   "wID": 3, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Zapisz całkowity czas pracy - organ GUL"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasJazdy_20B",   "wID": 0, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Zapisz całkowity czas jazdy – napęd lewy"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasJazdy_20B",   "wID": 1, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Zapisz całkowity czas jazdy – napęd prawy"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasJazdy_20B",   "wID": 2, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":"Zapisz całkowity czas jazdy – napęd rolki"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "calkDystKomb_20C", "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":1,"OPIS":"Zapisz całkowity dystans kombajnu"}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"Zapisz miejsce sterowania posuwem","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "miejsceSterPosuw_207", "wWartosc": 1},"OPIS":"Transmisja CAN"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "miejsceSterPosuw_207", "wWartosc": 2},"OPIS":"Po wejściach I/O"}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"Zapisz tryb pracy falowników posuwu","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 1},"OPIS":"Master/Follower momentowy – master str. lewa"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 2},"OPIS":"Master/Follower momentowy – master str. prawa"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 3},"OPIS":"Master/Follower częstotliwościowy – master str. lewa"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 4},"OPIS":"Master/Follower częstotliwościowy – master str. prawa"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 5},"OPIS":"Momentowy"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 6},"OPIS":"Częstotliwościowy"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 7},"OPIS":"Prędkościowy "}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"Zapisz tryb pracy falownika rolki","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 8},"OPIS":"Momentowy"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 9},"OPIS":"Częstotliwościowy"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 10},"OPIS":"Prędkościowy"}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"Zapisz tryb pracy ciągników ","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 0},"OPIS":"Ciągniki wyłączone"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 1},"OPIS":"Praca ciągnika lewego – z rolką"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 2},"OPIS":"Praca ciągnika prawego – z rolką"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 3},"OPIS":"Praca obu ciągników – z rolką"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 4},"OPIS":"Praca ciągnika lewego – bez rolki"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 5},"OPIS":"Praca ciągnika prawego – bez rolki"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 6},"OPIS":"Praca obu ciągników – bez rolki"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 7},"OPIS":"Praca samej rolki"}
+]},
+{"typKombajnu":"ALL","widocznosc":true,"OPIS":"Wizualizacja","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "jsonZPLC", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":"Aktualizuj pliki wizualizacji z PLC"}
+]},
+{}],
+"MENU_KOMUNIKATY":[
+{"id":"accordion","zawartosc":[
+{"id":"listaAlarmy","OPIS":"Alarmy"},
+{"id":"listaOstrzezenia","OPIS":"Ostrzeżenia"},
+{"id":"listaBlokady","OPIS":"Założone blokady"},
+{"id":"listaHistoria","OPIS":"Historia komunikatów"}
+]},
+{}],
+"MENU_POZ_DOST":[
+{"OPIS":"Wybierz poziom dostępu","zawartosc":[
+{"widocznosc":true,"id":"User","OPIS":"Użytkownik 1"},
+{"widocznosc":true,"id":"User2","OPIS":"Użytkownik 2"},
+{"widocznosc":true,"id":"Srvc","OPIS":"Serwis"},
+{"widocznosc":true,"id":"Adv","OPIS":"Zaawansowany"},
+{"widocznosc":true,"id":"wyloguj","OPIS":"Wyloguj użytkownika"}
+]},
+{}],
+"MENU_PAR":[
+{"widocznosc":true,"id":"mg_edycja","dostep":"Brak","OPIS":"Edycja parametrów","zawartosc":[
+]},
+{"widocznosc":true,"id":"mg_domyslne","dostep":"Srvc","OPIS":"Przywróć parametry domyślne","zawartosc":[
+{"widocznosc":true,"id":"default","OPIS":"Tak"},
+{"widocznosc":true,"id":  "ms_nie","OPIS":"Nie"}
+]},
+{"widocznosc":true,"id": "mg_wczytaj","dostep":"Adv","OPIS":"Wczytaj parametry z pliku","zawartosc":[
+{"widocznosc":true,"id":"loadFileUser1","OPIS":"Użytkownik 1"},
+{"widocznosc":true,"id":"loadFileUser2","OPIS":"Użytkownik 2"},
+{"widocznosc":true,"id":"loadFileUser3","OPIS":"Użytkownik 3"},
+{"widocznosc":true,"id":"loadFileUser4","OPIS":"Użytkownik 4"},
+{"widocznosc":true,"id":"loadFileUser5","OPIS":"Użytkownik 5"}
+]},
+{"widocznosc":true,"id": "mg_zapisz","dostep":"Brak","OPIS":"Zapisz parametry do pliku","zawartosc":[
+{"widocznosc":true,"id":"saveFileUser1","OPIS":"Użytkownik 1"},
+{"widocznosc":true,"id":"saveFileUser2","OPIS":"Użytkownik 2"},
+{"widocznosc":true,"id":"saveFileUser3","OPIS":"Użytkownik 3"},
+{"widocznosc":true,"id":"saveFileUser4","OPIS":"Użytkownik 4"},
+{"widocznosc":true,"id":"saveFileUser5","OPIS":"Użytkownik 5"}
+]},
+{"widocznosc":true,"id":"mg_poziomDostepu","dostep":"Brak","OPIS":"Zmień poziom dostępu","zawartosc":[
+]},
+{}],
+"MENU_ZMIANA_PLC":[
+{"widocznosc":true,"id":"mg_zrzutWszystkich","dostep":"Serwis","rozkaz":{"rozkaz": "podmianaPLC",  "typ": "zapisz","wartosc": "wszystkie"},"OPIS":"Zrzut wszystkich danych","zawartosc":[
+]},
+{"widocznosc":true,"id":"mg_przywrocenieWszystkich","dostep":"Serwis","rozkaz":{"rozkaz": "podmianaPLC",  "typ": "odczytaj", "wartosc": "wszystkie"},"OPIS":"Przywrócenie wszystkich danych","zawartosc":[
+]},
+{"widocznosc":true,"id":"mg_zrzutWybor","dostep":"Serwis","OPIS":"Wybierz dane do zrzutu z PLC","zawartosc":[
+{"widocznosc":true,"id":"zrzutPar","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "parametryZPLC"},"OPIS":"Zapisz plik z parametrami"},
+{"widocznosc":true,"id":"zrzutEKS","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "eksZPLC"},"OPIS":"Zapisz pliki EKS"},
+{"widocznosc":true,"id":"zrzutSkraw","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "skrawZPLC"},"OPIS":"Zapisz pliki skrawu"},
+{"widocznosc":true,"id":"zrzutWizuNaPLC","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonZPLC"},"OPIS":"Przegraj z PLC pliki json"},
+{"widocznosc":true,"id":"zrzutWizuNaUSB","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonZUsb"},"OPIS":"Przegraj z USB pliki json"}
+]},
+{"widocznosc":true,"id":"mg_przywrocenieWybor","dostep":"Serwis","OPIS":"Wybierz dane do przywrócenia na PLC","zawartosc":[
+{"widocznosc":true,"id":"przywrocPar","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "parametryNaPLC"},"OPIS":"Przywróć plik z parametrami"},
+{"widocznosc":true,"id": "przywrocEKS","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "eksNaPLC"},"OPIS":"Przywróć pliki EKS"},
+{"widocznosc":true,"id":"przywrocSkraw","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "skrawNaPLC"},"OPIS":"Przywróć pliki skrawu"},
+{"widocznosc":true,"id": "przywrocZPLC","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonNaPLC"},"OPIS":"Przegraj na PLC pliki json"},
+{"widocznosc":true,"id":"przywrocZUSB","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonNaUsb"},"OPIS":"Przegraj na USB pliki json"}
+]},
+{}],
+"MENU_EKS":[
+{"widocznosc":true,"id":"tab1eks","OPIS":"Codzienne","zawartosc":[
+{"widocznosc":true,"id":"eks0","klasa":true,"OPIS":"Potwierdź wykonanie czynnności codziennych"},
+{"widocznosc":true,"id":"eks0000","klasa":false,"OPIS":"Sprawdzić poziom oleju w przekładni organu"},
+{"widocznosc":true,"id":"eks0001","klasa":false,"OPIS":"Kontrola odpowietrzania przekładni"},
+{"widocznosc":true,"id":"eks0002","klasa":false,"OPIS":"Sprawdzić poziom cieczy hydraulicznej"},
+{"widocznosc":true,"id":"eks0003","klasa":false,"OPIS":"Sprawdzić wszystkie filtry w układzie hydraulicznym - stopień zabrudzenia (wskaźniki optyczne), uszkodzenia mechaniczne"},
+{"widocznosc":true,"id":"eks0004","klasa":false,"OPIS":"Sprawdzić działanie urządzeń kontroli ciśnienia i temperatury"},
+{"widocznosc":true,"id":"eks0005","klasa":false,"OPIS":"Kontrola stanu zbiornika z smarem w pompie centralnego smarowania"},
+{"widocznosc":true,"id":"eks0006","klasa":false,"OPIS":"Sprawdzić system smarowania - szczelność przewodów, uszkodzenia"},
+{"widocznosc":true,"id":"eks0007","klasa":false,"OPIS":"Skontrolować urządzenie Ppoż. - sprawność, drożność dysz"},
+{"widocznosc":true,"id":"eks0008","klasa":false,"OPIS":"Sprawdzić przewody i rury pod względem szczelności"},
+{"widocznosc":true,"id":"eks0009","klasa":false,"OPIS":"Sprawdzić naciąg łańcucha przenośnika"},
+{"widocznosc":true,"id":"eks0010","klasa":false,"OPIS":"Sprawdzić zgrzebła przenośnika pod katem zużycia i uszkodzenia"},
+{"widocznosc":true,"id":"eks0011","klasa":false,"OPIS":"Sprawdzić filtry wodne - stopień zabrudzenia, uszkodzenia mechaniczne"},
+{"widocznosc":true,"id":"eks0012","klasa":false,"OPIS":"Kontrola i prace konserwacyjne w zakresie urządzeń układu wodnego zgodnie z wymaganiami zawartymi w rozdz. 3.4. System wodny"},
+{"widocznosc":true,"id":"eks0013","klasa":false,"OPIS":"Sprawdzić zużycie noży urabiających"},
+{"widocznosc":true,"id":"eks0014","klasa":false,"OPIS":"Uzupełnić brakujące noże oraz wymienić uszkodzone w zależności od stopnia zużycia (Ocena zużycia noży, rys 21200388)"},
+{"widocznosc":true,"id":"eks0015","klasa":false,"OPIS":"Wymienić zużyte lub uszkodzone zgrzebła przenośnika"},
+{"widocznosc":true,"id":"eks0016","klasa":false,"OPIS":"Skontrolować śruby mocujące głowice urabiające oraz śruby mocujące przekładnie do wysięgnika - uszkodzenia mechaniczne, dokręcenie"}
+]},
+{"widocznosc":true,"id":"tab2eks","OPIS":"Tygodniowe","zawartosc":[
+{"widocznosc":true,"id":"eks100","klasa":true,"OPIS":"Kontrola śrub łączeniowych"},
+{"widocznosc":true,"id":"eks101","klasa":true,"OPIS":"Kontrola pompy centralnego smarowania"},
+{"widocznosc":true,"id":"eks102","klasa":true,"OPIS":"Kontrola chłodnic olejowych pod względem zanieczyszczeń i nieszczelności"},
+{"widocznosc":true,"id":"eks103","klasa":true,"OPIS":"Sprawdzenie wszystkich przekładni pod katem wycieków"},
+{"widocznosc":true,"id":"eks104","klasa":true,"OPIS":"Kontrola łańcucha przenośnika i zgrzebeł pod katem stanu zużycia i kompletności"},
+{"widocznosc":true,"id":"eks105","klasa":true,"OPIS":"Kontrola właściwego napięcia łańcucha przenośnika i mechanizmu jezdnego"},
+{"widocznosc":true,"id":"eks106","klasa":true,"OPIS":"Smarowanie maszyny zgodnie z harmonogramem  smarowania"},
+{"widocznosc":true,"id":"eks107","klasa":true,"OPIS":"Kontrola wszystkich odpowietrzników w przekładniach zębatych"},
+{"widocznosc":true,"id":"eks108","klasa":true,"OPIS":"Kontrola wyłączników awaryjnych (STOP) pod kątem właściwego funkcjonowania"},
+{"widocznosc":true,"id":"eks109","klasa":true,"OPIS":"Kontrola przekaźników nad prądowych pod katem właściwego ustawienia"},
+{"widocznosc":true,"id":"eks110","klasa":true,"OPIS":"Kontrola przewodów elektrycznych pod katem uszkodzeń i właściwego ułożenia"},
+{"widocznosc":true,"id":"eks111","klasa":true,"OPIS":"Kontrola skrzynek i przyłączy elektrycznych"},
+{"widocznosc":true,"id":"eks112","klasa":true,"OPIS":"Kontrola przewodów hydraulicznych i wodnych"},
+{"widocznosc":true,"id":"eks113","klasa":true,"OPIS":"Wyczyścić gąsienice mechanizmu  jazdy wodą"},
+{"widocznosc":true,"id":"eks114","klasa":true,"OPIS":"Smarować pierścienie ślizgowe w obrotnicy (wg. pkt. IO 3.2.11)"}
+]},
+{"widocznosc":true,"id":"tab3eks","OPIS":"Miesięczne","zawartosc":[
+{"widocznosc":true,"id":"eks200","klasa":true,"OPIS":"Kontrolować i oczyszczać z osadów pyłu i cząstek skroplonej wody wszystkie obudowy, skrzynki oraz osłony instalacji elektrycznej"},
+{"widocznosc":true,"id":"eks201","klasa":true,"OPIS":"Kontrolować napięcie zasilania"},
+{"widocznosc":true,"id":"eks202","klasa":true,"OPIS":"Kontrolować stan zanieczyszczenia olejów przekładniowych (pkt. 3.2.2)"},
+{"widocznosc":true,"id":"eks203","klasa":true,"OPIS":"Kontrolować stan zanieczyszczenia oleju hydraulicznego (pkt. 3.3.4)"},
+{"widocznosc":true,"id":"eks204","klasa":true,"OPIS":"Sprawdzić rezystancje izolacji obwodów głównych i sterowniczych"},
+{"widocznosc":true,"id":"eks205","klasa":true,"OPIS":"Konserwacja manipulatorów krzyżowych (joysticks)"}
+]},
+{"widocznosc":true,"id":"tab4eks","OPIS":"Motogodziny","zawartosc":[
+{"widocznosc":true,"id":"eks300","klasa":true,"OPIS":"Czas pracy kombajnu - MTG "},
+{"widocznosc":true,"id":"eks302","klasa":true,"OPIS":"Kontrola pracy silnika organu – MTG"},
+{"widocznosc":true,"id":"eks304","klasa":true,"OPIS":"Kontrola pracy silnika gwiazdy lewej – MTG"},
+{"widocznosc":true,"id":"eks306","klasa":true,"OPIS":"Kontrola pracy silnika gwiazdy prawej - MTG"},
+{"widocznosc":true,"id":"eks308","klasa":true,"OPIS":"Kontrola pracy przenośnika zgrzebłowego  - MTG"},
+{"widocznosc":true,"id":"eks310","klasa":true,"OPIS":"Kontrola pracy silnika jazdy lewej - MTG"},
+{"widocznosc":true,"id":"eks312","klasa":true,"OPIS":"Kontrola pracy silnika jazdy prawej - MTG"},
+{"widocznosc":true,"id":"eks314","klasa":true,"OPIS":"Kontrola pracy silnika hydrauliki - MTG"},
+{"widocznosc":true,"id":"eks316","klasa":true,"OPIS":"Kontrola pracy przenośnika odstawy  - MTG"},
+{"widocznosc":true,"id":"eks301","klasa":true},
+{"widocznosc":true,"id":"eks303","klasa":true,"OPIS":"Dokonano wymiany silnika organu"},
+{"widocznosc":true,"id":"eks305","klasa":true,"OPIS":"Dokonano wymiany silnika gwiazdy lewej"},
+{"widocznosc":true,"id":"eks307","klasa":true,"OPIS":"Dokonano wymiany silnika gwiazdy prawej"},
+{"widocznosc":true,"id":"eks308","klasa":true,"OPIS":"Dokonano wymiany przenośnika zgrzebłowego"},
+{"widocznosc":true,"id":"eks311","klasa":true,"OPIS":"Dokonano wymiany silnika jazdy lewej"},
+{"widocznosc":true,"id":"eks313","klasa":true,"OPIS":"Dokonano wymiany silnika jazdy prawej"},
+{"widocznosc":true,"id":"eks315","klasa":true,"OPIS":"Dokonano wymiany silnika hydrauliki"},
+{"widocznosc":true,"id":"eks317","klasa":true,"OPIS":"Dokonano wymiany przenośnika odstawy"}
+]},
+{"widocznosc":true,"id":"tab5eks","OPIS":"Nadzór zdalny","zawartosc":[
+]},
+{}
+]
+}

@@ -9,19 +9,14 @@
 # Description:       Serwer dla wizualizacji node.js 
 ### END INIT INFO
 
-chmod +xs /home/debian/kopex/scripts/*
+echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
+hwclock -s -f /dev/rtc1
+hwclock -w
+ifconfig eth0 192.168.3.51 netmask 255.255.255.0 up
+/sbin/route add -net 0.0.0.0 gw 192.168.3.1 eth0
+
 cd /home/debian/kopex/
-#nice -n10 node node/forever.js node/webServer.js --dir=../source &
+chmod +xs /home/debian/kopex/scripts/*
 node node/forever.js node/webServer.js &
 node node/forever.js node/strada.js &
 node node/forever.js node/zapisDoPliku.js &
-
-# date >> /tmp/my_log_w
-# cd /home/debian/kopex/
-# npm run web &
-# pwd >> /tmp/my_log_w
-# hwclock -f /dev/rtc1 >> /tmp/my_log_w
-
-#echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
-#hwclock -s -f /dev/rtc1
-#hwclock -w

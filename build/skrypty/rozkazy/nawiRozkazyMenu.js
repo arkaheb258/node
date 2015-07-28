@@ -1,0 +1,2 @@
+/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
+define(["jquery","zmienneGlobalne","scroll"],function(a,b){"use strict";var c=function(a,c){switch(a){case b.kodyKlawiszy.lewo:c.menu("collapse");break;case b.kodyKlawiszy.prawo:c.menu("expand");break;case b.kodyKlawiszy.gora:c.menu("previous");break;case b.kodyKlawiszy.dol:c.menu("next");break;case b.kodyKlawiszy.enter:require(["rozkazy/edytuj"],function(a){a.inicjacja(),c.menu("select")});break;case b.kodyKlawiszy.escape:require(["rozkazy"],function(a){a.zamknij()})}};return{wykonaj:c}});

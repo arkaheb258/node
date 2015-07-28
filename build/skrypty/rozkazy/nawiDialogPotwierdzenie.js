@@ -1,0 +1,2 @@
+/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
+define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){switch(c){case b.kodyKlawiszy.escape:a("#DialogEdycjaRozkazu").length>0&&require(["rozkazy/edytuj"],function(a){a.zamknij()});break;case b.kodyKlawiszy.enter:require(["rozkazy/edytuj"],function(a){a.wyslijpBrak()})}};return{wykonaj:c}});

@@ -350,7 +350,12 @@ Strada.prototype.send = function (instrNo, instrID, data) {
       tempOutBuff.writeUInt16LE(12, 2);
       // console.log('uiCzytajObszarNr: '+data);
       tempOutBuff.writeUInt16LE(data, 4); // uiCzytajObszarNr
-      if (self.ntpDate > 0) {
+      if (typeof self.ntpDate === 'string') {
+        self.ntpDate = -3;
+        setTimeout(function() {
+          self.ntpDate = -1;
+        }, 1000);
+      } else if (self.ntpDate > 0) {
         if (argv.debug) { console.log('Sterownik dostaje date', self.ntpDate); }
         tempOutBuff.writeUInt16LE(1, 6);
         tempOutBuff.writeUInt32LE(Math.round(self.ntpDate / 1000), 8);

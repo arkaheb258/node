@@ -1,2 +1,142 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON","klawiatura/nawiWspolne"],function(a,b,c,d){"use strict";var e,f=!1,g=function(c,g){var h,i,j=a("#tabs").tabs("option","active"),k=0,l=function(){g.hasClass("przyciskMenuGlowne")&&(b.buttonMemory[j]=a(g).attr("id"))},m=function(){f=!0,a(g).addClass("ui-state-error"),a(g).button("option","label",b.danePlikuKonfiguracyjnego.TEKSTY.brakDostepu),setTimeout(function(){f=!1,a(g).removeClass("ui-state-error"),a(g).button("option","label",i)},1500)};switch(k=a("#tabs").children().children("li").length-1,c){case b.kodyKlawiszy.lewo:l(),0===j?j=k:j-=1,j=d.sprawdzNieatywneTaby("-",j),a("#tabs").tabs("option","active",j),d.sprawdzPamiecButtona(j),d.wejdzNaKomunikaty(j);break;case b.kodyKlawiszy.prawo:l(),j===k?j=0:j+=1,j=d.sprawdzNieatywneTaby("+",j),a("#tabs").tabs("option","active",j),d.sprawdzPamiecButtona(j),d.wejdzNaKomunikaty(j);break;case b.kodyKlawiszy.gora:l(),0===g.prev().length?g.parent().find(".przyciskMenuGlowne").last().addClass("kopex-selected").addClass(b.ui_state):g.prev().addClass("kopex-selected").addClass(b.ui_state);break;case b.kodyKlawiszy.dol:l(),0===g.next().length?g.parent().find(".przyciskMenuGlowne").first().addClass("kopex-selected").addClass(b.ui_state):g.next().addClass("kopex-selected").addClass(b.ui_state);break;case b.kodyKlawiszy.enter:switch(h=a(g).attr("id"),i=a(g).text(),l(),b.poziomDostepu){case"Brak":if(a(g).hasClass("Srvc"))return void(f||m());break;case"User":case"User2":if(a(g).hasClass("Srvc"))return void(f||m())}return h=a(g).attr("id"),a("#"+h).trigger("click"),void a("#"+h).removeClass("kopex-selected").removeClass(b.ui_state);case b.kodyKlawiszy.escape:e=a(".kopex-memory"),a(e).removeClass("kopex-memory"),a(g).addClass("kopex-memory"),j=1,a("#tabs").tabs("option","active",j),d.wejdzNaKomunikaty(j),require(["komunikaty/tooltip"],function(a){a.naAccordionie(0)});break;default:return}g.removeClass("kopex-selected").removeClass(b.ui_state)};return{wykonaj:g}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON', 'klawiatura/nawiWspolne'], function ($, varGlobal, json, nawiWspolne) { // , 'parametry' , parametry
+    'use strict';
+
+
+    var oldMemory,
+        infoBrakDostepuAktywne = false,
+
+        wykonaj = function (kod, selected) {
+            var tabIndex = $('#tabs').tabs("option", "active"),
+                idButtona, // Pobranie indexu aktywnego tabu,
+                tytulButtona,
+                ostatniTab = 0,
+                wprowadzDoPamieci = function () {
+                    if (selected.hasClass("przyciskMenuGlowne")) { // jesli jest zaznaczony jakis button ...
+                        varGlobal.buttonMemory[tabIndex] = $(selected).attr('id'); // ... zapamietanie jego id na odpowoedniej komorce pamieci (odpowiadajacej indekowi tabu)
+                    }
+                },
+                brakDostepuDoButtona = function (selectedButton) {
+                    infoBrakDostepuAktywne = true; // bez tej flagi przy szybkim wciskaniu ENTERa na końcu pojawiał się problem z tekstem (nie było powrotu do pierwotnego opisu)
+                    $(selected).addClass('ui-state-error');
+                    $(selected).button("option", "label", varGlobal.danePlikuKonfiguracyjnego.TEKSTY.brakDostepu);
+                    setTimeout(function () {
+                        infoBrakDostepuAktywne = false;
+                        $(selected).removeClass('ui-state-error');
+                        $(selected).button("option", "label", tytulButtona);
+                    }, 1500);
+                };
+
+            ostatniTab = $('#tabs').children().children('li').length - 1;
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.lewo:
+                wprowadzDoPamieci();
+                if (tabIndex === 0) { // przejscie na ostatni tab
+                    tabIndex = ostatniTab;
+                } else {
+                    tabIndex -= 1;
+                }
+
+                tabIndex = nawiWspolne.sprawdzNieatywneTaby('-', tabIndex);
+                $("#tabs").tabs("option", "active", tabIndex);
+                nawiWspolne.sprawdzPamiecButtona(tabIndex);
+                nawiWspolne.wejdzNaKomunikaty(tabIndex);
+                break;
+
+            case varGlobal.kodyKlawiszy.prawo:
+                wprowadzDoPamieci();
+                if (tabIndex === ostatniTab) { // Jak jest na indexie 0 to przeskoczy na ostatni - w druga strone juz nie. Cholera wie dlaczego
+                    tabIndex = 0;
+                } else {
+                    tabIndex += 1;
+                }
+
+                tabIndex = nawiWspolne.sprawdzNieatywneTaby('+', tabIndex);
+                $("#tabs").tabs("option", "active", tabIndex);
+                nawiWspolne.sprawdzPamiecButtona(tabIndex);
+                nawiWspolne.wejdzNaKomunikaty(tabIndex);
+                break;
+
+            case varGlobal.kodyKlawiszy.gora:
+                wprowadzDoPamieci();
+                if (selected.prev().length === 0) {
+                    selected.parent().find(".przyciskMenuGlowne").last().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    selected.prev().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.dol:
+                wprowadzDoPamieci();
+                if (selected.next().length === 0) {
+                    selected.parent().find(".przyciskMenuGlowne").first().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    selected.next().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                idButtona = $(selected).attr("id"); //Pobranie id kliknietego buttona;
+                tytulButtona = $(selected).text();
+                wprowadzDoPamieci();
+                //console.log(idButtona);
+                switch (varGlobal.poziomDostepu) { // Sprawdzenie jaki aktualnie jest ustawiony poziom dostepu
+                case 'Brak':
+                    if ($(selected).hasClass('Srvc')) {
+                        if (!infoBrakDostepuAktywne) {
+                            brakDostepuDoButtona();
+                        }
+                        return;
+                    }
+                    break;
+                case 'User':
+                case 'User2':
+                    if ($(selected).hasClass('Srvc')) {
+                        if (!infoBrakDostepuAktywne) {
+                            brakDostepuDoButtona();
+                        }
+                        return;
+                    }
+                    break;
+                }
+
+                idButtona = $(selected).attr("id"); //Pobranie id kliknietego buttona;
+                $('#' + idButtona).trigger('click');
+                $('#' + idButtona).removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                return;
+
+            case varGlobal.kodyKlawiszy.escape:
+                oldMemory = $('.kopex-memory'); // jesli bylo gdzies wczesniej zaznaczenie - usuniecie go (moze byc tylko jedno)
+                $(oldMemory).removeClass('kopex-memory');
+
+                $(selected).addClass('kopex-memory');
+                tabIndex = 1;
+                $("#tabs").tabs("option", "active", tabIndex);
+                nawiWspolne.wejdzNaKomunikaty(tabIndex);
+
+                //wywietlenie podpowiedzi z możliwymi kierunkami nawigacji
+                require(['komunikaty/tooltip'], function (tooltip) {
+                    tooltip.naAccordionie(0);
+                });
+                break;
+
+            default:
+                return; // wyjscie z funkcji (nie kasowanie podswietlenia)
+            }
+
+            selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

@@ -1,2 +1,77 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){var d=jQuery.Event("keydown");switch(a("#dateEntry").focus(),a("#dateEntry").on("keyup",function(a){switch(a.preventDefault(),a.stopPropagation(),a.keyCode){case b.kodyKlawiszy.enter:b.trwaZmianaCzasu=!0,require(["dataCzas/main"],function(a){a.wyslijDoPLC()});break;case b.kodyKlawiszy.escape:require(["dataCzas/main"],function(a){a.zamknij()})}}),c){case b.kodyKlawiszy.lewo:d.keyCode=a.ui.keyCode.LEFT,a("#dateEntry").trigger(d);break;case b.kodyKlawiszy.prawo:d.keyCode=a.ui.keyCode.RIGHT,a("#dateEntry").trigger(d);break;case b.kodyKlawiszy.gora:d.keyCode=a.ui.keyCode.UP,a("#dateEntry").trigger(d);break;case b.kodyKlawiszy.dol:d.keyCode=a.ui.keyCode.DOWN,a("#dateEntry").trigger(d);break;case b.kodyKlawiszy.enter:b.trwaZmianaCzasu=!0,require(["dataCzas/main"],function(a){a.wyslijDoPLC()});break;case b.kodyKlawiszy.escape:require(["dataCzas/main"],function(a){a.zamknij()})}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+    var ccc,
+
+        wykonaj = function (kod) {
+            var e = jQuery.Event("keydown"); // działa tylko zdarzenie keydown
+
+            $("#dateEntry").focus(); // gdy jest otwarte okienko i pojawi sie komunikat popup (ten wyskakujący z dołu) to traci się podświetlenie (focus)
+            $("#dateEntry").on("keyup", function (event, ui) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                switch (event.keyCode) {
+                case varGlobal.kodyKlawiszy.enter:
+                    varGlobal.trwaZmianaCzasu = true;
+                    require(['dataCzas/main'], function (main) {
+                        main.wyslijDoPLC();
+                    });
+                    break;
+                case varGlobal.kodyKlawiszy.escape:
+                    require(['dataCzas/main'], function (main) {
+                        main.zamknij();
+                    });
+                    break;
+                }
+                //console.log(event.keyCode);
+            });
+
+            //console.log('wykonaj');
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.lewo:
+                e.keyCode = $.ui.keyCode.LEFT;
+                $("#dateEntry").trigger(e);
+                break;
+            case varGlobal.kodyKlawiszy.prawo:
+                e.keyCode = $.ui.keyCode.RIGHT;
+                $("#dateEntry").trigger(e);
+                break;
+            case varGlobal.kodyKlawiszy.gora:
+                e.keyCode = $.ui.keyCode.UP;
+                $("#dateEntry").trigger(e);
+                break;
+            case varGlobal.kodyKlawiszy.dol:
+                e.keyCode = $.ui.keyCode.DOWN;
+                $("#dateEntry").trigger(e);
+                break;
+            case varGlobal.kodyKlawiszy.enter:
+                varGlobal.trwaZmianaCzasu = true;
+                require(['dataCzas/main'], function (main) {
+                    main.wyslijDoPLC();
+                });
+                break;
+            case varGlobal.kodyKlawiszy.escape:
+                require(['dataCzas/main'], function (main) {
+                    main.zamknij();
+                });
+                break;
+            default:
+            }
+
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

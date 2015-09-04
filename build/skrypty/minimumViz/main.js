@@ -1,2 +1,77 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","dodajPojedynczaTabele","obslugaJSON","ustawKolejnosc"],function(a,b,c,d,e){"use strict";var f=!1,g=function(g){{var h,i,j={id:"idZegarMin",opis_pelny:"Data i czas UTC",jednostka:"_czas"},k=[],l=[],m=[];document.createDocumentFragment()}for(f||(f=!0,m.push(j)),k=b.danePlikuKonfiguracyjnego.MENU_TAB[g].zawartosc.split("_"),h=0;h<k.length;h+=1)i=k[h],m=m.concat(d.szukajWartosci(i,b.sygnaly)),l=l.concat(d.szukajWartosci(i,b.sygnaly));for(h=0;h<m.length;h+=1)m[h].plc_id="",m[h].kolejnosc=void 0,void 0!==m[h].kolejnosc_malyMonitor&&(m[h].kolejnosc=m[h].kolejnosc_malyMonitor);m=e.inicjacja({inputData:m,sortData:!0}),c.dodaj({objects:m,id:"#tab"+(g+1)}),m=[],a("#tabs").tabs("option","disabled",[5]),require(["minimumViz/odswiezaj"],function(a){a.dodajDaneDoOdswiezania(l)})};return{inicjacja:g}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+
+// wersja minimum - na male wyswietlacze. Bedzie wyswietlana tylko tabelka z najwazniejszymi danymi, przewijanie tylko lewo/prawo
+define(['jquery', 'zmienneGlobalne', 'dodajPojedynczaTabele', 'obslugaJSON', 'ustawKolejnosc'], function ($, varGlobal, dodajPojedynczaTabele, json, ustawKolejnosc) {
+    "use strict";
+
+    var init = false,
+
+        inicjacja = function (_nrTab, _ZAWARTOSC) {
+            var i,
+                komorkaZegar = {
+                    id: 'idZegarMin',
+                    opis_pelny: 'Data i czas UTC',
+                    jednostka: '_czas'
+                },
+                //szukanyZnacznik,
+                //rozbiteID = [],
+                daneDoOdswiezania = [],
+                pasujaceObiektyNaTab = [],
+                fragmentHtml = document.createDocumentFragment();
+
+            if (!init) { // dodanie wyświetlania czasu na tab1 (pierwsze przejście przez procedurę)
+                init = true;
+                pasujaceObiektyNaTab.push(komorkaZegar);
+            }
+
+//            rozbiteID = varGlobal.danePlikuKonfiguracyjnego.MENU_TAB[_nrTab].zawartosc.split('_');
+//            for (i = 0; i < rozbiteID.length; i += 1) {
+//                szukanyZnacznik = rozbiteID[i];
+//                pasujaceObiektyNaTab = pasujaceObiektyNaTab.concat(json.szukajWartosci(szukanyZnacznik, varGlobal.sygnaly)); // to do wyrysowania odpowiedniej paczki na odpowiedni tab
+//                daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci(szukanyZnacznik, varGlobal.sygnaly)); // to do odswiezania calej paczki
+//            }
+
+            
+            
+            pasujaceObiektyNaTab = pasujaceObiektyNaTab.concat(json.szukajWartosci(_ZAWARTOSC, varGlobal.sygnaly)); // to do wyrysowania odpowiedniej paczki na odpowiedni tab
+            daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci(_ZAWARTOSC, varGlobal.sygnaly)); // to do odswiezania calej paczki            
+            
+            for (i = 0; i < pasujaceObiektyNaTab.length; i += 1) {
+                pasujaceObiektyNaTab[i].plc_id = ''; // pozbycie się pól "plc_id"
+                pasujaceObiektyNaTab[i].kolejnosc = undefined; // wyczyszczenie pol "kolejnosc", będą zastąpione wartościami z "kolejnosc_malyMonitor"
+
+                if (pasujaceObiektyNaTab[i].kolejnosc_malyMonitor !== undefined) {
+                    pasujaceObiektyNaTab[i].kolejnosc = pasujaceObiektyNaTab[i].kolejnosc_malyMonitor;
+                }
+            }
+
+            pasujaceObiektyNaTab = ustawKolejnosc.inicjacja({
+                inputData: pasujaceObiektyNaTab,
+                sortData: true
+            });
+
+            dodajPojedynczaTabele.dodaj({
+                objects: pasujaceObiektyNaTab,
+                id: "#tab" + (_nrTab + 1)
+            });
+
+            pasujaceObiektyNaTab = [];
+
+            $("#tabs").tabs("option", "disabled", [5]);
+            require(['minimumViz/odswiezaj'], function (odswiezaj) { // dodanie do odświeżania paczki zmiennych odpowiedzialnych za dany tab
+                odswiezaj.dodajDaneDoOdswiezania(daneDoOdswiezania);
+            });
+        };
+
+    return {
+        inicjacja: inicjacja
+    };
+});

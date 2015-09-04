@@ -1,2 +1,60 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","kommTCP","wspolne/odswiezajObiekt"],function(a,b,c){"use strict";var d=function(a){var d,e,f;for(e=b.daneTCP,f=a.length,d=0;f>d;d+=1)"Analog"===a[d].typ_danych&&void 0!==e.analog[a[d].poz_ramka]&&c.typAnalog(a[d]),"Lista"===a[d].typ_danych&&c.typLista(a[d]),"Bit"===a[d].typ_danych&&("DO"===a[d].jednostka||"Lampka"===a[d].jednostka||"LED"===a[d].jednostka?c.typBit(a[d],"transparent","darkOrange"):"error"===a[d].jednostka||"CAN"===a[d].jednostka?c.typBit(a[d],"transparent","darkred"):"DI"===a[d].jednostka||"NAM"===a[d].jednostka?c.typBit(a[d],"transparent","green"):c.typBit(a[d],"transparent","green"))};return{aktualizuj:d}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define*/
+
+
+define(['jquery', 'kommTCP', 'wspolne/odswiezajObiekt'], function ($, dane, odswiezajObiekt) {
+    'use strict';
+
+
+    var aktualizuj = function (_daneWej) {
+        var i,
+            daneTCP,
+            length;
+
+        //console.log(daneTCP);
+        daneTCP = dane.daneTCP;
+        length = _daneWej.length;
+        for (i = 0; i < length; i += 1) {
+            // ------------------------------
+            // dane typu analog
+            // ------------------------------
+            if (_daneWej[i].typ_danych === "Analog" && daneTCP.analog[_daneWej[i].poz_ramka] !== undefined) {
+                odswiezajObiekt.typAnalog(_daneWej[i]);
+            }
+
+            // ------------------------------
+            // dane typu lista
+            // ------------------------------
+            if (_daneWej[i].typ_danych === "Lista") {
+                odswiezajObiekt.typLista(_daneWej[i]);
+            }
+
+            // ------------------------------
+            // dane typu bit
+            // ------------------------------
+            if (_daneWej[i].typ_danych === "Bit") { // Wyswietlenie danych bitowych
+                if ((_daneWej[i].jednostka === "DO") || (_daneWej[i].jednostka === "Lampka") || (_daneWej[i].jednostka === "LED")) {
+                    odswiezajObiekt.typBit(_daneWej[i], 'transparent', 'darkOrange');
+                } else if ((_daneWej[i].jednostka === "error") || (_daneWej[i].jednostka === "CAN")) {
+                    odswiezajObiekt.typBit(_daneWej[i], 'transparent', 'darkred');
+                } else if ((_daneWej[i].jednostka === "DI") || (_daneWej[i].jednostka === "NAM")) {
+                    odswiezajObiekt.typBit(_daneWej[i], 'transparent', 'green');
+                } else {
+                    odswiezajObiekt.typBit(_daneWej[i], 'transparent', 'green');
+                }
+            }
+        }
+    };
+
+
+    return {
+        aktualizuj: aktualizuj
+    };
+
+});

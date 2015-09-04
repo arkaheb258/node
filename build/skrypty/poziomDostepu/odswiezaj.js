@@ -1,2 +1,56 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne","kommTCP"],function(a,b,c){"use strict";var d=function(b){var d;switch(b){case"Brak":c.poziomDostepu="Brak",d=c.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[0];break;case"User":c.poziomDostepu="User",d=c.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[1];break;case"User2":c.poziomDostepu="User2",d=c.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[2];break;case"Srvc":c.poziomDostepu="Srvc",d=c.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[3];break;case"Adv":c.poziomDostepu="Adv",d=c.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[4]}a("#poziomDostepuUzytkownika").text(d)};return{inicjacja:d}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+
+define(['jquery', 'obslugaJSON', 'zmienneGlobalne', 'kommTCP'], function ($, json, varGlobal, dane) {
+    "use strict";
+
+    var init = false,
+
+
+        inicjacja = function (nowyPoziom) {
+            var tekst;
+
+            switch (nowyPoziom) { // Sprawdzenie jaki aktualnie jest ustawiony poziom dostepu
+            case 'Brak':
+                varGlobal.poziomDostepu = 'Brak';
+                tekst = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[0];
+                break;
+
+            case 'User':
+                varGlobal.poziomDostepu = 'User';
+                tekst = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[1];
+                break;
+
+            case 'User2':
+                varGlobal.poziomDostepu = 'User2';
+                tekst = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[2];
+                break;
+
+            case 'Srvc':
+                varGlobal.poziomDostepu = 'Srvc';
+                tekst = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[3];
+                break;
+
+            case "Adv":
+                varGlobal.poziomDostepu = 'Adv';
+                tekst = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.poziomDostepuUzytkownika[4];
+                break;
+            }
+
+            $("#poziomDostepuUzytkownika").text(tekst);
+            
+            return tekst;
+        };
+
+
+    return {
+        inicjacja: inicjacja // wywoływanie z funcji poziomDostepu/main
+    };
+});

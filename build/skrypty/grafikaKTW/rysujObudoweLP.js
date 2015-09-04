@@ -1,2 +1,85 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","paper"],function(a,b,c){"use strict";var d={strokeColor:"pink",strokeWidth:1},e=function(a){var b,e,f=Math.PI/180,g=function(a,b,e,g,h,i){var j,k=a+e*Math.cos(-g*f),l=b+e*Math.sin(-g*f),m=a+e*Math.cos(-h*f),n=b+e*Math.sin(-h*f),o=a+e*Math.cos((-g+i)*f),p=b+e*Math.sin((-g+i)*f),q=new c.Point(k,l),r=new c.Point(m,n),s=new c.Point(o,p);j=new c.Path.Arc(q,s,r),j.style=d};b=a.wsp.poczatekX+.5*a.LP.S+(a.LP.R1-.5*a.LP.S),e=a.wsp.wysokoscEkranu-a.LP.Z-a.wsp.marginesY-a.wsp.podciecieSpagu,g(b,e,a.LP.R1,180,180-a.LP.katL1,25),b=a.wsp.poczatekX+(.5*a.LP.S-(a.LP.R1-.5*a.LP.S)),e=a.wsp.wysokoscEkranu-a.LP.Z-a.wsp.marginesY-a.wsp.podciecieSpagu,g(b,e,a.LP.R1,0,a.LP.katL1,-25),b=a.wsp.poczatekX+.5*a.LP.S,e=a.wsp.wysokoscEkranu-a.LP.Z-a.wsp.marginesY-a.wsp.podciecieSpagu-(a.LP.W-a.LP.Z-a.LP.R2),g(b,e,a.LP.R2,90-a.LP.katL2/2,90+a.LP.katL2/2,-25)},f=function(a){var b,e,f,g,h=function(a,b){var e=new c.Path;e.add(a),e.add(b),e.style=d};b=new c.Point(a.wsp.poczatekX,a.wsp.poczatekY),e=new c.Point(a.wsp.poczatekX,a.wsp.wysokoscEkranu-a.LP.Z-a.wsp.marginesY-a.wsp.podciecieSpagu),h(b,e),f=new c.Point(a.LP.S+a.wsp.poczatekX,a.wsp.wysokoscEkranu-a.wsp.marginesY-a.wsp.podciecieSpagu),g=new c.Point(a.LP.S+a.wsp.poczatekX,a.wsp.wysokoscEkranu-a.LP.Z-a.wsp.marginesY-a.wsp.podciecieSpagu),h(f,g)},g=function(a){d.strokeColor=a.par.stroke,d.strokeWidth=a.par.strokeWidth,f(a),e(a)};return{inicjacja:g}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'paper'], function ($, varGlobal, paper) {
+    'use strict';
+
+    var styl = {
+            strokeColor: 'pink',
+            strokeWidth: 1
+        },
+
+        rysujLukiOciosowe = function (_wymiary) {
+            var cx,
+                cy,
+                rad = Math.PI / 180,
+                rysujLuk = function (cx, cy, r, startAngle, endAngle, punktPomiedzy) { // Funkcja do rysowania luku cx, cy - wspolrzedne srodka okregu, r - promien, sweep - parametr okreslajacy wyglad luku (w ktora strone jest wygiecie)
+                    var x1 = cx + r * Math.cos(-startAngle * rad), // punkt początkowy
+                        y1 = cy + r * Math.sin(-startAngle * rad),
+                        x2 = cx + r * Math.cos(-endAngle * rad), // punkt końcowy
+                        y2 = cy + r * Math.sin(-endAngle * rad),
+                        x3 = cx + r * Math.cos((-startAngle + punktPomiedzy) * rad), // punkt pomiędzy początkowym o końcowym
+                        y3 = cy + r * Math.sin((-startAngle + punktPomiedzy) * rad),
+                        p1 = new paper.Point(x1, y1),
+                        p2 = new paper.Point(x2, y2),
+                        pMiddle = new paper.Point(x3, y3),
+                        arc;
+
+                    arc = new paper.Path.Arc(p1, pMiddle, p2);
+                    arc.style = styl;
+                };
+
+            cx = _wymiary.wsp.poczatekX + (0.5 * _wymiary.LP.S) + (_wymiary.LP.R1 - (0.5 * _wymiary.LP.S));
+            cy = _wymiary.wsp.wysokoscEkranu - _wymiary.LP.Z - _wymiary.wsp.marginesY - _wymiary.wsp.podciecieSpagu;
+            rysujLuk(cx, cy, _wymiary.LP.R1, 180, 180 - _wymiary.LP.katL1, 25);
+
+            cx = _wymiary.wsp.poczatekX + (0.5 * _wymiary.LP.S - (_wymiary.LP.R1 - (0.5 * _wymiary.LP.S)));
+            cy = _wymiary.wsp.wysokoscEkranu - _wymiary.LP.Z - _wymiary.wsp.marginesY - _wymiary.wsp.podciecieSpagu;
+            rysujLuk(cx, cy, _wymiary.LP.R1, 0, _wymiary.LP.katL1, -25);
+
+            cx = _wymiary.wsp.poczatekX + 0.5 * _wymiary.LP.S;
+            cy = _wymiary.wsp.wysokoscEkranu - _wymiary.LP.Z - _wymiary.wsp.marginesY - _wymiary.wsp.podciecieSpagu - (_wymiary.LP.W - _wymiary.LP.Z - _wymiary.LP.R2);
+            rysujLuk(cx, cy, _wymiary.LP.R2, 90 - _wymiary.LP.katL2 / 2, 90 + _wymiary.LP.katL2 / 2, -25);
+        },
+
+
+        rysujSlupki = function (_wymiary) {
+            var punktZ_LD, // lewy dolny punkt slupka
+                punktZ_LG, // lewy gorny punkt slupka
+                punktZ_PD,
+                punktZ_PG,
+                rysujSlupek = function (_punkt1, _punkt2) {
+                    var path = new paper.Path();
+                    path.add(_punkt1);
+                    path.add(_punkt2);
+                    path.style = styl;
+                };
+
+            punktZ_LD = new paper.Point(_wymiary.wsp.poczatekX, _wymiary.wsp.poczatekY);
+            punktZ_LG = new paper.Point(_wymiary.wsp.poczatekX, _wymiary.wsp.wysokoscEkranu - _wymiary.LP.Z - _wymiary.wsp.marginesY - _wymiary.wsp.podciecieSpagu);
+            rysujSlupek(punktZ_LD, punktZ_LG);
+
+            punktZ_PD = new paper.Point(_wymiary.LP.S + _wymiary.wsp.poczatekX, (_wymiary.wsp.wysokoscEkranu - _wymiary.wsp.marginesY - _wymiary.wsp.podciecieSpagu));
+            punktZ_PG = new paper.Point(_wymiary.LP.S + _wymiary.wsp.poczatekX, _wymiary.wsp.wysokoscEkranu - _wymiary.LP.Z - _wymiary.wsp.marginesY - _wymiary.wsp.podciecieSpagu);
+            rysujSlupek(punktZ_PD, punktZ_PG);
+        },
+
+
+        inicjacja = function (_wymiary) {
+            styl.strokeColor = _wymiary.par.stroke;
+            styl.strokeWidth = _wymiary.par.strokeWidth;
+
+            rysujSlupki(_wymiary);
+            rysujLukiOciosowe(_wymiary);
+        };
+
+    return {
+        inicjacja: inicjacja
+    };
+});

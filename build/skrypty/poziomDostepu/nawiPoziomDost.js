@@ -1,2 +1,63 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(a,c){switch(c.blur(),a){case b.kodyKlawiszy.gora:0===c.prev().length?c.parent().find(".przyciskMenuPoziomDost").last().addClass("kopex-selected").addClass(b.ui_state):c.prev().addClass("kopex-selected").addClass(b.ui_state),c.removeClass("kopex-selected").removeClass(b.ui_state);break;case b.kodyKlawiszy.dol:0===c.next().length?c.parent().find(".przyciskMenuPoziomDost").first().addClass("kopex-selected").addClass(b.ui_state):c.next().addClass("kopex-selected").addClass(b.ui_state),c.removeClass("kopex-selected").removeClass(b.ui_state);break;case b.kodyKlawiszy.enter:return require(["poziomDostepu/main"],function(a){a.otworzKlawiature(c.attr("id"))}),void c.removeClass("kopex-selected").removeClass(b.ui_state);case b.kodyKlawiszy.escape:require(["poziomDostepu/main"],function(a){a.zamkniecieOkienka()}),c.removeClass("kopex-selected").removeClass(b.ui_state)}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+
+    var cc,
+
+        wykonaj = function (kod, selected) {
+
+            selected.blur();
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.gora:
+                if (selected.prev().length === 0) {
+                    selected.parent().find(".przyciskMenuPoziomDost").last().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    selected.prev().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                break;
+
+            case varGlobal.kodyKlawiszy.dol:
+                if (selected.next().length === 0) {
+                    selected.parent().find(".przyciskMenuPoziomDost").first().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    selected.next().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                break;
+            case varGlobal.kodyKlawiszy.enter:
+                require(['poziomDostepu/main'], function (poziomDostepu) {
+                    poziomDostepu.otworzKlawiature(selected.attr('id'));
+                });
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                return;
+
+            case varGlobal.kodyKlawiszy.escape:
+                require(['poziomDostepu/main'], function (poziomDostepu) {
+                    poziomDostepu.zamkniecieOkienka();
+                });
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                break;
+
+            default:
+
+            }
+
+            //selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

@@ -1,2 +1,99 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne","kommTCP","wspolne/odswiezajObiekt","grafikaGUL/main","paper"],function(a,b,c,d,e,f,g){"use strict";var h=!1,i=[],j=function(){h===!1&&(i=i.concat(b.szukajWartosci("grafikaTab1Analog",c.sygnaly)),i=i.concat(b.szukajWartosci("grafikaTab1Krancowki",c.sygnaly)),i=i.concat(b.szukajWartosci("grafikaTab1Jazda",c.sygnaly)),h=!0)},k=function(){var b,c,h;g.view.onFrame=function(g){if(0===a("#tabs").tabs("option","active")&&g.count%12===0)for(h=i.length,b=0;h>b;b+=1)"Bit"===i[b].typ_danych&&"grafikaTab1Krancowki"===i[b].grupa&&(c=e.typBitStan(i[b]),f.odswiezKrancowke(i[b],c)),"Lista"===i[b].typ_danych&&"idKierunekJazdy"===i[b].id&&f.odswiezJazde(e.typAnalog(i[b])),"Analog"===i[b].typ_danych&&void 0!==d.daneTCP.analog[i[b].poz_ramka]&&("grafikaTab1Analog"===i[b].grupa||"grafikaTab1Analog"===i[b].grupa_2)&&f.odswiezAnalog(i[b],e.typAnalog(i[b]))}},l=function(){j(),k()};return{inicjacja:l}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+
+define(['jquery',
+        'obslugaJSON',
+        'zmienneGlobalne',
+        'kommTCP',
+        'wspolne/odswiezajObiekt',
+        'grafikaGUL/main',
+        'paper'
+       ], function (
+    $,
+    json,
+    varGlobal,
+    dane,
+    odswiezajObiekt,
+    grafikaGULmain,
+    paper
+) {
+    "use strict";
+
+    var init = false,
+        daneDoOdswiezania = [],
+
+
+        dodajDaneDoOdswiezania = function () {
+            if (init === false) {
+                daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci("grafikaTab1Analog", varGlobal.sygnaly));
+                daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci("grafikaTab1Krancowki", varGlobal.sygnaly));
+                daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci("grafikaTab1Jazda", varGlobal.sygnaly));
+                init = true;
+                //console.log(daneDoOdswiezania);
+            }
+        },
+
+
+        odswiezaj = function () {
+            var i,
+                stanKrancowki,
+                stanJazda,
+                length;
+            
+
+            paper.view.onFrame = function (event) { //  it is called up to 60 times a second
+                if ($('#tabs').tabs("option", "active") !== 0) { // animacje tylko na tab 1
+                    return;
+                }
+                if (event.count % 12 === 0) { // zmniejszenie ilosci klatek
+                    //console.log('odswiezanie grafiki');
+                    length = daneDoOdswiezania.length;
+                    for (i = 0; i < length; i += 1) {
+                        if (daneDoOdswiezania[i].typ_danych === "Bit") {
+                            if ((daneDoOdswiezania[i].grupa === "grafikaTab1Krancowki") || (daneDoOdswiezania[i].grupa_2 === "grafikaTab1Krancowki")) {
+                                stanKrancowki = odswiezajObiekt.typBitStan(daneDoOdswiezania[i]);
+                                grafikaGULmain.odswiezKrancowke(daneDoOdswiezania[i], stanKrancowki);
+                            }
+//                            if (daneDoOdswiezania[i].grupa === "grafikaTab1Jazda") {
+//                                stanJazda = odswiezajObiekt.typBitStan(daneDoOdswiezania[i]);
+//                                grafikaGULmain.odswiezJazde(daneDoOdswiezania[i], stanJazda);
+//                            }
+                        }
+
+                        if (daneDoOdswiezania[i].typ_danych === "Lista") {
+                            if (daneDoOdswiezania[i].id === "idKierunekJazdy") {
+                                //stanJazda = odswiezajObiekt.typBitStan(daneDoOdswiezania[i]);
+                                grafikaGULmain.odswiezJazde(odswiezajObiekt.typAnalog(daneDoOdswiezania[i]));
+
+                            }
+                        }
+
+                        if ((daneDoOdswiezania[i].typ_danych === "Analog") && dane.daneTCP.analog[daneDoOdswiezania[i].poz_ramka] !== undefined) {
+                            if ((daneDoOdswiezania[i].grupa === "grafikaTab1Analog") || (daneDoOdswiezania[i].grupa_2 === "grafikaTab1Analog")) {
+                                grafikaGULmain.odswiezAnalog(daneDoOdswiezania[i], odswiezajObiekt.typAnalog(daneDoOdswiezania[i]));
+                            }
+
+                        }
+                    }
+                }
+            };
+        },
+
+
+        inicjacja = function () {
+            dodajDaneDoOdswiezania();
+            odswiezaj();
+        };
+
+
+    return {
+        inicjacja: inicjacja
+    };
+});

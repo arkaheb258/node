@@ -1,2 +1,134 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON","kommTCP"],function(a,b,c,d){"use strict";var e,f,g,h=!1,i=[],j=!1,k=function(){var k,l,m,n=1,o=jQuery.Event("keyup"),p=function(c){switch(c){case"LEWO":o.which=b.kodyKlawiszy.lewo;break;case"PRAWO":o.which=b.kodyKlawiszy.prawo;break;case"GORA":o.which=b.kodyKlawiszy.gora;break;case"DOL":o.which=b.kodyKlawiszy.dol;break;case"ENTER":o.which=b.kodyKlawiszy.enter;break;case"ESCAPE":o.which=b.kodyKlawiszy.escape}a(document).trigger(o)};for(j===!1&&(i=i.concat(c.szukajWartosci("klawiszeLCD",b.sygnaly)),j=!0),f=0,l=i.length,k=0;l>k;k+=1)n=1,n<<=i[k].poz_bit,d.daneTCP.bit[i[k].poz_ramka]&n&&(f+=n,m=i[k].id.toUpperCase());5===f&&h===!1&&(h=!0,setTimeout(function(){5===f&&0===a("#DialogGULtrybSerwisowy").length&&location.reload(),console.log("timer"),h=!1},6e3)),f!==e?(0!==f&&(b.typNawigacjiPoEkranach=1),e=f,p(m),clearTimeout(g)):f===e&&0!==f?g=setTimeout(function(){clearTimeout(g),16!==f&&(b.typNawigacjiPoEkranach=1,p(m))},500):f===e&&0!==f&&clearTimeout(g)},l=function(){b.hardware.czyMinimumViz||setInterval(function(){k()},b.czasOdswiezania),require(["klawiatura/zdarzenia"],function(a){a.przechwycZdarzenieKlawiatury()})};return{inicjacja:l}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON', 'kommTCP'], function ($, varGlobal, json, dane) {
+    'use strict';
+
+    var aktywneKlawiszeOld, // Zapamietany poprzedni stan klawiszy
+        aktywneKlawisze,
+        odswiezInit = false,
+        pasujaceObiekty = [],
+        timeoutId,
+        init = false,
+
+        klawiszeRamkaPLC = function () { // Przechwycenie zadania sterowania z ramki tcp od sterownika plc
+            var i,
+                maska = 1,
+                length,
+                //e = jQuery.Event("keydown"),
+                e = jQuery.Event("keyup"),
+                tymczasKlawisz,
+                wykonajRozkazKlawisza = function (wcisnietyKlawisz) {
+                    switch (wcisnietyKlawisz) {
+                    case 'LEWO':
+                        e.which = varGlobal.kodyKlawiszy.lewo;
+                        break;
+
+                    case 'PRAWO':
+                        e.which = varGlobal.kodyKlawiszy.prawo;
+                        break;
+
+                    case 'GORA':
+                        e.which = varGlobal.kodyKlawiszy.gora;
+                        break;
+
+                    case 'DOL':
+                        e.which = varGlobal.kodyKlawiszy.dol;
+                        break;
+
+                    case 'ENTER':
+                        e.which = varGlobal.kodyKlawiszy.enter;
+                        break;
+
+                    case 'ESCAPE':
+                        e.which = varGlobal.kodyKlawiszy.escape;
+                        break;
+
+                    default:
+                    }
+                    // Wyzwolenie zdarzenia wciesniecia klawisza
+                    $(document).trigger(e); // To zdarzenie bedzie zlapane w module zdarzenia w funkcji przechwycZdarzenieKlawiatury(
+                };
+
+            if (init === false) {
+                //console.log('nawigacja z ramki');
+                pasujaceObiekty = pasujaceObiekty.concat(json.szukajWartosci("klawiszeLCD", varGlobal.sygnaly));
+                init = true;
+            }
+
+            aktywneKlawisze = 0;
+            length = pasujaceObiekty.length;
+            for (i = 0; i < length; i += 1) { // Sprawdzenie ktory klawisz zostal wcisniety
+                maska = 1;
+                maska = maska << pasujaceObiekty[i].poz_bit; // Ustawienie maski na odpowiedniej pozycji
+                if (dane.daneTCP.bit[pasujaceObiekty[i].poz_ramka] & maska) { // Jest jedynka na odpowiedniej pozycji
+                    aktywneKlawisze += maska; // Zapamietanie wszystkich jedynek (ktore klawisze zostaly wcisniete)
+                    tymczasKlawisz = pasujaceObiekty[i].id.toUpperCase(); // konwersja na duze litery zeby pozbyc sie ewentualnych bledow z json'a
+                }
+            }
+
+            // Kombinacja klawiszy - odswiezenie okna przegladarki
+            if (aktywneKlawisze === 5) { // LEWO + GORA
+                if (odswiezInit === false) { // wlaczenie odswiezenia po kilku sekundach (potrzebne po wprowadzeniu sterowania na joystick)
+                    odswiezInit = true;
+                    setTimeout(function () {
+                        if (aktywneKlawisze === 5) { // jesli klawisze sa dalej wcisniete - odswiez
+                            if ($('#DialogGULtrybSerwisowy').length === 0) { // GUL - tryb serwisowy
+                                location.reload();
+                            }
+                        }
+                        console.log('timer');
+                        odswiezInit = false;
+                    }, 6000);
+                }
+            }
+
+            // normalna nawigacja z ramki tcp + szybkie przewijanie
+            if (aktywneKlawisze !== aktywneKlawiszeOld) {
+                if (aktywneKlawisze !== 0) { // To tylko do najbardziej uperdliwych kontrolek(np selectmeny na planszy z trybem serwisowym dla GULa)
+                    varGlobal.typNawigacjiPoEkranach = 1; // 0 - komendy z klawiatury usb,  1 - komendy z ramki tcp
+                }
+                //console.log('normalna nawigacja ' + aktywneKlawisze);
+                aktywneKlawiszeOld = aktywneKlawisze;
+                wykonajRozkazKlawisza(tymczasKlawisz);
+                clearTimeout(timeoutId);
+            } else if ((aktywneKlawisze === aktywneKlawiszeOld) && (aktywneKlawisze !== 0)) { // jest wcisniety dluzej jeden klawisz (nie zero)
+                timeoutId = setTimeout(function () { // aktywuj szybkie przewijanie dopiero po dluzszym przytrzymaniu klawisza
+                    clearTimeout(timeoutId);
+                    if (aktywneKlawisze !== 16) { // szybkie przewijanie na wszystkich klawiszach oprocz enter
+                        varGlobal.typNawigacjiPoEkranach = 1; // 0 - komendy z klawiatury usb,  1 - komendy z ramki tcp
+                        wykonajRozkazKlawisza(tymczasKlawisz);
+                        //console.log('szybkie przewijanie ' + tymczasKlawisz);
+                    }
+                }, 500);
+            } else if ((aktywneKlawisze === aktywneKlawiszeOld) && (aktywneKlawisze !== 0)) { // przychodza zera (brak wysterowanych klawiszy)
+                clearTimeout(timeoutId);
+            }
+
+        },
+
+
+        inicjacja = function () {
+            // Ustawienie cyklicznego odswiezania stanu klawiszy przychodzacych z ramki
+            if (!varGlobal.hardware.czyMinimumViz) { // sterowanie z ramki tylko na dużym wyświetlaczu
+                //console.log('nawigacja ramka tcp');
+                setInterval(function () {
+                    klawiszeRamkaPLC();
+                }, varGlobal.czasOdswiezania);
+            }
+            require(['klawiatura/zdarzenia'], function (zdarzenia) {
+                zdarzenia.przechwycZdarzenieKlawiatury();
+            });
+        };
+
+
+    return {
+        inicjacja: inicjacja
+    };
+});

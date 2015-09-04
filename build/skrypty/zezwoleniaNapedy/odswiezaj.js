@@ -1,2 +1,93 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne","kommTCP"],function(a,b,c,d){"use strict";var e,f=!1,g=[],h=function(){f===!1&&(g=g.concat(b.szukajWartosci("pokazStanZezwolen",c.sygnaly)),f=!0)},i=function(a,b){require(["wspolne/zezwNapedy"],function(c){"otworz"===b&&c.wyswietlPopUp(a),"zamknij"===b&&c.zamknijPopUp()})},j=function(){var b,c,e;for(e=g.length,b=0;e>b;b+=1)"Bit"===g[b].typ_danych&&(c=1,c<<=g[b].poz_bit,"pokazStanZezwolen"===g[b].grupa&&(d.daneTCP.bit[g[b].poz_ramka]&c?a("#DialogZezwoleniaNaped").dialog("isOpen")===!1&&i(g[b],"otworz"):a("#DialogZezwoleniaNaped").dialog("isOpen")&&i(g[b],"zamknij")))},k=function(){h(),e=setInterval(function(){j()},c.czasOdswiezania)};return{inicjacja:k}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+
+define(['jquery', 'obslugaJSON', 'zmienneGlobalne', 'kommTCP'], function ($, json, varGlobal, dane) {
+    "use strict";
+
+    var init = false,
+        intervalId,
+        daneDoOdswiezania = [],
+
+
+
+        dodajDaneDoOdswiezania = function () {
+            if (init === false) {
+                daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci("pokazStanZezwolen", varGlobal.sygnaly));
+                init = true;
+                //console.log(daneDoOdswiezania);
+            }
+        },
+
+
+        otworzPopUp = function (obiekt) {
+            require(['ksiazkaserwisowa/przypomnienie'], function (przypomnienie) {
+                przypomnienie.inicjacja(obiekt);
+            });
+        },
+
+        pokazZezwoleniaDlaNapedow = function (obiekt, operacja) {
+            require(['wspolne/zezwNapedy'], function (zezwNapedy) {
+                if (operacja === 'otworz') {
+                    zezwNapedy.wyswietlPopUp(obiekt);
+                }
+                if (operacja === 'zamknij') {
+                    zezwNapedy.zamknijPopUp();
+                }
+            });
+        },
+
+
+        odswiezajDane = function () {
+            var i,
+                maska,
+                length;
+
+            length = daneDoOdswiezania.length;
+            for (i = 0; i < length; i += 1) {
+
+                if (daneDoOdswiezania[i].typ_danych === "Bit") {
+                    maska = 1;
+                    maska = maska << daneDoOdswiezania[i].poz_bit; // Ustawienie maski na odpowiedniej pozycji
+
+                    if (daneDoOdswiezania[i].grupa === "pokazStanZezwolen") { // wyswietlenie okienka popup ze stanem zezwolen dla napedu
+                        if (dane.daneTCP.bit[daneDoOdswiezania[i].poz_ramka] & maska) { // polecenie wyswietlenia okienka popup
+                            if ($("#DialogZezwoleniaNaped").dialog("isOpen") === false) { // jesli nie ma otwartego okienka do odswiezania -> stworz nowe
+                                pokazZezwoleniaDlaNapedow(daneDoOdswiezania[i], 'otworz');
+                            }
+                        } else { // polenie zamkniecia okienka
+                            if ($("#DialogZezwoleniaNaped").dialog("isOpen")) { // jesli jest otwarte okienko -> zamknij
+
+                                pokazZezwoleniaDlaNapedow(daneDoOdswiezania[i], 'zamknij');
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        },
+
+
+        inicjacja = function (obiekt) {
+
+            dodajDaneDoOdswiezania();
+
+            intervalId = setInterval(function () {
+                odswiezajDane();
+            }, varGlobal.czasOdswiezania);
+
+        };
+
+
+    return {
+        inicjacja: inicjacja
+
+    };
+});

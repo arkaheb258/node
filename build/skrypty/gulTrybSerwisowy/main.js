@@ -1,2 +1,113 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON"],function(a,b){"use strict";var c,d="#DialogGULtrybSerwisowy",e=function(){a(c).addClass("kopex-selected").addClass(b.ui_state),a(d).dialog("close")},f=function(){var e,f,g,h={padding:"1",width:"30%",display:"inline-block",margin:"2px 2px 2px 2px"};e=document.createElement("div"),a(e).addClass("OknaDialog").attr("id",d.replace("#","")),a("body").append(e),a(d).dialog({autoOpen:!1,modal:!0,closeOnEscape:!1,height:a(document).height()-100,width:"95%",title:a(c).text(),show:{delay:0,effect:b.efektShowHide,duration:350},hide:{effect:b.efektShowHide,duration:350}}),e=document.createElement("div"),a(e).addClass("klasaButtonSelectMenu").css(h),f=document.createElement("select"),a(f).text("_text").attr("id","idCiagniki").attr("name","idCiagniki"),a(e).append(f),a(d).append(e),a("#idCiagniki")[0].options.add(new Option("Praca ciągnika lewego – z rolką",1)),a("#idCiagniki")[0].options.add(new Option("Praca ciągnika prawego – z rolką",2)),a("#idCiagniki")[0].options.add(new Option("Praca obu ciągników – z rolką",3)),a("#idCiagniki")[0].options.add(new Option("Praca ciągnika lewego – bez rolki",4)),a("#idCiagniki")[0].options.add(new Option("Praca ciągnika prawego – bez rolki",5)),a("#idCiagniki")[0].options.add(new Option("Praca obu ciągników – bez rolki",6)),a("#idCiagniki")[0].options.add(new Option("Praca samej rolki",7)),a("#idCiagniki").selectmenu({width:"100%"}),e=document.createElement("div"),a(e).addClass("klasaButtonSelectMenu").css(h),f=document.createElement("select"),a(f).text("_text").attr("id","idAktywuj").attr("name","idAktywuj"),a(e).append(f),a(d).append(e),a("#idAktywuj")[0].options.add(new Option("Tryb nieaktywny","idAktywuj_wylacz")),a("#idAktywuj")[0].options.add(new Option("Aktywuj","idAktywuj_wlacz")),a("#idAktywuj").selectmenu(),a("#idAktywuj").selectmenu({width:"100%"}),a(d).dialog("open"),a(d).find(".klasaButtonSelectMenu").first().addClass("kopex-selected"),g=a(d).find(".klasaButtonSelectMenu").first().find("select").attr("id"),a("#"+g).selectmenu("open"),a(d).one("dialogclose",function(){b.trybSerwisowyAktywny=!1,a(d).remove()})},g=function(b){c="#"+b,a(c).on("click",function(){f()})};return{inicjacja:g,zamknij:e}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON'], function ($, varGlobal, json) {
+    "use strict";
+
+    var init = false,
+        idDialog = "#DialogGULtrybSerwisowy", // tak będzie nazwane okienko popup
+        idButtonPowrot, // po zamknięciu caego okienka dialog powrot na button w zakladce tab ustawienia
+        tytul,
+        idButtonPowrotMenu,
+        intervalId,
+
+
+        zamknij = function () {
+            $(idButtonPowrot).addClass("kopex-selected").addClass(varGlobal.ui_state); // Powrot nawigacji na button
+            $(idDialog).dialog('close');
+        },
+
+
+        wylaczTrybSerwisowy = function () {
+            clearInterval(intervalId);
+            varGlobal.doWyslania.zalTrybSerwisowy.wTrybCiagnikowId = 0;
+            varGlobal.doWyslania.zalTrybSerwisowy.aktywuj = 0;
+            json.wyslij(varGlobal.doWyslania.zalTrybSerwisowy);
+            console.log(varGlobal.doWyslania.zalTrybSerwisowy);
+        },
+
+
+        podtrzymujTrybSerwisowy = function (_rozkaz) {
+            clearInterval(intervalId);
+            intervalId = setInterval(function () {
+                //console.log(_rozkaz);
+                //json.wyslij(_rozkaz);
+            }, 3000);
+        },
+
+
+
+        otworzMenu = function () {
+            var div,
+                fragMenu2 = document.createDocumentFragment();
+
+
+            if ($(idDialog).length === 0) { // sprawdzenie czy div już nie istnieje
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .css({
+                        'padding': '2em',
+                        'margin': '1em'
+                    })
+                    .attr('id', idDialog.replace("#", ""));
+                $('body').append(div);
+
+                $(idDialog).dialog({
+                    modal: true,
+                    closeOnEscape: false,
+                    autoOpen: false,
+                    height: "auto",
+                    width: '70%',
+                    title: $(idButtonPowrot).text()
+                });
+
+                require(['wspolne/dodajMenu2'], function (dodajMenu2) {
+                    fragMenu2 = dodajMenu2.dodajElementyHtml(varGlobal.danePlikuKonfiguracyjnego.MENU_GULTRYBSERW[0].zawartosc, 'przyciskMenuGULTrybSerw');
+                    $(idDialog).append(fragMenu2);
+                    $(idDialog).dialog("open");
+                    $("button").button(); // Nadanie stylu jquery
+                    $(idDialog).children().first().addClass("kopex-selected").addClass(varGlobal.ui_state); // Skierowanie nawigacji z klawiatury na nowo stworzone elementy submenu
+                    dodajMenu2.allignVertical(idDialog); // wyrównanie buttonów w osi Y   
+
+                    $(idDialog).dialog("option", "position", {
+                        my: "center",
+                        at: "center",
+                        of: window
+                    });
+                });
+            }
+
+//            require(['gulTrybSerwisowy/tooltip'], function (tooltip) {
+//                tooltip.inicjacja(idDialog);
+//            });
+
+            $(idDialog).one("dialogclose", function (event, ui) { // oczekiwanie na zdarzenie zamknięcia okienka
+                $(idDialog).remove();
+            });
+        },
+
+
+        inicjacja = function (_idButtona) {
+            idButtonPowrot = '#' + _idButtona;
+            $(idButtonPowrot).on("click", function (event, ui) {
+                otworzMenu();
+            });
+        };
+
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij,
+        podtrzymujTrybSerwisowy: podtrzymujTrybSerwisowy,
+        wylaczTrybSerwisowy: wylaczTrybSerwisowy
+    };
+
+});

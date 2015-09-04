@@ -1,3 +1,358 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:02:50 */
+@charset "utf-8";
 
-@charset "utf-8";.ui-keyboard{padding:.3em;position:absolute;left:0;top:0;z-index:16000}.ui-keyboard-has-focus{z-index:16001}.ui-keyboard div{font-size:1.1em}.ui-keyboard-button{height:2em;width:2em;min-width:1em;margin:.1em;cursor:pointer;overflow:hidden;line-height:2em;-moz-user-focus:ignore}.ui-keyboard-button span{padding:0;margin:0;white-space:nowrap;display:inline-block}.ui-keyboard-button-endrow{clear:left}.ui-keyboard-widekey{min-width:4em;width:auto}.ui-keyboard-space{width:15em}.ui-keyboard-empty span,.ui-keyboard-space span{font:0/0 a;text-shadow:none;color:transparent}.ui-keyboard-preview-wrapper{text-align:center}.ui-keyboard-preview{text-align:left;margin:0 0 3px;display:inline;width:99%}.ui-keyboard-keyset{text-align:center;white-space:nowrap}.ui-keyboard-input{text-align:left}.ui-keyboard-input-current{-moz-box-shadow:1px 1px 10px #00f;-webkit-box-shadow:1px 1px 10px #00f;box-shadow:1px 1px 10px #00f}.ui-keyboard-placeholder{color:#888}.ui-keyboard-nokeyboard{color:#888;border-color:#888}.ui-keyboard-button.disabled{opacity:.5;filter:alpha(opacity=50)}.ui-keyboard-spacer{display:inline-block;width:1px;height:0}.ui-keyboard-button.ui-keyboard-combo.ui-state-default{border-color:#ffaf0f}button.ui-keyboard-accept.ui-keyboard-valid-input{border-color:#0c0;background:#080;color:#fff}button.ui-keyboard-accept.ui-keyboard-valid-input:hover{background:#0a0}button.ui-keyboard-accept.ui-keyboard-invalid-input{border-color:#c00;background:#800;color:#fff}button.ui-keyboard-accept.ui-keyboard-invalid-input:hover{background:#a00}.ui-bar .ui-keyboard-button{width:3em;display:inline-block}.ui-bar .ui-keyboard-widekey{width:5.5em}.ui-bar .ui-keyboard-space{width:15em}.ui-bar .ui-keyboard-space span{visibility:hidden}.ui-bar .ui-keyboard-keyset{line-height:.5em}.ui-bar input.ui-input-text,.ui-bar textarea.ui-input-text{width:95%}.ui-bar .ui-btn-inner{height:2em;padding:.2em 0;margin:0}.ui-bar .ui-btn{margin:0;font-size:13px}@media all and (max-width:319px){.ui-keyboard div{font-size:9px}.ui-keyboard .ui-keyboard-input{font-size:12px}.ui-bar .ui-btn{margin:0;font-size:9px}.ui-bar .ui-keyboard-button{width:1.8em;height:2.5em}.ui-bar .ui-keyboard-widekey{width:4em}.ui-bar .ui-keyboard-space{width:8em}.ui-bar .ui-btn-inner{height:2.5em;padding:.3em 0}}@media all and (min-width:320px) and (max-width:479px){.ui-keyboard div{font-size:9px}.ui-keyboard .ui-keyboard-input{font-size:14px}.ui-bar .ui-btn{margin:0;font-size:11px}.ui-bar .ui-keyboard-button{width:1.8em;height:3em}.ui-bar .ui-keyboard-widekey{width:4.5em}.ui-bar .ui-keyboard-space{width:10em}.ui-bar .ui-btn-inner{height:3em;padding:.7em 0}}@media all and (min-width:480px) and (max-width:767px){.ui-keyboard div{font-size:13px}.ui-keyboard .ui-keyboard-input{font-size:14px}.ui-bar .ui-btn{margin:0;font-size:10px}.ui-bar .ui-keyboard-button{height:2.5em}.ui-bar .ui-btn-inner{height:2.5em;padding:.5em 0}}.ui-keyboard-button.ui-state-active.ui-state-hover{border:2px solid #fff}.hasFocus{border-color:#59b4d4}.datetimeEntry-control{vertical-align:middle;margin-left:2px}.c3 svg{font:10px sans-serif}.c3 line,.c3 path{fill:none;stroke:#000}.c3 text{-webkit-user-select:none;-moz-user-select:none;user-select:none}.c3-bars path,.c3-event-rect,.c3-legend-item-tile,.c3-xgrid-focus,.c3-ygrid{shape-rendering:crispEdges}.c3-chart-arc path{stroke:#fff}.c3-chart-arc text{fill:#fff;font-size:13px}.c3-grid line{stroke:#aaa}.c3-grid text{fill:#aaa}.c3-xgrid,.c3-ygrid{stroke-dasharray:3 3}.c3-text.c3-empty{fill:gray;font-size:4em}.c3-line{stroke-width:1px}.c3-circle._expanded_{stroke-width:1px;stroke:#fff}.c3-selected-circle{fill:#fff;stroke-width:2px}.c3-bar{stroke-width:0}.c3-bar._expanded_{fill-opacity:.75}.c3-target.c3-focused{opacity:1}.c3-target.c3-focused path.c3-line,.c3-target.c3-focused path.c3-step{stroke-width:2px}.c3-target.c3-defocused{opacity:.3!important}.c3-region{fill:#4682b4;fill-opacity:.1}.c3-brush .extent{fill-opacity:.1}.c3-legend-item{font-size:12px}.c3-legend-item-hidden{opacity:.15}.c3-legend-background{opacity:.75;fill:#fff;stroke:#d3d3d3;stroke-width:1}.c3-tooltip-container{z-index:10}.c3-tooltip{border-collapse:collapse;border-spacing:0;background-color:#fff;empty-cells:show;-webkit-box-shadow:7px 7px 12px -9px #777;-moz-box-shadow:7px 7px 12px -9px #777;box-shadow:7px 7px 12px -9px #777;opacity:.9}.c3-tooltip tr{border:1px solid #CCC}.c3-tooltip th{background-color:#aaa;font-size:14px;padding:2px 5px;text-align:left;color:#FFF}.c3-tooltip td{font-size:13px;padding:3px 6px;background-color:#fff;border-left:1px dotted #999}.c3-tooltip td>span{display:inline-block;width:10px;height:10px;margin-right:6px}.c3-tooltip td.value{text-align:right}.c3-area{stroke-width:0;opacity:.2}.c3-chart-arcs-title{dominant-baseline:middle;font-size:1.3em}.c3-chart-arcs .c3-chart-arcs-background{fill:#e0e0e0;stroke:none}.c3-chart-arcs .c3-chart-arcs-gauge-unit{fill:#000;font-size:16px}.c3-chart-arcs .c3-chart-arcs-gauge-max,.c3-chart-arcs .c3-chart-arcs-gauge-min{fill:#777}.c3-chart-arc .c3-gauge-value{fill:#000}.c3 .c3-axis-x line,.c3 .c3-axis-x path,.c3 .c3-axis-y line,.c3 .c3-axis-y path{stroke:grey}@media screen and (min-width:300px){body{font-size:.55em}}@media screen and (min-width:1000px) and (min-height:500px){body{font-size:.6em}}@media screen and (min-width:1000px) and (min-height:700px){body{font-size:.65em}}html{margin:0;padding:0;background-color:#606060;height:100%;overflow:hidden}body{position:fixed;margin:0 auto;padding:0;width:100%;height:100%;overflow:hidden}.ui-tabs .ui-tabs-nav li{height:100%;text-align:center;width:15%}.ui-tabs .ui-tabs-nav li a{width:85%}.ui-tabs .ui-tabs-panel{padding-left:.2em!important;padding-top:.2em!important}.selectable .ui-selecting{background:#FECA40}.selectable .ui-selected{background:#F39814;color:#fff}.selectable{list-style-type:none;margin:0;padding:0;width:100%}.selectable li{font-weight:400;margin:3px;padding:.1em}div#tab1_info1{border:.1em solid;border-color:grey;height:24%;width:100%;margin:3px;padding:3px}div#tab1_komunikat{height:95%;width:38%;padding-left:.2em;padding-right:.9em;float:left;font-weight:700}div#tab1_statusy{height:98%;width:60%;float:right}div#tab1_info2{border:.1em solid;border-color:grey;width:100%;margin:3px}div#grafika{border:.1em solid;border-color:grey;width:100%;padding:3px}p#p_tekstAlarmu{padding-left:.2em;height:40%;width:99%;font-weight:700;letter-spacing:.1em}table.tabelaPojedyn{width:99%;padding:.2em;border-collapse:separate;border-spacing:.2em}.tdOpisTabPoj{text-transform:uppercase;text-align:left;width:65%;padding:.1em;padding-left:1em;letter-spacing:.2em}.tdWartoscTabPoj{text-align:center;letter-spacing:.2em}div#tab1_info2{padding:0;text-align:center;vertical-align:text-bottom}div#tab1_dol1,div#tab1_dol3{margin:0;padding:0;display:inline-block;width:35%;height:99%;vertical-align:top}div#tab1_dol2{margin:0;padding:0;display:inline-block;width:30%;height:99%;vertical-align:top}div#DialogWersjaInfo{text-align:center;justify-content:center;vertical-align:middle}.Gauge{width:18em;height:9em;display:inline-block;margin:0;padding:0}.OknaDialog{text-align:center;overflow:hidden;position:fixed}.ui-menu{width:25%;text-align:left}.ui-menu .ui-menu{width:95%;text-align:left}.ui-menu .ui-menu .ui-menu-multilevel{width:35em;text-align:left}.ui-dialog-titlebar-close{visibility:hidden}div.panelTab{text-align:center;width:100%;height:98%;margin:0 auto}button.przyciskMenuDiagnostBlokow,button.przyciskMenuGlowne,button.przyciskMenuParametry,button.przyciskMenuPodmianaPLC,button.przyciskMenuPoziomDost{width:75%;height:2.2em;padding-left:3%;margin-top:1%;text-align:left;font-weight:700;letter-spacing:.3em}table.tabelaMain{width:100%;height:1em;margin:0;padding:0;border-spacing:0}td.kolumnaMain{vertical-align:top;width:50%}table.tabelaSub{border:1px solid #999;border-radius:1em;width:99.5%;margin-top:1em;padding:0;border-spacing:0}td.tdOpis{width:80%;margin:0;margin-right:1.5em;padding-left:.5em}td.tdWartosc{width:20%;margin:1px;border-radius:.5em;border:1px solid #363636;transition:background-color .1s linear;-moz-transition:background-color .1s linear;-o-transition:background-color .1s linear;-webkit-transition:background-color .1s linear}.overflow{height:35em}.ui-button .ui-icon.polska{background-image:url(../obrazki/Poland.png)!important}.ui-button .ui-icon.rosja{background-image:url(../obrazki/Russia.png)!important}.ui-button .ui-icon.chiny{background-image:url(../obrazki/China.png)!important}.ui-button .ui-icon.argentyna{background-image:url(../obrazki/Argentina.png)!important}.ui-button .ui-icon.anglia{background-image:url(../obrazki/Britain.png)!important}.jezyki_tab{background-image:url(../obrazki/Poland.png);background-repeat:no-repeat;background-position:left center}
+/* CSS Document */
+
+@import url("keyboard.css");
+@import url("keyboardNavi.css");
+@import url("jquery.datetimeentry.css");
+@import url("c3.css");
+@import url("c3ppp.css");
+
+/*@import url("c3.css");*/
+
+
+/*-Ustawienie wielkosci czcionki w zaleznosci od wielkosci okna*/
+
+
+/*
+@media screen and (min-width: 300px) {
+    body {
+        font-size: 0.6em;
+        cursor: none;
+    }
+}
+@media screen and (min-width: 1000px) {
+    body {
+        font-size: 0.7em;
+    }
+}
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 0.75em;
+    }
+}
+@media screen and (min-width: 1400px) {
+    body {
+        font-size: 0.8em;
+    }
+}
+*/
+
+@media screen and (min-width: 300px) {
+    body {
+        font-size: 0.55em;
+    }
+}
+
+@media screen and (min-width: 1000px) and (min-height: 500px) {
+    body {
+        font-size: 0.6em
+    }
+}
+
+@media screen and (min-width: 1000px) and (min-height: 700px) {
+    body {
+        font-size: 0.65em;
+    }
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(96, 96, 96);
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    position: fixed;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /*    cursor: none;*/
+}
+
+.ui-tabs .ui-tabs-nav li {
+    /* Modyfikacja szerokosci tabow jQuerryUI */
+    height: 100%;
+    text-align: center;
+    width: 15%;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+    /* Wycentrowanie tekstu w tabach jQuerryUI */
+    width: 85%;
+}
+
+.ui-tabs .ui-tabs-panel {
+    /* Skalowanie do wielkosci ekranu tabow */
+    /*    overflow: hidden !important;*/
+    padding-left: 0.2em !important;
+    padding-top: 0.2em !important;
+}
+
+.selectable .ui-selecting {
+    background: #FECA40;
+}
+
+.selectable .ui-selected {
+    background: #F39814;
+    color: white;
+}
+
+.selectable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.selectable li {
+    font-weight: normal;
+    margin: 3px;
+    padding: 0.1em;
+}
+
+
+/*---------------------------------- Tab 1 - główny--------------------------------*/
+
+div#tab1_info1 {
+    border: 0.1em solid;
+    border-color: grey;
+    height: 24%;
+    width: 100%;
+    margin: 3px;
+    padding: 3px;
+}
+
+div#tab1_komunikat {
+    height: 95%;
+    width: 38%;
+    padding-left: 0.2em;
+    padding-right: 0.9em;
+    float: left;
+    font-weight: bold;
+}
+
+div#tab1_statusy {
+    height: 98%;
+    width: 60%;
+    float: right;
+}
+
+div#tab1_info2 {
+    border: 0.1em solid;
+    border-color: grey;
+    width: 100%;
+    margin: 3px;
+    padding: 3px;
+}
+
+div#grafika {
+    border: 0.1em solid;
+    border-color: grey;
+    width: 100%;
+    /*    margin: 3px;*/
+    padding: 3px;
+}
+
+p#p_tekstAlarmu {
+    padding-left: 0.2em;
+    height: 40%;
+    width: 99%;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    /*    vertical-align: text-bottom !important;*/
+}
+
+table.tabelaPojedyn {
+    width: 99%;
+    padding: 0.2em;
+    border-collapse: separate;
+    border-spacing: 0.2em;
+}
+
+.tdOpisTabPoj {
+    text-transform: uppercase;
+    text-align: left;
+    width: 65%;
+    padding: 0.1em;
+    padding-left: 1.0em;
+    letter-spacing: 0.2em;
+}
+
+.tdWartoscTabPoj {
+    /*    text-transform: uppercase;*/
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+
+div#tab1_info2 {
+    padding: 0;
+    text-align: center;
+    vertical-align: text-bottom;
+}
+
+div#tab1_dol1,
+div#tab1_dol3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 35%;
+    height: 99%;
+    vertical-align: top;
+}
+
+div#tab1_dol2 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 30%;
+    height: 99%;
+    vertical-align: top;
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------*/
+
+div#DialogWersjaInfo {
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.Gauge {
+    /*
+    width: 19em;
+    height: 9.5em;
+*/
+    width: 18em;
+    height: 9em;
+    display: inline-block;
+    margin: 0.0em;
+    padding: 0;
+}
+
+.OknaDialog {
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+}
+
+.ui-menu {
+    width: 25%;
+    text-align: left;
+}
+
+.ui-menu .ui-menu {
+    width: 95%;
+    text-align: left;
+}
+
+.ui-menu .ui-menu .ui-menu-multilevel {
+    width: 35em;
+    text-align: left;
+}
+
+.ui-dialog-titlebar-close {
+    /*  Pozbycie sie ikonki krzyzyka zamykajacego okno dialogowe  */
+    visibility: hidden;
+}
+
+div.panelTab {
+    /* Buttony sa umieszczone w sekcji aby uzyskac odpowiednie marginesy dla calej grupy od krawedzi Tabow */
+    text-align: center;
+    width: 100%;
+    height: 98%;
+    margin: 0 auto;
+}
+
+button.przyciskMenuGlowne,
+button.przyciskMenuGULTrybSerw,
+button.przyciskMenuPodmianaPLC,
+button.przyciskMenuPoziomDost,
+button.przyciskMenuDiagnostBlokow,
+button.przyciskMenuParametry {
+    width: 75%;
+    height: 2.2em;
+    padding-left: 3%;
+    margin-top: 1.0%;
+    text-align: left;
+    font-weight: bold;
+    letter-spacing: 0.3em;
+    /*    top: 20%;*/
+}
+
+table.tabelaMain {
+    width: 100%;
+    height: 1em;
+    margin: 0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+td.kolumnaMain {
+    vertical-align: top;
+    width: 50%;
+}
+
+table.tabelaSub {
+    /*    border-collapse: collapse !important;*/
+    border: 1px solid #999999;
+    border-radius: 1em;
+    width: 99.5%;
+    margin-top: 1.0em;
+    padding: 0;
+    border-spacing: 0;
+}
+
+td.tdOpis {
+    width: 80%;
+    margin: 0px;
+    margin-right: 1.5em;
+    padding-left: 0.5em;
+}
+
+td.tdWartosc {
+    width: 20%;
+    margin: 1px;
+    border-radius: 0.5em;
+    border: 1px solid #363636;
+    transition: background-color 0.1s linear;
+    -moz-transition: background-color 0.1s linear;
+    -o-transition: background-color 0.1s linear;
+    -webkit-transition: background-color 0.1s linear;
+}
+
+.overflow {
+    height: 35em;
+}
+
+.ui-button .ui-icon.polska {
+    background-image: url("../obrazki/Poland.png") !important;
+}
+
+.ui-button .ui-icon.rosja {
+    background-image: url("../obrazki/Russia.png") !important;
+}
+
+.ui-button .ui-icon.chiny {
+    background-image: url("../obrazki/China.png") !important;
+}
+
+.ui-button .ui-icon.argentyna {
+    background-image: url("../obrazki/Argentina.png") !important;
+}
+
+.ui-button .ui-icon.anglia {
+    background-image: url("../obrazki/Britain.png") !important;
+}
+
+.jezyki_tab {
+    background-image: url("../obrazki/Poland.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    /*    background-attachment: fixed;*/
+}

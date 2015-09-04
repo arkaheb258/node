@@ -1,2 +1,68 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){switch(a("#keyboard").keyup(function(a){a.preventDefault(),a.stopPropagation()}),c){case b.kodyKlawiszy.lewo:a("#keyboard").trigger("navigate","left");break;case b.kodyKlawiszy.prawo:a("#keyboard").trigger("navigate","right");break;case b.kodyKlawiszy.gora:a("#keyboard").trigger("navigate","up");break;case b.kodyKlawiszy.dol:a("#keyboard").trigger("navigate","down");break;case b.kodyKlawiszy.enter:a("#keyboard").trigger("navigate","enter");break;case b.kodyKlawiszy.escape:a("#DialogEdycjaParametru").dialog("isOpen")&&require(["parametry/edycjaParametru"],function(a){a.zamknijKlawiature()}),a("#DialogEdycjaRozkazu").length>0&&require(["rozkazy/edytuj"],function(a){a.zamknij()})}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+
+    var ccc = false,
+
+        wykonaj = function (kod, selected) {
+
+            //console.log(kod);
+
+            $('#keyboard').keyup(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            });
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.lewo:
+                $('#keyboard').trigger('navigate', "left");
+                break;
+
+            case varGlobal.kodyKlawiszy.prawo:
+                $('#keyboard').trigger('navigate', "right");
+                break;
+
+            case varGlobal.kodyKlawiszy.gora:
+                $('#keyboard').trigger('navigate', "up");
+                break;
+
+            case varGlobal.kodyKlawiszy.dol:
+                $('#keyboard').trigger('navigate', "down");
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                $('#keyboard').trigger('navigate', "enter"); // Nawigacja po wirtualnej klawiaturze
+                break;
+
+            case varGlobal.kodyKlawiszy.escape:
+                if ($('#DialogEdycjaParametru').dialog("isOpen")) {
+                    require(['parametry/edycjaParametru'], function (edycja) {
+                        edycja.zamknijKlawiature();
+                    });
+                }
+
+                if ($('#DialogEdycjaRozkazu').length > 0) {
+                    require(['rozkazy/edytuj'], function (edytuj) {
+                        edytuj.zamknij();
+                    });
+                }
+                break;
+
+            default:
+
+            }
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

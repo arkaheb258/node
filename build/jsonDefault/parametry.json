@@ -1,4 +1,4 @@
-{"TYPM":"KTW","WER":"0.22","DATA":"2015-07-28","DANE":{
+{"TYPM":"KTW","WER":"0.23","DATA":"2015-07-29","DANE":{
 "grupa1":{"OPIS":"1. Konfiguracja kombajnu"
 , "podgrupa1":{"OPIS":"1.1 Opis kombajnu"
 ,"sKonfTypKombajnu":{"TYP":"pString", "ID":"1.1.1", "ROZM":16, "WART":"KTW-150", "DOST":"Adv", "OPIS":"Typ kombajnu"}
@@ -27,6 +27,7 @@
 ,"rKonfMetanomierzTyp":{"TYP":"pLista", "ID":"1.2.18", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["Wersja 0 - styk", "Wesja 1 - Analog"], "OPIS":"Typ modułu CH4"}
 ,"rKonfUkladPozycjonowaniaTyp":{"TYP":"pLista", "ID":"1.2.19", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["Wersja 0 - brak", "Wesja 1 - GIG"], "OPIS":"Typ systemu pozycjonowania"}
 ,"rKonfPilotRadiowyManJazTyp":{"TYP":"pLista", "ID":"1.2.20", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["Wersja 0 - Pilot dla KTW150", "Wesja 1 - Pilot uniwersalny"], "OPIS":"Typ manipulatora jazdy na pilocie radiowym"}
+,"rKonfAutoChlodzenieOleju":{"TYP":"pLista", "ID":"1.2.21", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Wyłączona", "1 - Włączona"], "OPIS":"Funkcja automatycznego chłodzenia oleju"}
 }},"grupa2":{"OPIS":"2. Pozycjonowanie i geometria"
 , "podgrupa1":{"OPIS":"2.1 Antykolizja"
 ,"rGeomDorgMax":{"TYP":"pLiczba", "ID":"2.1.1", "ROZM":1, "WART":850.0, "PREC":0, "MIN":0.0, "MAX":9999.0, "DOST":"Adv", "OPIS":"Maksymalna średnica organu [mm]"}
@@ -347,6 +348,8 @@
 ,"rBT14_TemOlejuZbHyd_HiALHist":{"TYP":"pLiczba", "ID":"7.14.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej temperatury oleju w zbiorniku [°C]"}
 ,"tBT14_TemOlejuZbHyd_HiALFiltr":{"TYP":"pCzas", "ID":"7.14.9", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury oleju w zbiorniku [s]"}
 ,"rBT14_TemOlejuZbHyd_Filtry":{"TYP":"pLiczba", "ID":"7.14.10", "ROZM":1, "WART":35.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość temperatury oleju w zbiorniku przy której zaczynamy kontrolować ciśnienie na filtrach oleju [°C]"}
+,"rBT14_TemOlejuZbHyd_ChlodzZal":{"TYP":"pLiczba", "ID":"7.14.11", "ROZM":1, "WART":45.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom załączenia automatycznego chłodzenia oleju w zbiorniku [°C]"}
+,"rBT14_TemOlejuZbHyd_ChlodzHist":{"TYP":"pLiczba", "ID":"7.14.12", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Histereza załączenia automatycznego chłodzenia oleju w zbiorniku [°C]"}
 },"podgrupa15":{"OPIS":"7.15 BT29 Temperatura oleju organu"
 ,"rBT29_TemOlPrzOrgAn_ZakrMin":{"TYP":"pLiczba", "ID":"7.15.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury oleju w przekładni organu [°C]"}
 ,"rBT29_TemOlPrzOrgAn_ZakrMax":{"TYP":"pLiczba", "ID":"7.15.2", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury oleju w przekładni organu [°C]"}

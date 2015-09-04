@@ -1,2 +1,71 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c,d=function(d,e){switch(d){case b.kodyKlawiszy.escape:require(["ramkaTcp/main"],function(a){a.zamknij()});break;case b.kodyKlawiszy.lewo:e.removeClass("kopex-selected").removeClass(b.ui_state),c=0===e.prev().length?e.parent().find(".radioButtonRamkaTCP").last().addClass("kopex-selected").addClass(b.ui_state):e.prev().addClass("kopex-selected").addClass(b.ui_state),require(["ramkaTcp/main"],function(a){a.dodajSygnaly(c.attr("id"))}),0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close");break;case b.kodyKlawiszy.prawo:e.removeClass("kopex-selected").removeClass(b.ui_state),c=0===e.next().length?e.parent().find(".radioButtonRamkaTCP").first().addClass("kopex-selected").addClass(b.ui_state):e.next().addClass("kopex-selected").addClass(b.ui_state),require(["ramkaTcp/main"],function(a){a.dodajSygnaly(c.attr("id"))}),0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close");break;case b.kodyKlawiszy.enter:require(["komunikaty/popUpKomunikaty"],function(a){a.inicjacja()})}};return{wykonaj:d}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+    var sel,
+
+        wykonaj = function (kod, selected) {
+            //console.log('wykonaj - ramka tcp');
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.escape:
+                require(['ramkaTcp/main'], function (main) {
+                    main.zamknij();
+                });
+                break;
+
+                //radioButtonRamkaTCP
+
+            case varGlobal.kodyKlawiszy.lewo:
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                if (selected.prev().length === 0) {
+                    sel = selected.parent().find(".radioButtonRamkaTCP").last().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    sel = selected.prev().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                require(['ramkaTcp/main'], function (main) {
+                    main.dodajSygnaly(sel.attr('id'));
+                });
+
+                if ($("#DialogPopUpKomunikaty").length !== 0) { // w przypadku otwartego okienka z ostatnimi alarmami i ostrzezeniami - zamkniecie ich
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.prawo:
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                if (selected.next().length === 0) {
+                    sel = selected.parent().find(".radioButtonRamkaTCP").first().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    sel = selected.next().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                require(['ramkaTcp/main'], function (main) {
+                    main.dodajSygnaly(sel.attr('id'));
+                });
+
+                if ($("#DialogPopUpKomunikaty").length !== 0) {
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                require(['komunikaty/popUpKomunikaty'], function (popUpKomunikaty) {
+                    popUpKomunikaty.inicjacja();
+                });
+                break;
+
+            default:
+            }
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

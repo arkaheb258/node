@@ -1,2 +1,162 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","kommTCP"],function(a,b,c){"use strict";var d,e,f="#idDivDaneSurowe",g="#idDivDaneUlozone",h=function(){clearInterval(e)},i=function(b){var h,i,j,k,l="",m="",n=function(a){for(var b="_"+a.toString();b.length<8;)b+="_";return b+"|"};clearInterval(e),e=setInterval(function(){for(a(f).empty(),a(g).empty(),l="",h=c.daneTCP[b].length,l=JSON.stringify(c.daneTCP[b],null,1),a(f).append(l),m=n("_"),i=0;10>i;i+=1)m+=n(i+"+");for(a(g).append(m),a(g).append("<br/>"),a(g).append("<br/>"),j=0,k=0,m=n(k+"+"),i=0;h>i;i+=1)j+=1,10===j?(j=0,k+=10,m+=n(c.daneTCP[b][i]),a(g).append(m),m="",m+=n(k+"+"),a(g).append("<br/>")):m+=n(c.daneTCP[b][i]);if(9>j){for(i=0;10-j>i;i+=1)m+=n("");a(g).append(m)}a(d).dialog("option","position",{my:"center",at:"center",of:window})},500)},j=function(b){var c;d=b,c=document.createElement("div"),a(c).attr("id",f.replace("#","")).css({border:"0.1em solid","border-color":"grey","border-radius":"1em","font-size":"90%",padding:"0.5em",margin:"1em"}),a(b).append(c),c=document.createElement("div"),a(c).attr("id",g.replace("#","")).css({border:"0.1em solid","border-color":"grey","border-radius":"1em",padding:"0.5em","font-size":"115%","font-family":"monospace","text-transform":"uppercase",margin:"1em"}),a(b).append(c),i("analog")};return{inicjacja:j,zamknij:h,wyswietlBlokDanych:i}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'kommTCP'], function ($, varGlobal, dane) {
+    "use strict";
+
+
+    var idDial,
+        intervalId,
+        idDivDaneSurowe = '#idDivDaneSurowe',
+        idDivDaneUlozone = '#idDivDaneUlozone',
+
+
+        zamknij = function () {
+            clearInterval(intervalId);
+        },
+
+
+        wyswietlBlokDanych = function (_blokDanych) {
+            var length,
+                stringDaneSurowe = '',
+                stringDaneUlozone = '',
+                i,
+                ccc,
+                init = false,
+                licznik,
+                licznikDziesiatek,
+                dopelnijDo10 = function (_tekst) {
+                    var txt = '_' + _tekst.toString();
+                    while (txt.length < 8) {
+                        txt += '_';
+                    }
+                    return txt + '|';
+                };
+
+            clearInterval(intervalId);
+            intervalId = setInterval(function () {
+                $(idDivDaneSurowe).empty();
+                $(idDivDaneUlozone).empty();
+
+                //console.log(dane.daneTCP['analog']);
+                //console.log(dane.daneTCP[_blokDanych]);
+
+                //      _                                                    
+                //   __| | __ _ _ __   ___    ___ _   _ _ __ _____      _____ 
+                //  / _` |/ _` | '_ \ / _ \  / __| | | | '__/ _ \ \ /\ / / _ \
+                // | (_| | (_| | | | |  __/  \__ \ |_| | | | (_) \ V  V /  __/
+                //  \__,_|\__,_|_| |_|\___|  |___/\__,_|_|  \___/ \_/\_/ \___|
+                stringDaneSurowe = '';
+                length = dane.daneTCP[_blokDanych].length;
+                stringDaneSurowe = JSON.stringify(dane.daneTCP[_blokDanych], null, 1);
+                $(idDivDaneSurowe).append(stringDaneSurowe);
+
+                //      _                          _                          
+                //   __| | __ _ _ __   ___   _   _| | ___ _______  _ __   ___ 
+                //  / _` |/ _` | '_ \ / _ \ | | | | |/ _ \_  / _ \| '_ \ / _ \
+                // | (_| | (_| | | | |  __/ | |_| | | (_) / / (_) | | | |  __/
+                //  \__,_|\__,_|_| |_|\___|  \__,_|_|\___/___\___/|_| |_|\___|
+
+                // Pierwsza linijka z numeracją kolumn
+                stringDaneUlozone = dopelnijDo10('_');
+                for (i = 0; i < 10; i += 1) {
+                    stringDaneUlozone += dopelnijDo10(i + '+');
+                }
+                $(idDivDaneUlozone).append(stringDaneUlozone);
+                $(idDivDaneUlozone).append('<br/>');
+                $(idDivDaneUlozone).append('<br/>');
+
+                // Dane w kolumnach
+                licznik = 0;
+                licznikDziesiatek = 0;
+                stringDaneUlozone = dopelnijDo10(licznikDziesiatek + '+');
+                for (i = 0; i < length; i += 1) {
+                    licznik += 1;
+
+                    if (licznik === 10) {
+                        licznik = 0;
+                        licznikDziesiatek += 10;
+                        stringDaneUlozone += dopelnijDo10(dane.daneTCP[_blokDanych][i]);
+
+                        $(idDivDaneUlozone).append(stringDaneUlozone);
+                        stringDaneUlozone = '';
+                        stringDaneUlozone += dopelnijDo10(licznikDziesiatek + '+'); // rozpoczęcie zapisu nowej linii
+                        $(idDivDaneUlozone).append('<br/>');
+                    } else {
+                        stringDaneUlozone += dopelnijDo10(dane.daneTCP[_blokDanych][i]);
+                    }
+                }
+                if (licznik < 9) { // dopełnienie do 10 ostatniego wiersza tabeli
+                    for (i = 0; i < (10 - licznik); i += 1) {
+                        stringDaneUlozone += dopelnijDo10('');
+                    }
+                    $(idDivDaneUlozone).append(stringDaneUlozone);
+                }
+
+                $(idDial).dialog("option", "position", { // wycentrowanie okienka
+                    my: "center",
+                    at: "center",
+                    of: window
+                });
+
+            }, 500);
+        },
+
+
+        inicjacja = function (_idDialog) {
+            var div;
+
+            idDial = _idDialog;
+            div = document.createElement("div");
+            $(div)
+                .attr('id', idDivDaneSurowe.replace("#", ""))
+                .css({
+                    'border': '0.1em solid',
+                    'border-color': 'grey',
+                    'border-radius': '1em',
+                    'font-size': '90%',
+                    'padding': '0.5em',
+                    'margin': '1em'
+                });
+            $(_idDialog).append(div);
+
+            div = document.createElement("div");
+            $(div)
+                .attr('id', idDivDaneUlozone.replace("#", ""))
+                .css({
+                    'border': '0.1em solid',
+                    'border-color': 'grey',
+                    'border-radius': '1em',
+                    'padding': '0.5em',
+                    'font-size': '115%',
+                    'font-family': 'monospace',
+                    'text-transform': 'uppercase',
+                    'margin': '1em'
+                });
+            $(_idDialog).append(div);
+
+            // prz starcie pierwsze wyświetlamy analogi
+            wyswietlBlokDanych('analog');
+        };
+
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij,
+        wyswietlBlokDanych: wyswietlBlokDanych
+    };
+
+});
+
+
+//if (dane.daneTCP[_blokDanych][i] === undefined) {
+//    stringDaneUlozone += dopelnijDo10('_u');
+//} else {
+//    stringDaneUlozone += dopelnijDo10('_' + dane.daneTCP[_blokDanych][i]);
+//}

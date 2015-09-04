@@ -1,2 +1,55 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(a){switch(a){case b.kodyKlawiszy.lewo:return;case b.kodyKlawiszy.prawo:return;case b.kodyKlawiszy.gora:break;case b.kodyKlawiszy.dol:break;case b.kodyKlawiszy.enter:return void require(["ksiazkaSerwisowa/potwierdzenie"],function(a){a.wyslijDoPLC()});case b.kodyKlawiszy.escape:require(["ksiazkaSerwisowa/potwierdzenie"],function(a){a.zamknij()})}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+    var ccc,
+
+        wykonaj = function (kod, selected) {
+
+            //console.log('wykonaj nawiEKSpotwierdzenie');
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.lewo:
+                return;
+
+            case varGlobal.kodyKlawiszy.prawo:
+                return;
+
+            case varGlobal.kodyKlawiszy.gora:
+                break;
+
+            case varGlobal.kodyKlawiszy.dol:
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                require(['ksiazkaSerwisowa/potwierdzenie'], function (potwierdzenie) {
+                    potwierdzenie.wyslijDoPLC();
+                });
+                return;
+
+            case varGlobal.kodyKlawiszy.escape:
+                require(['ksiazkaSerwisowa/potwierdzenie'], function (potwierdzenie) {
+                    potwierdzenie.zamknij();
+                });
+
+                break;
+
+            default:
+            }
+
+
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

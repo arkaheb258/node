@@ -1,2 +1,132 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","scrollTo"],function(a,b){"use strict";var c=function(a){var c,d=!1,e=!1,f="RAPORT - zdublowane indeksy: ",g="RAPORT - brak pola .kolejnosc: ",h="RAPORT - zla wersja wyposażenia: ",i="RAPORT - czujnik nie aktywny: ",j=[],k=[];if(this.config={inputData:a.inputData,sortData:a.sortData||!1},this.config.sortData)for(c=0;c<this.config.inputData.length;c+=1)void 0!==this.config.inputData[c].kolejnosc?void 0===k[this.config.inputData[c].kolejnosc]?k[this.config.inputData[c].kolejnosc]=this.config.inputData[c]:(f+=this.config.inputData[c].id+", ",k[c+100]=this.config.inputData[c]):(k[c+100]=this.config.inputData[c],g+=this.config.inputData[c].id+", ");else g+="Wyłączone sortowanie",f+="Wyłączone sortowanie",k=a.inputData;for(c=0;c<k.length;c+=1)void 0===k[c]&&(e=!0);for(e&&(e=!1,k=k.filter(function(){return!0})),c=0;c<k.length;c+=1)void 0!==k[c].wersja?b.wersjaWyposazenia===parseFloat(k[c].wersja)?j.push(k[c]):h+=k[c].id+", ":j.push(k[c]);for(c=0;c<j.length;c+=1)void 0!==j[c].czyAktywny&&0===parseFloat(j[c].czyAktywny)&&(i+=j[c].id+", ",delete j[c],e=!0);return e&&(j=j.filter(function(){return!0})),d&&(console.log(f),console.log(g),console.log(h),console.log(i)),f="",g="",h="",i="",k=void 0,j};return{inicjacja:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define */
+
+// Zadania funkcji:
+// ustawia kolejność elementów w tablicu względem pola "kolejnosc" w pliku sygnaly.json
+// sprawdza poprawnosc danych (brak pustych indexow)
+// pozbywa się czujników, które w pliku sygnaly.json w polu "czyAktywny" wartosc 0
+define(['jquery', 'zmienneGlobalne', 'scrollTo'], function ($, varGlobal, scroll) {
+    'use strict';
+
+    var ccc,
+
+
+        inicjacja = function (_config) {
+            var i,
+                pokazRaport = false,
+                filtrujTablice = false,
+                raportZdublowaneIndeksy = 'RAPORT - zdublowane indeksy: ',
+                raportBrakKolejknosci = 'RAPORT - brak pola .kolejnosc: ',
+                raportWersjaWyposazenia = 'RAPORT - zla wersja wyposażenia: ',
+                raportCzyAktywny = 'RAPORT - czujnik nie aktywny: ',
+                daneWersjaWyposazeniaOK = [],
+                daneWejKolejne = [];
+
+            // Konfiguracja wstępna
+            this.config = {
+                inputData: _config.inputData,
+                sortData: _config.sortData || false // czy posortować dane
+            };
+            
+            //console.log(this.config.inputData);
+
+            // Ustawienie kolejności zgodnie z polami json "kolejnosc"
+            if (this.config.sortData) {
+                for (i = 0; i < this.config.inputData.length; i += 1) { // istnieją pola z kolejnością -> stworzenie nowej tablicy odpowiednio posegregowanej
+                    if (this.config.inputData[i].kolejnosc !== undefined) {
+                        // sprawdzenie, czy nie powtarzają się indeksy ustawione w polu .kolejnosc
+                        if (daneWejKolejne[this.config.inputData[i].kolejnosc] === undefined) {
+                            daneWejKolejne[this.config.inputData[i].kolejnosc] = this.config.inputData[i];
+                        } else {
+                            raportZdublowaneIndeksy += this.config.inputData[i].id + ', ';
+                            daneWejKolejne[i + 100] = this.config.inputData[i];
+
+                        }
+                        //daneWejKolejne[this.config.inputData[i].kolejnosc] = this.config.inputData[i];
+                    } else { // jesli dane nie maja numeracji
+                        daneWejKolejne[i + 100] = this.config.inputData[i];
+                        raportBrakKolejknosci += this.config.inputData[i].id + ', ';
+                    }
+                }
+            } else {
+                raportBrakKolejknosci += 'Wyłączone sortowanie';
+                raportZdublowaneIndeksy += 'Wyłączone sortowanie';
+                daneWejKolejne = _config.inputData;
+            }
+            
+            
+
+            // Sprawdzenie poprawności tablicy (czy nie brakuje niektórych indeksów - zdarza się czasami pominąć w pliku excela)
+            for (i = 0; i < daneWejKolejne.length; i += 1) { // stworzenie nowej tablicy z zadana kolejnoscią
+                if (daneWejKolejne[i] === undefined) {
+                    filtrujTablice = true;
+                }
+            }
+            if (filtrujTablice) { // Wywalenie pustych indeksów
+                filtrujTablice = false;
+                daneWejKolejne = daneWejKolejne.filter(function () {
+                    return true;
+                });
+            }
+            
+            //console.log(daneWejKolejne);
+
+            // sprawdzenie sygnałów pod kątem parametru wersji wyposażenia -> pole sygnaly.json .wersja
+            for (i = 0; i < daneWejKolejne.length; i += 1) {
+                if (daneWejKolejne[i].wersja !== undefined) {
+                    if (varGlobal.wersjaWyposazenia === parseFloat(daneWejKolejne[i].wersja)) {
+                        daneWersjaWyposazeniaOK.push(daneWejKolejne[i]);
+                    } else {
+                        raportWersjaWyposazenia += daneWejKolejne[i].id + ', ';
+                    }
+                } else { // wersja wyposażenia nie jest podana -> dane będą wyświetlane dla każdego przypadku
+                    daneWersjaWyposazeniaOK.push(daneWejKolejne[i]);
+                }
+            }
+
+            //wyrzucenie zmiennych, które nie mają być wyświetlane (ustawiane parametrem w pliku sygnaly.json - pole "czyAktywny")
+            for (i = 0; i < daneWersjaWyposazeniaOK.length; i += 1) {
+                if (daneWersjaWyposazeniaOK[i].czyAktywny !== undefined) {
+                    if (parseFloat(daneWersjaWyposazeniaOK[i].czyAktywny) === 0) {
+                        raportCzyAktywny += daneWersjaWyposazeniaOK[i].id + ', ';
+                        delete daneWersjaWyposazeniaOK[i];
+                        filtrujTablice = true;
+                    }
+                }
+            }
+            if (filtrujTablice) { // Wywalenie pustych indeksów
+                daneWersjaWyposazeniaOK = daneWersjaWyposazeniaOK.filter(function () {
+                    return true;
+                });
+            }
+
+            // koncowy raport po sortowaniu
+            if (pokazRaport) {
+                console.log(raportZdublowaneIndeksy);
+                console.log(raportBrakKolejknosci);
+                console.log(raportWersjaWyposazenia);
+                console.log(raportCzyAktywny);
+            }
+
+            // czyszczenie pamięci
+            raportZdublowaneIndeksy = '';
+            raportBrakKolejknosci = '';
+            raportWersjaWyposazenia = '';
+            raportCzyAktywny = '';
+            daneWejKolejne = undefined;
+
+            return daneWersjaWyposazeniaOK;
+        };
+
+
+    return {
+        inicjacja: inicjacja
+    };
+
+});

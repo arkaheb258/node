@@ -1,2 +1,56 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){var d=a("#tabs").tabs("option","active");switch(c){case b.kodyKlawiszy.lewo:break;case b.kodyKlawiszy.prawo:break;case b.kodyKlawiszy.dol:break;case b.kodyKlawiszy.enter:require(["komunikaty/zalozBlokade"],function(a){a.wyslij()});break;case b.kodyKlawiszy.escape:require(["komunikaty/zalozBlokade"],function(a){a.zamknij()}),1===d&&require(["komunikaty/tooltip"],function(a){a.naSelectable()})}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+    var tabID,
+        tabIndex,
+
+        wykonaj = function (kod) {
+            var tabIndex = $('#tabs').tabs("option", "active");
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.lewo:
+                break;
+
+            case varGlobal.kodyKlawiszy.prawo:
+                break;
+
+            case varGlobal.kodyKlawiszy.dol:
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                require(['komunikaty/zalozBlokade'], function (blokady) {
+                    //console.log('wyslij');
+                    blokady.wyslij();
+                });
+                break;
+
+            case varGlobal.kodyKlawiszy.escape:
+                require(['komunikaty/zalozBlokade'], function (blokady) {
+                    blokady.zamknij();
+                });
+
+                if (tabIndex === 1) { // ma nie wyskakiwać na pełnej liście komunikatów
+                    require(['komunikaty/tooltip'], function (tooltip) { // wywietlenie podpowiedzi z możliwymi kierunkami nawigacji
+                        tooltip.naSelectable();
+                    });
+                }
+                break;
+
+            default:
+            }
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

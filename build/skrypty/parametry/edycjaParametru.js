@@ -1,2 +1,340 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","keyboard","keyboardNav","obslugaJSON"],function(a,b,c,d,e){"use strict";var f,g,h,i="#DialogEdycjaParametru",j=function(){var b;b=a("#keyboard").keyboard().getkeyboard(),void 0!==b&&b.isVisible()&&(b.close(),b.destroy()),a("#DialogEdycjaParametru").empty(),a("#DialogEdycjaParametru").dialog("close"),a("#menu").addClass("kopex-selected")},k=function(){var c,d,i=!1,k=function(a){var b;return b=a%1===0?!0:!1};c=a("#keyboard").keyboard().getkeyboard(),"pLiczba"===h.TYP||"pCzas"===h.TYP?isNaN(g)?i=!1:(d=k(g)?h.PREC:g.toString().split(".")[1].length,i=d<=h.PREC?g<h.MIN||g>h.MAX?!1:!0:!1):i=!0,i?(b.doWyslania.parametr.id=f,b.doWyslania.parametr.wartosc=g,c.close(),c.destroy(),j(),require(["progresBar"],function(a){a.inicjacja({show:!0,status:"sending"})}),e.wyslij(b.doWyslania.parametr),console.log(b.doWyslania.parametr)):setTimeout(function(){c.$el.val(b.danePlikuKonfiguracyjnego.TEKSTY.paramZlaWartosc),setTimeout(function(){c.$el.val("").focus()},1500)},200)},l=function(a){b.doWyslania.parametr.id=f,b.doWyslania.parametr.wartosc=a,require(["progresBar"],function(a){a.inicjacja({show:!0,status:"sending"})}),j(),e.wyslij(b.doWyslania.parametr),console.log(b.doWyslania.parametr)},m=function(){a("#keyboard").bind("canceled.keyboard",function(){j()}),a("#keyboard").bind("accepted.keyboard",function(a,b,c){"pString"===h.TYP?g=c.value:("pLiczba"===h.TYP||"pCzas"===h.TYP)&&(g=Number(c.value)),k()})},n=function(){var c,d,e;c=document.createElement("p"),a(c).css({position:"relative",top:"25%"}),d=document.createElement("label"),e=document.createElement("input"),a(d).attr("for","spinner"),a(c).append(d),a(e).attr("id","spinner").attr("name","value").css({"font-size":"1.5em","text-align":"center",width:"20em"}),a(c).append(e),a("#DialogEdycjaParametru").append(c),a("#DialogEdycjaParametru").dialog({buttons:[{disabled:!0,text:b.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz},{disabled:!0,text:b.danePlikuKonfiguracyjnego.TEKSTY.anuluj}]}),a("#spinner").formatSpinner({values:h.LISTA,count:h.LISTA.length}),a("#spinner").addClass("kopex-selected").addClass("kopex-selected").formatSpinner("stepUp")},o=function(){var c,d,e,f;if(0===a(i).length)switch(c=document.createElement("div"),a(c).addClass("OknaDialog").addClass("ui-corner-all").attr("id",i.replace("#","")),a("body").append(c),e=b.danePlikuKonfiguracyjnego.TEKSTY.parametr+" "+h.ID,a(i).dialog({modal:!0,closeOnEscape:!1,height:a(document).height()/1.5,width:"65%",hide:{delay:200,effect:b.efektShowHide,duration:350},title:e}),a(i).dialog("open"),d=document.createElement("p"),a(d).attr("id","pParametrOpis").text(h.OPIS).css({padding:"0.4em",border:"0.1em solid","border-color":"grey","font-style":"italic","font-size":"1.2em","text-align":"center","border-radius":"0.5em",width:"95%"}),a("#DialogEdycjaParametru").append(d),f="pLista"===h.TYP?" = "+h.LISTA[h.WART]:" = "+h.WART,d=document.createElement("p"),a(d).attr("id","pAktualnaWartosc").text(b.danePlikuKonfiguracyjnego.TEKSTY.wartAktualna+" "+f).css({"letter-spacing":"0.1em","text-align":"left","border-radius":"0.5em",width:"100%"}),a("#DialogEdycjaParametru").append(d),a("#menu").removeClass("kopex-selected"),b.doWyslania.parametr.typ=h.TYP,h.TYP){case"pLista":n();break;case"pString":case"pCzas":case"pLiczba":require(["wspolne/dodajKlawiature"],function(a){a.inicjacja(h,"DialogEdycjaParametru"),m()})}a(i).one("dialogclose",function(){setTimeout(function(){a(i).remove()},500)})},p=function(){a("#menu").one("menuselect",function(c,d){var e,g=d.item.attr("id"),i=d.item.parent().parent(),j=i.parent().parent();return f=g,d.item.hasClass("ui-state-disabled")?void a("#menu").menu("next"):(b.zmienianyParametr.id=g,a.each(b.parametry.DANE,function(c,d){c===j.attr("id")&&(b.zmienianyParametr.grupa=c,a.each(d,function(c,d){c===i.attr("id")&&(b.zmienianyParametr.podgrupa=c,a.each(d,function(a,c){a===g&&(e=c,b.zmienianyParametr.obiekt=e)}))}))}),void(void 0!==e&&(h=e,o(e))))})};return{inicjacja:p,zamknijKlawiature:j,wyslijReaDolPLC:k,wyslijListeDoPLC:l}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'keyboard', 'keyboardNav', 'obslugaJSON'], function ($, varGlobal, keyboard, keyboardNav, json) {
+    "use strict";
+
+    var id,
+        wartoscParametru,
+        idDialog = "#DialogEdycjaParametru",
+        obiekt2,
+
+        zamknijKlawiature = function () {
+            var vKeyboard;
+
+            vKeyboard = $('#keyboard').keyboard().getkeyboard();
+            if (vKeyboard !== undefined) {
+                if (vKeyboard.isVisible()) {
+                    vKeyboard.close();
+                    vKeyboard.destroy();
+                }
+            }
+            $("#DialogEdycjaParametru").empty();
+            $("#DialogEdycjaParametru").dialog('close');
+            $('#menu').addClass("kopex-selected");
+        },
+
+
+        wyslijReaDolPLC = function () {
+            var vKeyboard,
+                precyzja,
+                zezwolenieDoWyslania = false,
+                isInt = function (n) { // funkcja sprawdzająca czy liczba jest int czy float -> sprawdzenie czy po podzieleniu przez 1 pozostaje jakaś reszta
+                    var czyInt;
+                    if (n % 1 === 0) { // int
+                        czyInt = true;
+                    } else { // float
+                        czyInt = false;
+                    }
+                    return czyInt;
+                };
+
+            vKeyboard = $('#keyboard').keyboard().getkeyboard();
+            // czas jest zawsze podawany przez użytkownika w sekundach a wysyłany do sterownika (przez Arka) w milisekundach -> musi być ustawiona precyzja na 3 dla wszystkich parametrów czasu
+            if ((obiekt2.TYP === 'pLiczba') || (obiekt2.TYP === 'pCzas')) { // Wstepne sprawdzenie poprawnosci wprowadzonych danych
+                if (isNaN(wartoscParametru)) { //wprowadzona wartosc nie jest cyfra... (ktos moze wpisac przypadkowo dwa przecinki itp)
+                    zezwolenieDoWyslania = false;
+                } else { // Jesli wprowadzona wartosc jest cyfra
+                    if (isInt(wartoscParametru)) { // sprawdzenie czy liczba jest intem czy float (jeśli ktoś wprowadzi np 5.0 to javascript przerobi to na zwykłe 5)
+                        precyzja = obiekt2.PREC;
+                    } else {
+                        precyzja = wartoscParametru.toString().split('.')[1].length;
+                    }
+
+                    if (precyzja <= obiekt2.PREC) { // sprawdzenie precyzji wpisanego parametru
+                        //wartoscParametru = Number(wartoscParametru); // toFixed zwraca zmienna typu string...
+                        if ((wartoscParametru < obiekt2.MIN) || (wartoscParametru > obiekt2.MAX)) { // liczba nie jest w odpowiednim zakresie
+                            zezwolenieDoWyslania = false;
+                        } else {
+                            zezwolenieDoWyslania = true;
+                        }
+                    } else { // zła precyzja
+                        zezwolenieDoWyslania = false;
+                    }
+                }
+            } else { // wpisywana jest wartosc typu string
+                zezwolenieDoWyslania = true;
+            }
+
+
+            if (zezwolenieDoWyslania) {
+                varGlobal.doWyslania.parametr.id = id;
+                varGlobal.doWyslania.parametr.wartosc = wartoscParametru;
+
+                vKeyboard.close();
+                vKeyboard.destroy();
+                zamknijKlawiature();
+
+                require(['progresBar'], function (progresBar) {
+                    progresBar.inicjacja({
+                        show: true,
+                        status: 'sending'
+                    });
+                });
+
+                json.wyslij(varGlobal.doWyslania.parametr);
+                console.log(varGlobal.doWyslania.parametr);
+            } else {
+                setTimeout(function () {
+                    vKeyboard.$el.val(varGlobal.danePlikuKonfiguracyjnego.TEKSTY.paramZlaWartosc); // Informacja o zlej wartosci
+                    setTimeout(function () {
+                        vKeyboard.$el.val('').focus(); // Wyczyszczenie poprzedniej wpisanej wartosci
+                    }, 1500);
+                }, 200);
+            }
+        },
+
+        wyslijListeDoPLC = function (_wart) {
+            var zezwolenie = true;
+
+            varGlobal.doWyslania.parametr.id = id;
+            varGlobal.doWyslania.parametr.wartosc = _wart;
+
+            //            console.log(varGlobal.parametry.DANE.grupa1.podgrupa2.rKonfWersjaJezykowa.LISTA[4]);
+            //            if (varGlobal.zmienianyParametr.id === 'rKonfWersjaJezykowa') { // dodatkowe zabezpieczenie na parametr z wyborem języka
+            //                if (varGlobal.aktywneJezyki[_wart] === false) { // nie ma plikow jsona z ta wersja jezykowa!
+            //                    zezwolenie = false;
+            //                    require(['alert'], function (alert) {
+            //                        alert.inicjacja({
+            //                            texts: [varGlobal.danePlikuKonfiguracyjnego.TEKSTY.paramZlaWartosc],
+            //                            background: 'ui-state-default',
+            //                            timer: 5000,
+            //                            escConfirm: true
+            //                        });
+            //                    });
+            //                }
+            //            }
+
+            //if (zezwolenie) {
+            require(['progresBar'], function (progresBar) {
+                progresBar.inicjacja({
+                    show: true,
+                    status: 'sending'
+                });
+            });
+            zamknijKlawiature();
+            json.wyslij(varGlobal.doWyslania.parametr);
+            console.log(varGlobal.doWyslania.parametr);
+            //}
+        },
+
+
+        przechwycZdarzenia = function () { // Po wscisnieciu klawisza ACCEPT na klawiaturze - pobranie wpisanej wartosci
+            $('#keyboard').bind('canceled.keyboard', function (e, keyboard, el) {
+                zamknijKlawiature();
+            });
+
+            $('#keyboard').bind('accepted.keyboard', function (e, keyboard, el) {
+
+                if (obiekt2.TYP === 'pString') {
+                    wartoscParametru = el.value;
+                } else if ((obiekt2.TYP === 'pLiczba') || (obiekt2.TYP === 'pCzas')) {
+                    wartoscParametru = Number(el.value);
+                }
+
+                wyslijReaDolPLC();
+            });
+        },
+
+
+        dodajObslugeListy = function () { //obiekt
+            var p,
+                znalezionyObiekt,
+                label,
+                input,
+                button;
+
+            p = document.createElement('p');
+            $(p)
+                .css({
+                    'position': 'relative',
+                    'top': '25%'
+                });
+            label = document.createElement('label');
+            input = document.createElement('input');
+            $(label).attr('for', 'spinner');
+            $(p).append(label);
+            $(input)
+                .attr('id', 'spinner')
+                .attr('name', 'value')
+                .css({
+                    'font-size': '1.5em',
+                    'text-align': 'center',
+                    'width': '20em'
+                });
+            $(p).append(input);
+            $("#DialogEdycjaParametru").append(p);
+
+            $("#DialogEdycjaParametru").dialog({
+                buttons: [
+                    {
+                        disabled: true,
+                        text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz
+                    },
+                    {
+                        disabled: true,
+                        text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.anuluj
+                    }
+                ]
+            });
+
+            $("#spinner").formatSpinner({ // Przewijanie po tablicy z pozycju WART parametru
+                values: obiekt2.LISTA,
+                count: obiekt2.LISTA.length
+            });
+            $('#spinner').addClass("kopex-selected").addClass("kopex-selected").formatSpinner("stepUp"); // .focus()
+        },
+
+        stworzDialog = function () {
+            var div,
+                p,
+                tytul,
+                aktualnaWartosc,
+                nazwaDialog;
+
+            if ($(idDialog).length === 0) { // sprawdzenie czy div już nie istnieje
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', idDialog.replace("#", "")); //idDialog.replace("#", ""))            dialogWymianaPLC
+                $('body').append(div);
+
+                tytul = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.parametr + ' ' + obiekt2.ID;
+                $(idDialog).dialog({
+                    modal: true,
+                    closeOnEscape: false,
+                    height: ($(document).height() / 1.5),
+                    width: '65%',
+                    hide: {
+                        delay: 200,
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    },
+                    title: tytul
+                });
+                $(idDialog).dialog("open");
+
+                p = document.createElement('p');
+                $(p)
+                    .attr('id', 'pParametrOpis')
+                    .text(obiekt2.OPIS)
+                    .css({
+                        'padding': '0.4em',
+                        'border': '0.1em solid',
+                        'border-color': 'grey',
+                        'font-style': 'italic',
+                        'font-size': '1.2em',
+                        'text-align': 'center',
+                        'border-radius': '0.5em',
+                        'width': '95%'
+                    });
+                $("#DialogEdycjaParametru").append(p);
+
+                if (obiekt2.TYP === 'pLista') {
+                    aktualnaWartosc = ' = ' + obiekt2.LISTA[obiekt2.WART]; // wczytanie wartosci z listy
+                } else {
+                    aktualnaWartosc = ' = ' + obiekt2.WART;
+                }
+                p = document.createElement('p'); // Wyswietlenie aktualnie ustawionej wartosci
+                $(p)
+                    .attr('id', 'pAktualnaWartosc')
+                    .text(varGlobal.danePlikuKonfiguracyjnego.TEKSTY.wartAktualna + ' ' + aktualnaWartosc)
+                    .css({
+                        'letter-spacing': '0.1em',
+                        'text-align': 'left',
+                        'border-radius': '0.5em',
+                        'width': '100%'
+                    });
+                $("#DialogEdycjaParametru").append(p);
+                $('#menu').removeClass("kopex-selected");
+
+                varGlobal.doWyslania.parametr.typ = obiekt2.TYP; // ustawienie typu parametru w razie wyslania wiadomosci do serwera
+                switch (obiekt2.TYP) {
+                case 'pLista':
+                    dodajObslugeListy();
+                    break;
+
+                case 'pString':
+                case 'pCzas':
+                case 'pLiczba':
+                    require(['wspolne/dodajKlawiature'], function (dodajKlawiature) {
+                        dodajKlawiature.inicjacja(obiekt2, 'DialogEdycjaParametru');
+                        przechwycZdarzenia(); //obiekt
+                    });
+                    break;
+
+                default:
+                }
+
+            }
+
+            $(idDialog).one("dialogclose", function (event, ui) { // oczekiwanie na zdarzenie zamknięcia okienka
+                setTimeout(function () {
+                    $(idDialog).remove();
+                }, 500);
+                //$(idDialog).remove();
+            });
+
+        },
+
+
+        inicjacja = function (buttonId) { // Przeszukanie struktury parametrow i znalezienie tego wybranego z menu
+            $("#menu").one("menuselect", function (event, ui) { // menuselect    menufocus
+                var idParametru = ui.item.attr('id'),
+                    podgrupa = ui.item.parent().parent(),
+                    znalezionyObiekt,
+                    grupaGlowna = podgrupa.parent().parent();
+
+                id = idParametru;
+                if (ui.item.hasClass('ui-state-disabled')) {
+                    $('#menu').menu("next"); // Jesli ktos wcisnal Enter na elemencie nieaktywnym to przejscie do nastepnego
+                    return;
+                }
+                varGlobal.zmienianyParametr.id = idParametru; // potrzebne do przeladowania nowej wartosci na liscie menu po otrzymaniu informacji ze zapisano parametr (obslugaJSON)
+                $.each(varGlobal.parametry.DANE, function (key, val) {
+                    if (key === grupaGlowna.attr('id')) {
+                        varGlobal.zmienianyParametr.grupa = key; // zapamietanie sciezki dostepu do pozniejszejpodmiany wartosci na rozwijanel liscie menu ui
+                        $.each(val, function (ke, va) {
+                            if (ke === podgrupa.attr('id')) {
+                                varGlobal.zmienianyParametr.podgrupa = ke;
+                                $.each(va, function (k, v) {
+                                    if (k === idParametru) {
+                                        znalezionyObiekt = v;
+                                        varGlobal.zmienianyParametr.obiekt = znalezionyObiekt;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                if (znalezionyObiekt !== undefined) {
+                    obiekt2 = znalezionyObiekt; // Przepisanie do zmiennej globalnej
+                    stworzDialog(znalezionyObiekt); // Stworzenie okienka dialog z odpoeirdnim dla wybranego parametrem zestawieniem
+                }
+            });
+        };
+
+    return {
+        inicjacja: inicjacja,
+        zamknijKlawiature: zamknijKlawiature,
+        wyslijReaDolPLC: wyslijReaDolPLC,
+        wyslijListeDoPLC: wyslijListeDoPLC
+    };
+});

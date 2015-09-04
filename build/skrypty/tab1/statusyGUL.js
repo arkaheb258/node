@@ -1,2 +1,83 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","dodajPojedynczaTabele","obslugaJSON"],function(a,b,c,d){"use strict";var e=function(){var a=[],e=[];a=d.szukajWartosci("tab1status",b.sygnaly),e=e.concat(d.szukajWartosci("statusKombajnu",a)),e=e.concat(d.szukajWartosci("diagnostykaBlokad",a)),e=e.concat(d.szukajWartosci("idTrybPracy",a)),e=e.concat(d.szukajWartosci("trwaPlukanieFiltra",a)),e=e.concat(d.szukajWartosci("idPolaczenieKES",a)),e=e.concat({id:"poziomDostepuUzytkownika",opis_pelny:"Poziom Dostępu"}),c.dodaj({objects:e,id:"#tab1_statusy",background:"ui-state-default"}),e=[],e=e.concat(d.szukajWartosci("idSterowanieposuwGUL1",a)),e=e.concat(d.szukajWartosci("idSterowanieposuwGUL2",a)),c.dodaj({objects:e,id:"#tab1_dol1",background:"ui-state-default"}),e=[],e=e.concat(d.szukajWartosci("idPozycjaNapinacza",a)),e=e.concat(d.szukajWartosci("idSilaNaciaguPrzewodu",a)),e=e.concat(d.szukajWartosci("wSN_ZadanaPredkosc",a)),c.dodaj({objects:e,id:"#tab1_dol2",background:"ui-state-default"}),e=[],e=e.concat(d.szukajWartosci("idSterowanieposuwRolka1",a)),e=e.concat(d.szukajWartosci("idSterowanieposuwRolka2",a)),c.dodaj({objects:e,id:"#tab1_dol3",background:"ui-state-default"}),e=[],require(["tab1/odswiezaj"],function(b){b.inicjacja(a),a=[]}),require(["poziomDostepu/odswiezaj"],function(a){a.inicjacja(b.poziomDostepu)})};return{inicjacja:e}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'dodajPojedynczaTabele', 'obslugaJSON'], function ($, varGlobal, dodajTabele2, json) {
+    "use strict";
+
+    var ccc,
+
+        inicjacja = function () { // Dodanie na tab1 statusow kombajnu, typu obudowy LP, licznikow itp
+            var i,
+                aDaneStatusoweGUL = [],
+                aStatusy = [];
+            
+            aDaneStatusoweGUL = json.szukajWartosci("tab1status", varGlobal.sygnaly);
+
+            aStatusy = aStatusy.concat(json.szukajWartosci("statusKombajnu", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("diagnostykaBlokad", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("wWyborNapedow", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("idPolaczenieKES", aDaneStatusoweGUL));
+            
+            aStatusy = aStatusy.concat({
+                id: 'poziomDostepuUzytkownika',
+                opis_pelny: 'Poziom Dostępu'
+            });
+            dodajTabele2.dodaj({
+                objects: aStatusy,
+                id: '#tab1_statusy',
+                background: 'ui-state-default'
+            });
+
+            aStatusy = [];
+            aStatusy = aStatusy.concat(json.szukajWartosci("idSterowanieposuwGUL1", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("idSterowanieposuwGUL2", aDaneStatusoweGUL));
+            dodajTabele2.dodaj({
+                objects: aStatusy,
+                id: '#tab1_dol1',
+                background: 'ui-state-default'
+            });
+
+            aStatusy = [];
+            aStatusy = aStatusy.concat(json.szukajWartosci("idPozycjaNapinacza", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("idSilaNaciaguPrzewodu", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("wSN_ZadanaPredkosc", aDaneStatusoweGUL));
+            dodajTabele2.dodaj({
+                objects: aStatusy,
+                id: '#tab1_dol2',
+                background: 'ui-state-default'
+            });
+
+            aStatusy = [];
+            aStatusy = aStatusy.concat(json.szukajWartosci("idSterowanieposuwRolka1", aDaneStatusoweGUL));
+            aStatusy = aStatusy.concat(json.szukajWartosci("idSterowanieposuwRolka2", aDaneStatusoweGUL));
+            dodajTabele2.dodaj({
+                objects: aStatusy,
+                id: '#tab1_dol3',
+                background: 'ui-state-default'
+            });
+            aStatusy = [];
+
+            //dodanie takze licznikow ktore sa pod zegarem do odswiezania
+            require(['tab1/odswiezaj'], function (odswiezaj) { // rozpoczęcie odświeżania wszystkich danych statusowych
+                odswiezaj.inicjacja(aDaneStatusoweGUL);
+                aDaneStatusoweGUL = [];
+            });
+            // wyswietlenie aktualnego poziomu dostepu
+            require(['poziomDostepu/odswiezaj'], function (odswiezaj) {
+                odswiezaj.inicjacja(varGlobal.poziomDostepu);
+            });
+        };
+
+
+    return {
+        inicjacja: inicjacja
+
+    };
+
+});

@@ -1,2 +1,97 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c,d,e=!1,f=function(f,g){var h=["0","1","2"],i=jQuery.Event("keydown"),j=function(){e?(e=!1,require(["wykresyRT/main"],function(a){a.zamknij()})):(e=!0,a("#"+c).selectmenu("close"))},k=function(){h[0]=a("#idWykresy01").val(),e?(e=!1,a("#"+c).selectmenu("open")):(e=!0,require(["wykresyRT/rysujWykresy"],function(a){a.inicjacja("#"+d,h)}))};if(d=g.parent().attr("id"),c=g.find("select").attr("id"),0===b.typNawigacjiPoEkranach)switch(f){case b.kodyKlawiszy.escape:j();break;case b.kodyKlawiszy.enter:k()}if(1===b.typNawigacjiPoEkranach){switch(f){case b.kodyKlawiszy.gora:i.keyCode=a.ui.keyCode.UP,a("#"+c).next().trigger(i);break;case b.kodyKlawiszy.dol:i.keyCode=a.ui.keyCode.DOWN,a("#"+c).next().trigger(i);break;case b.kodyKlawiszy.escape:j();break;case b.kodyKlawiszy.enter:i.keyCode=a.ui.keyCode.ENTER,a("#"+c).next().trigger(i),k()}b.typNawigacjiPoEkranach=0}};return{wykonaj:f}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+
+    var idSelected,
+        idNext,
+        idDialog,
+        czySelectMenuZwiniete = false,
+
+        // STRUKTURA HTML opisująca umieszczenie kontrolkę selectMenu:
+        //                <div class="klasaButtonWykresy">
+        //                    <select id="idFalownikTrybPracy"> </select>
+        //                    <span class=ui-selectmenu-button> </span>
+        //                </div>
+
+        wykonaj = function (kod, selected) {
+            var tablicaVal = ['0', '1', '2'], // tutaj są wrzucone wybrane wartości z wszystkich trzech menuselect
+                e = jQuery.Event("keydown"), // działa tylko zdarzenie keydown
+                wcisnietoEscape = function (_kierunek) {
+                    if (!czySelectMenuZwiniete) { // menu jest otwarte
+                        czySelectMenuZwiniete = true;
+                        $('#' + idSelected).selectmenu("close");
+                    } else {
+                        czySelectMenuZwiniete = false;
+                        require(['wykresyRT/main'], function (main) {
+                            main.zamknij();
+                        });
+                    }
+                },
+                wcisnietoEnter = function (_kierunek) {
+                    tablicaVal[0] = $("#idWykresy01").val();
+                    if (!czySelectMenuZwiniete) { // menu jest otwarte
+                        czySelectMenuZwiniete = true; // enter automatycznie zwija menu
+                        require(['wykresyRT/rysujWykresy'], function (rysujWykresy) {
+                            rysujWykresy.inicjacja('#' + idDialog, tablicaVal);
+                        });
+                    } else { // menu jest zamkniete
+                        czySelectMenuZwiniete = false;
+                        $('#' + idSelected).selectmenu("open");
+                    }
+                };
+
+            
+            idDialog = selected.parent().attr('id');
+            idSelected = selected.find('select').attr('id');
+
+            // Nawigacja reagująca na dane z klawiatury usb
+            if (varGlobal.typNawigacjiPoEkranach === 0) { // 0 - komendy z klawiatury usb,  1 - komendy z ramki tcp
+                switch (kod) {
+                case varGlobal.kodyKlawiszy.escape:
+                    wcisnietoEscape();
+                    break;
+                case varGlobal.kodyKlawiszy.enter:
+                    wcisnietoEnter();
+                    break;
+                }
+            }
+            // Nawigacja reagująca na dane z ramki tcp
+            if (varGlobal.typNawigacjiPoEkranach === 1) {
+                switch (kod) {
+                case varGlobal.kodyKlawiszy.gora:
+                    e.keyCode = $.ui.keyCode.UP;
+                    $("#" + idSelected).next().trigger(e); // trzeba zadziałać na element <span>
+                    break;
+                case varGlobal.kodyKlawiszy.dol:
+                    e.keyCode = $.ui.keyCode.DOWN;
+                    $("#" + idSelected).next().trigger(e); // trzeba zadziałać na element <span>
+                    break;
+                case varGlobal.kodyKlawiszy.escape:
+                    wcisnietoEscape();
+                    break;
+                case varGlobal.kodyKlawiszy.enter:
+                    e.keyCode = $.ui.keyCode.ENTER;
+                    $("#" + idSelected).next().trigger(e); // trzeba zadziałać na element <span>
+                    //console.log('tcp: ' + $("#" + idSelected).val());
+                    wcisnietoEnter();
+                    break;
+                }
+                varGlobal.typNawigacjiPoEkranach = 0; // oczekiwanie na ewentualną nawigację z klawiatury
+            }
+
+
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

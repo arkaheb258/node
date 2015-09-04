@@ -1,2 +1,202 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON","komunikaty/liczbaDostepnych"],function(a,b,c,d){"use strict";var e,f=[],g="#DialogBlokady",h=function(){a("#DialogBlokady").empty(),a("#DialogBlokady").dialog("close"),a("#DialogBlokady").removeClass("kopex-selected"),a("#PelnaListaKomm").dialog("isOpen")&&a("#PelnaListaKomm").addClass("kopex-selected")},i=function(){var e=d.inicjacja();return e.dostepne<=0&&1===b.doWyslania.blokady.wartosc?void require(["komunikaty/popUpAlarm"],function(a){a.inicjacja(": "+b.danePlikuKonfiguracyjnego.TEKSTY.brakWolnychBlokad)}):(c.wyslij(b.doWyslania.blokady),console.log(b.doWyslania.blokady),require(["progresBar"],function(a){a.inicjacja({show:!0,status:"sending"})}),h(),void(a("#PelnaListaKomm").length>0&&require(["komunikatyPelnaLista/main"],function(a){a.odswiez()})))},j=function(a,c,d){"User2"===d&&(d="User"),f=a.attr("id").split("_"),b.doWyslania.blokady.typ="ustawBlokade",b.doWyslania.blokady.dostep=d,b.doWyslania.blokady.slowo=f[1],b.doWyslania.blokady.bit=f[3],b.doWyslania.blokady.wartosc=c},k=function(){a("#tekstZapytanie").text(b.danePlikuKonfiguracyjnego.TEKSTY.blokZaloz),j(e,1,b.poziomDostepu)},l=function(c){a("#tekstZapytanie").text(b.danePlikuKonfiguracyjnego.TEKSTY.blokZdejmij),j(e,0,c)},m=function(c){var f,h,i,j,m,n;if(0===a(g).length&&(m=document.createElement("div"),a(m).addClass("OknaDialog").addClass("ui-corner-all").attr("id",g.replace("#","")),a("body").append(m),h=d.inicjacja(),f=b.danePlikuKonfiguracyjnego.TEKSTY.pozDost+": "+b.poziomDostepu+", "+b.danePlikuKonfiguracyjnego.TEKSTY.blokLiczbDost+" "+h.dostepne+"/"+h.max,e=a(".ui-selected"),a(g).dialog({modal:!0,closeOnEscape:!1,height:a(document).height()/2,width:"50%",title:f,show:{delay:200,effect:b.efektShowHide,duration:350},hide:{effect:b.efektShowHide,duration:350},buttons:[{disabled:!0,text:b.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz},{disabled:!0,text:b.danePlikuKonfiguracyjnego.TEKSTY.anuluj}]}),a(g).dialog("open"),a(g).addClass("kopex-selected"),n=document.createElement("p"),a(n).attr("id","tekstZapytanie").css({position:"relative","text-align":"left","border-radius":"0.5em","letter-spacing":"0.0em",width:"100%"}),a("#DialogBlokady").append(n),n=document.createElement("p"),a(n).attr("id","tekstKomunikatu").text(e.text()).css({position:"relative",top:"15%","font-size":"1.5em","text-align":"center","border-radius":"0.5em","letter-spacing":"0.0em",width:"100%"}),a("#DialogBlokady").append(n),a(e).hasClass("User")?(j="User",i="zdejmij"):a(e).hasClass("Srvc")?(j="Srvc",i="zdejmij"):a(e).hasClass("Adv")?(j="Adv",i="zdejmij"):i="zaloz","listaAlarmy"===c&&k(),"listaBlokady"===c&&l(j),"listaPelnaOLselectable"===c))switch(i){case"zaloz":k();break;case"zdejmij":l(j)}a(g).one("dialogclose",function(){a(g).remove()})};return{otworzDialog:m,wyslij:i,zamknij:h}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON', 'komunikaty/liczbaDostepnych'], function ($, varGlobal, json, liczbaDostepnych) {
+    "use strict";
+
+    var zaznaczonyKomunikat, // Komunikat na ktory ma byc zalozona/zdjeta blokada
+        zaznaczenie = [], // tablica po rozdzieleniu stringa z id zaznaczonego elemntu,
+        idDialog = '#DialogBlokady',
+
+        zamknij = function () {
+            $("#DialogBlokady").empty();
+            $('#DialogBlokady').dialog('close');
+            $("#DialogBlokady").removeClass("kopex-selected");
+
+            if ($("#PelnaListaKomm").dialog("isOpen")) {
+                $("#PelnaListaKomm").addClass("kopex-selected");
+            }
+        },
+
+        
+        wyslij = function () {
+            var blokady = liczbaDostepnych.inicjacja();
+
+            // Sprawdzenie czy są dostpne wolne blokady w przypadku próby założenia nowej
+            if ((blokady.dostepne <= 0) && (varGlobal.doWyslania.blokady.wartosc === 1)) {
+                require(['komunikaty/popUpAlarm'], function (popUpAlarm) {
+                    popUpAlarm.inicjacja(': ' + varGlobal.danePlikuKonfiguracyjnego.TEKSTY.brakWolnychBlokad);
+                });
+                return;
+            }
+
+            json.wyslij(varGlobal.doWyslania.blokady);
+            console.log(varGlobal.doWyslania.blokady);
+            require(['progresBar'], function (progresBar) {
+                progresBar.inicjacja({
+                    show: true,
+                    status: 'sending'
+                });
+            });
+
+            zamknij();
+            if ($("#PelnaListaKomm").length > 0) { // w przypadku operacji na pełnej liście komunikatów -> odświeżenie aktualnie wyświetlanego widoku
+                require(['komunikatyPelnaLista/main'], function (pelnaLista) {
+                    pelnaLista.odswiez();
+                });
+            }
+        },
+        stworzWiadomosc = function (komunikat, zal_wyl, _poziom) {
+            if (_poziom === 'User2') {
+                _poziom = 'User';
+            }
+            zaznaczenie = komunikat.attr('id').split("_"); //rozbicie id zaznaczonego elementu li: mesg_nr_bit_nr  --> np. mesg_0_bit_12 --> powstaje tablica [mesg, 0, bit, 12
+            varGlobal.doWyslania.blokady.typ = "ustawBlokade";
+            varGlobal.doWyslania.blokady.dostep = _poziom; // "Usr"; varGlobal.poziomDostepu
+            varGlobal.doWyslania.blokady.slowo = zaznaczenie[1];
+            varGlobal.doWyslania.blokady.bit = zaznaczenie[3];
+            varGlobal.doWyslania.blokady.wartosc = zal_wyl;
+            //console.log('stworzWiadomosc');
+        },
+
+        zalozBlokade = function () {
+            $('#tekstZapytanie').text(varGlobal.danePlikuKonfiguracyjnego.TEKSTY.blokZaloz);
+            stworzWiadomosc(zaznaczonyKomunikat, 1, varGlobal.poziomDostepu);
+        },
+
+        zdejmijBlokade = function (poziomZalozonejBlokady) {
+            $('#tekstZapytanie').text(varGlobal.danePlikuKonfiguracyjnego.TEKSTY.blokZdejmij);
+            stworzWiadomosc(zaznaczonyKomunikat, 0, poziomZalozonejBlokady);
+        },
+
+        otworzDialog = function (aktywnyAccordion) {
+            var tytul,
+                blokady,
+                komenda,
+                poziomBlokady,
+                div,
+                p;
+
+            if ($(idDialog).length === 0) { // sprawdzenie czy div już nie istnieje
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', idDialog.replace("#", "")); //idDialog.replace("#", ""))            dialogWymianaPLC
+                $('body').append(div);
+
+                blokady = liczbaDostepnych.inicjacja();
+                tytul = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.pozDost + ': ' + varGlobal.poziomDostepu + ', ' +
+                    varGlobal.danePlikuKonfiguracyjnego.TEKSTY.blokLiczbDost + ' ' + blokady.dostepne + '/' + blokady.max;
+                zaznaczonyKomunikat = $('.ui-selected'); // Na ktory komunikat ma byc zalozona blokada
+
+                $(idDialog).dialog({
+                    modal: true,
+                    closeOnEscape: false,
+                    height: ($(document).height() / 2),
+                    width: '50%',
+                    title: tytul,
+                    show: {
+                        delay: 200,
+                        effect: varGlobal.efektShowHide, // shake  bounce  pulsate
+                        duration: 350
+                    },
+                    hide: {
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    },
+                    buttons: [
+                        {
+                            disabled: true,
+                            text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz
+                        },
+                        {
+                            disabled: true,
+                            text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.anuluj
+                        }
+                    ]
+                });
+
+                $(idDialog).dialog("open");
+                $(idDialog).addClass("kopex-selected");
+
+                p = document.createElement('p');
+                $(p)
+                    .attr('id', 'tekstZapytanie')
+                    .css({
+                        'position': 'relative',
+                        'text-align': 'left',
+                        'border-radius': '0.5em',
+                        'letter-spacing': '0.0em',
+                        'width': '100%'
+                    });
+                $("#DialogBlokady").append(p);
+
+                p = document.createElement('p');
+                $(p)
+                    .attr('id', 'tekstKomunikatu')
+                    .text(zaznaczonyKomunikat.text())
+                    .css({
+                        'position': 'relative',
+                        'top': '15%',
+                        'font-size': '1.5em',
+                        'text-align': 'center',
+                        'border-radius': '0.5em',
+                        'letter-spacing': '0.0em',
+                        'width': '100%'
+                    });
+                $("#DialogBlokady").append(p);
+
+                if ($(zaznaczonyKomunikat).hasClass('User')) {
+                    poziomBlokady = 'User';
+                    komenda = 'zdejmij'; // specjalnie dla ekranu pelnej listy komunikatow
+                } else if ($(zaznaczonyKomunikat).hasClass('Srvc')) {
+                    poziomBlokady = 'Srvc';
+                    komenda = 'zdejmij';
+                } else if ($(zaznaczonyKomunikat).hasClass('Adv')) {
+                    poziomBlokady = 'Adv';
+                    komenda = 'zdejmij';
+                } else {
+                    komenda = 'zaloz';
+                }
+
+                if (aktywnyAccordion === "listaAlarmy") { // Zalozenie blokady
+                    zalozBlokade();
+                }
+                if (aktywnyAccordion === "listaBlokady") { // Zdjecie blokady
+                    zdejmijBlokade(poziomBlokady);
+                }
+                if (aktywnyAccordion === 'listaPelnaOLselectable') {
+                    switch (komenda) {
+                    case 'zaloz':
+                        zalozBlokade();
+                        break;
+
+                    case 'zdejmij':
+                        zdejmijBlokade(poziomBlokady);
+                        break;
+                    }
+                }
+            }
+
+            $(idDialog).one("dialogclose", function (event, ui) { // oczekiwanie na zdarzenie zamknięcia okienka
+                $(idDialog).remove();
+            });
+
+
+
+        };
+
+    return {
+        otworzDialog: otworzDialog,
+        wyslij: wyslij,
+        zamknij: zamknij
+    };
+
+});

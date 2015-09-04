@@ -1,2 +1,59 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){switch(c){case b.kodyKlawiszy.escape:require(["diagnostykaKolumny/main"],function(a){a.zamknij()}),0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close");break;case b.kodyKlawiszy.lewo:0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close");break;case b.kodyKlawiszy.prawo:0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close");break;case b.kodyKlawiszy.enter:require(["komunikaty/popUpKomunikaty"],function(a){a.inicjacja()})}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+    var sel,
+
+        wykonaj = function (kod, selected) {
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.escape:
+                require(['diagnostykaKolumny/main'], function (main) {
+                    main.zamknij();
+                });
+                if ($("#DialogPopUpKomunikaty").length !== 0) {
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+
+                // jest aktywny tryb serwisowy!!!
+                if ($("#DialogGULtrybSerwisowy").length !== 0) {
+                    require(['gulTrybSerwisowy/main'], function (main) {
+                        main.wylaczTrybSerwisowy();
+                    });
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.lewo:
+                if ($("#DialogPopUpKomunikaty").length !== 0) { // w przypadku otwartego okienka z ostatnimi alarmami i ostrzezeniami - zamkniecie ich
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.prawo:
+                if ($("#DialogPopUpKomunikaty").length !== 0) {
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                require(['komunikaty/popUpKomunikaty'], function (popUpKomunikaty) {
+                    popUpKomunikaty.inicjacja();
+                });
+                break;
+
+            default:
+            }
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

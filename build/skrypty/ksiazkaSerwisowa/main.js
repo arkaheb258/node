@@ -1,2 +1,186 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne","kommTCP"],function(a,b,c,d){"use strict";var e,f,g=[],h=function(){a(e).empty(),a(e).dialog("close"),a(f).addClass("kopex-selected").addClass(c.ui_state)},i=function(){g=[],g=g.concat(b.szukajWartosci("licznikiEKS",c.sygnaly))},j=function(){var b,h,j,k,l,m,n,o,p,q,r,s,t;if(0===a("#DialogKsiazkaSerwisowa").length){for(e="#DialogKsiazkaSerwisowa",i(),b=document.createElement("div"),a(b).addClass("OknaDialog").addClass("ui-corner-all").attr("id","DialogKsiazkaSerwisowa"),a("body").append(b),a("#DialogKsiazkaSerwisowa").dialog({modal:!0,closeOnEscape:!1,height:a(document).height()/1.2,width:"90%",title:a(f).text()}),b=document.createElement("div"),a(b).addClass("panelTab").attr("id","tabsEKS").appendTo("#DialogKsiazkaSerwisowa"),l=document.createElement("ul"),a(l).appendTo("#tabsEKS"),p=c.danePlikuKonfiguracyjnego.MENU_EKS,h=0;h<p.length-1;h+=1)for(n=document.createElement("li"),o=document.createElement("a"),a(o).attr("href","#"+p[h].id).text(p[h].OPIS).appendTo(n),a(n).appendTo(l),b=document.createElement("div"),a(b).addClass("panelTab").css({width:"95%",overflow:"auto",height:"90%"}).attr("id",p[h].id).appendTo("#tabsEKS"),j=0;j<p[h].zawartosc.length;j+=1){for(t=g.length,k=0;t>k;k+=1)g[k].id===p[h].zawartosc[j].id&&(s="",q=d.daneTCP.analog[g[k].poz_ramka],q>0?(q=32767&q,r="[ "+q+" "+c.danePlikuKonfiguracyjnego.TEKSTY.dniDoPrzegladu+" ]"):0===q?r="":(s="red",r="[ "+Math.abs(q)+" "+c.danePlikuKonfiguracyjnego.TEKSTY.dniPoTerminie+" ]"));m=document.createElement("button"),a(m).addClass("buttonEKS").appendTo("#"+p[h].id).attr("id",p[h].zawartosc[j].id).text(p[h].zawartosc[j].OPIS+" "+r).css({color:s,margin:"0.3%",width:"95%","padding-left":"3%","text-align":"left","font-weight":"normal",top:"5%"}),"tab1eks"===p[h].id&&a(m).button("eks0"===p[h].zawartosc[j].id?{disabled:!1}:{disabled:!0})}a("div#tabsEKS").tabs(),a("div#tabsEKS").tabs("refresh"),a("button").button(),a("#DialogKsiazkaSerwisowa").dialog("open"),a("#DialogKsiazkaSerwisowa").addClass("kopex-selected")}a("#DialogKsiazkaSerwisowa").one("dialogclose",function(){a("#DialogKsiazkaSerwisowa").remove()})},k=function(b){f="#"+b,a(f).on("click",function(){j()}),require(["ksiazkaSerwisowa/odswiezaj"],function(a){a.inicjacja()})};return{inicjacja:k,zamknij:h}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+// po kliknięciu na button z czynnością serwisową wyświetli się okienko z pytaniem potwierdzającym o zatwierdzenie akcji
+define(['jquery', 'obslugaJSON', 'zmienneGlobalne', 'kommTCP'], function ($, json, varGlobal, dane) {
+    "use strict";
+
+    var daneDoOdswiezania = [],
+        idDialog,
+        idButtonPowrot,
+
+
+        zamknij = function () {
+            $(idDialog).empty();
+            $(idDialog).dialog('close');
+            $(idButtonPowrot).addClass("kopex-selected").addClass(varGlobal.ui_state); // Powrot nawigacji na button eks
+        },
+
+
+        dodajDaneDoOdswiezania = function () {
+            daneDoOdswiezania = [];
+            daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci("licznikiEKS", varGlobal.sygnaly));
+            //console.log(daneDoOdswiezania);
+        },
+
+
+        otworz = function () {
+            var div,
+                i,
+                j,
+                licznik,
+                ul,
+                button,
+                li,
+                a,
+                menuEKS,
+                p,
+                wartoscLicznika, // cała wartość licznika (zawiera w sobie dwie informacje - czas do przeglądu i po przeglądzie)
+                tekst,
+                kolorTekstu,
+                length;
+
+            if ($("#DialogKsiazkaSerwisowa").length === 0) { // sprawdzenie czy div już nie istnieje
+
+                idDialog = "#DialogKsiazkaSerwisowa";
+                dodajDaneDoOdswiezania(); // pobranie liczników dla wszystkich czynności przy każdym otwarciu okienka
+
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', 'DialogKsiazkaSerwisowa');
+                $('body').append(div);
+
+                $("#DialogKsiazkaSerwisowa").dialog({
+                    modal: true,
+                    closeOnEscape: false,
+                    height: ($(document).height() / 1.2),
+                    width: '90%',
+                    title: $(idButtonPowrot).text()
+                });
+
+                // dodanie zakładek tabs - szkielet
+                div = document.createElement("div");
+                $(div)
+                    .addClass('panelTab')
+                    .attr('id', 'tabsEKS')
+                    .appendTo('#DialogKsiazkaSerwisowa');
+                ul = document.createElement("ul");
+                $(ul).appendTo('#tabsEKS');
+
+                //console.log(daneDoOdswiezania);
+                //console.log(varGlobal.danePlikuKonfiguracyjnego.MENU_EKS);
+                menuEKS = varGlobal.danePlikuKonfiguracyjnego.MENU_EKS;
+                for (i = 0; i < menuEKS.length - 1; i += 1) {
+
+                    li = document.createElement("li");
+                    a = document.createElement("a");
+                    $(a)
+                        .attr('href', "#" + menuEKS[i].id)
+                        .text(menuEKS[i].OPIS)
+                        .appendTo(li);
+                    $(li).appendTo(ul);
+
+                    div = document.createElement("div");
+                    $(div)
+                        .addClass('panelTab')
+                        .css({
+                            'width': '95%',
+                            'overflow': 'auto', // auto    scroll
+                            'height': '90%'
+                        })
+                        .attr('id', menuEKS[i].id)
+                        .appendTo('#tabsEKS');
+
+                    for (j = 0; j < menuEKS[i].zawartosc.length; j += 1) {
+
+
+                        length = daneDoOdswiezania.length;
+                        for (licznik = 0; licznik < length; licznik += 1) {
+
+                            if (daneDoOdswiezania[licznik].id === menuEKS[i].zawartosc[j].id) {
+                                kolorTekstu = '';
+                                // wartość dodatnia licznika mówi nam, że termin został przekroczony
+                                wartoscLicznika = dane.daneTCP.analog[daneDoOdswiezania[licznik].poz_ramka];
+                                if (wartoscLicznika > 0) {
+                                    wartoscLicznika = wartoscLicznika & 0x7FFF;
+                                    tekst = '[ ' + wartoscLicznika + ' ' + varGlobal.danePlikuKonfiguracyjnego.TEKSTY.dniDoPrzegladu + ' ]'; // "dniDoPrzegladu"
+                                } else if (wartoscLicznika === 0) {
+                                    tekst = ''; //ccc
+                                } else {
+                                    kolorTekstu = 'red';
+                                    tekst = '[ ' + Math.abs(wartoscLicznika) + ' ' + varGlobal.danePlikuKonfiguracyjnego.TEKSTY.dniPoTerminie + ' ]'; // "dniPoTerminie"
+                                }
+                            }
+                        }
+
+                        button = document.createElement('button');
+                        $(button)
+                            .addClass('buttonEKS')
+                            .appendTo("#" + menuEKS[i].id)
+                            .attr('id', menuEKS[i].zawartosc[j].id)
+                            .text(menuEKS[i].zawartosc[j].OPIS + ' ' + tekst)
+                            .css({
+                                'color': kolorTekstu,
+                                'margin': '0.3%',
+                                'width': '95%',
+                                'padding-left': '3%',
+                                'text-align': 'left',
+                                'font-weight': 'normal',
+                                'top': '5%'
+                            });
+
+                        if (menuEKS[i].id === "tab1eks") { // na zakładce 1 ze zdarzeniami dziennymi...
+                            if (menuEKS[i].zawartosc[j].id === "eks0") { // ...tylko pierwsze pole ma być aktywne, reszta ma służyć czysto informacyjnie
+                                $(button).button({
+                                    disabled: false
+                                });
+                            } else {
+                                $(button).button({
+                                    disabled: true
+                                });
+                            }
+                        }
+
+                    }
+                }
+
+                $("div#tabsEKS").tabs(); // sformatowanie na jquerry
+                $("div#tabsEKS").tabs("refresh");
+                $("button").button();
+                $("#DialogKsiazkaSerwisowa").dialog("open");
+
+                $("#DialogKsiazkaSerwisowa").addClass("kopex-selected");
+            }
+
+            $("#DialogKsiazkaSerwisowa").one("dialogclose", function (event, ui) {
+                $("#DialogKsiazkaSerwisowa").remove();
+            });
+        },
+
+
+        inicjacja = function (idButtona) {
+
+            idButtonPowrot = '#' + idButtona;
+            $(idButtonPowrot).on("click", function (event, ui) {
+                otworz(); // otwarcie okienka dialog
+            });
+
+            require(['ksiazkaSerwisowa/odswiezaj'], function (odswiezaj) { // inicjacja odświeżania danych
+                odswiezaj.inicjacja();
+            });
+
+        };
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij
+    };
+});

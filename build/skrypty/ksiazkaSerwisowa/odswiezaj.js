@@ -1,2 +1,70 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne","kommTCP"],function(a,b,c,d){"use strict";var e=!1,f=[],g=function(){e===!1&&(f=f.concat(b.szukajWartosci("statusWordEKS",c.sygnaly)),e=!0)},h=function(a){require(["ksiazkaserwisowa/przypomnienie"],function(b){b.inicjacja(a)})},i=function(){var a,b,c;for(c=f.length,a=0;c>a;a+=1)"Bit"===f[a].typ_danych&&(b=1,b<<=f[a].poz_bit,d.daneTCP.bit[f[a].poz_ramka]&b&&h(f[a]))},j=function(){g(),setInterval(function(){i()},c.czasOdswiezania)};return{inicjacja:j}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+
+define(['jquery', 'obslugaJSON', 'zmienneGlobalne', 'kommTCP'], function ($, json, varGlobal, dane) {
+    "use strict";
+
+    var init = false,
+        daneDoOdswiezania = [],
+
+
+
+        dodajDaneDoOdswiezania = function () {
+            if (init === false) {
+                daneDoOdswiezania = daneDoOdswiezania.concat(json.szukajWartosci("statusWordEKS", varGlobal.sygnaly));
+                init = true;
+                //console.log(daneDoOdswiezania);
+            }
+        },
+
+
+        otworzPopUp = function (obiekt) {
+            require(['ksiazkaserwisowa/przypomnienie'], function (przypomnienie) {
+                przypomnienie.inicjacja(obiekt);
+            });
+        },
+
+
+        odswiezajDane = function () {
+            var i,
+                maska,
+                length;
+
+            length = daneDoOdswiezania.length;
+            for (i = 0; i < length; i += 1) {
+
+                if (daneDoOdswiezania[i].typ_danych === "Bit") {
+                    maska = 1;
+                    maska = maska << daneDoOdswiezania[i].poz_bit; // Ustawienie maski na odpowiedniej pozycji
+
+                    if (dane.daneTCP.bit[daneDoOdswiezania[i].poz_ramka] & maska) {
+                        otworzPopUp(daneDoOdswiezania[i]);
+                    }
+                }
+            }
+        },
+
+
+        inicjacja = function (obiekt) {
+
+            dodajDaneDoOdswiezania();
+
+            setInterval(function () {
+                odswiezajDane();
+            }, varGlobal.czasOdswiezania);
+
+        };
+
+
+    return {
+        inicjacja: inicjacja
+
+    };
+});

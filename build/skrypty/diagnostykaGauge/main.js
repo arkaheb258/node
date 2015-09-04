@@ -1,2 +1,101 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON"],function(a,b,c){"use strict";var d,e,f=[],g="#dialogDiagnostykaGauge",h=!1,i=function(){a(g).trigger("dialogclose")},j=function(){var c;0===a(g).length&&(c=document.createElement("div"),a(c).addClass("OknaDialog").addClass("ui-corner-all").attr("id",g.replace("#","")),a("body").append(c),a(g).dialog({autoOpen:!1,modal:!0,closeOnEscape:!1,height:"auto",width:"98%",title:a(e).text()}),c=document.createElement("div"),a(c).addClass("kontenerGauge").attr("id","idDivGauge").attr("text","bla bla"),a(g).append(c),require(["diagnostykaGauge/oknoAnalogi2"],function(b){a("#dialogDiagnostykaGauge").addClass("kopex-selected"),b.inicjacja(d)})),a(g).one("dialogclose",function(){a(g).remove(),a(e).addClass("kopex-selected").addClass(b.ui_state)})},k=function(){var g;h||(h=!0,a(".gauge").on("click",function(a){for(e=a.target.id,d=[],f=[],f=e.split("_"),g=0;g<f.length;g+=1)d=d.concat(c.szukajWartosci(f[g],b.sygnaly));e="#"+e,j()}))};return{inicjacja:k,zamknij:i}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require*/
+
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON'], function ($, varGlobal, json) {
+    'use strict';
+
+    var pasujaceObiekty,
+        modulyGauge = [],
+        idDialog = "#dialogDiagnostykaGauge", // tak będzie nazwane okienko popup
+        idButtonPowrot, // po zamknięciu caego okienka dialog powrot na button w zakladce tab ustawienia
+        intervalId,
+        init = false,
+
+
+        zamknij = function () {
+            $(idDialog).trigger('dialogclose');
+        },
+
+
+        otworz = function () {
+            var div,
+                i,
+                input,
+                label,
+                button,
+                tabela;
+
+            if ($(idDialog).length === 0) { // sprawdzenie czy div już nie istnieje
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', idDialog.replace("#", ""));
+                $('body').append(div);
+
+                //console.log($(idButtonPowrot).text());
+                $(idDialog).dialog({
+                    autoOpen: false,
+                    modal: true,
+                    closeOnEscape: false,
+                    height: 'auto', // ($(document).height() / 2.5)
+                    width: '98%',
+                    title: $(idButtonPowrot).text() //varGlobal.danePlikuKonfiguracyjnego.MENU_ZMIANA_PLC.tytul
+                });
+
+                div = document.createElement("div"); // stworzenie radiobuttona z nazwami modulow PLC
+                $(div)
+                    .addClass('kontenerGauge')
+                    .attr('id', 'idDivGauge')
+                    .attr('text', 'bla bla');
+                $(idDialog).append(div);
+
+                require(['diagnostykaGauge/oknoAnalogi2'], function (noweOkno) {
+                    $("#dialogDiagnostykaGauge").addClass("kopex-selected");
+                    noweOkno.inicjacja(pasujaceObiekty);
+                });
+            }
+
+            $(idDialog).one("dialogclose", function (event, ui) { // oczekiwanie na zdarzenie zamknięcia okienka
+                $(idDialog).remove();
+                $(idButtonPowrot).addClass("kopex-selected").addClass(varGlobal.ui_state); // Powrot nawigacji na button wywołujący
+            });
+        },
+
+
+        inicjacja = function () {
+            var i;
+
+            if (!init) {
+                init = true;
+                $(".gauge").on("click", function (event, ui) {
+                    idButtonPowrot = event.target.id;
+
+                    pasujaceObiekty = []; // wyczyszczenie tablicy z poprzedniego wyszukiwania
+                    modulyGauge = []; // Wyczyszczenie tablicy z poprzednich wynikow
+                    modulyGauge = idButtonPowrot.split("_"); // stworzenie z nazwy buttona tablicy stringow oddzielonych znakiem "_"
+                    for (i = 0; i < modulyGauge.length; i += 1) {
+                        // pasujaceObiekty = pasujaceObiekty.concat(json.szukajWartosciWerWypos(modulyGauge[i])); // przeszukanie tablicy pod katem pasujacych id i scalenie wynikow
+                        pasujaceObiekty = pasujaceObiekty.concat(json.szukajWartosci(modulyGauge[i], varGlobal.sygnaly));
+                    }
+                    idButtonPowrot = '#' + idButtonPowrot;
+                    otworz(); // otwarcie okienka dialog
+                });
+            }
+        };
+
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij
+    };
+
+
+});

@@ -1,2 +1,99 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON","kommTCP","wspolne/odswiezajObiekt","dodajPojedynczaTabele"],function(a,b,c,d,e){"use strict";var f,g,h=!1,i=[],j=function(){clearInterval(f),a("#DialogLiczniki").remove(),a(g).addClass("kopex-selected").addClass(b.ui_state)},k=function(){var a,b;for(b=d.daneTCP,a=0;a<i.length;a+=1)e.typAnalog(i[a])},l=function(){a("#DialogLiczniki").dialog("option","height","auto"),a("#DialogLiczniki").dialog("open"),dodajPojTabele2.dodaj({objects:i,id:"#DialogLiczniki"}),a("#DialogLiczniki").addClass("kopex-selected"),f=setInterval(function(){k()},b.czasOdswiezania)},m=function(){var d;h===!1&&(i=i.concat(c.szukajWartosci("licznikiCzasuPracyCalkowite",b.sygnaly)),i=i.concat(c.szukajWartosci("licznikiCzasuPracyDzienne",b.sygnaly)),h=!0),d=document.createElement("div"),a(d).addClass("OknaDialog").addClass("ui-corner-all").attr("id","DialogLiczniki"),a("body").append(d),a("#DialogLiczniki").dialog({autoOpen:!1,modal:!0,closeOnEscape:!1,height:a(document).height()/1.2,width:"70%",title:"Liczniki czasu pracy"}),l()},n=function(b){g="#"+b,a(g).on("click",function(){m()})};return{inicjacja:n,zamknij:j}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define, Raphael */
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON', 'kommTCP', 'wspolne/odswiezajObiekt', 'dodajPojedynczaTabele'], function ($, varGlobal, json, dane, odswiezajObiekt, dodajPojedynczaTabele) {
+    'use strict';
+
+    var init = false,
+        liczniki = [],
+        intervalId,
+        idButtonPowrot,
+
+
+        zamknij = function () {
+            clearInterval(intervalId);
+            $("#DialogLiczniki").remove();
+            $(idButtonPowrot).addClass("kopex-selected").addClass(varGlobal.ui_state);
+        },
+
+
+        odswiezaj = function () {
+            var wartoscAnaloguPoPrzeliczeniu,
+                i,
+                button_id,
+                daneTCP;
+
+            daneTCP = dane.daneTCP;
+            for (i = 0; i < liczniki.length; i += 1) {
+                odswiezajObiekt.typAnalog(liczniki[i]);
+            }
+        },
+
+
+        dodajElementyTabeli = function () {
+            $("#DialogLiczniki").dialog("option", "height", 'auto');
+            $("#DialogLiczniki").dialog("open");
+            dodajPojTabele2.dodaj({
+                objects: liczniki,
+                id: '#DialogLiczniki'
+            });
+            $("#DialogLiczniki").addClass("kopex-selected");
+
+            intervalId = setInterval(function () { // przechwycenie Id funkcji setInterval, po zamknieciu okna bedzie mozliwe zakonczenie odswiezania
+                odswiezaj();
+            }, varGlobal.czasOdswiezania);
+        },
+
+
+
+        otworz = function () {
+            var div,
+                p;
+
+            if (init === false) { // pobranie informacji o danych potrzebnych do odswiezania (pozycja w ramce, bitu itp)
+                liczniki = liczniki.concat(json.szukajWartosci("licznikiCzasuPracyCalkowite", varGlobal.sygnaly));
+                liczniki = liczniki.concat(json.szukajWartosci("licznikiCzasuPracyDzienne", varGlobal.sygnaly));
+                init = true;
+                //console.log(liczniki);
+            }
+
+            div = document.createElement("div");
+            $(div)
+                .addClass('OknaDialog')
+                .addClass('ui-corner-all')
+                .attr('id', 'DialogLiczniki');
+            $('body').append(div);
+
+            $("#DialogLiczniki").dialog({
+                autoOpen: false,
+                modal: true,
+                closeOnEscape: false,
+                height: ($(document).height() / 1.2), // ($(document).height() / 1.2)                  'auto'
+                width: '70%',
+                title: 'Liczniki czasu pracy'
+            });
+
+            dodajElementyTabeli();
+        },
+
+
+        inicjacja = function (idButtona) {
+            //console.log('inicjacja - liczniki');
+            idButtonPowrot = '#' + idButtona;
+            $(idButtonPowrot).on("click", function (event, ui) {
+                otworz(); // otwarcie okienka dialog
+            });
+        };
+
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij
+    };
+});

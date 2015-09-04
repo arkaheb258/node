@@ -1,2 +1,154 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne"],function(a,b,c){"use strict";var d,e,f=function(){a("#dialogPotwierdzenieEKS").empty(),a("#dialogPotwierdzenieEKS").dialog("close"),a("#dialogPotwierdzenieEKS").removeClass("kopex-selected").removeClass(c.ui_state),a("#"+d).addClass("kopex-selected").addClass(c.ui_state)},g=function(){var b,e,f=/\[([\w\W]*?)\]/;b=a("#tabsEKS").find("#"+d),e=a(b).text(),e=e.replace(f,"[ "+c.danePlikuKonfiguracyjnego.TEKSTY.OK+" ]"),a(b).button("option","label",e).css({color:""})},h=function(b){var f,g,h,i;0===a("#dialogPotwierdzenieEKS").length&&(g=a(b).attr("id"),e=g.replace("eks",""),h=a(b).button("option","label"),d=g,a("#"+d).removeClass("kopex-selected").removeClass(c.ui_state),f=document.createElement("div"),a(f).addClass("OknaDialog").addClass("ui-corner-all").attr("id","dialogPotwierdzenieEKS"),a("body").append(f),a("#dialogPotwierdzenieEKS").dialog({modal:!0,title:c.danePlikuKonfiguracyjnego.TEKSTY.potwierdzenieEKS+" "+e,closeOnEscape:!1,width:"60%",height:a(document).height()/2.5,effect:c.efektShowHide,buttons:[{disabled:!0,text:c.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz},{disabled:!0,text:c.danePlikuKonfiguracyjnego.TEKSTY.anuluj}],show:{effect:c.efektShowHide,duration:350},hide:{effect:c.efektShowHide,duration:350}}),a(f).css({width:"95%",display:"table"}),i=document.createElement("p"),a(i).attr("id","pEksOpis").text(h).css({display:"table-cell","vertical-align":"middle",width:"95%",padding:"0.4em",border:"0.1em solid","border-color":"grey","font-style":"italic","font-size":"1.2em","text-align":"center","border-radius":"0.5em"}),a("#dialogPotwierdzenieEKS").append(i),a("#dialogPotwierdzenieEKS").dialog("open"),a("#dialogPotwierdzenieEKS").addClass("kopex-selected")),a("#dialogPotwierdzenieEKS").one("dialogclose",function(){a("#dialogPotwierdzenieEKS").remove()})},i=function(){require(["progresBar"],function(a){a.inicjacja().done(function(a){a&&(f(),g())})}),c.doWyslania.eks_520.wActivID=e,b.wyslij(c.doWyslania.eks_520),console.log(c.doWyslania.eks_520)};return{inicjacja:h,zamknij:f,wyslijDoPLC:i,odswiezWygladButtona:g}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+
+define(['jquery', 'obslugaJSON', 'zmienneGlobalne'], function ($, json, varGlobal) {
+    "use strict";
+
+    var idButtona,
+        idEKS,
+
+
+        zamknij = function () {
+            $("#dialogPotwierdzenieEKS").empty();
+            $('#dialogPotwierdzenieEKS').dialog('close');
+            $('#dialogPotwierdzenieEKS').removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+            $('#' + idButtona).addClass("kopex-selected").addClass(varGlobal.ui_state); // Powrot nawigacji na button eks
+        },
+
+
+        odswiezWygladButtona = function () {
+            var button,
+                regExp = /\[([\w\W]*?)\]/,   //     /\[(.*?)\]/   wyrażenie regularne wycinające wszystko co jest pomiędzy nawiasami [....] łącznie z nawiasami
+                tekstButtona;
+
+            button = $("#tabsEKS").find('#' + idButtona); // znalezienie buttona po jego id
+            tekstButtona = $(button).text(); // pobranie jego tekstu
+            tekstButtona = tekstButtona.replace(regExp, '[ ' + varGlobal.danePlikuKonfiguracyjnego.TEKSTY.OK + ' ]'); // zastąpienie nowym stringiem starego tekstu z informacją o ilości godzin do przeglądu
+
+            $(button)
+                .button("option", "label", tekstButtona)
+                .css({
+                    'color': '' // ustawienie defaultowego koloru tekstu
+                });
+        },
+
+
+        inicjacja = function (kliknietyButton) {
+            var div,
+                tytul,
+                opis,
+                p;
+
+
+            if ($("#dialogPotwierdzenieEKS").length === 0) { // sprawdzenie czy div już nie istnieje
+
+                tytul = $(kliknietyButton).attr('id');
+                idEKS = tytul.replace('eks', '');
+                opis = $(kliknietyButton).button("option", "label");
+
+                // zdjęcie "kopex-selected" z kliknietego buttona
+                idButtona = tytul;
+                $('#' + idButtona).removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+
+
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', 'dialogPotwierdzenieEKS');
+                $('body').append(div);
+
+                $("#dialogPotwierdzenieEKS").dialog({
+                    modal: true,
+                    title: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.potwierdzenieEKS + ' ' + idEKS,
+                    closeOnEscape: false,
+                    width: '60%',
+                    height: ($(document).height() / 2.5),
+                    effect: varGlobal.efektShowHide,
+                    buttons: [
+                        {
+                            disabled: true,
+                            text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz
+                        },
+                        {
+                            disabled: true,
+                            text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.anuluj
+                        }
+                    ],
+                    show: {
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    },
+                    hide: {
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    }
+                });
+
+                $(div).css({ // potrzebne do wycentrowania elementu paragraph <p> w divie
+                    'width': '95%',
+                    'display': 'table'
+                });
+
+                p = document.createElement('p');
+                $(p)
+                    .attr('id', 'pEksOpis')
+                    .text(opis)
+                    .css({
+                        'display': 'table-cell',
+                        'vertical-align': 'middle', // to i powyżej do wycentrowania w divie
+                        'width': '95%',
+                        'padding': '0.4em',
+                        'border': '0.1em solid',
+                        'border-color': 'grey',
+                        'font-style': 'italic',
+                        'font-size': '1.2em',
+                        'text-align': 'center',
+                        'border-radius': '0.5em'
+                    });
+                $("#dialogPotwierdzenieEKS").append(p);
+                $("#dialogPotwierdzenieEKS").dialog("open");
+
+                $("#dialogPotwierdzenieEKS").addClass("kopex-selected");
+            }
+
+            $("#dialogPotwierdzenieEKS").one("dialogclose", function (event, ui) {
+                $("#dialogPotwierdzenieEKS").remove(); // zniszczenie całego okienka
+            });
+
+        },
+
+
+        wyslijDoPLC = function () {
+
+            require(['progresBar'], function (progresBar) {
+                progresBar.inicjacja().done(function (czyZamknacDialog) { // Wywolanie asynchroniczne progresBar.inicjacja() --> po jej wykonaniu (czyZamknacDialog=true) przejscie do nastepnych czynnosci
+                    if (czyZamknacDialog) {
+                        zamknij();
+
+                        odswiezWygladButtona(); // wywalić to jak już będzie poprawna obsługa rozkazu z Arkiem -> obslugaJson
+                    }
+                });
+            });
+
+            varGlobal.doWyslania.eks_520.wActivID = idEKS;
+            json.wyslij(varGlobal.doWyslania.eks_520);
+            console.log(varGlobal.doWyslania.eks_520);
+
+        };
+
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij,
+        wyslijDoPLC: wyslijDoPLC,
+        odswiezWygladButtona: odswiezWygladButtona
+    };
+});

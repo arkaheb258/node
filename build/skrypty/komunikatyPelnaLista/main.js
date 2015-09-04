@@ -1,2 +1,239 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne","obslugaJSON","kommTCP","komunikaty/przepisz","komunikaty/liczbaDostepnych"],function(a,b,c,d,e,f){"use strict";var g,h,i,j,k=!1,l="#PelnaListaKomm",m="#listaPelnaOLselectable",n=function(){return a("#DialogBlokady").length>0?void require(["komunikaty/zalozBlokade"],function(a){a.zamknij()}):(a(m).empty(),a(l).removeClass("kopex-selected"),a(l).dialog("close"),void a(j).addClass("kopex-selected").addClass(b.ui_state))},o=function(c){var e,i,j,n,o,p,q,r,s,t,u,v,w="",x=document.createDocumentFragment(),y=function(c,d,e,f,g){var h,i;i=null===q?"":"red",h=document.createElement("li"),1===f&&(a(h).addClass("nieBlokowalny"),d+=" ("+b.danePlikuKonfiguracyjnego.TEKSTY.nieBlokowalny+")"),a(h).addClass(void 0!==g&&""!==g?g:"dostepUser"),a(h).text(d).addClass("ui-widget-content").addClass(e).css({"text-align":"left"}).attr("id",c),a(x).append(h)};switch(o=b.tekstyKomunikatow.length-1,c){case"next":g+=1;break;case"prev":g-=1}for(0>g?g=o:g>o&&(g=0),n=1,e=0;16>e;e+=1)r=16*g+e,s="",s="mesg_"+g+"_bit_"+e,void 0!==b.tekstyKomunikatow[g]&&void 0!==b.tekstyKomunikatow[g].bity[e]&&(w="",q=null,d.daneTCP.blockUser[g]&n&&(w+="(Blokada User) ",q="User"),d.daneTCP.blockSrvc[g]&n&&(w+="(Blokada Srvc) ",q="Srvc"),d.daneTCP.blockAdv[g]&n&&(w+="(Blokada Adv) ",q="Adv"),w+=b.danePlikuKonfiguracyjnego.TEKSTY.kod+" "+r+" - "+b.tekstyKomunikatow[g].bity[e].opis,t=b.tekstyKomunikatow[g].bity[e].nb,u=b.tekstyKomunikatow[g].bity[e].dostep,y(s,w,q,t,u)),n<<=1;v=f.inicjacja(),p=b.danePlikuKonfiguracyjnego.TEKSTY.pelnaLista+" - "+g+" / "+o+", "+b.danePlikuKonfiguracyjnego.TEKSTY.pozDost+": "+b.poziomDostepu+", "+b.danePlikuKonfiguracyjnego.TEKSTY.blokLiczbDost+": "+v.dostepne+"/"+v.max,0===a(l).length?(i=document.createElement("div"),a(i).addClass("OknaDialog").addClass("ui-corner-all").attr("id",l.replace("#","")),a("body").append(i),a(l).dialog({modal:!0,autoOpen:!1,closeOnEscape:!1,height:"auto",width:"95%",title:p,show:{delay:200,effect:b.efektShowHide,duration:350},hide:{effect:b.efektShowHide,duration:350}}),j=document.createElement("ol"),a(j).addClass("selectable").attr("id",m.replace("#","")),a(j).append(x),a(l).append(j),a(l).dialog("open"),a(l).addClass("kopex-selected")):(a(m).empty(),a(m).append(x),a(l).dialog("option","title",p)),a(l).one("dialogclose",function(){a(l).remove()}),k===!1?a("#listaPelnaOLselectable").find("li").first().addClass("ui-selected"):(k=!1,a("#listaPelnaOLselectable").find("li").eq(h).addClass("ui-selected"))},p=function(){i=a(".ui-selected"),h=a(i).index(),k=!0,o(g)},q=function(){o("next")},r=function(){o("prev")},s=function(){g=0,o(g)},t=function(){j="#pelnaListaKomuniktow",a(j).on("click",function(){s()})};return{inicjacja:t,nastepnaStrona:q,poprzedniaStrona:r,zamknij:n,odswiez:p}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne', 'obslugaJSON', 'kommTCP', 'komunikaty/przepisz', 'komunikaty/liczbaDostepnych', 'poziomDostepu/odswiezaj'], function ($, varGlobal, json, dane, przepisz, liczbaDostepnych, poziomDostepuTekst) { // , 'komunikaty/wyslijDoPLC'    , wyslij
+    "use strict";
+
+    var index,
+        odswiezListe = false,
+        selectedIndex,
+        selectedLi,
+        idButtonPowrot,
+        idDialog = '#PelnaListaKomm',
+        idSelectable = '#listaPelnaOLselectable',
+
+
+        zamknij = function () {
+            //console.log($('#DialogBlokady').length);
+            if ($('#DialogBlokady').length > 0) {
+                require(['komunikaty/zalozBlokade'], function (blokady) {
+                    blokady.zamknij();
+                });
+                return;
+            }
+
+            $(idSelectable).empty();
+            $(idDialog).removeClass("kopex-selected");
+            $(idDialog).dialog('close');
+            $(idButtonPowrot).addClass("kopex-selected").addClass(varGlobal.ui_state); // Powrot nawigacji na button parametrow
+        },
+
+
+        dodajKomunikaty = function (komenda) {
+            var i,
+                div,
+                ol,
+                maska,
+                iloscWordKomunikatow,
+                tytul,
+                klasa,
+                nrKomunikatu,
+                li_id, // string z nazwa id dla kazdego aktywnego komunikatu np mesg_nr_bit_nr  -->  mesg_0_bit_12
+                tymczasTekst = '',
+                tekstPozdost,
+                czyBlokowalny,
+                poziomDostepuKomunikatu,
+                blokady,
+                fragMenu = document.createDocumentFragment(),
+                dodajPojedynczy = function (li_id, _tekst, _klasaBlokady, _czyBlokowalny, _poziomdostepu) {
+                    var li,
+                        kolorTekstu;
+
+                    if (klasa === null) {
+                        kolorTekstu = '';
+
+                    } else {
+                        kolorTekstu = 'red';
+                    }
+
+                    li = document.createElement("li");
+                    if (_czyBlokowalny === 1) { // 0-mozna blokowac, 1-brak mozliwosci blokowania komunikatu
+                        $(li).addClass('nieBlokowalny');
+                        _tekst += ' (' + varGlobal.danePlikuKonfiguracyjnego.TEKSTY.nieBlokowalny + ')';
+                    }
+
+                    //console.log(_poziomdostepu);
+                    if ((_poziomdostepu !== undefined) && (_poziomdostepu !== '')) {
+                        $(li).addClass(_poziomdostepu);
+                    } else {
+                        $(li).addClass('dostepUser');
+                    }
+
+                    $(li)
+                        .text(_tekst)
+                        .addClass('ui-widget-content')
+                        .addClass(_klasaBlokady)
+                        .css({
+                            'text-align': 'left'
+                        })
+                        .attr('id', li_id);
+                    $(fragMenu).append(li);
+                };
+
+
+            iloscWordKomunikatow = varGlobal.tekstyKomunikatow.length - 1; // ilosc wordow komunikatow
+            switch (komenda) { // pokaz nestepny lub poprzedni word
+            case 'next':
+                index += 1;
+                break;
+
+            case 'prev':
+                index -= 1;
+                break;
+            }
+
+            if (index < 0) {
+                index = iloscWordKomunikatow;
+            } else if (index > iloscWordKomunikatow) {
+                index = 0;
+            }
+
+            maska = 1;
+            for (i = 0; i < 16; i += 1) { // sprawdzenie wszystkich bitow w wordzie
+                nrKomunikatu = index * 16 + i; // obliczenie kodu (numeru) komunikatu z numeru worda oraz numeru bitu w wordzie
+                li_id = '';
+                li_id = "mesg_" + index + "_bit_" + i;
+
+                if ((varGlobal.tekstyKomunikatow[index] !== undefined) && (varGlobal.tekstyKomunikatow[index].bity[i] !== undefined)) { //  sprawdzenie czy w ogole istnieje tekst komunikatu w pliku "komunikaty.json"
+                    tymczasTekst = '';
+
+                    klasa = null;
+                    if (dane.daneTCP.blockUser[index] & maska) {
+                        tymczasTekst += '(Blokada User) ';
+                        klasa = 'User';
+                    }
+                    if (dane.daneTCP.blockSrvc[index] & maska) {
+                        tymczasTekst += '(Blokada Srvc) ';
+                        klasa = 'Srvc';
+                    }
+                    if (dane.daneTCP.blockAdv[index] & maska) {
+                        tymczasTekst += '(Blokada Adv) ';
+                        klasa = 'Adv';
+                    }
+
+                    tymczasTekst += varGlobal.danePlikuKonfiguracyjnego.TEKSTY.kod + ' ' + nrKomunikatu + ' - ' + varGlobal.tekstyKomunikatow[index].bity[i].opis;
+                    czyBlokowalny = varGlobal.tekstyKomunikatow[index].bity[i].nb;
+                    poziomDostepuKomunikatu = varGlobal.tekstyKomunikatow[index].bity[i].dostep;
+
+                    dodajPojedynczy(li_id, tymczasTekst, klasa, czyBlokowalny, poziomDostepuKomunikatu);
+                }
+                maska = maska << 1;
+            }
+
+            tekstPozdost = poziomDostepuTekst.inicjacja(varGlobal.poziomDostepu);
+            blokady = liczbaDostepnych.inicjacja();
+            tytul = varGlobal.danePlikuKonfiguracyjnego.TEKSTY.pelnaLista + ' - ' + (index) + ' / ' + (iloscWordKomunikatow) + ', ' +
+                //varGlobal.danePlikuKonfiguracyjnego.TEKSTY.pozDost + ': ' + varGlobal.poziomDostepu + ', ' +
+                varGlobal.danePlikuKonfiguracyjnego.TEKSTY.pozDost + ': ' + tekstPozdost + ', ' +
+                varGlobal.danePlikuKonfiguracyjnego.TEKSTY.blokLiczbDost + ': ' + blokady.dostepne + '/' + blokady.max;
+
+            if ($(idDialog).length === 0) { // sprawdzenie czy div już nie istnieje
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', idDialog.replace("#", ""));
+                $('body').append(div);
+
+                $(idDialog).dialog({
+                    modal: true,
+                    autoOpen: false,
+                    closeOnEscape: false,
+                    height: 'auto',
+                    width: '95%',
+                    title: tytul,
+                    show: {
+                        delay: 200,
+                        effect: varGlobal.efektShowHide, // shake  bounce  pulsate
+                        duration: 350
+                    },
+                    hide: {
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    }
+                });
+
+                ol = document.createElement("ol");
+                $(ol)
+                    .addClass("selectable")
+                    .attr('id', idSelectable.replace("#", "")); //idDialog.replace("#", ""))            dialogWymianaPLC
+                $(ol).append(fragMenu);
+                $(idDialog).append(ol);
+
+                $(idDialog).dialog("open");
+                $(idDialog).addClass("kopex-selected");
+            } else {
+                $(idSelectable).empty();
+                $(idSelectable).append(fragMenu);
+                $(idDialog).dialog("option", "title", tytul); // Nadanie tytulu okienku
+            }
+
+            $(idDialog).one("dialogclose", function (event, ui) { // oczekiwanie na zdarzenie zamknięcia okienka
+                $(idDialog).remove();
+            });
+
+            if (odswiezListe === false) { // pierwsze wywolanie lub nastepna strona
+                $("#listaPelnaOLselectable").find("li").first().addClass("ui-selected"); // Zaznaczenie pierwszego elementu listy
+            } else { // ponowne podswietlenie elementu na ktorym byla zalozona blokada
+                odswiezListe = false;
+                $("#listaPelnaOLselectable").find("li").eq(selectedIndex).addClass("ui-selected");
+            }
+        },
+
+
+        odswiez = function () {
+            selectedLi = $(".ui-selected");
+            selectedIndex = $(selectedLi).index();
+
+            odswiezListe = true;
+            dodajKomunikaty(index);
+        },
+
+        nastepnaStrona = function () {
+            dodajKomunikaty('next');
+        },
+
+        poprzedniaStrona = function () {
+            dodajKomunikaty('prev');
+        },
+
+        otworz = function () {
+            index = 0;
+            dodajKomunikaty(index);
+        },
+
+        inicjacja = function (idButtona) {
+
+            //idButtonPowrot = '#' + idButtona;
+            idButtonPowrot = "#pelnaListaKomuniktow";
+            $(idButtonPowrot).on("click", function (event, ui) {
+                otworz(); // otwarcie okienka dialog
+            });
+        };
+
+
+    return {
+        inicjacja: inicjacja,
+        nastepnaStrona: nastepnaStrona,
+        poprzedniaStrona: poprzedniaStrona,
+        zamknij: zamknij,
+        odswiez: odswiez
+    };
+
+});

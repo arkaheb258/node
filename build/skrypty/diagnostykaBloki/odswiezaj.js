@@ -1,2 +1,127 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","kommTCP"],function(a,b){"use strict";var c=function(c,d,e){var f=1,g=function(b){switch(b){case"transparent":a("#"+c.id).css({backgroundColor:"",color:"",border:"1px solid #363636"});break;case"darkred":a("#"+c.id).css({backgroundColor:b,border:"1px solid red"});break;case"darkOrange":a("#"+c.id).css({backgroundColor:b,border:"1px solid yellow"});break;case"green":a("#"+c.id).css({backgroundColor:b,border:"1px solid lime"})}};f<<=c.pozBit,g(b.daneDiag.DigitData[c.pozWord]&f?e:d)},d=function(d){var e;c(d,"transparent","darkred"),e=b.daneDiag.AnalogData[d.pozAn]/10,a("#"+d.id).text(e.toFixed(1))},e=function(d){var e;switch(e=b.daneDiag.AnalogData[d.pozAn]){case 0:a("#"+d.id).text("NAM"),c(d,"transparent","green");break;case 1:a("#"+d.id).text("Przerwa"),c(d,"darkred","darkred");break;case 2:a("#"+d.id).text("Zwarcie"),c(d,"darkred","darkred");break;default:a("#"+d.id).text("status: "+e),c(d,"darkred","darkred")}},f=function(a){var b,f;for(f=a.length,b=0;f>b;b+=1)"AN"===a[b].TYPWEWY&&d(a[b]),"NAM"===a[b].TYPWEWY&&e(a[b]),"CAN"===a[b].TYPWEWY&&c(a[b],"darkred","green"),"DI"===a[b].TYPWEWY&&c(a[b],"transparent","green"),"DO"===a[b].TYPWEWY&&c(a[b],"transparent","darkOrange")};return{aktualizuj:f}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define*/
+
+
+define(['jquery', 'kommTCP'], function ($, dane) {
+    'use strict';
+
+
+    var ccc,
+
+        typBit = function (_obiekt, _kolorLow, _kolorHigh) {
+            var kolorObwodki,
+                maska = 1,
+                ustawKolor = function (__kolor) {
+                    switch (__kolor) {
+                    case 'transparent':
+                        $("#" + _obiekt.id)
+                            .css({
+                                'backgroundColor': '', // tło
+                                'color': '',
+                                'border': '1px solid #363636'
+                            });
+                        break;
+                    case 'darkred':
+                        $("#" + _obiekt.id)
+                            .css({
+                                'backgroundColor': __kolor,
+                                'border': '1px solid ' + 'red'
+                            });
+                        break;
+                    case 'darkOrange':
+                        $("#" + _obiekt.id)
+                            .css({
+                                'backgroundColor': __kolor,
+                                'border': '1px solid ' + 'yellow'
+                            });
+                        break;
+                    case 'green':
+                        $("#" + _obiekt.id)
+                            .css({
+                                'backgroundColor': __kolor,
+                                'border': '1px solid ' + 'lime'
+                            });
+                        break;
+                    }
+                };
+
+            maska = maska << _obiekt.pozBit;
+            if (dane.daneDiag.DigitData[_obiekt.pozWord] & maska) { // stan wysoki bitu
+                ustawKolor(_kolorHigh); // ustawienie koloru tła
+            } else { // stan niski bitu
+                ustawKolor(_kolorLow);
+            }
+        },
+
+
+        typAnalog = function (_obiekt) {
+            var wartoscAnaloguPoPrzeliczeniu;
+
+            typBit(_obiekt, 'transparent', 'darkred');
+            wartoscAnaloguPoPrzeliczeniu = dane.daneDiag.AnalogData[_obiekt.pozAn] / 10; // wartość analogu po uwzględnieniu mnożnika
+            $("#" + _obiekt.id).text(wartoscAnaloguPoPrzeliczeniu.toFixed(1)); // ustawienie końcowego tekstu na kontrolce
+        },
+
+
+        typNamur = function (_obiekt) {
+            var stanNamur;
+
+            stanNamur = dane.daneDiag.AnalogData[_obiekt.pozAn];
+            //console.log(stanNamur);
+            switch (stanNamur) {
+            case 0: // praca prawidłowa
+                $("#" + _obiekt.id).text('NAM');
+                //typBit(_obiekt, 'green', 'transparent');
+                typBit(_obiekt, 'transparent', 'green');
+                break;
+            case 1: // przerwa
+                $("#" + _obiekt.id).text('Przerwa');
+                typBit(_obiekt, 'darkred', 'darkred');
+                break;
+            case 2: // zwarcie
+                $("#" + _obiekt.id).text('Zwarcie');
+                typBit(_obiekt, 'darkred', 'darkred');
+                break;
+
+            default:
+                $("#" + _obiekt.id).text('status: ' + stanNamur);
+                typBit(_obiekt, 'darkred', 'darkred');
+            }
+        },
+
+
+        aktualizuj = function (_daneWej) {
+            var i,
+                length;
+
+            length = _daneWej.length;
+            for (i = 0; i < length; i += 1) {
+                if (_daneWej[i].TYPWEWY === 'AN') {
+                    typAnalog(_daneWej[i]);
+                }
+                if (_daneWej[i].TYPWEWY === 'NAM') {
+                    typNamur(_daneWej[i]);
+                }
+                if (_daneWej[i].TYPWEWY === 'CAN') {
+                    typBit(_daneWej[i], 'darkred', 'green');
+                }
+                if (_daneWej[i].TYPWEWY === 'DI') {
+                    typBit(_daneWej[i], 'transparent', 'green');
+                }
+                if (_daneWej[i].TYPWEWY === 'DO') {
+                    typBit(_daneWej[i], 'transparent', 'darkOrange');
+                }
+            }
+        };
+
+    return {
+        aktualizuj: aktualizuj
+    };
+
+});

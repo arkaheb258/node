@@ -1,2 +1,115 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","obslugaJSON","zmienneGlobalne"],function(a,b,c){"use strict";var d=function(){a("#dialogPrzypomnienieEKS").empty(),a("#dialogPrzypomnienieEKS").dialog("close")},e=function(b){var d,e;0===a("#dialogPrzypomnienieEKS").length&&(console.log(b),d=document.createElement("div"),a(d).addClass("OknaDialog").addClass("ui-corner-all").attr("id","dialogPrzypomnienieEKS"),a("body").append(d),a("#dialogPrzypomnienieEKS").dialog({modal:!0,title:c.danePlikuKonfiguracyjnego.TEKSTY.przypomnienieEKS,closeOnEscape:!1,width:"60%",height:a(document).height()/2.5,effect:c.efektShowHide,buttons:[{disabled:!0,text:c.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz},{disabled:!0,text:c.danePlikuKonfiguracyjnego.TEKSTY.anuluj}],show:{effect:c.efektShowHide,duration:350},hide:{effect:c.efektShowHide,duration:350}}),a(d).css({width:"95%",display:"table"}),e=document.createElement("p"),a(e).attr("id","pEksOpis").text(b.opis_pelny).css({display:"table-cell","vertical-align":"middle",width:"95%",padding:"0.4em",border:"0.1em solid","border-color":"grey","font-style":"italic","font-size":"1.2em","text-align":"center","border-radius":"0.5em"}),a("#dialogPrzypomnienieEKS").append(e),a("#dialogPrzypomnienieEKS").dialog("open"),a("#dialogPrzypomnienieEKS").addClass("kopex-selected")),a("#dialogPrzypomnienieEKS").one("dialogclose",function(){a("#dialogPrzypomnienieEKS").remove()})},f=function(){console.log("wyslijDoPLC")};return{inicjacja:e,zamknij:d,wyslijDoPLC:f}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define, require */
+
+
+define(['jquery', 'obslugaJSON', 'zmienneGlobalne'], function ($, json, varGlobal) {
+    "use strict";
+
+    var ccc,
+
+
+        zamknij = function () {
+            $("#dialogPrzypomnienieEKS").empty();
+            $('#dialogPrzypomnienieEKS').dialog('close');
+        },
+
+
+        inicjacja = function (obiekt) { // typPrzypomnienia: codzienne, tygodniowe, miesięczne, motogodziny
+            var div,
+                tekstPrzypomnienia,
+                p;
+
+
+            if ($("#dialogPrzypomnienieEKS").length === 0) { // sprawdzenie czy div już nie istnieje
+
+                console.log(obiekt);
+
+                div = document.createElement("div");
+                $(div)
+                    .addClass('OknaDialog')
+                    .addClass('ui-corner-all')
+                    .attr('id', 'dialogPrzypomnienieEKS');
+                $('body').append(div);
+
+                $("#dialogPrzypomnienieEKS").dialog({
+                    modal: true,
+                    title: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.przypomnienieEKS,
+                    closeOnEscape: false,
+                    width: '60%',
+                    height: ($(document).height() / 2.5),
+                    effect: varGlobal.efektShowHide,
+                    buttons: [
+                        {
+                            disabled: true,
+                            text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.zatwierdz
+                        },
+                        {
+                            disabled: true,
+                            text: varGlobal.danePlikuKonfiguracyjnego.TEKSTY.anuluj
+                        }
+                    ],
+                    show: {
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    },
+                    hide: {
+                        effect: varGlobal.efektShowHide,
+                        duration: 350
+                    }
+                });
+
+                $(div).css({ // potrzebne do wycentrowania elementu paragraph <p> w divie
+                    'width': '95%',
+                    'display': 'table'
+                });
+
+
+                p = document.createElement('p');
+                $(p)
+                    .attr('id', 'pEksOpis')
+                    .text(obiekt.opis_pelny)
+                    .css({
+                        'display': 'table-cell',
+                        'vertical-align': 'middle', // to i powyżej do wycentrowania w divie
+                        'width': '95%',
+                        'padding': '0.4em',
+                        'border': '0.1em solid',
+                        'border-color': 'grey',
+                        'font-style': 'italic',
+                        'font-size': '1.2em',
+                        'text-align': 'center',
+                        'border-radius': '0.5em'
+                    });
+                $("#dialogPrzypomnienieEKS").append(p);
+                $("#dialogPrzypomnienieEKS").dialog("open");
+
+                $("#dialogPrzypomnienieEKS").addClass("kopex-selected");
+            }
+
+            $("#dialogPrzypomnienieEKS").one("dialogclose", function (event, ui) {
+                $("#dialogPrzypomnienieEKS").remove(); // zniszczenie całego okienka
+            });
+
+        },
+
+
+        wyslijDoPLC = function () {
+
+            console.log('wyslijDoPLC');
+
+        };
+
+
+
+    return {
+        inicjacja: inicjacja,
+        zamknij: zamknij,
+        wyslijDoPLC: wyslijDoPLC
+    };
+});

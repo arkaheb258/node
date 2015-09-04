@@ -1,2 +1,64 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a){"use strict";var b=function(b){var c,d,e,f;f=a(b).height(),d=a(b).children().length,e=a(b).children().first().outerHeight(!0),c=(f-d*e)/2.5,a(b).children().css({top:c})},c=function(b,c){var d,e,f=document.createDocumentFragment();for(d=0;d<b.length;d+=1)b[d].widocznosc&&(e=document.createElement("button"),a(e).text(b[d].OPIS).addClass(b[d].dostep).addClass(c).css({width:"75%","font-weight":"normal"}).attr("id",b[d].id),a(f).append(e));return f};return{dodajElementyHtml:c,allignVertical:b}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  define */
+
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+    var ccc,
+
+
+        allignVertical = function (idDialog) { // wycentrowanie buttonów w ich kontenerze w osi Y
+            var top,
+                iloscButtonow,
+                wysokoscButtona,
+                wysokoscDiv;
+            
+            wysokoscDiv = $(idDialog).height();
+            iloscButtonow = $(idDialog).children().length;
+            wysokoscButtona = $(idDialog).children().first().outerHeight(true); // wysokość jednego buttona z marginesami
+
+            top = (wysokoscDiv - (iloscButtonow * wysokoscButtona)) / 2.5; // wyrównanie nie idealnie równo lecz trochę podniesione w górę -> dlatego dzielone przez 3  a nie 2
+            $(idDialog).children().css({
+                'top': top
+            });
+        },
+
+
+        dodajElementyHtml = function (menu, klasa) { // Stworzenie malego menu z buttonow (np. wybor poziomu dostepu itp)
+            var i,
+                fragMenu = document.createDocumentFragment(),
+                button;
+
+            for (i = 0; i < menu.length; i += 1) {
+                if (menu[i].widocznosc) {
+                    button = document.createElement('button');
+                    $(button)
+                        .text(menu[i].OPIS)
+                        .addClass(menu[i].dostep)
+                        .addClass(klasa)
+                        .css({
+                            'width': '75%', // 60
+                            'font-weight': 'normal'
+                        })
+                        .attr('id', menu[i].id);
+                    $(fragMenu).append(button); // Zwiekszenie wydajnosci - chcemy jak najmniej operacji na DOM (append na zewnatrz petli for)
+                }
+            }
+            return fragMenu;
+        };
+    
+
+
+
+    return { // Metody publiczne
+        dodajElementyHtml: dodajElementyHtml,
+        allignVertical: allignVertical
+    };
+});

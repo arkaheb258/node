@@ -1,3 +1,49 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:02:50 */
+.c3 .c3-axis-x path,
+.c3 .c3-axis-x line {
+    stroke: grey;
+}
 
-.c3 .c3-axis-x line,.c3 .c3-axis-x path,.c3 .c3-axis-y line,.c3 .c3-axis-y path{stroke:grey}
+.c3 .c3-axis-y path,
+.c3 .c3-axis-y line {
+    stroke: grey;
+}
+
+/*
+#idMainDivWykresy .c3-chart-arc text {
+    fill: #ff0000;
+}
+
+.c3-axis-y-label,
+.c3-axis-y2-label {
+    fill: #ff0000;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#idMainDivWykresy .c3-line-data2 {
+    stroke-width: 10px;
+}
+
+#idMainDivWykresy .c3-text {
+    fill: #ff0000;
+}
+
+#idMainDivWykresy .c3-chart-arc {
+    fill: #ff0000;
+}
+
+#idMainDivWykresy .c3-chart-arc text {
+    fill: #ff0000;
+}
+
+#idMainDivWykresy .c3-chart-text {
+    fill: #ff0000;
+}
+
+#idMainDivWykresy .c3-chart-texts text {
+    fill: #ff0000;
+}
+
+#idMainDivWykresy .c3-axis-x-label text {
+    fill: #ff0000;
+}*/

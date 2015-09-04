@@ -1,2 +1,132 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","wspolne/stworzTooltip"],function(a,b){"use strict";var c,d,e,f,g=function(){var c,f="";a("#"+d).data("ui-tooltip")&&a("#"+d).tooltip("destroy"),clearTimeout(e),e=setTimeout(function(){if(d=a(".ui-selected").attr("id"),a("#"+d).attr("title",""),void 0!==d){switch(c=a("#accordion").accordion("option","active")){case 0:f=b.inicjacja("g_d_ent_esc");break;case 1:f=b.inicjacja("g_d_esc");break;case 2:f=b.inicjacja("g_d_ent_esc");break;case 3:f=b.inicjacja("g_d_esc")}if(a("#DialogBlokady").is(":visible"))return;a("#"+d).tooltip({position:{my:"top+5",at:"right-50 bottom"},content:function(){return f}}),a("#"+d).tooltip("open")}},2e3)},h=function(d){var e,g,h,i="",j="";if(a("#"+c).data("ui-tooltip")&&a("#"+c).tooltip("destroy"),h=a("#tabs").tabs("option","active"),1===h){if(c=a("#accordion").find("h3").eq(d).attr("id"),void 0===e)switch(a("#"+c).attr("title",""),void 0!==a(".kopex-memory").parent().attr("id")&&(j="_esc"),d){case 0:i=b.inicjacja("l_p_d_ent"+j);break;case 1:i=b.inicjacja("l_p_g_d_ent"+j);break;case 2:i=b.inicjacja("l_p_g_d_ent"+j);break;case 3:i=b.inicjacja("l_p_g_ent"+j)}clearTimeout(f),f=setTimeout(function(){h=a("#tabs").tabs("option","active"),g=a("#"+c).next().find(".ui-selected").attr("id"),1===h&&void 0===g&&(a("#"+c).tooltip({position:{my:"top+5",at:"right-75 bottom"},content:function(){return i}}),a("#"+c).tooltip("open"))},2e3)}};return{naAccordionie:h,naSelectable:g}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+// dodanie pomocy nawigacyjnych - pokazanie wszystkich możliwych kierunkow
+define(['jquery', 'wspolne/stworzTooltip'], function ($, stworzTooltip) {
+    'use strict';
+
+    var id_h3,
+        selectedId,
+        timeoutIdSelectable,
+        timeoutIdAccordion,
+
+        naSelectable = function () { // tooltipy na zaznaczonych komunikatach
+            var mojContent = '',
+                accordionIndex,
+                tabIndex;
+
+            if ($("#" + selectedId).data('ui-tooltip')) { // Jesli jest otwarty tooltip z poprzednia podpowiedzia -> zamkniecie go
+                $("#" + selectedId).tooltip('destroy'); // destroy   close
+            }
+
+
+            clearTimeout(timeoutIdSelectable); // reset timera przy kazdym nowym poleceniu nawigacji (licznik ma zawsze odliczyc te 3 sekundy od poczatku)
+            timeoutIdSelectable = setTimeout(function () {
+                selectedId = $('.ui-selected').attr('id');
+                $("#" + selectedId).attr('title', '');
+
+                if (selectedId !== undefined) {
+                    accordionIndex = $("#accordion").accordion("option", "active");
+                    switch (accordionIndex) {
+                    case 0: // alarmy
+                        mojContent = stworzTooltip.inicjacja('g_d_ent_esc');
+                        break;
+                    case 1: // ostrzeżenia
+                        mojContent = stworzTooltip.inicjacja('g_d_esc');
+                        break;
+                    case 2: // zalożone blokady
+                        mojContent = stworzTooltip.inicjacja('g_d_ent_esc');
+                        break;
+                    case 3: // historia
+                        mojContent = stworzTooltip.inicjacja('g_d_esc');
+                        break;
+                    }
+
+                    if ($("#DialogBlokady").is(":visible")) { // nie wyswietlenie podpowiedzi gdy uzytkownik wcisnal enter i zaklada blokade
+                        return;
+                    }
+
+                    $("#" + selectedId).tooltip({
+                        position: {
+                            my: "top+5",
+                            at: "right-50 bottom"
+                        },
+                        content: function () {
+                            return mojContent;
+                        }
+                    });
+                    $("#" + selectedId).tooltip("open");
+                }
+            }, 2000);
+        },
+
+
+        naAccordionie = function (_accordionIndex) { // tooltipy na wstażkach accordiona
+            var acordionTitle,
+                mojContent = '',
+                opcjaPamiecAktywna = '', // bedac na zakladce np diagnostyki i klikajac klawisz ESC nastepuje automatyczny przeskok na komunikaty -> ponowne ESC powoduje powrot na zakladke komunikaty
+                zaznaczonyKomunikat,
+                tabIndex;
+
+            if ($("#" + id_h3).data('ui-tooltip')) { // Jesli jest otwarty tooltip z poprzednia podpowiedzia -> zamkniecie go
+                $("#" + id_h3).tooltip('destroy'); // destroy   close
+            }
+            tabIndex = $('#tabs').tabs("option", "active"); // rysowanie tooltipow tylko na zakladce z komunikatami
+            if (tabIndex !== 1) {
+                return;
+            }
+
+            id_h3 = $("#accordion").find('h3').eq(_accordionIndex).attr('id'); // pobranie id aktywnego naglowka accordiona
+            if (acordionTitle === undefined) {
+                $("#" + id_h3).attr('title', ''); // nadanie pustego opisu tooltipa -> bedzie zastapiony przez ikonki
+
+                if ($('.kopex-memory').parent().attr('id') !== undefined) { // sprawdzenie czy jest aktywny przycisk historii przeskoku z innej zakladki
+                    opcjaPamiecAktywna = '_esc';
+                }
+                switch (_accordionIndex) {
+                case 0: // alarmy
+                    mojContent = stworzTooltip.inicjacja('l_p_d_ent' + opcjaPamiecAktywna);
+                    break;
+                case 1: // ostrzeżenia
+                    mojContent = stworzTooltip.inicjacja('l_p_g_d_ent' + opcjaPamiecAktywna);
+                    break;
+                case 2: // zalożone blokady
+                    mojContent = stworzTooltip.inicjacja('l_p_g_d_ent' + opcjaPamiecAktywna);
+                    break;
+                case 3: // historia
+                    mojContent = stworzTooltip.inicjacja('l_p_g_ent' + opcjaPamiecAktywna);
+                    break;
+                }
+            }
+
+            clearTimeout(timeoutIdAccordion);
+            timeoutIdAccordion = setTimeout(function () {
+                tabIndex = $('#tabs').tabs("option", "active");
+                zaznaczonyKomunikat = $('#' + id_h3).next().find('.ui-selected').attr('id');
+                if ((tabIndex === 1) && (zaznaczonyKomunikat === undefined)) { // jeszcze raz sprawdzenie czy jest aktywna zakladaka z komunikatami - ktos mogl szybko przejsc w inna lokalizacje
+                    $("#" + id_h3).tooltip({
+                        position: {
+                            my: "top+5",
+                            at: "right-75 bottom"
+                        },
+                        content: function () {
+                            return mojContent;
+                        }
+                    });
+                    $("#" + id_h3).tooltip("open");
+                }
+            }, 2000);
+        };
+
+
+    return {
+        naAccordionie: naAccordionie,
+        naSelectable: naSelectable
+    };
+});

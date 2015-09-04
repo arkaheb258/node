@@ -1,2 +1,51 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(c){switch(c){case b.kodyKlawiszy.escape:require(["diagnostykaGauge/main"],function(a){a.zamknij()}),0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close");break;case b.kodyKlawiszy.enter:require(["komunikaty/popUpKomunikaty"],function(a){a.inicjacja()});break;case b.kodyKlawiszy.lewo:case b.kodyKlawiszy.prawo:case b.kodyKlawiszy.gora:case b.kodyKlawiszy.dol:0!==a("#DialogPopUpKomunikaty").length&&a("#DialogPopUpKomunikaty").dialog("close")}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal) {
+    'use strict';
+
+
+    var ccc,
+
+        wykonaj = function (kod, selected) {
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.escape:
+                require(['diagnostykaGauge/main'], function (main) {
+                    main.zamknij();
+                });
+                if ($("#DialogPopUpKomunikaty").length !== 0) {
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                require(['komunikaty/popUpKomunikaty'], function (popUpKomunikaty) {
+                    popUpKomunikaty.inicjacja();
+                });
+                break;
+
+            case varGlobal.kodyKlawiszy.lewo:
+            case varGlobal.kodyKlawiszy.prawo:
+            case varGlobal.kodyKlawiszy.gora:
+            case varGlobal.kodyKlawiszy.dol:
+                if ($("#DialogPopUpKomunikaty").length !== 0) {
+                    $("#DialogPopUpKomunikaty").dialog("close");
+                }
+                break;
+
+            default:
+
+            }
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

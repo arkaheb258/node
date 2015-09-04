@@ -1,2 +1,60 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:01:42 */
-define(["jquery","zmienneGlobalne"],function(a,b){"use strict";var c=function(a,c){switch(c.blur(),a){case b.kodyKlawiszy.gora:0===c.prev().length?c.parent().find(".przyciskMenuParametry").last().addClass("kopex-selected").addClass(b.ui_state):c.prev().addClass("kopex-selected").addClass(b.ui_state),c.removeClass("kopex-selected").removeClass(b.ui_state);break;case b.kodyKlawiszy.dol:0===c.next().length?c.parent().find(".przyciskMenuParametry").first().addClass("kopex-selected").addClass(b.ui_state):c.next().addClass("kopex-selected").addClass(b.ui_state),c.removeClass("kopex-selected").removeClass(b.ui_state);break;case b.kodyKlawiszy.enter:require(["parametry/main"],function(a){a.subMenu(c.attr("id"))});break;case b.kodyKlawiszy.escape:require(["parametry/main"],function(a){a.zamkniecieOkienka()});break;default:return}};return{wykonaj:c}});
+/*jslint browser: true*/
+/*jslint bitwise: true */
+/*global $, jQuery*/
+/*jslint devel: true */
+/*global document: false */
+/*global JustGage, getRandomInt */
+/*jslint nomen: true*/
+/*global  require, define */
+
+define(['jquery', 'zmienneGlobalne'], function ($, varGlobal, scroll) {
+    'use strict';
+
+    var inicjacja = false,
+
+        wykonaj = function (kod, selected) {
+            selected.blur(); // Po otwarciu okienka dialogu pierwszy element jest zafocusowany (taka waściwość jquery) - pozbycie sie tego zaznaczenia
+
+            switch (kod) {
+            case varGlobal.kodyKlawiszy.gora:
+                if (selected.prev().length === 0) {
+                    selected.parent().find(".przyciskMenuParametry").last().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    selected.prev().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                break;
+
+            case varGlobal.kodyKlawiszy.dol:
+                if (selected.next().length === 0) {
+                    selected.parent().find(".przyciskMenuParametry").first().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                } else {
+                    selected.next().addClass("kopex-selected").addClass(varGlobal.ui_state);
+                }
+                selected.removeClass("kopex-selected").removeClass(varGlobal.ui_state);
+                break;
+
+            case varGlobal.kodyKlawiszy.enter:
+                require(['parametry/main'], function (noweOkno) {
+                    //console.log('naviparamMenu - enter');
+                    noweOkno.subMenu(selected.attr('id'));
+                });
+                break;
+
+            case varGlobal.kodyKlawiszy.escape:
+                require(['parametry/main'], function (noweOkno) {
+                    noweOkno.zamkniecieOkienka();
+                });
+                break;
+
+            default:
+                return;
+            }
+
+
+        };
+
+    return {
+        wykonaj: wykonaj
+    };
+});

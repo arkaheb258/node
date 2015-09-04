@@ -1,3 +1,17 @@
-/*! Data kompilacji: Tue Jul 28 2015 11:02:50 */
+/* Add this css so we can see when the action (orange) keys are highlighted */
 
-.ui-keyboard-button.ui-state-active.ui-state-hover{border:2px solid #fff}.hasFocus{border-color:#59b4d4}
+
+.ui-keyboard-button.ui-state-active.ui-state-hover {
+    border: 2px solid #fff;
+/*    -moz-box-shadow: 1px 1em 1px #ffba2b inset;*/
+/*    -webkit-box-shadow: 1px 1em 1px #ffba2b inset;*/
+/*    box-shadow: 1px 1em 1px #ffba2b inset;*/
+}
+
+
+/* Class added to indicate the virtual keyboard has navigation focus */
+
+
+.hasFocus {
+    border-color: #59b4d4;
+}

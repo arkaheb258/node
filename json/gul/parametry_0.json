@@ -1,14 +1,14 @@
-{"TYPM":"GUŁ350/500","WER":"0.1","DATA":"2015-06-18","DANE":{
+{"TYPM":"GUL","WER":"0.1","DATA":"2015-08-12","DANE":{
 "grupa1":{"OPIS":"1. Konfiguracja kombajnu"
 , "podgrupa1":{"OPIS":"1.1 Opis kombajnu"
-,"sKonfTypKombajnu":{"TYP":"pString", "ID":"1.1.1", "ROZM":16, "WART":"GUŁ", "DOST":"Adv", "OPIS":"Typ kombajnu"}
+,"sKonfTypKombajnu":{"TYP":"pString", "ID":"1.1.1", "ROZM":16, "WART":"GUŁ350/500", "DOST":"Adv", "OPIS":"Typ kombajnu"}
 ,"sKonfNrKomisji":{"TYP":"pString", "ID":"1.1.2", "ROZM":16, "WART":"01H900", "DOST":"Adv", "OPIS":"Nr komisji kombajnu"}
 ,"sKonfNazwaKopalni":{"TYP":"pString", "ID":"1.1.3", "ROZM":16, "WART":"KWK JasMos", "DOST":"Adv", "OPIS":"Nazwa kopalni"}
 ,"sKonfNrSciany":{"TYP":"pString", "ID":"1.1.4", "ROZM":16, "WART":"xxx", "DOST":"Adv", "OPIS":"Numer ściany"}
 ,"sKonfWersjaProgramu":{"TYP":"pString", "ID":"1.1.5", "ROZM":16, "WART":"4.0.1", "DOST":"Adv", "OPIS":"Nr wersji programu"}
 },"podgrupa2":{"OPIS":"1.2 Pozostałe"
 ,"rKonfWersjaJezykowa":{"TYP":"pLista", "ID":"1.2.1", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["Polski", "Rosyjski", "Angielski"], "OPIS":"Wybór wersji językowej"}
-,"rKonfWersjaWyposazeniaElektr":{"TYP":"pLista", "ID":"1.2.2", "ROZM":1, "WART":1.0, "DOST":"Adv", "LISTA":["MZS590", "MZS590/1"], "OPIS":"Wybór wersji wyposażenia elektrycznego"}
+,"rKonfWersjaWyposazeniaElektr":{"TYP":"pLista", "ID":"1.2.2", "ROZM":1, "WART":0.0, "DOST":"Adv", "LISTA":["MZS590", "MZS590/1"], "OPIS":"Wybór wersji wyposażenia elektrycznego"}
 ,"rKonfZapisEn":{"TYP":"pLista", "ID":"1.2.3", "ROZM":1, "WART":1.0, "DOST":"Adv", "LISTA":["nie", "tak"], "OPIS":"Czy jest aktywna archiwizacja danych na karcie flash"}
 ,"rKonfRegObcOrgEn":{"TYP":"pLista", "ID":"1.2.4", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Czy jest aktywna funkcja ograniczenia obciążenia organu"}
 ,"rKonfCzasLetni":{"TYP":"pLista", "ID":"1.2.5", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Czy uwzględniać czas letni"}
@@ -43,7 +43,7 @@
 ,"rRegPosuwuTd":{"TYP":"pLiczba", "ID":"2.2.4", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Czas wyprzedzenia regulatora [s]"}
 ,"rRegPosuwuMaxProc":{"TYP":"pLiczba", "ID":"2.2.5", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":150.0, "DOST":"Srvc", "OPIS":"Maksymalna dopuszczalna wartość prądu organu dla regulatora [%]"}
 ,"tRegPosuwuMax":{"TYP":"pCzas", "ID":"2.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Dopuszczalny czas pracy z przekroczeniem maksymalnej wartości prądu organu [s]"}
-,"rRegPosuwuWartMinWyj":{"TYP":"pLiczba", "ID":"2.2.7", "ROZM":1, "WART":-130.0, "PREC":1, "MIN":-150.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość minimalna sygnału wyjściowego [%]"}
+,"rRegPosuwuWartMinWyj":{"TYP":"pLiczba", "ID":"2.2.7", "ROZM":1, "WART":-130.0, "PREC":1, "MIN":-500.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Wartość minimalna sygnału wyjściowego [%]"}
 ,"rRegPosuwuWartMaxWyj":{"TYP":"pLiczba", "ID":"2.2.8", "ROZM":1, "WART":100.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość maksymalna sygnału wyjściowego [%]"}
 ,"rRegPosuwuLiczbaProbek":{"TYP":"pLiczba", "ID":"2.2.9", "ROZM":1, "WART":10.0, "PREC":1, "MIN":0.0, "MAX":1000.0, "DOST":"Srvc", "OPIS":"Liczba próbek dla dla funkcji uśredniającej"}
 ,"rRegPosuwuWartOffset":{"TYP":"pLiczba", "ID":"2.2.10", "ROZM":1, "WART":0.0, "PREC":1, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Przesunięcie wartości wyjściowej regulatora [%]"}
@@ -453,16 +453,6 @@
 ,"rGU_SilOrg_TempCH2_HiAl":{"TYP":"pLiczba", "ID":"6.2.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
 ,"rGU_SilOrg_TempCH2_HiAlHist":{"TYP":"pLiczba", "ID":"6.2.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartości [°C]"}
 ,"tGU_SilOrg_TempCH2_HiALFiltr":{"TYP":"pCzas", "ID":"6.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
-},"podgrupa3":{"OPIS":"6.3 Transformator T1 PT100"
-,"rTempTrafoT1_ZakrMin":{"TYP":"pLiczba", "ID":"6.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy temperatury uzwojeń transformatora T1 [°C]"}
-,"rTempTrafoT1_ZakrMax":{"TYP":"pLiczba", "ID":"6.3.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy temperatury uzwojeń transformatora T1 [°C]"}
-,"tTempTrafoT1_StFiltr":{"TYP":"pCzas", "ID":"6.3.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury uzwojeń transformatora T1 [s]"}
-,"rTempTrafoT1_HiWr":{"TYP":"pLiczba", "ID":"6.3.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej temperatury uzwojeń transformatora T1 [°C]"}
-,"rTempTrafoT1_HiWrHist":{"TYP":"pLiczba", "ID":"6.3.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej temperatury uzwojeń transformatora T1 [°C]"}
-,"tTempTrafoT1_HiWrFiltr":{"TYP":"pCzas", "ID":"6.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej temperatury uzwojeń transformatora T1 [s]"}
-,"rTempTrafoT1_HiAl":{"TYP":"pLiczba", "ID":"6.3.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej temperatury uzwojeń transformatora T1 [°C]"}
-,"rTempTrafoT1_HiAlHist":{"TYP":"pLiczba", "ID":"6.3.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej temperatury uzwojeń transformatora T1 [°C]"}
-,"tTempTrafoT1_HiALFiltr":{"TYP":"pCzas", "ID":"6.3.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury uzwojeń transformatora T1 [s]"}
 }},"grupa7":{"OPIS":"7. Zabezpieczenia"
 , "podgrupa1":{"OPIS":"7.1 Przeciążeniowe"
 ,"tZabxLTMR_SilnikaOrganu":{"TYP":"pCzas", "ID":"7.1.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zadziałania zabezpieczenia silnikowego organu [s]"}
@@ -496,129 +486,150 @@
 , "podgrupa1":{"OPIS":"9.1 Prędkość GUŁ"
 ,"rGULPredkoscMax":{"TYP":"pLiczba", "ID":"9.1.1", "ROZM":1, "WART":27.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Prędkośc maksymalna GUŁ. [m/min]"}
 },"podgrupa2":{"OPIS":"9.2 Prędkość zadana"
-,"rPredkoscZadana_ZakrMin":{"TYP":"pLiczba", "ID":"10.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Prędkość zadana z systemu nadrzędnego - wartość minimalna. [m/min]"}
-,"rPredkoscZadana_ZakrMax":{"TYP":"pLiczba", "ID":"10.1.2", "ROZM":1, "WART":27.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Prędkość zadana z systemu nadrzędnego - wartość maksymalna. [m/min]"}
-,"tPredkoscZadana_StFiltr":{"TYP":"pCzas", "ID":"10.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":1000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii w obwodzie pomiarowym [s]"}
+,"rPredkoscZadana_ZakrMin":{"TYP":"pLiczba", "ID":"9.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":50.0, "DOST":"Srvc", "OPIS":"Prędkość zadana z systemu nadrzędnego - wartość minimalna. [m/min]"}
+,"rPredkoscZadana_ZakrMax":{"TYP":"pLiczba", "ID":"9.2.2", "ROZM":1, "WART":27.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Prędkość zadana z systemu nadrzędnego - wartość maksymalna. [m/min]"}
+,"tPredkoscZadana_StFiltr":{"TYP":"pCzas", "ID":"9.2.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":1000.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii w obwodzie pomiarowym [s]"}
 },"podgrupa3":{"OPIS":"9.3 Konfiguracja rolki"
-,"rNRPredkoscJazda":{"TYP":"pLiczba", "ID":"10.2.1", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ograniczenie prędkości napędu rolki w trakcie jazdy. [%]"}
-,"rNRPredkoscNapinanieWstepne":{"TYP":"pLiczba", "ID":"10.2.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ograniczenie prędkości napędu rolki w trakcie napinania wstępnego [%]"}
-,"rNRMomentJazdaOdRolki":{"TYP":"pLiczba", "ID":"10.2.3", "ROZM":1, "WART":2.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki przy jeżdzie głowicy w kierunku od rolki [%]"}
-,"rNRMomentJazdaDoRolki":{"TYP":"pLiczba", "ID":"10.2.4", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki przy jeżdzie głowicy w kierunku do rolki [%]"}
-,"rNRMomentNapinanieWstepne":{"TYP":"pLiczba", "ID":"10.2.5", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki w trakcie napinania wstępnego [%]"}
+,"rNRPredkoscJazda":{"TYP":"pLiczba", "ID":"9.3.1", "ROZM":1, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ograniczenie prędkości napędu rolki w trakcie jazdy. [%]"}
+,"rNRPredkoscNapinanieWstepne":{"TYP":"pLiczba", "ID":"9.3.2", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Ograniczenie prędkości napędu rolki w trakcie napinania wstępnego [%]"}
+,"rNRMomentJazdaOdRolki":{"TYP":"pLiczba", "ID":"9.3.3", "ROZM":1, "WART":2.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki przy jeżdzie głowicy w kierunku od rolki [%]"}
+,"rNRMomentJazdaDoRolki":{"TYP":"pLiczba", "ID":"9.3.4", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki przy jeżdzie głowicy w kierunku do rolki [%]"}
+,"rNRMomentNapinanieWstepne":{"TYP":"pLiczba", "ID":"9.3.5", "ROZM":1, "WART":25.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Wartość momentu zadanego dla napędu rolki w trakcie napinania wstępnego [%]"}
 }},"grupa10":{"OPIS":"10. MZSG"
 , "podgrupa1":{"OPIS":"10.1 Temperatura komory automatyki"
-,"rSA_Temperatura_ZakrMin":{"TYP":"pLiczba", "ID":"11.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
-,"rSA_Temperatura_ZakrMax":{"TYP":"pLiczba", "ID":"11.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
-,"tSA_Temperatura_StFiltr":{"TYP":"pCzas", "ID":"11.1.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_Temperatura_HiWr":{"TYP":"pLiczba", "ID":"11.1.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
-,"rSA_Temperatura_HiWrHist":{"TYP":"pLiczba", "ID":"11.1.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
-,"tSA_Temperatura_HiWrFiltr":{"TYP":"pCzas", "ID":"11.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
-,"rSA_Temperatura_HiAl":{"TYP":"pLiczba", "ID":"11.1.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
-,"rSA_Temperatura_HiAlHist":{"TYP":"pLiczba", "ID":"11.1.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
-,"tSA_Temperatura_HiALFiltr":{"TYP":"pCzas", "ID":"11.1.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+,"rSA_Temperatura_ZakrMin":{"TYP":"pLiczba", "ID":"10.1.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_Temperatura_ZakrMax":{"TYP":"pLiczba", "ID":"10.1.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_Temperatura_StFiltr":{"TYP":"pCzas", "ID":"10.1.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_Temperatura_HiWr":{"TYP":"pLiczba", "ID":"10.1.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_Temperatura_HiWrHist":{"TYP":"pLiczba", "ID":"10.1.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_Temperatura_HiWrFiltr":{"TYP":"pCzas", "ID":"10.1.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_Temperatura_HiAl":{"TYP":"pLiczba", "ID":"10.1.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_Temperatura_HiAlHist":{"TYP":"pLiczba", "ID":"10.1.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_Temperatura_HiALFiltr":{"TYP":"pCzas", "ID":"10.1.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
 },"podgrupa2":{"OPIS":"10.2 Temperatura uzwojeń transformatora T1"
-,"rSA_TrafoT1TempUzw_ZakrMin":{"TYP":"pLiczba", "ID":"11.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
-,"rSA_TrafoT1TempUzw_ZakrMax":{"TYP":"pLiczba", "ID":"11.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
-,"tSA_TrafoT1TempUzw_StFiltr":{"TYP":"pCzas", "ID":"11.2.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_TrafoT1TempUzw_HiWr":{"TYP":"pLiczba", "ID":"11.2.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
-,"rSA_TrafoT1TempUzw_HiWrHist":{"TYP":"pLiczba", "ID":"11.2.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
-,"tSA_TrafoT1TempUzw_HiWrFiltr":{"TYP":"pCzas", "ID":"11.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
-,"rSA_TrafoT1TempUzw_HiAl":{"TYP":"pLiczba", "ID":"11.2.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
-,"rSA_TrafoT1TempUzw_HiAlHist":{"TYP":"pLiczba", "ID":"11.2.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
-,"tSA_TrafoT1TempUzw_HiALFiltr":{"TYP":"pCzas", "ID":"11.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+,"rSA_TrafoT1TempUzw_ZakrMin":{"TYP":"pLiczba", "ID":"10.2.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_TrafoT1TempUzw_ZakrMax":{"TYP":"pLiczba", "ID":"10.2.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_TrafoT1TempUzw_StFiltr":{"TYP":"pCzas", "ID":"10.2.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_TrafoT1TempUzw_HiWr":{"TYP":"pLiczba", "ID":"10.2.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_TrafoT1TempUzw_HiWrHist":{"TYP":"pLiczba", "ID":"10.2.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_TrafoT1TempUzw_HiWrFiltr":{"TYP":"pCzas", "ID":"10.2.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_TrafoT1TempUzw_HiAl":{"TYP":"pLiczba", "ID":"10.2.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_TrafoT1TempUzw_HiAlHist":{"TYP":"pLiczba", "ID":"10.2.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_TrafoT1TempUzw_HiALFiltr":{"TYP":"pCzas", "ID":"10.2.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
 },"podgrupa3":{"OPIS":"10.3 Rezystancja sieci 440VAC"
-,"rSA_Siec440VACRezyst_ZakrMin":{"TYP":"pLiczba", "ID":"11.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
-,"rSA_Siec440VACRezyst_ZakrMax":{"TYP":"pLiczba", "ID":"11.3.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
-,"tSA_Siec440VACRezyst_StFiltr":{"TYP":"pCzas", "ID":"11.3.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_Siec440VACRezyst_LoWr":{"TYP":"pLiczba", "ID":"11.3.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [°C]"}
-,"rSA_Siec440VACRezyst_LoWrHist":{"TYP":"pLiczba", "ID":"11.3.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [°C]"}
-,"tSA_Siec440VACRezyst_LoWrFiltr":{"TYP":"pCzas", "ID":"11.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
-,"rSA_Siec440VACRezyst_LoAl":{"TYP":"pLiczba", "ID":"11.3.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [°C]"}
-,"rSA_Siec440VACRezyst_LoAlHist":{"TYP":"pLiczba", "ID":"11.3.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [°C]"}
-,"tSA_Siec440VACRezyst_LoALFiltr":{"TYP":"pCzas", "ID":"11.3.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_Siec440VACRezyst_ZakrMin":{"TYP":"pLiczba", "ID":"10.3.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_Siec440VACRezyst_ZakrMax":{"TYP":"pLiczba", "ID":"10.3.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_Siec440VACRezyst_StFiltr":{"TYP":"pCzas", "ID":"10.3.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_Siec440VACRezyst_LoWr":{"TYP":"pLiczba", "ID":"10.3.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [°C]"}
+,"rSA_Siec440VACRezyst_LoWrHist":{"TYP":"pLiczba", "ID":"10.3.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [°C]"}
+,"tSA_Siec440VACRezyst_LoWrFiltr":{"TYP":"pCzas", "ID":"10.3.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_Siec440VACRezyst_LoAl":{"TYP":"pLiczba", "ID":"10.3.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [°C]"}
+,"rSA_Siec440VACRezyst_LoAlHist":{"TYP":"pLiczba", "ID":"10.3.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [°C]"}
+,"tSA_Siec440VACRezyst_LoALFiltr":{"TYP":"pCzas", "ID":"10.3.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
 },"podgrupa4":{"OPIS":"10.4 Chłodzenie falowników - przepływ"
-,"rSA_ChlodzFalPrzepl_ZakrMin":{"TYP":"pLiczba", "ID":"11.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [l/min]"}
-,"rSA_ChlodzFalPrzepl_ZakrMax":{"TYP":"pLiczba", "ID":"11.4.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [l/min]"}
-,"tSA_ChlodzFalPrzepl_StFiltr":{"TYP":"pCzas", "ID":"11.4.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_ChlodzFalPrzepl_LoWr":{"TYP":"pLiczba", "ID":"11.4.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [l/min]"}
-,"rSA_ChlodzFalPrzepl_LoWrHist":{"TYP":"pLiczba", "ID":"11.4.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [l/min]"}
-,"tSA_ChlodzFalPrzepl_LoWrFiltr":{"TYP":"pCzas", "ID":"11.4.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
-,"rSA_ChlodzFalPrzepl_LoAl":{"TYP":"pLiczba", "ID":"11.4.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [l/min]"}
-,"rSA_ChlodzFalPrzepl_LoAlHist":{"TYP":"pLiczba", "ID":"11.4.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [l/min]"}
-,"tSA_ChlodzFalPrzepl_LoALFiltr":{"TYP":"pCzas", "ID":"11.4.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_ChlodzFalPrzepl_ZakrMin":{"TYP":"pLiczba", "ID":"10.4.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [l/min]"}
+,"rSA_ChlodzFalPrzepl_ZakrMax":{"TYP":"pLiczba", "ID":"10.4.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [l/min]"}
+,"tSA_ChlodzFalPrzepl_StFiltr":{"TYP":"pCzas", "ID":"10.4.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzFalPrzepl_LoWr":{"TYP":"pLiczba", "ID":"10.4.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [l/min]"}
+,"rSA_ChlodzFalPrzepl_LoWrHist":{"TYP":"pLiczba", "ID":"10.4.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [l/min]"}
+,"tSA_ChlodzFalPrzepl_LoWrFiltr":{"TYP":"pCzas", "ID":"10.4.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzFalPrzepl_LoAl":{"TYP":"pLiczba", "ID":"10.4.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [l/min]"}
+,"rSA_ChlodzFalPrzepl_LoAlHist":{"TYP":"pLiczba", "ID":"10.4.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [l/min]"}
+,"tSA_ChlodzFalPrzepl_LoALFiltr":{"TYP":"pCzas", "ID":"10.4.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
 },"podgrupa5":{"OPIS":"10.5 Chłodzenie falowników - temperatura"
-,"rSA_ChlodzFalTemp_ZakrMin":{"TYP":"pLiczba", "ID":"11.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
-,"rSA_ChlodzFalTemp_ZakrMax":{"TYP":"pLiczba", "ID":"11.5.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
-,"tSA_ChlodzFalTemp_StFiltr":{"TYP":"pCzas", "ID":"11.5.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_ChlodzFalTemp_HiWr":{"TYP":"pLiczba", "ID":"11.5.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
-,"rSA_ChlodzFalTemp_HiWrHist":{"TYP":"pLiczba", "ID":"11.5.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
-,"tSA_ChlodzFalTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"11.5.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
-,"rSA_ChlodzFalTemp_HiAl":{"TYP":"pLiczba", "ID":"11.5.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
-,"rSA_ChlodzFalTemp_HiAlHist":{"TYP":"pLiczba", "ID":"11.5.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
-,"tSA_ChlodzFalTemp_HiALFiltr":{"TYP":"pCzas", "ID":"11.5.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+,"rSA_ChlodzFalTemp_ZakrMin":{"TYP":"pLiczba", "ID":"10.5.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_ChlodzFalTemp_ZakrMax":{"TYP":"pLiczba", "ID":"10.5.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_ChlodzFalTemp_StFiltr":{"TYP":"pCzas", "ID":"10.5.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzFalTemp_HiWr":{"TYP":"pLiczba", "ID":"10.5.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_ChlodzFalTemp_HiWrHist":{"TYP":"pLiczba", "ID":"10.5.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_ChlodzFalTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"10.5.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzFalTemp_HiAl":{"TYP":"pLiczba", "ID":"10.5.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_ChlodzFalTemp_HiAlHist":{"TYP":"pLiczba", "ID":"10.5.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_ChlodzFalTemp_HiALFiltr":{"TYP":"pCzas", "ID":"10.5.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
 },"podgrupa6":{"OPIS":"10.6 Chłodzenie falowników - ciśnienie"
-,"rSA_ChlodzFalCisn_ZakrMin":{"TYP":"pLiczba", "ID":"11.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [bar]"}
-,"rSA_ChlodzFalCisn_ZakrMax":{"TYP":"pLiczba", "ID":"11.6.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [bar]"}
-,"tSA_ChlodzFalCisn_StFiltr":{"TYP":"pCzas", "ID":"11.6.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_ChlodzFalCisn_LoWr":{"TYP":"pLiczba", "ID":"11.6.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [bar]"}
-,"rSA_ChlodzFalCisn_LoWrHist":{"TYP":"pLiczba", "ID":"11.6.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [bar]"}
-,"tSA_ChlodzFalCisn_LoWrFiltr":{"TYP":"pCzas", "ID":"11.6.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
-,"rSA_ChlodzFalCisn_LoAl":{"TYP":"pLiczba", "ID":"11.6.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [bar]"}
-,"rSA_ChlodzFalCisn_LoAlHist":{"TYP":"pLiczba", "ID":"11.6.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [bar]"}
-,"tSA_ChlodzFalCisn_LoALFiltr":{"TYP":"pCzas", "ID":"11.6.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
-,"rSA_ChlodzFalCisn_HiWr":{"TYP":"pLiczba", "ID":"11.6.10", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [bar]"}
-,"rSA_ChlodzFalCisn_HiWrHist":{"TYP":"pLiczba", "ID":"11.6.11", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [bar]"}
-,"tSA_ChlodzFalCisn_HiWrFiltr":{"TYP":"pCzas", "ID":"11.6.12", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
-,"rSA_ChlodzFalCisn_HiAl":{"TYP":"pLiczba", "ID":"11.6.13", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [bar]"}
-,"rSA_ChlodzFalCisn_HiAlHist":{"TYP":"pLiczba", "ID":"11.6.14", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [bar]"}
-,"tSA_ChlodzFalCisn_HiALFiltr":{"TYP":"pCzas", "ID":"11.6.15", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+,"rSA_ChlodzFalCisn_ZakrMin":{"TYP":"pLiczba", "ID":"10.6.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [bar]"}
+,"rSA_ChlodzFalCisn_ZakrMax":{"TYP":"pLiczba", "ID":"10.6.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [bar]"}
+,"tSA_ChlodzFalCisn_StFiltr":{"TYP":"pCzas", "ID":"10.6.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzFalCisn_LoWr":{"TYP":"pLiczba", "ID":"10.6.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [bar]"}
+,"rSA_ChlodzFalCisn_LoWrHist":{"TYP":"pLiczba", "ID":"10.6.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [bar]"}
+,"tSA_ChlodzFalCisn_LoWrFiltr":{"TYP":"pCzas", "ID":"10.6.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzFalCisn_LoAl":{"TYP":"pLiczba", "ID":"10.6.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [bar]"}
+,"rSA_ChlodzFalCisn_LoAlHist":{"TYP":"pLiczba", "ID":"10.6.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [bar]"}
+,"tSA_ChlodzFalCisn_LoALFiltr":{"TYP":"pCzas", "ID":"10.6.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_ChlodzFalCisn_HiWr":{"TYP":"pLiczba", "ID":"10.6.10", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [bar]"}
+,"rSA_ChlodzFalCisn_HiWrHist":{"TYP":"pLiczba", "ID":"10.6.11", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [bar]"}
+,"tSA_ChlodzFalCisn_HiWrFiltr":{"TYP":"pCzas", "ID":"10.6.12", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzFalCisn_HiAl":{"TYP":"pLiczba", "ID":"10.6.13", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [bar]"}
+,"rSA_ChlodzFalCisn_HiAlHist":{"TYP":"pLiczba", "ID":"10.6.14", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [bar]"}
+,"tSA_ChlodzFalCisn_HiALFiltr":{"TYP":"pCzas", "ID":"10.6.15", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
 },"podgrupa7":{"OPIS":"10.7 Chłodzenie transformatora T1 - przepływ"
-,"rSA_ChlodzTransPrzepl_ZakrMin":{"TYP":"pLiczba", "ID":"11.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [l/min]"}
-,"rSA_ChlodzTransPrzepl_ZakrMax":{"TYP":"pLiczba", "ID":"11.7.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [l/min]"}
-,"tSA_ChlodzTransPrzepl_StFiltr":{"TYP":"pCzas", "ID":"11.7.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_ChlodzTransPrzepl_LoWr":{"TYP":"pLiczba", "ID":"11.7.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [l/min]"}
-,"rSA_ChlodzTransPrzepl_LoWrHist":{"TYP":"pLiczba", "ID":"11.7.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [l/min]"}
-,"tSA_ChlodzTransPrzepl_LoWrFiltr":{"TYP":"pCzas", "ID":"11.7.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
-,"rSA_ChlodzTransPrzepl_LoAl":{"TYP":"pLiczba", "ID":"11.7.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [l/min]"}
-,"rSA_ChlodzTransPrzepl_LoAlHist":{"TYP":"pLiczba", "ID":"11.7.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [l/min]"}
-,"tSA_ChlodzTransPrzepl_LoALFiltr":{"TYP":"pCzas", "ID":"11.7.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_ChlodzTransPrzepl_ZakrMin":{"TYP":"pLiczba", "ID":"10.7.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [l/min]"}
+,"rSA_ChlodzTransPrzepl_ZakrMax":{"TYP":"pLiczba", "ID":"10.7.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [l/min]"}
+,"tSA_ChlodzTransPrzepl_StFiltr":{"TYP":"pCzas", "ID":"10.7.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzTransPrzepl_LoWr":{"TYP":"pLiczba", "ID":"10.7.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [l/min]"}
+,"rSA_ChlodzTransPrzepl_LoWrHist":{"TYP":"pLiczba", "ID":"10.7.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [l/min]"}
+,"tSA_ChlodzTransPrzepl_LoWrFiltr":{"TYP":"pCzas", "ID":"10.7.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzTransPrzepl_LoAl":{"TYP":"pLiczba", "ID":"10.7.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [l/min]"}
+,"rSA_ChlodzTransPrzepl_LoAlHist":{"TYP":"pLiczba", "ID":"10.7.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [l/min]"}
+,"tSA_ChlodzTransPrzepl_LoALFiltr":{"TYP":"pCzas", "ID":"10.7.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
 },"podgrupa8":{"OPIS":"10.8 Chłodzenie transformatora T1 - temperatura"
-,"rSA_ChlodzTransTemp_ZakrMin":{"TYP":"pLiczba", "ID":"11.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
-,"rSA_ChlodzTransTemp_ZakrMax":{"TYP":"pLiczba", "ID":"11.8.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
-,"tSA_ChlodzTransTemp_StFiltr":{"TYP":"pCzas", "ID":"11.8.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_ChlodzTransTemp_HiWr":{"TYP":"pLiczba", "ID":"11.8.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
-,"rSA_ChlodzTransTemp_HiWrHist":{"TYP":"pLiczba", "ID":"11.8.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
-,"tSA_ChlodzTransTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"11.8.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
-,"rSA_ChlodzTransTemp_HiAl":{"TYP":"pLiczba", "ID":"11.8.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
-,"rSA_ChlodzTransTemp_HiAlHist":{"TYP":"pLiczba", "ID":"11.8.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
-,"tSA_ChlodzTransTemp_HiALFiltr":{"TYP":"pCzas", "ID":"11.8.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+,"rSA_ChlodzTransTemp_ZakrMin":{"TYP":"pLiczba", "ID":"10.8.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [°C]"}
+,"rSA_ChlodzTransTemp_ZakrMax":{"TYP":"pLiczba", "ID":"10.8.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [°C]"}
+,"tSA_ChlodzTransTemp_StFiltr":{"TYP":"pCzas", "ID":"10.8.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzTransTemp_HiWr":{"TYP":"pLiczba", "ID":"10.8.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [°C]"}
+,"rSA_ChlodzTransTemp_HiWrHist":{"TYP":"pLiczba", "ID":"10.8.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [°C]"}
+,"tSA_ChlodzTransTemp_HiWrFiltr":{"TYP":"pCzas", "ID":"10.8.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzTransTemp_HiAl":{"TYP":"pLiczba", "ID":"10.8.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [°C]"}
+,"rSA_ChlodzTransTemp_HiAlHist":{"TYP":"pLiczba", "ID":"10.8.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [°C]"}
+,"tSA_ChlodzTransTemp_HiALFiltr":{"TYP":"pCzas", "ID":"10.8.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
 },"podgrupa9":{"OPIS":"10.9 Chłodzenie transformatora T1 - ciśnienie"
-,"rSA_ChlodzTransCisn_ZakrMin":{"TYP":"pLiczba", "ID":"11.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [bar]"}
-,"rSA_ChlodzTransCisn_ZakrMax":{"TYP":"pLiczba", "ID":"11.9.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [bar]"}
-,"tSA_ChlodzTransCisn_StFiltr":{"TYP":"pCzas", "ID":"11.9.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
-,"rSA_ChlodzTransCisn_LoWr":{"TYP":"pLiczba", "ID":"11.9.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [bar]"}
-,"rSA_ChlodzTransCisn_LoWrHist":{"TYP":"pLiczba", "ID":"11.9.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [bar]"}
-,"tSA_ChlodzTransCisn_LoWrFiltr":{"TYP":"pCzas", "ID":"11.9.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
-,"rSA_ChlodzTransCisn_LoAl":{"TYP":"pLiczba", "ID":"11.9.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [bar]"}
-,"rSA_ChlodzTransCisn_LoAlHist":{"TYP":"pLiczba", "ID":"11.9.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [bar]"}
-,"tSA_ChlodzTransCisn_LoALFiltr":{"TYP":"pCzas", "ID":"11.9.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
-,"rSA_ChlodzTransCisn_HiWr":{"TYP":"pLiczba", "ID":"11.9.10", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [bar]"}
-,"rSA_ChlodzTransCisn_HiWrHist":{"TYP":"pLiczba", "ID":"11.9.11", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [bar]"}
-,"tSA_ChlodzTransCisn_HiWrFiltr":{"TYP":"pCzas", "ID":"11.9.12", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
-,"rSA_ChlodzTransCisn_HiAl":{"TYP":"pLiczba", "ID":"11.9.13", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [bar]"}
-,"rSA_ChlodzTransCisn_HiAlHist":{"TYP":"pLiczba", "ID":"11.9.14", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [bar]"}
-,"tSA_ChlodzTransCisn_HiALFiltr":{"TYP":"pCzas", "ID":"11.9.15", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
-}},"grupa11":{"OPIS":"11. Różne"
-, "podgrupa1":{"OPIS":"11.1 Potwierdzenie załączenia stycznika"
-,"tPotZalStySilnikaOrganu":{"TYP":"pCzas", "ID":"13.1.1", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika silnika organu [s]"}
-,"tPotZalStyWstLadFalownikaF1":{"TYP":"pCzas", "ID":"13.1.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F1 [s]"}
-,"tPotZalStyFalownikaF1":{"TYP":"pCzas", "ID":"13.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F1 [s]"}
-,"tPotZalStyWstLadFalownikaF2":{"TYP":"pCzas", "ID":"13.1.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F2 [s]"}
-,"tPotZalStyFalownikaF2":{"TYP":"pCzas", "ID":"13.1.5", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F2 [s]"}
-,"tPotZalStyWstLadFalownikaF3":{"TYP":"pCzas", "ID":"13.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F3 [s]"}
-,"tPotZalStyFalownikaF3":{"TYP":"pCzas", "ID":"13.1.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F3 [s]"}
-},"podgrupa2":{"OPIS":"11.2 Not Aus"
-,"tNotAusSkrzynia":{"TYP":"pCzas", "ID":"13.2.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na naciśnięcie wyłącznika awaryjnego skrzynia [s]"}
-,"tNotAusSystemNadrzedny":{"TYP":"pCzas", "ID":"13.2.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na naciśnięcie wyłącznika awaryjnego system nadrzędny [s]"}
-,"tUGSSystemNadrzedny":{"TYP":"pCzas", "ID":"13.2.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na UGS [s]"}
+,"rSA_ChlodzTransCisn_ZakrMin":{"TYP":"pLiczba", "ID":"10.9.1", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Dolny zakres pomiarowy [bar]"}
+,"rSA_ChlodzTransCisn_ZakrMax":{"TYP":"pLiczba", "ID":"10.9.2", "ROZM":1, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Górny zakres pomiarowy [bar]"}
+,"tSA_ChlodzTransCisn_StFiltr":{"TYP":"pCzas", "ID":"10.9.3", "ROZM":2, "WART":0.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru [s]"}
+,"rSA_ChlodzTransCisn_LoWr":{"TYP":"pLiczba", "ID":"10.9.4", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia obniżonej wartości [bar]"}
+,"rSA_ChlodzTransCisn_LoWrHist":{"TYP":"pLiczba", "ID":"10.9.5", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia obniżonej wartości [bar]"}
+,"tSA_ChlodzTransCisn_LoWrFiltr":{"TYP":"pCzas", "ID":"10.9.6", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia obniżonej wartości [s]"}
+,"rSA_ChlodzTransCisn_LoAl":{"TYP":"pLiczba", "ID":"10.9.7", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu zbyt niskiej wartości [bar]"}
+,"rSA_ChlodzTransCisn_LoAlHist":{"TYP":"pLiczba", "ID":"10.9.8", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu zbyt niskiej wartośći [bar]"}
+,"tSA_ChlodzTransCisn_LoALFiltr":{"TYP":"pCzas", "ID":"10.9.9", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia zbyt niskiej wartości [s]"}
+,"rSA_ChlodzTransCisn_HiWr":{"TYP":"pLiczba", "ID":"10.9.10", "ROZM":1, "WART":130.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej wartości [bar]"}
+,"rSA_ChlodzTransCisn_HiWrHist":{"TYP":"pLiczba", "ID":"10.9.11", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza ostrzeżenia podwyższonej wartości [bar]"}
+,"tSA_ChlodzTransCisn_HiWrFiltr":{"TYP":"pCzas", "ID":"10.9.12", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej wartości [s]"}
+,"rSA_ChlodzTransCisn_HiAl":{"TYP":"pLiczba", "ID":"10.9.13", "ROZM":1, "WART":140.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej wartości [bar]"}
+,"rSA_ChlodzTransCisn_HiAlHist":{"TYP":"pLiczba", "ID":"10.9.14", "ROZM":1, "WART":5.0, "PREC":1, "MIN":0.0, "MAX":200.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej wartośći [bar]"}
+,"tSA_ChlodzTransCisn_HiALFiltr":{"TYP":"pCzas", "ID":"10.9.15", "ROZM":2, "WART":5000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej wartości [s]"}
+}},"grupa11":{"OPIS":"11. Pozycjonowanie"
+, "podgrupa1":{"OPIS":"11.1 Konfiguracja ściany"
+,"rKonfSciany_LiczbaSekcji":{"TYP":"pLiczba", "ID":"11.1.1", "ROZM":1, "WART":150.0, "PREC":1, "MIN":0.0, "MAX":500.0, "DOST":"Srvc", "OPIS":"Liczba sekcji w ścianie"}
+,"rKonfSciany_SzerSekcji":{"TYP":"pLiczba", "ID":"11.1.2", "ROZM":1, "WART":1500.0, "PREC":0, "MIN":0.0, "MAX":5000.0, "DOST":"Srvc", "OPIS":"Szerokość sekcji [mm]"}
+,"rKonfSciany_NrSekcji_NL":{"TYP":"pLiczba", "ID":"11.1.3", "ROZM":1, "WART":1.0, "PREC":0, "MIN":1.0, "MAX":9999.0, "DOST":"Srvc", "OPIS":"Numer sekcji przy napędzie lewym"}
+,"rKonfSciany_NrSekcji_NP":{"TYP":"pLiczba", "ID":"11.1.4", "ROZM":1, "WART":125.0, "PREC":0, "MIN":1.0, "MAX":9999.0, "DOST":"Srvc", "OPIS":"Numer sekcji przy napędzie prawym"}
+},"podgrupa2":{"OPIS":"11.2 Enkoder napędu lewego"
+,"rENL_TypEnkodera":{"TYP":"pLista", "ID":"11.2.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak enkodera", "1 - GEA-28", "2 - BARTEC"], "OPIS":"Typ enkodera zabudowanego przy napędzie leweym"}
+,"rENL_KierZliczania":{"TYP":"pLista", "ID":"11.2.2", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0 - LEWO", "1 - PRAWO"], "OPIS":"Kierunek zliczania enkodera napędu lewego"}
+,"rENL_WspolczynnikObrotu":{"TYP":"pLiczba", "ID":"11.2.3", "ROZM":1, "WART":2.064, "PREC":3, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Liczba obrotów enkodera na metr drogi"}
+},"podgrupa3":{"OPIS":"11.3 Enkoder napędu prawego"
+,"rENP_TypEnkodera":{"TYP":"pLista", "ID":"11.3.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak enkodera", "1 - GEA-28", "2 - BARTEC"], "OPIS":"Typ enkodera zabudowanego przy napędzie leweym"}
+,"rENP_KierZliczania":{"TYP":"pLista", "ID":"11.3.2", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0 - LEWO", "1 - PRAWO"], "OPIS":"Kierunek zliczania enkodera napędu lewego"}
+,"rENP_WspolczynnikObrotu":{"TYP":"pLiczba", "ID":"11.3.3", "ROZM":1, "WART":2.064, "PREC":3, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Liczba obrotów enkodera na metr drogi"}
+},"podgrupa4":{"OPIS":"11.4 Enkoder napędu rolki"
+,"rENR_TypEnkodera":{"TYP":"pLista", "ID":"11.4.1", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["0 - Brak enkodera", "1 - GEA-28", "2 - BARTEC"], "OPIS":"Typ enkodera zabudowanego przy napędzie leweym"}
+,"rENR_KierZliczania":{"TYP":"pLista", "ID":"11.4.2", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["0 - LEWO", "1 - PRAWO"], "OPIS":"Kierunek zliczania enkodera napędu lewego"}
+,"rENR_WspolczynnikObrotu":{"TYP":"pLiczba", "ID":"11.4.3", "ROZM":1, "WART":2.064, "PREC":3, "MIN":0.0, "MAX":20.0, "DOST":"Srvc", "OPIS":"Liczba obrotów enkodera na metr drogi"}
+},"podgrupa5":{"OPIS":"11.5 Błedy enkoderów"
+,"rEN_TolerancjaPozycji":{"TYP":"pLiczba", "ID":"11.5.1", "ROZM":1, "WART":1.0, "PREC":0, "MIN":0.0, "MAX":9999.9, "DOST":"Srvc", "OPIS":"Tolerancja wskazań pozycji enkodera napędu lewego i prawego [sekcja]"}
+,"rEN_TolerancjaPredkosci":{"TYP":"pLiczba", "ID":"11.5.2", "ROZM":1, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":9999.9, "DOST":"Srvc", "OPIS":"Tolerancja wskazań prędkości enkodera napędu lewego i prawego [m/min]"}
+}},"grupa12":{"OPIS":"12. Różne"
+, "podgrupa1":{"OPIS":"12.1 Potwierdzenie załączenia stycznika"
+,"tPotZalStySilnikaOrganu":{"TYP":"pCzas", "ID":"12.1.1", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika silnika organu [s]"}
+,"tPotZalStyWstLadFalownikaF1":{"TYP":"pCzas", "ID":"12.1.2", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F1 [s]"}
+,"tPotZalStyFalownikaF1":{"TYP":"pCzas", "ID":"12.1.3", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F1 [s]"}
+,"tPotZalStyWstLadFalownikaF2":{"TYP":"pCzas", "ID":"12.1.4", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F2 [s]"}
+,"tPotZalStyFalownikaF2":{"TYP":"pCzas", "ID":"12.1.5", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F2 [s]"}
+,"tPotZalStyWstLadFalownikaF3":{"TYP":"pCzas", "ID":"12.1.6", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika wstępnego ładowania falownika F3 [s]"}
+,"tPotZalStyFalownikaF3":{"TYP":"pCzas", "ID":"12.1.7", "ROZM":2, "WART":1000.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika falownika F3 [s]"}
+},"podgrupa2":{"OPIS":"12.2 Not Aus"
+,"tNotAusSkrzynia":{"TYP":"pCzas", "ID":"12.2.1", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na naciśnięcie wyłącznika awaryjnego skrzynia [s]"}
+,"tNotAusSystemNadrzedny":{"TYP":"pCzas", "ID":"12.2.2", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na naciśnięcie wyłącznika awaryjnego system nadrzędny [s]"}
+,"tUGSSystemNadrzedny":{"TYP":"pCzas", "ID":"12.2.3", "ROZM":2, "WART":100.0, "PREC":3, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas opóźnienia reakcji na UGS [s]"}
 }}}}

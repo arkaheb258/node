@@ -1,1 +1,443 @@
-{"WER":"0.0.0 - grunt build","WER_NODE":"0.0.0","OPCJE":{"czyNaviRamkaPLC":true},"MENU_TAB":[{"widocznosc":true,"OPIS":"F1 - Main","zawartosc":[]},{"widocznosc":true,"OPIS":"F2 - Messages","zawartosc":[]},{"widocznosc":true,"OPIS":"F3 - Monitoring","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep":"Brak","klasa":"gauge","OPIS":"Electrical installation"},{"typKombajnu":"KTW","wersjaWyposazenia":"0","widocznosc":false,"id":"Elektryczne2","katalog":null,"dostep":"Brak","klasa":"gauge","OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep":"Brak","klasa":"gauge","OPIS":"Hydraulics 1"},{"typKombajnu":"KTW","widocznosc":true,"id":"Hydraulika2","katalog":null,"dostep":"Brak","klasa":"gauge","OPIS":"Hydraulics 2"},{"typKombajnu":"KTW","widocznosc":true,"id":"Woda","katalog":null,"dostep":"Brak","klasa":"gauge","OPIS":"Water installation"},{"typKombajnu":"KTW","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":"diagnostykaKolumny","dostep":"Brak","klasa":"diagKol","OPIS":"Counters"},{"typKombajnu":"GUL","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep":"Brak","klasa":"gauge","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL_U2-NP_U3-NR","katalog":"diagnostykaKolumny","dostep":"Brak","klasa":"diagKol","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep":"Brak","klasa":"gauge","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"Woda","katalog":null,"dostep":"Brak","klasa":"gauge","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":null,"dostep":"Brak","klasa":"diagKol","OPIS":""},{"typKombajnu":"GUL","widocznosc":false,"id":"E1_E2_E3","katalog":"diagnostykaKolumny","dostep":"Brak","klasa":"diagKol","OPIS":""},{"typKombajnu":"ALL","widocznosc":true,"id":"idWykresyD3","katalog":"wykresyRT","dostep":"Brak","klasa":null,"OPIS":""}]},{"widocznosc":true,"OPIS":"F4 - Diagnostics","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"id":"PLCS-AI_PLCS-DI_PLCS-DO","katalog":"diagnostykaPLC","dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"SA-AI_SA-BC_SA-BZ-BO_SA-BT-BP-BL_SA-DI_SA-DO","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"LTMR-PE_CBZU-PTC","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"Motors controllers"},{"typKombajnu":"KTW","widocznosc":true,"id":"A14-A32-DI_A14-A32-DO_A15-A33_A16-A34_A17-A35","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"YL-DO-1_YL-DO-2_YL-AO","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"JOY-REZ_JOY-CAN_BK1-BK3_RADIO","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","widocznosc":false,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep":"Brak","klasa":"klDiagnBloki","OPIS":""},{"typKombajnu":"KTW","widocznosc":false,"id":"noweUPT","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"PLCS1_PLCS2_PLCS3_PLCS4_PLCS5_PLCS6","katalog":"diagnostykaPLC","dostep":"Brak","klasa":"PLC","OPIS":"PLCS"},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"PLCT3_PLCT4_PLCT5_PLCT6_PLCT7","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"PLCT"},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"A14_A15_A16","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"PLCT6, A16"},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"AO1_AO2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"KPS AO1, AO2"},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"AI1a_AI1b_AI2a_AI2b","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"KPS AI1, AI2"},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"Motors controllers"},{"typKombajnu":"KTW","wersjaWyposazenia":"x0","widocznosc":true,"id":"A11_MJ_MW_BK1_BK2_BK3","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"Radio, joysticks (CAN), encoders"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"PLCS1_PLCS2_PLCS3_PLCS4_PLCS5_PLCS6_PLCS7","katalog":"diagnostykaPLC","dostep":"Brak","klasa":"PLC","OPIS":"PLC Safety"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"PLCT2_PLCT3_PLCT4_PLCT5_PLCT6_PLCT7_PLCT8_PLCT9_PLCT10","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"PLC Technic"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"AI1a_AI1b_AI2a_AI2b","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"AI1, AI2"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"AO1_AO2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"AO1, AO2"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"A32_A33_A34_A35","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"Pulpit"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"Motors controllers"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"A11_MJ_MW_BK1_BK2_BK3","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":"Radio, joysticks (CAN), encoders"},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":false,"id":"noweUPT","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"KTW","wersjaWyposazenia":"x1","widocznosc":true,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep":"Brak","klasa":"klDiagnBloki","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"GUL_CP-CNP","katalog":"diagnostykaPLC","dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"E1-E3_SK-HUNAP","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"SA-AI_SA-DI_SA-DO_SA-LED","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"SN-IN1_SN-IN2_SN-OUT1_SN-OUT2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"4F2_PTC_BZU-CZU_PE-NOTAUS","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"3F1-M1_3F2-M2-NL_3F3-M3-NP_3F4-M4-NR_3F5-T1","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"UWIin1_UWIin2_UWIout1_UWIout2","katalog":null,"dostep":"Brak","klasa":"PLC","OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep":"Brak","klasa":"klDiagnBloki","OPIS":""}]},{"widocznosc":true,"OPIS":"F5 - Settings","zawartosc":[{"typKombajnu":"ALL","widocznosc":true,"id":"idParametry","katalog":"parametry","dostep":"Brak","klasa":"parametry","OPIS":"Parameters"},{"typKombajnu":"ALL","widocznosc":true,"id":"poziomDostepu","katalog":"poziomDostepu","dostep":"Brak","klasa":"pozDost","OPIS":"Set acces level"},{"typKombajnu":"ALL","widocznosc":true,"id":"dataCzas","katalog":"dataCzas","dostep":"Srvc","klasa":"ustawDate","OPIS":"Date and time"},{"typKombajnu":"ALL","widocznosc":true,"id":"pelnaListaKomuniktow","katalog":"komunikatyPelnaLista","dostep":"Brak","klasa":"pelnaLista","OPIS":"Full list of messages"},{"typKombajnu":"ALL","widocznosc":true,"id":"rozkazyDoPLC","katalog":"rozkazy","dostep":"Brak","klasa":"rozkazyPLC","OPIS":"Commands to PLC"},{"typKombajnu":"KTW","widocznosc":false,"id":"elektrKsiazkaSerw","katalog":"ksiazkaSerwisowa","dostep":"Brak","klasa":"elektronicznaKsiazkaSerwisowa","OPIS":"Electronic Service Book"},{"typKombajnu":"ALL","widocznosc":false,"id":"idPodmianaSterownika","katalog":"podmianaPLC","dostep":"Srvc","klasa":null,"OPIS":"PLC replacement"},{"typKombajnu":"ALL","widocznosc":true,"id":"idPokazRamkeTcp","katalog":"ramkaTcp","dostep":"Srvc","klasa":null,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"id":"idPlanszaTrybSerwisowy","katalog":"gulTrybSerwisowy","dostep":"Srvc","klasa":null,"OPIS":""}]},{"widocznosc":false,"OPIS":"F6 – Language","zawartosc":[{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykPolski","katalog":"zmianaJezyka","dostep":"Brak","klasa":"klZmianaJezyka","OPIS":"Polski"},{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykRosyjski","katalog":"zmianaJezyka","dostep":"Brak","klasa":"klZmianaJezyka","OPIS":""},{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykAngielski","katalog":"zmianaJezyka","dostep":"Brak","klasa":"klZmianaJezyka","OPIS":"English"},{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykChinski","katalog":"zmianaJezyka","dostep":"Brak","klasa":"klZmianaJezyka","OPIS":""},{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykHiszpanski","katalog":"zmianaJezyka","dostep":"Brak","klasa":"klZmianaJezyka","OPIS":""}]},{}],"TEKSTY":{"paramWys":"Sending…","parametr":"Parameter","blad":"Error","paramZakres":"Value range","paramPrecyzja":"Precision","paramPrecyzja2":"(digits after dot)","paramZlaWartosc":"Wrong value","wartAktualna":"Actual value","anuluj":"Escape - cancel","zatwierdz":"Enter - confirm","pozDostTytul":"Enter access level password","pozDost":"Access level","pozDostKodNOK":"Incorrect password","blokLiczbDost":"Avaible overrides","blokZaloz":"Switch on the override","blokZdejmij":"Switch off the override","tab1Nawi":"Next / Previous message","tab1LiczbAlrm":"Alarms","tab1LiczbOstrz":"Warnings","tab1LiczbBlokad":"Overrides","alarm":"Alarm","ostrz":"Warning","brakAlar":"No alarms","BladTekstu":"Wrong text for message","brakPolTCP1":"Monitor  ---x---  Node  -------  PLC1","brakPolTCP2":"Monitor  -------  Node  ---x---  PLC1","infoPar":"Parameters","brakDostepu":"Higher access level needed","pelnaLista":"Full list of messages","kod":"Code","wylogowano":"Access level logout","nieBlokowalny":"NON OVERRIDE MESSAGE","bladPLC1":"PLC error - can not connect via FTP","odswiez":"Restart for","antykolizja":"Collision system malfunction!! ENTER to confirm","antykolizja2":"Collision system malfunction!! ","pozycjaOrgX":"CutterX","pozycjaOrgY":"CutterY","katDoOsiWyrob":"Axis angle","laserPrzod":"Laser front","laserTyl":"Laser rear","potwierdzenieEKS":"Confirm service action nr","przypomnienieEKS":"Service reminder","dniDoPrzegladu":"days to inspection","dniPoTerminie":"days after inspection","OK":"OK","potwierdzenie":"Confirm","miejsceSterowania":["Nothing","Local","Remote","Radio"],"diagnostykaBlokad":["No overrides","Override active"],"typZraszania":["-","Sektor G48D06","Sektor G48D08","Sektor G57D06","Sektor G57D08","Kurtyna PowWod","Kurtyna Wodna","Sektor G48D06KPW","Sektor G48D08KPW","Sektor G57D06KPW","Sektor G57D08KPW","Sektor G48D06KW","Sektor G48D08KW","Sektor G57D06KW","Sektor G57D08KW","G57D06KPW","G57D06KW"],"lacznikS5":["Nothing","Run","Test","Remote pulpit","Reset"],"typObudowyLP":["Nothing","ŁP 1","ŁP 2","ŁP 3","ŁP 4","ŁP 5","ŁP 6","ŁP 7","ŁP 8","ŁP 9","ŁP 10","ŁP 11","ŁP 12","ŁP 13","ŁP 14","ŁP 15","ŁP 16","ŁP 17","ŁP 18","ŁP 19"],"zadzialanieAntykolizji":["OK","Collision"],"sprawnoscAntykolizji":["OK","Malfunction"],"poziomDostepuUzytkownika":["Nothing","User1","User2","Servis","Adv"],"trwaPlukanieFiltra":["-","Cleaning"],"trwaTestZabezpieczen":["No","Test running"],"zezwoleniaNapedow":["Motors requisites:","Cutter","Hydraulics","Conveyor M3, M4","Conveyor M5, M6","Water system"],"ustawAntykolizje1":"","ustawAntykolizje2":"eng","idTrybPracy":["eng"],"idPolaczenieKES":["eng"],"idSterowanieposuwGUL1":["eng"],"idSterowanieposuwGUL2":["eng"],"idSterowanieposuwRolka1":["eng"],"idSterowanieposuwRolka2":["eng"],"zmianaKonfiguracji":"Configuration change","bladKomunikacji":"","brakWolnychBlokad":"","idFal1_kierunek":["eng"],"idFal2_kierunek":["eng"],"idFal3_kierunek":["eng"],"restart":"Restart …","ustaw":"Set","brakPolPulpit":"","uruchomPonownie":"","TEKSTYkoniec":""},"ROZKAZY":[{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"id":"ustawAntykolizje1","dostep":"User","rozkaz":{"rozkaz":"kalibracja","napedId":4,"pozycja":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"id":"ustawAntykolizje2","dostep":"User","rozkaz":{"rozkaz":"kalibracja","napedId":5,"pozycja":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz":"kalibracja","napedId":1,"pozycja":0},"MIN":-160,"MAX":160,"PREC":2,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz":"kalibracja","napedId":2,"pozycja":0},"MIN":-160,"MAX":160,"PREC":2,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz":"kalibracja","napedId":3,"pozycja":0},"MIN":-160,"MAX":160,"PREC":2,"OPIS":""}]},{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":20,"wartosc":0},"OPIS":""}]},{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":1,"wartosc":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":1,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":11,"wartosc":0},"OPIS":""}]},{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":2,"wartosc":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":2,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":12,"wartosc":0},"OPIS":""}]},{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":3,"wartosc":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":3,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":13,"wartosc":0},"OPIS":""}]},{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":4,"wartosc":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":4,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":14,"wartosc":0},"OPIS":""}]},{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":5,"wartosc":0},"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":5,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":15,"wartosc":0},"OPIS":""}]},{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"wWartosc","wID":0,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":2,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"wWartosc","wID":0,"wartosc":0},"MIN":0,"MAX":9999999999,"PREC":2,"OPIS":""}]},{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"liczniki","rozkazId":20,"wartosc":0},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"czasPracy_20A","wID":0,"wWartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"czasPracy_20A","wID":3,"wWartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"czasJazdy_20B","wID":0,"wWartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"czasJazdy_20B","wID":1,"wWartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"czasJazdy_20B","wID":2,"wWartosc":0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"calkDystKomb_20C","wWartosc":0},"MIN":0,"MAX":9999999999,"PREC":1,"OPIS":""}]},{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"miejsceSterPosuw_207","wWartosc":1},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"miejsceSterPosuw_207","wWartosc":2},"OPIS":""}]},{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":1},"OPIS":"1 - Tryb MF Speed control"},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":2},"OPIS":"2 - Tryb MF Freq control"},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":3},"OPIS":"3 - Tryb single freq control"},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":4},"OPIS":"4 - Tryb single speed control"},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":5},"OPIS":"5 - Tryb single torq control slow"},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":6},"OPIS":"6 - Tryb single torq control fast"},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":7},"OPIS":""}]},{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":8},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":9},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyPosuw_208","wWartosc":10},"OPIS":""}]},{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":0},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":1},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":2},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":3},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":4},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":5},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":6},"OPIS":""},{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"trybPracyCiagniki_209","wWartosc":7},"OPIS":""}]},{"typKombajnu":"ALL","widocznosc":true,"OPIS":"","zawartosc":[{"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit":"zarzadzaniePlikami","ioMess":"jsonZPLC","ioOn":"zarzadzaniePlikamiOdp"},"OPIS":""},{"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit":"zarzadzaniePlikami","ioMess":"jsonZUsb","ioOn":"zarzadzaniePlikamiOdp"},"OPIS":""},{"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit":"zarzadzaniePlikami","ioMess":"restart","ioOn":"zarzadzaniePlikamiOdp"},"OPIS":""},{"typKombajnu":"ALL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz":"ustawBlokade","wartosc":666,"dostep":"Adv"},"OPIS":""}]},{}],"MENU_KOMUNIKATY":[{"id":"accordion","zawartosc":[{"id":"listaAlarmy","OPIS":"Alarms"},{"id":"listaOstrzezenia","OPIS":"Warnings"},{"id":"listaBlokady","OPIS":"Overrides"},{"id":"listaHistoria","OPIS":"Messages - history"}]},{}],"MENU_POZ_DOST":[{"OPIS":"Select acces level","zawartosc":[{"widocznosc":true,"id":"User","OPIS":"User 1"},{"widocznosc":true,"id":"User2","OPIS":"User 2"},{"widocznosc":true,"id":"Srvc","OPIS":"Service"},{"widocznosc":true,"id":"Adv","OPIS":"Advance"},{"widocznosc":true,"id":"wyloguj","OPIS":"Logout"}]},{}],"MENU_PAR":[{"widocznosc":true,"id":"mg_edycja","dostep":"Brak","OPIS":"Edit parameters","zawartosc":[]},{"widocznosc":true,"id":"mg_domyslne","dostep":"Srvc","OPIS":"Default settings","zawartosc":[{"widocznosc":true,"id":"default","OPIS":"Yes"},{"widocznosc":true,"id":"ms_nie","OPIS":"No"}]},{"widocznosc":true,"id":"mg_wczytaj","dostep":"Adv","OPIS":"Read from file","zawartosc":[{"widocznosc":true,"id":"loadFileUser1","OPIS":"User 1"},{"widocznosc":true,"id":"loadFileUser2","OPIS":"User 2"},{"widocznosc":true,"id":"loadFileUser3","OPIS":"User 3"},{"widocznosc":true,"id":"loadFileUser4","OPIS":"User 4"},{"widocznosc":true,"id":"loadFileUser5","OPIS":"User 5"}]},{"widocznosc":true,"id":"mg_zapisz","dostep":"Brak","OPIS":"Save to file","zawartosc":[{"widocznosc":true,"id":"saveFileUser1","OPIS":"User 1"},{"widocznosc":true,"id":"saveFileUser2","OPIS":"User 2"},{"widocznosc":true,"id":"saveFileUser3","OPIS":"User 3"},{"widocznosc":true,"id":"saveFileUser4","OPIS":"User 4"},{"widocznosc":true,"id":"saveFileUser5","OPIS":"User 5"}]},{"widocznosc":true,"id":"mg_poziomDostepu","dostep":"Brak","OPIS":"Access level","zawartosc":[]},{}],"MENU_ZMIANA_PLC":[{"widocznosc":true,"id":"mg_zrzutWszystkich","dostep":"Serwis","rozkaz":{"rozkaz":"podmianaPLC","typ":"zapisz","wartosc":"wszystkie"},"OPIS":"Save all files","zawartosc":[]},{"widocznosc":true,"id":"mg_przywrocenieWszystkich","dostep":"Serwis","rozkaz":{"rozkaz":"podmianaPLC","typ":"odczytaj","wartosc":"wszystkie"},"OPIS":"Restore all files","zawartosc":[]},{"widocznosc":true,"id":"mg_zrzutWybor","dostep":"Serwis","OPIS":"Choose files to save","zawartosc":[{"widocznosc":true,"id":"zrzutPar","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"parametryZPLC"},"OPIS":""},{"widocznosc":true,"id":"zrzutEKS","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"eksZPLC"},"OPIS":""},{"widocznosc":true,"id":"zrzutSkraw","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"skrawZPLC"},"OPIS":""},{"widocznosc":true,"id":"zrzutWizuNaPLC","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"jsonZPLC"},"OPIS":""},{"widocznosc":true,"id":"zrzutWizuNaUSB","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"jsonZUsb"},"OPIS":""}]},{"widocznosc":true,"id":"mg_przywrocenieWybor","dostep":"Serwis","OPIS":"Choose files to restore","zawartosc":[{"widocznosc":true,"id":"przywrocPar","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"parametryNaPLC"},"OPIS":""},{"widocznosc":true,"id":"przywrocEKS","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"eksNaPLC"},"OPIS":""},{"widocznosc":true,"id":"przywrocSkraw","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"skrawNaPLC"},"OPIS":""},{"widocznosc":true,"id":"przywrocZPLC","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"jsonNaPLC"},"OPIS":""},{"widocznosc":true,"id":"przywrocZUSB","dostep":"Serwis","rozkaz":{"rozkaz":"zarzadzaniePlikami","sWartosc":"jsonNaUsb"},"OPIS":""}]},{}],"MENU_EKS":[{"widocznosc":true,"id":"tab1eks","OPIS":"Daily","zawartosc":[{"widocznosc":true,"id":"eks0","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks0000","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0001","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0002","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0003","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0004","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0005","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0006","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0007","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0008","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0009","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0010","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0011","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0012","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0013","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0014","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0015","klasa":false,"OPIS":""},{"widocznosc":true,"id":"eks0016","klasa":false,"OPIS":""}]},{"widocznosc":true,"id":"tab2eks","OPIS":"Weekly","zawartosc":[{"widocznosc":true,"id":"eks100","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks101","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks102","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks103","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks104","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks105","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks106","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks107","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks108","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks109","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks110","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks111","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks112","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks113","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks114","klasa":true,"OPIS":""}]},{"widocznosc":true,"id":"tab3eks","OPIS":"Monthly","zawartosc":[{"widocznosc":true,"id":"eks200","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks201","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks202","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks203","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks204","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks205","klasa":true,"OPIS":""}]},{"widocznosc":true,"id":"tab4eks","OPIS":"Motohours","zawartosc":[{"widocznosc":true,"id":"eks300","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks302","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks304","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks306","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks308","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks310","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks312","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks314","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks316","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks301","klasa":true},{"widocznosc":true,"id":"eks303","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks305","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks307","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks308","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks311","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks313","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks315","klasa":true,"OPIS":""},{"widocznosc":true,"id":"eks317","klasa":true,"OPIS":""}]},{"widocznosc":true,"id":"tab5eks","OPIS":"Remote acces","zawartosc":[]},{}]}
+{
+"WER":"0.0.0 - grunt build",
+"WER_NODE":"0.0.0",
+"OPCJE":{
+"czyNaviRamkaPLC":true
+},
+"MENU_TAB_KTW":[
+{"widocznosc":true,"id":"tab1Grafika","OPIS":"F1 - Main","zawartosc":[
+]},
+{"widocznosc":true,"id":"komunikaty","OPIS":"F2 - Messages","zawartosc":[
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F3 - Monitoring","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep": "Brak","klasa":"gauge","OPIS":"Electrical installation"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Hydraulics 1"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"Hydraulika2","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Hydraulics 2"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"Woda","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":"Water installation"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":"Counters"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"idWykresyD3","katalog":"wykresyRT","dostep": "Brak","klasa":null,"OPIS":""}
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F4 - Diagnostics","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"id":"PLCS-AI_PLCS-DI_PLCS-DO","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"id":"SA-AI_SA-BC_SA-BZ-BO_SA-BT-BP-BL_SA-DI_SA-DO","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"id":"LTMR-PE_CBZU-PTC","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"id":"1F2_2F2_3F2_4F2_5F2_6F2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":"Motors controllers"},
+{"typKombajnu":"KTW","widocznosc":true,"id":"IKW1-DI_IKW1-DO_IKW2_IKW3_IKW4","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"id":"YL-DO-1_YL-DO-2_YL-AO","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"id":"JOY-REZ_JOY-CAN_BK1-BK3_RADIO","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":false,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep": "Brak","klasa":"klDiagnBloki","OPIS":""},
+{"typKombajnu":"KTW","widocznosc":false,"id":"noweUPT","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""}
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F5 - Settings","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idParametry","katalog": "parametry","dostep": "Brak","klasa": "parametry","OPIS":"Parameters"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"poziomDostepu","katalog":"poziomDostepu","dostep": "Brak","klasa": "pozDost","OPIS":"Set acces level"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"dataCzas","katalog":"dataCzas","dostep":"Srvc","klasa": "ustawDate","OPIS":"Date and time"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"pelnaListaKomuniktow","katalog":"komunikatyPelnaLista","dostep": "Brak","klasa": "pelnaLista","OPIS":"Full list of messages"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"rozkazyDoPLC","katalog":"rozkazy","dostep": "Brak","klasa":"rozkazyPLC","OPIS":"Commands to PLC"},
+{"typKombajnu":"KTW","widocznosc":false,"id":"elektrKsiazkaSerw","katalog":"ksiazkaSerwisowa","dostep": "Brak","klasa":"elektronicznaKsiazkaSerwisowa","OPIS":"Electronic Service Book"},
+{"typKombajnu":"ALL","widocznosc":false,"id":"idPodmianaSterownika","katalog":"podmianaPLC","dostep":"Srvc","klasa":null,"OPIS":"PLC replacement"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idPokazRamkeTcp","katalog":"ramkaTcp","dostep": "Brak","klasa":null,"OPIS":""}
+]},
+{"widocznosc":false,"id":"jezyki","OPIS":"F6 – Language","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykPolski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Polski"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykRosyjski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykAngielski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"English"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykChinski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykHiszpanski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":""}
+]},
+{}],
+"MENU_TAB_KTW_MIN":[
+{"widocznosc":true,"id":"minimum","OPIS":"","zawartosc":[
+{"id":"S1"}
+]},
+{"widocznosc":true,"id":"minimum","OPIS":"","zawartosc":[
+{"id":"E1"}
+]},
+{"widocznosc":true,"id":"minimum","OPIS":"","zawartosc":[
+{"id":"H1"}
+]},
+{"widocznosc":true,"id":"minimum","OPIS":"","zawartosc":[
+{"id":"W1"}
+]},
+{"widocznosc":true,"id":"minimum","OPIS":"","zawartosc":[
+{"id":"Z1"}
+]},
+{"widocznosc":false,"OPIS":"","zawartosc":[
+]},
+{}],
+"MENU_TAB_GUL":[
+{"widocznosc":true,"id":"tab1Grafika","OPIS":"F1 - Main","zawartosc":[
+]},
+{"widocznosc":true,"id":"komunikaty","OPIS":"F2 - Messages","zawartosc":[
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F3 - Monitoring","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep": "Brak","klasa":"gauge","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL-A4_U2-NP-A6_U3-NR-A8","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL-A5_U2-NP-A7_U3-NR-A9","katalog":null,"dostep": "Brak","klasa":"diagKol","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"Woda","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":null,"dostep": "Brak","klasa":"diagKol","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":false,"id":"E1_E2_E3","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idWykresyD3","katalog":"wykresyRT","dostep": "Brak","klasa":null,"OPIS":""}
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F4 - Diagnostics","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"id":"GUL_CP-CNP","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"E1-E3_SK-HUNAP","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"SA-AI_SA-DI_SA-DO_SA-LED","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"SN-IN1_SN-IN2_SN-OUT1_SN-OUT2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"4F2_PTC_BZU-CZU_PE-NOTAUS","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"3F1-M1_3F2-M2-NL_3F3-M3-NP_3F4-M4-NR_3F5-T1","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"UWIin1_UWIin2_UWIout1_UWIout2","katalog":null,"dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"idDiagnostykaBloki","katalog":"diagnostykaBloki","dostep": "Brak","klasa":"klDiagnBloki","OPIS":""}
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F5 - Settings","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idParametry","katalog": "parametry","dostep": "Brak","klasa": "parametry","OPIS":"Parameters"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"poziomDostepu","katalog":"poziomDostepu","dostep": "Brak","klasa": "pozDost","OPIS":"Set acces level"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"dataCzas","katalog":"dataCzas","dostep":"Srvc","klasa": "ustawDate","OPIS":"Date and time"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"pelnaListaKomuniktow","katalog":"komunikatyPelnaLista","dostep": "Brak","klasa": "pelnaLista","OPIS":"Full list of messages"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"rozkazyDoPLC","katalog":"rozkazy","dostep": "Brak","klasa":"rozkazyPLC","OPIS":"Commands to PLC"},
+{"typKombajnu":"ALL","widocznosc":false,"id":"idPodmianaSterownika","katalog":"podmianaPLC","dostep":"Srvc","klasa":null,"OPIS":"PLC replacement"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idPokazRamkeTcp","katalog":"ramkaTcp","dostep": "Brak","klasa":null,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"idPlanszaTrybSerwisowy","katalog":"gulTrybSerwisowy","dostep":"Srvc","klasa":null,"OPIS":""}
+]},
+{"widocznosc":false,"id":"jezyki","OPIS":"F6 – Language","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykPolski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"Polski"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykRosyjski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykAngielski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":"English"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykChinski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idJezykHiszpanski","katalog": "zmianaJezyka","dostep": "Brak","klasa":"klZmianaJezyka","OPIS":""}
+]},
+{}],
+"MENU_TAB_WOW":[
+{"widocznosc":true,"id":"tab1Grafika","OPIS":"F1 - Main","zawartosc":[
+]},
+{"widocznosc":true,"id":"komunikaty","OPIS":"F2 - Messages","zawartosc":[
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F3 - Monitoring","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"PC1-A1_PC1-A2-A6","katalog":"diagnostykaPLC","dostep": "Brak","klasa":"PLC","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"temperaturyWOW","katalog":"diagnostykaGauge","dostep": "Brak","klasa":"gauge","OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idWykresyD3","katalog":"wykresyRT","dostep": "Brak","klasa":null,"OPIS":""}
+]},
+{"widocznosc":false,"OPIS":"F4 - Diagnostics","zawartosc":[
+]},
+{"widocznosc":true,"id":"buttony","OPIS":"F5 - Settings","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"id":"idParametry","katalog": "parametry","dostep": "Brak","klasa": "parametry","OPIS":"Parameters"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"poziomDostepu","katalog":"poziomDostepu","dostep": "Brak","klasa": "pozDost","OPIS":"Set acces level"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"dataCzas","katalog":"dataCzas","dostep":"Srvc","klasa": "ustawDate","OPIS":"Date and time"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"pelnaListaKomuniktow","katalog":"komunikatyPelnaLista","dostep": "Brak","klasa": "pelnaLista","OPIS":"Full list of messages"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"rozkazyDoPLC","katalog":"rozkazy","dostep": "Brak","klasa":"rozkazyPLC","OPIS":"Commands to PLC"},
+{"typKombajnu":"ALL","widocznosc":true,"id":"idPokazRamkeTcp","katalog":"ramkaTcp","dostep": "Brak","klasa":null,"OPIS":""}
+]},
+{"widocznosc":false,"OPIS":"F6 – Language","zawartosc":[
+]},
+{}],
+"TEKSTY":{
+"paramWys": "Sending…",
+"parametr": "Parameter",
+"blad": "Error",
+"paramZakres": "Value range",
+"paramPrecyzja":"Precision",
+"paramPrecyzja2": "(digits after dot)",
+"paramZlaWartosc":"Wrong value",
+"wartAktualna":"Actual value",
+"anuluj": "Escape - cancel",
+"zatwierdz": "Enter - confirm",
+"pozDostTytul": "Enter access level password",
+"pozDost": "Access level",
+"pozDostKodNOK":"Incorrect password",
+"blokLiczbDost": "Avaible overrides",
+"blokZaloz":"Switch on the override",
+"blokZdejmij": "Switch off the override",
+"tab1Nawi": "Next / Previous message",
+"tab1LiczbAlrm": "Alarms",
+"tab1LiczbOstrz": "Warnings",
+"tab1LiczbBlokad": "Overrides",
+"alarm":"Alarm",
+"ostrz":"Warning",
+"brakAlar": "No alarms",
+"BladTekstu":"Wrong text for message",
+"brakPolTCP1":"Monitor  ---x---  Node  -------  PLC1",
+"brakPolTCP2": "Monitor  -------  Node  ---x---  PLC1",
+"infoPar":"Parameters",
+"brakDostepu": "Higher access level needed",
+"pelnaLista": "Full list of messages",
+"kod": "Code",
+"wylogowano":"Access level logout",
+"nieBlokowalny": "NON OVERRIDE MESSAGE",
+"bladPLC1": "PLC error - can not connect via FTP",
+"odswiez": "Restart for",
+"antykolizja": "Collision system malfunction!! ENTER to confirm",
+"antykolizja2":"Collision system malfunction!! ",
+"pozycjaOrgX": "CutterX",
+"pozycjaOrgY":"CutterY",
+"katDoOsiWyrob": "Axis angle",
+"laserPrzod": "Laser front",
+"laserTyl": "Laser rear",
+"potwierdzenieEKS": "Confirm service action nr",
+"przypomnienieEKS": "Service reminder",
+"dniDoPrzegladu": "days to inspection",
+"dniPoTerminie": "days after inspection",
+"OK": "OK",
+"potwierdzenie": "Confirm",
+"miejsceSterowania":  [ "Nothing",  "Local",   "Remote", "Radio"],
+"diagnostykaBlokad":  ["No overrides",  "Override active"],
+"typZraszania": ["-", "Sektor G48D06", "Sektor G48D08", "Sektor G57D06", "Sektor G57D08", "Kurtyna PowWod", "Kurtyna Wodna", "Sektor G48D06KPW", "Sektor G48D08KPW", "Sektor G57D06KPW", "Sektor G57D08KPW", "Sektor G48D06KW", "Sektor G48D08KW", "Sektor G57D06KW", "Sektor G57D08KW", "G57D06KPW", "G57D06KW"],
+"lacznikS5": [ "Nothing",  "Run",  "Test", "Remote pulpit",    "Reset"],
+"typObudowyLP":  ["Nothing", "ŁP 1", "ŁP 2", "ŁP 3", "ŁP 4", "ŁP 5", "ŁP 6", "ŁP 7", "ŁP 8", "ŁP 9", "ŁP 10", "ŁP 11", "ŁP 12", "ŁP 13", "ŁP 14", "ŁP 15", "ŁP 16", "ŁP 17", "ŁP 18", "ŁP 19"],
+"zadzialanieAntykolizji": [ "OK","Collision"],
+"sprawnoscAntykolizji": ["OK",  "Malfunction"],
+"poziomDostepuUzytkownika": [ "Nothing", "User1", "User2", "Servis", "Adv"],
+"trwaPlukanieFiltra": [   "-", "Cleaning"],
+"trwaTestZabezpieczen": [  "No","Test running"],
+"zezwoleniaNapedow":  [ "Motors requisites:","Cutter",  "Hydraulics", "Conveyor M3, M4", "Conveyor M5, M6",   "Water system"],
+"ustawAntykolizje1":"",
+"ustawAntykolizje2":"eng",
+"idTrybPracy": ["eng"],
+"idPolaczenieKES": ["eng"],
+"idSterowanieposuwGUL1": ["eng"],
+"idSterowanieposuwGUL2": ["eng"],
+"idSterowanieposuwRolka1": ["eng"],
+"idSterowanieposuwRolka2": ["eng"],
+"zmianaKonfiguracji":"Configuration change",
+"bladKomunikacji":"",
+"brakWolnychBlokad":"",
+"idFal1_kierunek": ["eng"],
+"idFal2_kierunek": ["eng"],
+"idFal3_kierunek": ["eng"],
+"restart":"Restart …",
+"ustaw":"Set",
+"brakPolPulpit":"",
+"uruchomPonownie":"",
+"wWyborNapedow": ["-", "NL", "NP", "NR"],
+"idWOWPozSmaru": ["Niski", "OK"],
+"TEKSTYkoniec": ""},
+"ROZKAZY":[
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"id":"ustawAntykolizje1","dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 4, "pozycja": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"id":"ustawAntykolizje2","dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 5, "pozycja": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 1, "pozycja": 0},"MIN": -160.0,"MAX":160.0,"PREC":2,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 2, "pozycja": 0},"MIN": -160.0,"MAX":160.0,"PREC":2,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "kalibracja",   "napedId": 3, "pozycja": 0},"MIN": -160.0,"MAX":160.0,"PREC":2,"OPIS":""}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 20, "wartosc": 0},"OPIS":""}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 1, "wartosc": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 1, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 11, "wartosc": 0},"OPIS":""}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 2, "wartosc": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 2, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 12, "wartosc": 0},"OPIS":""}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 3, "wartosc": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 3, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 13, "wartosc": 0},"OPIS":""}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 4, "wartosc": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 4, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 14, "wartosc": 0},"OPIS":""}
+]},
+{"typKombajnu":"KTW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 5, "wartosc": 0},"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 5, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"KTW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 15, "wartosc": 0},"OPIS":""}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "wWartosc","wID": 0, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":2,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "wWartosc","wID": 0, "wartosc": 0},"MIN":0,"MAX":9999999999,"PREC":2,"OPIS":""}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "liczniki",   "rozkazId": 20, "wartosc": 0},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasPracy_20A",   "wID": 0, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasPracy_20A",   "wID": 3, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasJazdy_20B",   "wID": 0, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasJazdy_20B",   "wID": 1, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasJazdy_20B",   "wID": 2, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "calkDystKomb_20C", "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":1,"OPIS":""}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "miejsceSterPosuw_207", "wWartosc": 1},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "miejsceSterPosuw_207", "wWartosc": 2},"OPIS":""}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 1},"OPIS":"1 - Tryb MF Speed control"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 2},"OPIS":"2 - Tryb MF Freq control"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 3},"OPIS":"3 - Tryb single freq control"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 4},"OPIS":"4 - Tryb single speed control"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 5},"OPIS":"5 - Tryb single torq control slow"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 6},"OPIS":"6 - Tryb single torq control fast"},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 7},"OPIS":""}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 8},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 9},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyPosuw_208", "wWartosc": 10},"OPIS":""}
+]},
+{"typKombajnu":"GUL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 0},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 1},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 2},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 3},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 4},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 5},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 6},"OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 7},"OPIS":""}
+]},
+{"typKombajnu":"ALL","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"ALL","widocznosc":true,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "jsonZPLC", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
+{"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "jsonZUsb", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "restart", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
+{"typKombajnu":"ALL","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "ustawBlokade", "wartosc": 666, "dostep": "Adv"},"OPIS":""}
+]},
+{"typKombajnu":"WOW","widocznosc":true,"OPIS":"","zawartosc":[
+{"typKombajnu":"WOW","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "czasPracy_20A",   "wID": 0, "wWartosc": 0},"MIN":0,"MAX":9999999999,"PREC":0,"OPIS":""}
+]},
+{}],
+"MENU_KOMUNIKATY":[
+{"id":"accordion","zawartosc":[
+{"id":"listaAlarmy","OPIS":"Alarms"},
+{"id":"listaOstrzezenia","OPIS":"Warnings"},
+{"id":"listaBlokady","OPIS":"Overrides"},
+{"id":"listaHistoria","OPIS":"Messages - history"}
+]},
+{}],
+"MENU_GULTRYBSERW":[
+{"zawartosc":[
+{"widocznosc":true,"id":"trybSerwisowy01","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 1, "wWartosc": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy02","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 2, "wWartosc": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy03","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 3, "wWartosc": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy04","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 4, "wWartosc": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy05","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 5, "wWartosc": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy06","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 6, "wWartosc": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy07","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 7, "wWartosc": 1},"OPIS":""}
+]},
+{}],
+"MENU_POZ_DOST":[
+{"OPIS":"Select acces level","zawartosc":[
+{"widocznosc":true,"id":"User","OPIS":"User 1"},
+{"widocznosc":true,"id":"User2","OPIS":"User 2"},
+{"widocznosc":true,"id":"Srvc","OPIS":"Service"},
+{"widocznosc":true,"id":"Adv","OPIS":"Advance"},
+{"widocznosc":true,"id":"wyloguj","OPIS":"Logout"}
+]},
+{}],
+"MENU_PAR":[
+{"widocznosc":true,"id":"mg_edycja","dostep":"Brak","OPIS":"Edit parameters","zawartosc":[
+]},
+{"widocznosc":true,"id":"mg_domyslne","dostep":"Srvc","OPIS":"Default settings","zawartosc":[
+{"widocznosc":true,"id":"default","OPIS":"Yes"},
+{"widocznosc":true,"id":"ms_nie","OPIS":"No"}
+]},
+{"widocznosc":true,"id": "mg_wczytaj","dostep":"Adv","OPIS":"Read from file","zawartosc":[
+{"widocznosc":true,"id":"loadFileUser1","OPIS":"User 1"},
+{"widocznosc":true,"id":"loadFileUser2","OPIS":"User 2"},
+{"widocznosc":true,"id":"loadFileUser3","OPIS":"User 3"},
+{"widocznosc":true,"id":"loadFileUser4","OPIS":"User 4"},
+{"widocznosc":true,"id":"loadFileUser5","OPIS":"User 5"}
+]},
+{"widocznosc":true,"id": "mg_zapisz","dostep":"Brak","OPIS":"Save to file","zawartosc":[
+{"widocznosc":true,"id":"saveFileUser1","OPIS":"User 1"},
+{"widocznosc":true,"id":"saveFileUser2","OPIS":"User 2"},
+{"widocznosc":true,"id":"saveFileUser3","OPIS":"User 3"},
+{"widocznosc":true,"id":"saveFileUser4","OPIS":"User 4"},
+{"widocznosc":true,"id":"saveFileUser5","OPIS":"User 5"}
+]},
+{"widocznosc":true,"id":"mg_poziomDostepu","dostep":"Brak","OPIS":"Access level","zawartosc":[
+]},
+{}],
+"MENU_ZMIANA_PLC":[
+{"widocznosc":true,"id":"mg_zrzutWszystkich","dostep":"Serwis","rozkaz":{"rozkaz": "podmianaPLC",  "typ": "zapisz","wartosc": "wszystkie"},"OPIS":"Save all files","zawartosc":[
+]},
+{"widocznosc":true,"id":"mg_przywrocenieWszystkich","dostep":"Serwis","rozkaz":{"rozkaz": "podmianaPLC",  "typ": "odczytaj", "wartosc": "wszystkie"},"OPIS":"Restore all files","zawartosc":[
+]},
+{"widocznosc":true,"id":"mg_zrzutWybor","dostep":"Serwis","OPIS":"Choose files to save","zawartosc":[
+{"widocznosc":true,"id":"zrzutPar","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "parametryZPLC"},"OPIS":""},
+{"widocznosc":true,"id":"zrzutEKS","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "eksZPLC"},"OPIS":""},
+{"widocznosc":true,"id":"zrzutSkraw","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "skrawZPLC"},"OPIS":""},
+{"widocznosc":true,"id":"zrzutWizuNaPLC","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonZPLC"},"OPIS":""},
+{"widocznosc":true,"id":"zrzutWizuNaUSB","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonZUsb"},"OPIS":""}
+]},
+{"widocznosc":true,"id":"mg_przywrocenieWybor","dostep":"Serwis","OPIS":"Choose files to restore","zawartosc":[
+{"widocznosc":true,"id":"przywrocPar","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "parametryNaPLC"},"OPIS":""},
+{"widocznosc":true,"id": "przywrocEKS","dostep":"Serwis","rozkaz":{ "rozkaz": "zarzadzaniePlikami", "sWartosc": "eksNaPLC"},"OPIS":""},
+{"widocznosc":true,"id":"przywrocSkraw","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "skrawNaPLC"},"OPIS":""},
+{"widocznosc":true,"id": "przywrocZPLC","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonNaPLC"},"OPIS":""},
+{"widocznosc":true,"id":"przywrocZUSB","dostep":"Serwis","rozkaz":{"rozkaz": "zarzadzaniePlikami","sWartosc": "jsonNaUsb"},"OPIS":""}
+]},
+{}],
+"MENU_EKS":[
+{"widocznosc":true,"id":"tab1eks","OPIS":"Daily","zawartosc":[
+{"widocznosc":true,"id":"eks0","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks0000","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0001","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0002","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0003","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0004","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0005","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0006","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0007","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0008","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0009","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0010","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0011","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0012","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0013","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0014","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0015","klasa":false,"OPIS":""},
+{"widocznosc":true,"id":"eks0016","klasa":false,"OPIS":""}
+]},
+{"widocznosc":true,"id":"tab2eks","OPIS":"Weekly","zawartosc":[
+{"widocznosc":true,"id":"eks100","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks101","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks102","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks103","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks104","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks105","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks106","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks107","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks108","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks109","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks110","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks111","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks112","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks113","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks114","klasa":true,"OPIS":""}
+]},
+{"widocznosc":true,"id":"tab3eks","OPIS":"Monthly","zawartosc":[
+{"widocznosc":true,"id":"eks200","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks201","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks202","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks203","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks204","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks205","klasa":true,"OPIS":""}
+]},
+{"widocznosc":true,"id":"tab4eks","OPIS":"Motohours","zawartosc":[
+{"widocznosc":true,"id":"eks300","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks302","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks304","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks306","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks308","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks310","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks312","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks314","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks316","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks301","klasa":true},
+{"widocznosc":true,"id":"eks303","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks305","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks307","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks308","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks311","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks313","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks315","klasa":true,"OPIS":""},
+{"widocznosc":true,"id":"eks317","klasa":true,"OPIS":""}
+]},
+{"widocznosc":true,"id":"tab5eks","OPIS":"Remote acces","zawartosc":[
+]},
+{}
+]
+}

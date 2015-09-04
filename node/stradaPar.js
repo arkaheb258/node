@@ -3,6 +3,7 @@
 *  @brief Odświerzania parametrów
 */
 'use strict';
+var argv = require('minimist')(process.argv.slice(2));
 var common = require('./common.js');
 var decode = require('./decode.js');
 var fs = require('fs');
@@ -86,7 +87,12 @@ module.exports = function (Strada) {
           return;
         }
         // console.log('Struktura parametrów niepoprawna');
-        common.pobierzPlikFTP('ide/Parametry/Temp.par', null, function (string) {
+        var con_par = {host : '192.168.3.30', user : 'admin', password : 'admin', path: 'ide/Parametry/Temp.par'};
+        if (argv.wago) {
+          con_par.password = 'wago';
+          con_par.path = 'PLC/Parametry/Temp.par';
+        }
+        common.pobierzPlikFTP(con_par, function (string) {
           console.log('Wczytano parametry FTP');
           gpar = decode.decodeStrada307(stradaDane.dane, string);
           if (gpar) {

@@ -45,13 +45,14 @@ function Strada() {
         dane = new decode.DecodeStrada302(dane.dane);
         if (!dane) {console.log('DecodeStrada302 null'); return; }
         if (dane.wDataControl === 1) {
-          if (argv.debug) { console.log('Sterownik rzada daty'); }
+          if (argv.debug) { console.log('Sterownik rzada daty', self.ntpDate); }
           if (self.ntpDate === -1) {
             self.ntpDate = -2;
             common.runScript(['getTime.sh'], function (data) {
               if (data.error === 0) {
-                self.ntpDate = data.stdout.replace(/[ \n\r]*/mg, '') + '000';
+                self.ntpDate = Number(data.stdout.replace(/[ \n\r]*/mg, '') + '000');
               } else {
+                console.log(data);
                 self.ntpDate = -1;
               }
             });
@@ -279,12 +280,15 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x21D: // Zapisz auto fazę skrawu wzorcowego.
     case 0x221: // Zapisz miejsce sterowania kombajnu przez zewnętrzny system sterowania
     case 0x222: // Zapisz tryb pracy pomp hydrauliki.
+    case 0x223: // Włącz tryb pracy lokalnej napędów (GUŁ) (Obsługa synchroniczna)
     case 0x307: // Odczytanie obszaru danych konfiguracyjnych
     case 0x308: // Podaj historię zdarzeń.
+    case 0x31B: // Podaj typ sterownika.
     case 0x401: // Testuj hamulec.
     case 0x402: // Sterowanie reflektorami.
     case 0x404: // Kalibracja czujnika położenia napędów hydraulicznych
     case 0x502: // Obsluga plików parametrów
+    case 0x520: // Obsługa Elektronicznej Książki Serwisowej
     case 0x601: // Podaj nazwy plików Skrawu Wzorcowego.
     case 0x603: { // Podaj nazwę aktualnego pliku Skrawu Wzorcowego.
       tempOutBuff = new Buffer(8);

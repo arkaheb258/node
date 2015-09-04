@@ -1,0 +1,69 @@
+{"TYPM":"WOW","WER":"2.0","DATA":"2015-08-12","DANE":{
+"grupa1":{"OPIS":"1. Konfiguracja kombajnu"
+, "podgrupa1":{"OPIS":"1.1 Opis kombajnu"
+,"sKonfTypKombajnu":{"TYP":"pString", "ID":"1.1.1", "ROZM":16, "WART":"WOW-1_3Z", "DOST":"Srvc", "OPIS":"Typ kombajnu"}
+,"sKonfNrSeryjny":{"TYP":"pString", "ID":"1.1.2", "ROZM":16, "WART":"1", "DOST":"Srvc", "OPIS":"Nr seryjny kombajnu"}
+,"sKonfNazwaKopalni":{"TYP":"pString", "ID":"1.1.3", "ROZM":16, "WART":"xxx", "DOST":"Srvc", "OPIS":"Nazwa kopalni"}
+,"sKonfAdresKopalni":{"TYP":"pString", "ID":"1.1.4", "ROZM":16, "WART":"Polska", "DOST":"Srvc", "OPIS":"Adres kopalni"}
+,"sKonfWerKomb":{"TYP":"pString", "ID":"1.1.5", "ROZM":16, "WART":"PL", "DOST":"Srvc", "OPIS":"Wersja dokumentacji"}
+,"sKonfNrKomisji":{"TYP":"pString", "ID":"1.1.6", "ROZM":16, "WART":"01H900xxxx", "DOST":"Srvc", "OPIS":"Numer komisji kombajnu"}
+},"podgrupa2":{"OPIS":"1.2 Pozostałe"
+,"rKonfWersjaJezykowa":{"TYP":"pLista", "ID":"1.2.1", "ROZM":1, "WART":0.0, "DOST":"Srvc", "LISTA":["Polski", "Rosyjski", "Angielski"], "OPIS":"Wybór wersji językowej"}
+,"rKonfWersjaWyposazeniaElektr":{"TYP":"pLista", "ID":"1.2.2", "ROZM":1, "WART":0.0, "DOST":"Adv", "LISTA":["MZS590", "MZS590/1"], "OPIS":"Wybór wersji wyposażenia elektrycznego"}
+,"rKonfCzasLetni":{"TYP":"pLista", "ID":"1.2.5", "ROZM":1, "WART":1.0, "DOST":"Srvc", "LISTA":["nie", "tak"], "OPIS":"Czy uwzględniać czas letni"}
+,"rKonfCzasStrefa":{"TYP":"pLista", "ID":"1.2.6", "ROZM":1, "WART":14.0, "DOST":"Srvc", "LISTA":["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", "UTC-03:00", "UTC-02:00", "UTC-01:00", "UTC+00:00", "UTC+01:00", "UTC+02:00", "UTC+03:00", "UTC+04:00", "UTC+05:00", "UTC+06:00", "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00", "UTC+12:00"], "OPIS":"Strefa czasowa"}
+}},"grupa2":{"OPIS":"2. Napędy"
+, "podgrupa1":{"OPIS":"2.1 Obsługa napędów"
+,"tNapedyLampaLo":{"TYP":"pCzas", "ID":"6.1.2", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas trwania stanu niskiego sterowania świeceniem lampki sygnalizującej błąd podczas rozruchu napędów"}
+,"tNapedyLampaHi":{"TYP":"pCzas", "ID":"6.1.3", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas trwania stanu wysokiego sterowania świeceniem lampki sygnalizującej błąd podczas rozruchu napędów"}
+,"tNapedyOpoznZalNapGl":{"TYP":"pCzas", "ID":"6.1.4", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie załączenia stycznika napędu głównego po naciśnięciu przycisku załączenia odwadniarki S2"}
+,"tNapedyOpoznWylNapGl":{"TYP":"pCzas", "ID":"6.1.5", "ROZM":2, "WART":2000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie wyłączenia stycznika napędu głównego po wyłączeniu stycznika elektrowibratora"}
+,"tNapedyOpoznZalElektrowibr":{"TYP":"pCzas", "ID":"6.1.8", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie załączenia stycznika elektrowibratora po załączeniu stycznika napędu głównego"}
+,"tNapedyOpoznWylElektrowibr":{"TYP":"pCzas", "ID":"6.1.9", "ROZM":2, "WART":0.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie wyłączenia stycznika elektrowibratora po naciśnięciu przycisku wyłączenia odwadniarki S3"}
+}},"grupa3":{"OPIS":"3. Instalacja hydrauliczna i smarowanie"
+, "podgrupa1":{"OPIS":"3.1 Centralne smarowanie"
+,"tSmarowCzas":{"TYP":"pCzas", "ID":"7.1.1", "ROZM":2, "WART":115000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas pracy pompki smarowniczej [s]"}
+,"rSmarowCykl":{"TYP":"pLiczba", "ID":"7.1.2", "ROZM":2, "WART":86400.0, "PREC":0, "MIN":0.0, "MAX":86400.0, "DOST":"Srvc", "OPIS":"Ilość sekund do kolejnego smarowania [s]"}
+}},"grupa4":{"OPIS":"4. Temperatury urządzeń elektrycznych"
+, "podgrupa1":{"OPIS":"4.1 Łożyska odwadniarki"
+,"tLozKoszSitowy_T_StatusFiltr":{"TYP":"pCzas", "ID":"8.1.1", "ROZM":2, "WART":4000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury łożysk kosza sitowego"}
+,"rLozKoszSitowy_T_HiWr":{"TYP":"pLiczba", "ID":"8.1.2", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej temperatury łożysk kosza sitowego"}
+,"tLozKoszSitowy_T_HiWrFiltr":{"TYP":"pCzas", "ID":"8.1.3", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej temperatury łożysk kosza sitowego"}
+,"rLozKoszSitowy_T_HiAl":{"TYP":"pLiczba", "ID":"8.1.4", "ROZM":1, "WART":80.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej temperatury łożysk kosza sitowego"}
+,"rLozKoszSitowy_T_HiAlHist":{"TYP":"pLiczba", "ID":"8.1.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej temperatury łożysk kosza sitowego"}
+,"tLozKoszSitowy_T_HiAlFiltr":{"TYP":"pCzas", "ID":"8.1.6", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury łożysk kosza sitowego"}
+,"tLozKoloPasowe_T_StatusFiltr":{"TYP":"pCzas", "ID":"8.2.1", "ROZM":2, "WART":4000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury łożysk koła pasowego"}
+,"rLozKoloPasowe_T_HiWr":{"TYP":"pLiczba", "ID":"8.2.2", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej temperatury łożysk koła pasowego"}
+,"tLozKoloPasowe_T_HiWrFiltr":{"TYP":"pCzas", "ID":"8.2.3", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej temperatury łożysk koła pasowego"}
+,"rLozKoloPasowe_T_HiAl":{"TYP":"pLiczba", "ID":"8.2.4", "ROZM":1, "WART":80.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej temperatury łożysk koła pasowego"}
+,"rLozKoloPasowe_T_HiAlHist":{"TYP":"pLiczba", "ID":"8.2.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej temperatury łożysk koła pasowego"}
+,"tLozKoloPasowe_T_HiAlFiltr":{"TYP":"pCzas", "ID":"8.2.6", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury łożysk koła pasowego"}
+,"tUzwNapGl_T_StatusFiltr":{"TYP":"pCzas", "ID":"8.3.1", "ROZM":2, "WART":4000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia awarii pomiaru temperatury uzwojeń silnika napędu głównego"}
+,"rUzwNapGl_T_HiWr":{"TYP":"pLiczba", "ID":"8.3.2", "ROZM":1, "WART":75.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom ostrzeżenia podwyższonej temperatury uzwojeń silnika napędu głównego"}
+,"tUzwNapGl_T_HiWrFiltr":{"TYP":"pCzas", "ID":"8.3.3", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia podwyższonej temperatury uzwojeń silnika napędu głównego"}
+,"rUzwNapGl_T_HiAl":{"TYP":"pLiczba", "ID":"8.3.4", "ROZM":1, "WART":80.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Poziom alarmu przekroczonej temperatury uzwojeń silnika napędu głównego"}
+,"rUzwNapGl_T_HiAlHist":{"TYP":"pLiczba", "ID":"8.3.5", "ROZM":1, "WART":5.0, "PREC":0, "MIN":0.0, "MAX":100.0, "DOST":"Srvc", "OPIS":"Histereza alarmu przekroczonej temperatury uzwojeń silnika napędu głównego"}
+,"tUzwNapGl_T_HiAlFiltr":{"TYP":"pCzas", "ID":"8.3.6", "ROZM":2, "WART":3000.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia przekroczonej temperatury uzwojeń silnika napędu głównego"}
+}},"grupa5":{"OPIS":"5. Przyciski i selektory"
+, "podgrupa1":{"OPIS":"5.1 Przyciski"
+,"tPrzyciskNotAusOn":{"TYP":"pCzas", "ID":"11.1.1", "ROZM":2, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na naciśniecie przycisku NotAus S1"}
+,"tPrzyciskNotAusOff":{"TYP":"pCzas", "ID":"11.1.2", "ROZM":2, "WART":100.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku NotAus S1"}
+,"tPrzyciskZalNapedowLokOn":{"TYP":"pCzas", "ID":"11.1.3", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na naciśniecie przycisku załączenia odwadniarki S2"}
+,"tPrzyciskZalNapedowLokOff":{"TYP":"pCzas", "ID":"11.1.4", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku załączenia odwadniarki S2"}
+,"tPrzyciskWylNapedowLokOn":{"TYP":"pCzas", "ID":"11.1.5", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na naciśniecie przycisku wyłączenia odwadniarki S3"}
+,"tPrzyciskWylNapedowLokOff":{"TYP":"pCzas", "ID":"11.1.6", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku wyłączenia odwadniarki S3"}
+,"tPrzyciskZalNapedowZdalOn":{"TYP":"pCzas", "ID":"11.1.7", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na naciśniecie przycisku załączenia odwadniarki zdalnie SZ"}
+,"tPrzyciskZalNapedowZdalOff":{"TYP":"pCzas", "ID":"11.1.8", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku załączenia odwadniarki zdalnie SZ"}
+,"tPrzyciskZalSmarowOn":{"TYP":"pCzas", "ID":"11.1.9", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na naciśniecie przycisku załączenia pompki smarowniczej ręcznie"}
+,"tPrzyciskZalSmarowOff":{"TYP":"pCzas", "ID":"11.1.10", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku załączenia pompki smarowniczej ręcznie"}
+,"tPrzyciskWyswOn":{"TYP":"pCzas", "ID":"11.1.11", "ROZM":2, "WART":400.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku obsługi wyświetlacza"}
+,"tPrzyciskWyswOff":{"TYP":"pCzas", "ID":"11.1.12", "ROZM":2, "WART":200.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Opóźnienie reakcji na puszczenie przycisku obsługi wyświetlacza"}
+}},"grupa6":{"OPIS":"6. Różne"
+, "podgrupa1":{"OPIS":"6.1 Styczniki"
+,"tPozostKNapGl_TimOn":{"TYP":"pCzas", "ID":"14.1.1", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika napędu głównego"}
+,"tPozostKNapGl_TimOff":{"TYP":"pCzas", "ID":"14.1.2", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia stycznika napędu głównego"}
+,"tPozostKWibr_TimOn":{"TYP":"pCzas", "ID":"14.1.3", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika elektrowibratora"}
+,"tPozostKWibr_TimOff":{"TYP":"pCzas", "ID":"14.1.4", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia stycznika elektrowibratora"}
+,"tPozostKSmarow_TimOn":{"TYP":"pCzas", "ID":"14.1.5", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku załączenia stycznika silnika pompki smarowniczej"}
+,"tPozostKSmarow_TimOff":{"TYP":"pCzas", "ID":"14.1.6", "ROZM":2, "WART":500.0, "PREC":0, "MIN":0.0, "MAX":999999.0, "DOST":"Srvc", "OPIS":"Czas do stwierdzenia braku wyłączenia stycznika silnika pompki smarowniczej"}
+}}}}

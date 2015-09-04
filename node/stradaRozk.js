@@ -271,14 +271,6 @@ module.exports = function (strada) {
           });
         break;
       }
-      case 'trybSerwisowy': {
-        console.log(get.rozkaz);
-        console.log(get.aktywuj);
-        console.log(get.wTrybCiagnikowId);
-        msg.dane = 'Nieznany rozkaz';
-        strada.socket.emit('odpowiedz', msg);
-        break;
-      }
       case 'miejsceSterPosuw_207':
       case 'trybPracyPosuw_208':
       case 'trybPracyCiagniki_209':
@@ -304,6 +296,7 @@ module.exports = function (strada) {
       case 'nrSekcji_204':
       case 'czasPracy_20A':
       case 'czasJazdy_20B':
+      case 'trybSerwisowy_223':
       case 'sterReflektorami_402':
       case 'kalibracjeEnk_404': {
         console.log(get.rozkaz);
@@ -313,6 +306,18 @@ module.exports = function (strada) {
           function (dane) {
             console.log(dane);
             emitSIN(dane, msg);
+          });
+        break;
+      }
+      case 'typSterownika_31B':{
+        console.log(get.rozkaz);
+        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), [0, 0],
+          function (dane) {
+            console.log(dane.dane);
+            console.log(common.readStringTo0(dane.dane, 0, 32));
+            msg.dane = common.readStringTo0(dane.dane, 0, 32);
+            strada.socket.emit('odpowiedz', msg);
+            // emitSIN(dane, msg);
           });
         break;
       }

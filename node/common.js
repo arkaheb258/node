@@ -41,15 +41,13 @@ module.exports.runScript = function (args, callback_end, interpreter) {
  * @param {} callback
  * @param {} cache
  */
-function pobierzPlikFTP(file, con_par, callback) {
-  con_par = con_par || {host : '192.168.3.30', user : 'admin', password : 'admin'};
+function pobierzPlikFTP(con_par, callback) {
   var Ftp = require('ftp');
   var c = new Ftp();
   c.on('ready', function () {
-    c.get(file, function (err, stream) {
+    c.get(con_par.path, function (err, stream) {
       if (err) {
-        console.log('FTP error');
-        console.log(err);
+        console.log('FTP error', err);
         callback(null);
         return;
       }
@@ -58,7 +56,7 @@ function pobierzPlikFTP(file, con_par, callback) {
         string += response;
       });
       stream.once('close', function () {
-        console.log('FTP: pobrano plik ', file);
+        console.log('FTP: pobrano plik ', con_par.path);
         callback(string);
         c.end();
       });
@@ -68,8 +66,8 @@ function pobierzPlikFTP(file, con_par, callback) {
     console.log('FTP timeout');
     callback(null);
   });
-  c.on('error', function () {
-    console.log('FTP error');
+  c.on('error', function (err) {
+    console.log('FTP error', err);
     callback(null);
   });
   c.connect({host: con_par.host,

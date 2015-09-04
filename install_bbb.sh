@@ -70,7 +70,13 @@ echo 'WantedBy=multi-user.target' >> /lib/systemd/system/rtc-ds1307.service
 systemctl enable rtc-ds1307.service
 
 
+w 
+/etc/logrotate.d/rsyslog
+dopisac w obu nawiasach
+size 100M
 
+
+/opt/scripts/tools/grow_partition.sh 
 
 
 

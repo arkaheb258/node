@@ -7,6 +7,17 @@ export GOOGLE_DEFAULT_CLIENT_SECRET="no"
 xdotool mousemove --sync 0 0 &
 sleep 10
 chromium -kiosk -incognito http://127.0.0.1:8888/ --disable-translate &
+
+# tail -c 40MB syslog > syslog.tmp 2>&1
+# mv syslog syslog.x
+# mv syslog.tmp syslog
+# rm syslog.x
+
+# tail -c 40MB daemon.log > daemon.tmp 2>&1
+# mv daemon.log daemon.x
+# mv daemon.tmp daemon.log
+# rm daemon.x
+
 #node /home/debian/kopex/node/x_agent.js > /tmp/log_x.txt &
 
 #xdotool mousemove --sync 1024 300 &

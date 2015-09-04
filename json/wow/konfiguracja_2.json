@@ -72,8 +72,7 @@
 ]},
 {"widocznosc":true,"id":"buttony","OPIS":"F3 - Monitoring","zawartosc":[
 {"typKombajnu":"GUL","widocznosc":true,"id":"Elektryczne1","katalog":"diagnostykaGauge","dostep": "Brak","klasa":"gauge","OPIS":""},
-{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL-A4_U2-NP-A6_U3-NR-A8","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":""},
-{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL-A5_U2-NP-A7_U3-NR-A9","katalog":null,"dostep": "Brak","klasa":"diagKol","OPIS":""},
+{"typKombajnu":"GUL","widocznosc":true,"id":"U1-NL_U2-NP_U3-NR","katalog":"diagnostykaKolumny","dostep": "Brak","klasa":"diagKol","OPIS":""},
 {"typKombajnu":"GUL","widocznosc":true,"id":"Hydraulika1","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":""},
 {"typKombajnu":"GUL","widocznosc":true,"id":"Woda","katalog":null,"dostep": "Brak","klasa":"gauge","OPIS":""},
 {"typKombajnu":"GUL","widocznosc":true,"id":"CTD-DAY_CTD-ALL","katalog":null,"dostep": "Brak","klasa":"diagKol","OPIS":""},
@@ -289,9 +288,9 @@
 {"typKombajnu":"GUL","widocznosc":true,"dostep":"Srvc","rozkaz":{"rozkaz": "trybPracyCiagniki_209", "wWartosc": 7},"OPIS":""}
 ]},
 {"typKombajnu":"ALL","widocznosc":true,"OPIS":"","zawartosc":[
-{"typKombajnu":"ALL","widocznosc":true,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "jsonZPLC", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
+{"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "jsonZPLC", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
 {"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "jsonZUsb", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
-{"typKombajnu":"ALL","widocznosc":true,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "restart", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
+{"typKombajnu":"ALL","widocznosc":false,"dostep":"Srvc","rozkaz":{"ioEmit": "zarzadzaniePlikami", "ioMess": "restart", "ioOn": "zarzadzaniePlikamiOdp"},"OPIS":""},
 {"typKombajnu":"ALL","widocznosc":true,"dostep":"User","rozkaz":{"rozkaz": "ustawBlokade", "wartosc": 666, "dostep": "Adv"},"OPIS":""}
 ]},
 {"typKombajnu":"WOW","widocznosc":true,"OPIS":"","zawartosc":[
@@ -308,13 +307,13 @@
 {}],
 "MENU_GULTRYBSERW":[
 {"zawartosc":[
-{"widocznosc":true,"id":"trybSerwisowy01","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 1, "wWartosc": 1},"OPIS":""},
-{"widocznosc":true,"id":"trybSerwisowy02","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 2, "wWartosc": 1},"OPIS":""},
-{"widocznosc":true,"id":"trybSerwisowy03","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 3, "wWartosc": 1},"OPIS":""},
-{"widocznosc":true,"id":"trybSerwisowy04","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 4, "wWartosc": 1},"OPIS":""},
-{"widocznosc":true,"id":"trybSerwisowy05","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 5, "wWartosc": 1},"OPIS":""},
-{"widocznosc":true,"id":"trybSerwisowy06","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 6, "wWartosc": 1},"OPIS":""},
-{"widocznosc":true,"id":"trybSerwisowy07","rozkaz":{"rozkaz": "trybSerwisowy_223", "wID": 7, "wWartosc": 1},"OPIS":""}
+{"widocznosc":true,"id":"trybSerwisowy01","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 1, "aktywuj": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy02","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 2, "aktywuj": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy03","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 3, "aktywuj": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy04","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 4, "aktywuj": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy05","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 5, "aktywuj": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy06","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 6, "aktywuj": 1},"OPIS":""},
+{"widocznosc":true,"id":"trybSerwisowy07","rozkaz":{"rozkaz": "trybSerwisowy", "wTrybCiagnikowId": 7, "aktywuj": 1},"OPIS":""}
 ]},
 {}],
 "MENU_POZ_DOST":[

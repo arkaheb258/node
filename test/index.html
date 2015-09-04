@@ -127,6 +127,9 @@
   <input type="checkbox" id="e_gpar" />Emit gpar
   <input type="checkbox" id="e_dane" />Emit dane
   <input type="checkbox" id="e_diag" />Emit diag
+  <button id="emitTest1">Testuj rozkaz trybSerwisowy_223</button>
+  <button id="emitTest2">Testuj rozkaz typSterownika_31B</button>
+  <button id="emitTest3">Testuj rozkaz eks_520</button>
   </br>
 	<code id="dane">null</code></br></br>
 	<code id="gpar">null</code></br></br>
@@ -137,5 +140,19 @@
 	DDiag: <span id="t_diag"></span></br>
 	<div id="gpar"></div>
   <script type="text/javascript" src="skrypt.js"></script>
+  <script>
+	socket.on('odpowiedz', function (dane) {
+		console.log(dane);
+	});
+	  $('#emitTest1').click(function(){
+		socket.emit('rozkaz', {rozkaz:'trybSerwisowy_223', wWartosc: 0, wID: 0});
+	  });
+	  $('#emitTest2').click(function(){
+		socket.emit('rozkaz', {rozkaz:'typSterownika_31B'});
+	  });
+	  $('#emitTest3').click(function(){
+		socket.emit('rozkaz', {rozkaz:'liczniki', rozkazId: 1, wartosc: 345});
+	  });
+  </script>
   </body>
 </html>

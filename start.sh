@@ -12,11 +12,14 @@
 echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
 hwclock -s -f /dev/rtc1
 hwclock -w
-ifconfig eth0 192.168.3.51 netmask 255.255.255.0 up
-/sbin/route add -net 0.0.0.0 gw 192.168.3.1 eth0
+
+chmod +xs /home/debian/kopex/scripts/*
+
+/home/debian/kopex/scripts/restart_network.sh 10 &
+#ifconfig eth0 192.168.3.51 netmask 255.255.255.0 up
+#/sbin/route add -net 0.0.0.0 gw 192.168.3.1 eth0
 
 cd /home/debian/kopex/
-chmod +xs /home/debian/kopex/scripts/*
 node node/forever.js node/webServer.js &
 node node/forever.js node/strada.js &
 node node/forever.js node/zapisDoPliku.js &

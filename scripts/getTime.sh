@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 sys=`uname`
 if [[ "$sys" == "Linux" ]]; then
   hwclock -s -f /dev/rtc1 > /dev/null

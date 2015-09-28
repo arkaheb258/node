@@ -121,6 +121,107 @@ function czytajPlikSygnalow(fileToRead, gpar, callback) {
   });
 }
 
+var str_KomunikatyJednSilnVacon = [
+  "przekroczony dopuszczalny prąd wyjściowy",
+  "przekroczone napięcie w obwodzie DC",
+  "doziemienie silnika",
+  "stycznik ładowania obwodu DC nadal otwarty",
+  "zatrzymanie awaryjne",
+  "nasycenie",
+  "usterka systemowa",
+  "zbyt niskie napięcie DC",
+  "zanik fazy zasilającej",
+  "zanik fazy wyjściowej",
+  "czoper hamowania",
+  "zbyt niska temperatura radiatora",
+  "przekroczona temperatura radiatora 90°C",
+  "utyk silnika",
+  "przekroczona temperatura silnika",
+  "niedociążenie silnika",
+  "asymetria miedzy jednostkami pracującymi równolegle",
+  "błąd sumy kontrolnej pamięci EEPROM",
+  "błąd licznika",
+  "błąd watchdoga mikroprocesora",
+  "zabezpieczenie przed rozruchem",
+  "termistor (przegrzany silnik)",
+  "bezpieczne wyłączenie",
+  "temperatura IGBT (sprzętowe zabezpieczenie nadprądowe)",
+  "awaria wentylatora",
+  "błąd transmisji CAN",
+  "błąd programowy aplikacji",
+  "niewłaściwy kontroler",
+  "zmieniono kartę rozszerzeń lub sterującą (parametry bez zmian)",
+  "dodano kartę rozszerzeń (parametry bez zmian)",
+  "usunięto kartę rozszerzeń (parametry bez zmian)",
+  "nieznana karta rozszerzeń lub moduł mocy",
+  "temperatura IGBT (zabezpieczenie nadprądowe)",
+  "temperatura rezystora hamowania",
+  "błąd enkodera",
+  "zmieniono kartę rozszerzeń lub sterującą (parametry domyślne)",
+  "dodano kartę rozszerzeń (parametry domyślne)",
+  "operacja dzielenia przez zero w aplikacji",
+  "prąd wejścia analogowego <4mA)",
+  "błąd zewnętrzny",
+  "błąd komunikacji z panelem",
+  "błąd komunikacji po magistrali",
+  "błąd slotu rozszerzeń",
+  "przekroczona temperatura (karta Pt100)",
+  "nieudana procedura autotuningu",
+  "stan hamulca inny niż sygnał sterujący",
+  "błąd komunikacji Master/Follower",
+  "brak przepływu w układzie chłodzenia",
+  "prędkość silnika niezgodna z wartością zadana",
+  "brak zezwolenia na prace",
+  "stop awaryjny",
+  "otwarty stycznik",
+  "przekroczona temperatura  ostrzeżenie",
+  "przekroczona temperatura  alarm",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa",
+  "rezerwa"
+];
+var str_KomunikatyJednSiecVacon = [
+  "przekroczony dopuszczalny prąd wyjściowy",
+  "przekroczone napięcie w obwodzie DC",
+  "wykrył doziemienie w sieci zasilającej",
+  "nasycenie",
+  "usterka systemowa",
+  "zbyt niskie napięcie DC",
+  "błąd synchronizacji z siecią zasilającą",
+  "zanik fazy zasilającej",
+  "zbyt niska temperatura radiatora",
+  "przekroczona temperatura radiatora 90°C",
+  "przeciążenie",
+  "błąd watchdoga mikroprocesora",
+  "termistor (przegrzany silnik)",
+  "temperatura IGBT (sprzętowe zabezpieczenie nadprądowe)",
+  "awaria wentylatora",
+  "błąd programowy aplikacji",
+  "zmieniono kartę rozszerzeń lub sterującą (parametry bez zmian)",
+  "dodano kartę (parametry bez zmian)",
+  "usunięto kartę rozszerzeń (parametry bez zmian)",
+  "nieznana karta rozszerzeń lub moduł mocy",
+  "temperatura IGBT (zabezpieczenie nadprądowe)",
+  "błąd zewnętrzny",
+  "błąd komunikacji po magistrali",
+  "błąd slotu lub karty rozszerzeń",
+  "błąd komunikacji Master/Follower",
+  "błąd synchronizacji z siecią  brak fazy wejściowej",
+  "błąd synchronizacji z siecią",
+  "otwarty stycznik",
+  "błąd wentylatora filtra wejściowego",
+  "przegrzanie filtra wejściowego",
+  "rezerwa",
+  "rezerwa"
+];
+
 /**
  * Description
  * @method czytajPlikKomunikatow
@@ -134,11 +235,12 @@ function czytajPlikKomunikatow(text, word) {
   var output = [];
   var out_string = ''; //do generowania listy komunikatów dla serwisu
   var i = 0;
-  var l;
+  var l, j;
   for (l in rows) {
     if (rows.hasOwnProperty(l)) {
       var row = rows[l].trim();
-      if (row.search(';') !== -1 && row.search('x') === 0) {
+      if (row.search(';') === -1) continue; 
+      if (row.search('x') === 0) {
         var nr = (i - (i % 16)) / 16;
         var bit = (i % 16);
         var opis = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
@@ -152,6 +254,43 @@ function czytajPlikKomunikatow(text, word) {
         out_string += 'Kod ' + (nr * 16 + bit) + ': ' + opis + '\n';
         output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
         i += 1;
+      } else {
+        var opisStr = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
+        if (row.search('str_KomunikatyJednSilnVacon') !== -1) {
+          for (j in str_KomunikatyJednSilnVacon) {
+            var nr = (i - (i % 16)) / 16;
+            var bit = (i % 16);
+            // var opis = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
+            var opis = str_KomunikatyJednSilnVacon[j];
+            var nb = 0;
+            if (output[nr] === undefined) { output[nr] = {opis: 'opis slowa ' + nr, nr: nr, bity: []}; }
+            if (opis.indexOf('_nb_') === 0) {
+              opis = opis.substring(4).trim();
+              nb = 1;
+            }
+            opis = opisStr + opis;
+            out_string += 'Kod ' + (nr * 16 + bit) + ': ' + opis + '\n';
+            output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
+            i += 1;
+          }
+        } else if (row.search('str_KomunikatyJednSiecVacon') !== -1) {
+          for (j in str_KomunikatyJednSiecVacon) {
+            var nr = (i - (i % 16)) / 16;
+            var bit = (i % 16);
+            // var opis = row.substring(row.search(/\(\*/g) + 2, row.search(/\*\)/g)).trim();
+            var opis = str_KomunikatyJednSiecVacon[j];
+            var nb = 0;
+            if (output[nr] === undefined) { output[nr] = {opis: 'opis slowa ' + nr, nr: nr, bity: []}; }
+            if (opis.indexOf('_nb_') === 0) {
+              opis = opis.substring(4).trim();
+              nb = 1;
+            }
+            opis = opisStr + opis;
+            out_string += 'Kod ' + (nr * 16 + bit) + ': ' + opis + '\n';
+            output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
+            i += 1;
+          }
+        }
       }
     }
   }

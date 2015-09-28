@@ -76,7 +76,7 @@ module.exports = function (strada) {
           var str = dataa.toISOString().split('T');
           //TODO: obsluga bledow skryptu
           common.runScript(['setTime.sh', str[0], str[1].substring(0, 8)], function () {});
-          strada.stradaEnqueue(0x201, temp, function (dane) {
+          strada.stradaEnqueue({instrNo: 0x201, instrVer: 1, data: temp}, function (dane) {
             console.log('dane 201', dane);
             if (!dane.error) {
               msg.dane = 'OK';
@@ -115,7 +115,7 @@ module.exports = function (strada) {
           strada.socket.emit('odpowiedz', msg);
           return;
         }
-        strada.stradaEnqueue(0x202, decode.encodeStrada202(temp), function (dane) {
+        strada.stradaEnqueue({instrNo: 0x202, instrVer: 1, data: decode.encodeStrada202(temp)}, function (dane) {
           console.log('dane 202');
           console.log(dane);
           emitSIN(dane, msg, 'BLOK_OK');
@@ -133,7 +133,7 @@ module.exports = function (strada) {
           // typ = 'LISTA';
           typ = 'REAL';
         }
-        strada.stradaEnqueue(0x500, {NAZ: get.id, TYP: typ, WART: get.wartosc},
+        strada.stradaEnqueue({instrNo: 0x500, instrVer: 1, data: {NAZ: get.id, TYP: typ, WART: get.wartosc}},
           function (dane) {
             console.log('dane 500');
             if (dane && dane.error) console.log(dane);
@@ -172,7 +172,7 @@ module.exports = function (strada) {
         } else if (get.akcja === 'save') {
           kierunek = 2;
         }
-        strada.stradaEnqueue(0x502, [plik, kierunek], function (dane) {
+        strada.stradaEnqueue({instrNo: 0x502, instrVer: 1, data: [plik, kierunek]}, function (dane) {
           console.log('dane 502');
           console.log(dane);
           emitSIN(dane, msg);
@@ -186,7 +186,7 @@ module.exports = function (strada) {
         console.log('kalibracja 2');
         console.log(get.napedId);
         console.log(get.pozycja * 100);
-        strada.stradaEnqueue(0x701, [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100],
+        strada.stradaEnqueue({instrNo: 0x701, instrVer: 1, data: [parseInt(get.napedId, 10), parseFloat(get.pozycja) * 100]},
           function (dane) {
             console.log('dane 701');
             console.log(dane);
@@ -201,7 +201,14 @@ module.exports = function (strada) {
         console.log('liczniki');
         console.log(get.rozkazId);
         console.log(get.wartosc);
-        strada.stradaEnqueue(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)],
+        console.log(get.instrVer);
+        strada.stradaEnqueue(
+          {
+            instrNo: 0x702,
+            instrVer: get.instrVer || 1,
+            data: [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)]
+          }, 
+        // strada.stradaEnqueue(0x702, [parseInt(get.rozkazId, 10), parseFloat(get.wartosc)],
           function (dane) {
             console.log('dane 702');
             console.log(dane);
@@ -263,7 +270,7 @@ module.exports = function (strada) {
         console.log(get.rozkaz);
         // identyfikator rozkazu (np 2001 dla prac miesięcznych)
         console.log(get.wActivID);
-        strada.stradaEnqueue(0x520, [parseInt(get.wActivID, 10)],
+        strada.stradaEnqueue({instrNo: 0x520, instrVer: 1, data: [parseInt(get.wActivID, 10)]},
           function (dane) {
             console.log('dane 520');
             console.log(dane);
@@ -287,7 +294,7 @@ module.exports = function (strada) {
       case 'podajNazwePliku_603': {
         console.log(get.rozkaz);
         console.log(get.wWartosc);
-        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), [parseInt(get.wWartosc, 10), 0], function (dane) {
+        strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [parseInt(get.wWartosc, 10), 0]}, function (dane) {
           console.log(dane);
           emitSIN(dane, msg);
         });
@@ -302,7 +309,7 @@ module.exports = function (strada) {
         console.log(get.rozkaz);
         console.log(get.wWartosc);
         console.log(get.wID);
-        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), [parseFloat(get.wWartosc), parseInt(get.wID, 10)],
+        strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [parseFloat(get.wWartosc), parseInt(get.wID, 10)]},
           function (dane) {
             console.log(dane);
             emitSIN(dane, msg);
@@ -311,7 +318,7 @@ module.exports = function (strada) {
       }
       case 'typSterownika_31B':{
         console.log(get.rozkaz);
-        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), [0, 0],
+        strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [0, 0]},
           function (dane) {
             console.log(dane.dane);
             console.log(common.readStringTo0(dane.dane, 0, 32));
@@ -326,7 +333,7 @@ module.exports = function (strada) {
       case 'nowyPlik_606': {
         console.log(get.rozkaz);
         console.log(get.sWartosc);
-        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), get.sWartosc,
+        strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: get.sWartosc},
           function (dane) {
             console.log(dane);
             emitSIN(dane, msg);
@@ -336,7 +343,7 @@ module.exports = function (strada) {
       case 'zerujLicznikiDzien_403':
       case 'skasujAktywnyPlik_602': {
         console.log(get.rozkaz);
-        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), null,
+        strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: null},
           function (dane) {
             console.log(dane);
             emitSIN(dane, msg);
@@ -347,7 +354,7 @@ module.exports = function (strada) {
         console.log(get.rozkaz);
         console.log(get.sNazwaPlikuOld);
         console.log(get.sNazwaPlikuNew);
-        strada.stradaEnqueue(parseInt(get.rozkaz.split('_')[1], 16), [get.sNazwaPlikuOld, get.sNazwaPlikuNew],
+        strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [get.sNazwaPlikuOld, get.sNazwaPlikuNew]},
           function (dane) {
             console.log(dane);
             emitSIN(dane, msg);

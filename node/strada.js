@@ -40,7 +40,7 @@ function Strada() {
   //TODO: wystartowanie interwału w osobnej metodzie, a nie w konstruktorze
   self.myInterval = new common.MyInterval(self.interval, function () {
     // if (!strada.master || !strada.master.connected) {
-    self.stradaEnqueue(0x302, 0, function (dane) {
+    self.stradaEnqueue({instrNo: 0x302, instrVer: 1, data: 0}, function (dane) {
       if (!dane.error) {
         dane = new decode.DecodeStrada302(dane.dane);
         if (!dane) {console.log('DecodeStrada302 null'); return; }
@@ -69,7 +69,7 @@ function Strada() {
     // console.log(' on get_gpar', self.PLCConnected);
     if (self.master && self.master.connected) {
       self.master.on('gpar', function(msg){
-          self.socket.emit('gpar', msg);
+        self.socket.emit('gpar', msg);
       });
     } else {
       if (self.PLCConnected) { self.odswierzParametry(msg); }
@@ -219,7 +219,12 @@ Strada.prototype.connect = function (err) {
 * @param instrNo kod instrukcji
 * @param data dane do wyslania
 */
-Strada.prototype.send = function (instrNo, instrID, data) {
+Strada.prototype.send = function (el) {
+  // console.log(el);
+  var instrNo = el.instrNo;
+  var instrID = el.instrID;
+  var data = el.data;
+  var instrVer = el.instrVer;
   var self = this;
   if (argv.debug) { console.log('sendData', instrNo.toString(16), instrID); }
   var DstID = 1;
@@ -254,7 +259,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     }
     case 0x201: { // Zapisz datę i czas.
       tempOutBuff = new Buffer(8);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(4, 2);
       tempOutBuff.writeUInt32LE(data, 4);
       break;
@@ -262,7 +267,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x202: { // Zapisz aktualne blokady.
       if (!data || !data.length) { data = [0, 0, 0, 0]; }
       tempOutBuff = new Buffer(4);    // naglowek Iver >=4bajty
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(data.length, 2);
       break;
     }
@@ -292,7 +297,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x601: // Podaj nazwy plików Skrawu Wzorcowego.
     case 0x603: { // Podaj nazwę aktualnego pliku Skrawu Wzorcowego.
       tempOutBuff = new Buffer(8);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(4, 2);
       tempOutBuff.writeUInt16LE(data[0], 4);
       tempOutBuff.writeUInt16LE(data[1], 6);
@@ -301,7 +306,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     }
     case 0x701: { // Kalibracja czujników położenia napędów hydraulicznych kombajnów chodnikowych
       tempOutBuff = new Buffer(8);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(4, 2);
       tempOutBuff.writeUInt16LE(data[0], 4);
       tempOutBuff.writeInt16LE(data[1], 6); // !! Int zamiast UInt
@@ -310,7 +315,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     }
     case 0x702: { // Ustawianie liczników czasu pracy dla kombajnów chodnikowych.
       tempOutBuff = new Buffer(12);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(8, 2);
       tempOutBuff.writeUInt16LE(data[0], 4);
       tempOutBuff.writeUInt16LE(0, 6);
@@ -321,7 +326,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x403: // Zeruj liczniki dzienne.
     case 0x602: { // Skasuj aktywny plik Skrawu Wzorcowego i usuń dane Skrawu z pamięci.
       tempOutBuff = new Buffer(4);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(0, 2);
       data = null;
       break;
@@ -331,7 +336,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x606: { // Stwórz nowy plik Skrawu Wzorcowego
       tempOutBuff = new Buffer(26);
       tempOutBuff.fill(0);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(24, 2);
       tempOutBuff.write(data, 4);
       data = null;
@@ -340,7 +345,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x605: { // Zmień nazwę pliku Skrawu Wzorcowego
       tempOutBuff = new Buffer(50);
       tempOutBuff.fill(0);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(24, 2);
       tempOutBuff.write(data[0], 4);
       tempOutBuff.write(data[1], 28);
@@ -350,7 +355,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x302: { // Odczytanie obszaru danych wizualizacyjnych kombajnu
       tempOutBuff = new Buffer(16);
       tempOutBuff.fill(0);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(12, 2);
       // console.log('uiCzytajObszarNr: '+data);
       tempOutBuff.writeUInt16LE(data, 4); // uiCzytajObszarNr
@@ -374,7 +379,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
       console.log(data);
       tempOutBuff = new Buffer(32);
       tempOutBuff.fill(0);
-      tempOutBuff.writeUInt16LE(1, 0);  // instrVer
+      tempOutBuff.writeUInt16LE(instrVer, 0);  // instrVer
       tempOutBuff.writeUInt16LE(28, 2); // ClientDataLen
       tempOutBuff.writeUInt16LE(data[0], 4);  // uiCzytajObszarNr
       tempOutBuff.writeUInt16LE(0, 6);  // Rezerwa
@@ -385,7 +390,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
     case 0x500: { // Zapisz parametr
       tempOutBuff = new Buffer(100);
       tempOutBuff.fill(0);
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(96, 2);
       if (data.NAZ.length > 31) {
         console.log('0x500 - za długa NAZWA (' + data.NAZ.length + ')');
@@ -427,7 +432,7 @@ Strada.prototype.send = function (instrNo, instrID, data) {
       if (instrNo < 0x200 || instrNo === 0x301) { break; }
       if (!data || !data.length) { data = [0, 0, 0, 0]; }
       tempOutBuff = new Buffer(4);    // Nagłówek Iver >=4bajty
-      tempOutBuff.writeUInt16LE(1, 0);
+      tempOutBuff.writeUInt16LE(instrVer, 0);
       tempOutBuff.writeUInt16LE(data.length, 2);
       break;
     }

@@ -31,7 +31,7 @@ module.exports = function (Strada) {
     // wyslanie nastepnego zapytania
     if (!self.lastSent && self.queue.length > 0) {
       el = self.queue[0];
-      self.send(el.instrNo, el.instrID, el.data);
+      self.send(el);
       if (self.queue.length > 2) {
         console.log('queue.length = ', self.queue.length);
       }
@@ -49,7 +49,7 @@ module.exports = function (Strada) {
     if (uiCzytajObszarNr === 0) {
       tempKonf = {dane: new Buffer(0), DataLen: 0};
     }
-    self.stradaEnqueue(instrNo, dane2, function (dane) {
+    self.stradaEnqueue({instrNo: instrNo, instrVer: 1, data: dane2}, function (dane) {
       // console.log('stradaEnqueue', dane.dane);
       if (!dane.dane || (typeof dane.dane === 'string')) {
         if (callback) { callback(dane); }
@@ -81,7 +81,10 @@ module.exports = function (Strada) {
    *  @param [in] callback Funkcja wywolywana po odebraniu odpowiedzi
    *  @param [in] timeout Czas oczekiwania w kolejce
    */
-  Strada.prototype.stradaEnqueue = function (instrNo, data, callback, timeout) {
+  Strada.prototype.stradaEnqueue = function (instr, callback, timeout) {
+    var instrVer = instr.instrVer || 1;
+    var data = instr.data;
+    var instrNo = instr.instrNo;
     // if (instrNo.length == 2) console.log('stradaEnqueue', instrNo, data);
     var self = this;
     if (!callback) { callback = console.log; }
@@ -101,6 +104,7 @@ module.exports = function (Strada) {
       return;
     }
     self.queue.push({
+      instrVer: instrVer,
       instrNo: instrNo,
       instrID: Number(self.instrID),
       data: data,
@@ -128,7 +132,7 @@ module.exports = function (Strada) {
       if (retry) {
         if (el.instrNo.length === 2) { el.instrNo = el.instrNo[0]; }
         setTimeout(function () {
-          self.stradaEnqueue([el.instrNo, 0x101], el.data, el.callback, el.timeout - (Date.now() - el.time));
+          self.stradaEnqueue({instrNo: [el.instrNo, 0x101], instrVer: 1, data: el.data}, el.callback, el.timeout - (Date.now() - el.time));
         }, 100);
       } else {
         el.callback(dane);

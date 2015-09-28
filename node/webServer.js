@@ -232,13 +232,14 @@
             })
           .stdout.on('data', function (chunk) {
             if (argv.debug) { console.log(chunk.toString('utf8')); }
-            var chunk2 = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
-            if (!chunk2) {
-              chunk2 = chunk.toString().match(/.*Cmd: CWD(.*)/g);
-            }
-            if (chunk2) {
-              socket.emit('zarzadzaniePlikamiOdp', chunk2[0].substring(9));
-            }
+            // var chunk2 = chunk.toString().match(/.*Cmd: MDTM(.*)/g);
+            // if (!chunk2) {
+              // chunk2 = chunk.toString().match(/.*Cmd: CWD(.*)/g);
+            // }
+            // if (chunk2) {
+              // socket.emit('zarzadzaniePlikamiOdp', chunk2[0].substring(9));
+            // }
+            socket.emit('zarzadzaniePlikamiOdp', chunk.toString());
           });
         });
     });

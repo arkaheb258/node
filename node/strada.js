@@ -33,6 +33,7 @@ function Strada() {
   self.ntpDate = -1;
   self.emitEnable = true;
   self.dane = [];
+  self.plc = "???";
 
   require('./stradaPar.js')(Strada);
   require('./stradaConn.js')(Strada);
@@ -173,6 +174,7 @@ Strada.prototype.connect = function (err) {
       console.log('Strada Polaczono ....', self.client.numer);
       self.socket.emit('nazwa', 'strada');
       self.PLCConnected = true;
+      self.typPLC();
       self.odswierzParametry(true);
       self.myInterval.setInterval(self.interval);
     })
@@ -247,7 +249,7 @@ Strada.prototype.send = function (el) {
   outBuff.writeUInt16LE(instrID, 12);
   outBuff.writeUInt16LE(0, 14);
   if (instrNo === 0x204) { data[0] = data[0] * 100; }
-  if (instrNo === 0x20C) { data = data * 10; }
+  if (instrNo === 0x20C) { data[0] = data[0] * 10; }
 
   switch (instrNo) {
     case 0x0: { // External instrNo

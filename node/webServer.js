@@ -228,7 +228,8 @@
           common.runScript(args,
             function (data) {
               if (argv.debug) { console.log('data', data); }
-              socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
+              if (data.error !== 0) { socket.emit('zarzadzaniePlikamiOdp', 'error'); }
+              // socket.emit('zarzadzaniePlikamiOdp', (data.error !== 0) ? 'error' : 'OK');
             })
           .stdout.on('data', function (chunk) {
             if (argv.debug) { console.log(chunk.toString('utf8')); }

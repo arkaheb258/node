@@ -40,6 +40,7 @@ module.exports.runScript = function (args, callback_end, interpreter) {
  * @param {} con_par
  * @param {} callback
  * @param {} cache
+ zamienic na wykonanie skryptu ftp.js
  */
 function pobierzPlikFTP(con_par, callback) {
   var Ftp = require('ftp');

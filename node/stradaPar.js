@@ -59,6 +59,7 @@ module.exports = function (Strada) {
     freshPar = 1;   //parametry w trakcie odswierzania
     var self = this;
     var gpar = common.getGpar();
+    
     console.log('Pobranie parametrow Strada (0x307)');
     self.readAll(0x307, [0, 0], function (stradaDane) {
       if (!stradaDane || stradaDane.error) {
@@ -88,7 +89,7 @@ module.exports = function (Strada) {
         }
         // console.log('Struktura parametrów niepoprawna');
         var con_par = {host : '192.168.3.30', user : 'admin', password : 'admin', path: 'ide/Parametry/Temp.par'};
-        if (argv.wago) {
+        if (argv.wago || self.plc == "wago") {
           con_par.password = 'wago';
           con_par.path = 'PLC/Parametry/Temp.par';
         }
@@ -105,6 +106,18 @@ module.exports = function (Strada) {
         });
       });
     });
+  };
+
+  Strada.prototype.typPLC = function (callback) {
+    var self = this;
+    self.plc = "???";
+    self.stradaEnqueue({instrNo: 0x31B, instrVer: 1, data: [0, 0]},
+      function (dane) {
+        self.plc = common.readStringTo0(dane.dane, 0, 32);
+        console.log("PLC:", self.plc);
+        if (callback) { callback(self.plc); }
+      }
+    );
   };
 
   return Strada;

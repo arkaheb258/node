@@ -17,13 +17,14 @@
     "url": "git://github.com/arkaheb258/node.git"
   },
   "dependencies": {
+    "async": "1.4.x",
     "cache-require-paths": "0.1.x",
     "express": "4.12.x",
-    "async": "1.4.x",
     "ftp": "0.3.x",
-	  "minimist": "1.1.x",
+	"minimist": "1.1.x",
     "socket.io": "1.3.x",
-    "socket.io-client": "^1.3.x"
+    "socket.io-client": "^1.3.x",
+    "walker": "1.0.x"
   },
   "engine": "node >= 0.10.0"
 }

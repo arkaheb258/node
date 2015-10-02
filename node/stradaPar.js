@@ -89,7 +89,7 @@ module.exports = function (Strada) {
         }
         // console.log('Struktura parametrów niepoprawna');
         var con_par = {host : '192.168.3.30', user : 'admin', password : 'admin', path: 'ide/Parametry/Temp.par'};
-        if (argv.wago || self.plc == "wago") {
+        if (argv.wago || self.plc == "WAGO_880") {
           con_par.password = 'wago';
           con_par.path = 'PLC/Parametry/Temp.par';
         }

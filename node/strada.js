@@ -174,9 +174,10 @@ Strada.prototype.connect = function (err) {
       console.log('Strada Polaczono ....', self.client.numer);
       self.socket.emit('nazwa', 'strada');
       self.PLCConnected = true;
-      self.typPLC();
-      self.odswierzParametry(true);
-      self.myInterval.setInterval(self.interval);
+      self.typPLC(function(){
+        self.odswierzParametry(true);
+        self.myInterval.setInterval(self.interval);
+      });
     })
     .on('error', function (err) {
       if (argv.debug) { console.log('error', err); }

@@ -130,6 +130,7 @@ module.exports.codesysTimeToMs = function (time) {
  */
 module.exports.readStringTo0 = function (buf, start, len) {
   var i;
+  if (!buf) {return null;}
   for (i = start; i < start + len; i += 1) {
     if (buf[i] === 0) {
       break;

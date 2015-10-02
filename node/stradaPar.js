@@ -93,6 +93,9 @@ module.exports = function (Strada) {
           con_par.password = 'wago';
           con_par.path = 'PLC/Parametry/Temp.par';
         }
+        if (self.plc == "WAGO_FPC") {
+          con_par.password = 'kopex';
+        }
         common.pobierzPlikFTP(con_par, function (string) {
           console.log('Wczytano parametry FTP');
           gpar = decode.decodeStrada307(stradaDane.dane, string);

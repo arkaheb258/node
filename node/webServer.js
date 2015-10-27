@@ -71,7 +71,7 @@
       return;
     }
     if (file[1] === 'hardware') {
-      var ip = '192.168.x.x';
+      var ip = null;
       if (process.platform === 'linux') {
         // execute('cat /etc/dogtag', console.log);
          // /sbin/ifconfig eth0 | sed '/inet\ /!d;s/.*r://g;s/\ .*//g'
@@ -80,7 +80,21 @@
         if (os.networkInterfaces().eth0 && os.networkInterfaces().eth0[0]) {
           ip = os.networkInterfaces().eth0[0].address;
         }
+      } else {
+        //TODO: do przetestowania na Linuxie
+        var temp = os.networkInterfaces();
+        for (var x in temp) {
+          for (var y in temp[x]) {
+            var temp_adr = temp[x][y].address;
+            if (temp_adr.search('[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}') != -1) {
+              ip = temp_adr;
+            }
+            if (!ip) break;
+          }
+          if (!ip) break;
+        }
       }
+      if (!ip) { ip = '192.168.x.x'; }
       fs.readFile(__dirname + '/../json/soft.json',
         'utf8',
         function (err, text) {

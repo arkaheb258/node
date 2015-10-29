@@ -86,7 +86,7 @@
         for (var x in temp) {
           for (var y in temp[x]) {
             var temp_adr = temp[x][y].address;
-            if (temp_adr.search('[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}') != -1) {
+            if (temp_adr.search('192[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}') != -1) {
               ip = temp_adr;
             }
             if (!ip) break;

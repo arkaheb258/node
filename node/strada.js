@@ -53,7 +53,7 @@ function Strada() {
               if (data.error === 0) {
                 self.ntpDate = Number(data.stdout.replace(/[ \n\r]*/mg, '') + '000');
               } else {
-                console.log(data);
+                // console.log(data);
                 self.ntpDate = -1;
               }
             });
@@ -249,8 +249,8 @@ Strada.prototype.send = function (el) {
   outBuff.writeUInt16LE(instrNo, 10);
   outBuff.writeUInt16LE(instrID, 12);
   outBuff.writeUInt16LE(0, 14);
-  if (instrNo === 0x204) { data[0] = data[0] * 100; }
-  if (instrNo === 0x20C) { data[0] = data[0] * 10; }
+  // if (instrNo === 0x204) { data[0] = data[0] * 100; }
+  // if (instrNo === 0x20C) { data[0] = data[0] * 10; }
 
   switch (instrNo) {
     case 0x0: { // External instrNo

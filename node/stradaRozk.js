@@ -251,8 +251,8 @@ module.exports = function (strada) {
                       return;
                     }
                     var br = new BlockRW();
-                    var DigitData = br.read(dane);
-                    var AnalogData = br.read(dane);
+                    var DigitData = br.read(dane.dane);
+                    var AnalogData = br.read(dane.dane);
                     // console.log({DigitData: DigitData, AnalogData: AnalogData});
                     strada.socket.emit('broadcast', ['daneDiag', {sID: get.sID, DigitData: DigitData, AnalogData: AnalogData}]);
                   });
@@ -294,6 +294,15 @@ module.exports = function (strada) {
       case 'podajNazwePliku_603': {
         console.log(get.rozkaz);
         console.log(get.wWartosc);
+        if (get.rozkaz === 'calkDystKomb_20C') { 
+          get.wWartosc = get.wWartosc * 10; 
+          if (get.wWartosc > 0xffff) {
+            // console.log('przekroczenie zakresu');
+            msg.dane = 'przekroczenie zakresu';
+            strada.socket.emit('odpowiedz', msg);
+            break;
+          }
+        }
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [parseInt(get.wWartosc, 10), 0]}, function (dane) {
           console.log(dane);
           emitSIN(dane, msg);
@@ -309,6 +318,15 @@ module.exports = function (strada) {
         console.log(get.rozkaz);
         console.log(get.wWartosc);
         console.log(get.wID);
+        if (get.rozkaz === 'nrSekcji_204') { 
+          get.wWartosc = get.wWartosc * 100; 
+          if (get.wWartosc > 0xffff) {
+            // console.log('przekroczenie zakresu');
+            msg.dane = 'przekroczenie zakresu';
+            strada.socket.emit('odpowiedz', msg);
+            break;
+          }
+        }
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [parseFloat(get.wWartosc), parseInt(get.wID, 10)]},
           function (dane) {
             console.log(dane);
@@ -326,6 +344,29 @@ module.exports = function (strada) {
             strada.socket.emit('odpowiedz', msg);
             // emitSIN(dane, msg);
           });
+        break;
+      }
+      case 'kes_405':{
+        console.log(get.rozkaz);
+        console.log(get.tDane);
+        if (!get.tDane) {
+          msg.dane = 'Brak parametru tDane';
+          strada.socket.emit('odpowiedz', msg);
+        } else {
+          strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: get.tDane},
+            function (dane) {
+              console.log(dane.dane);
+              if (dane.dane.length) {
+                msg.dane = [];
+                for (var i = 0; i < dane.dane.length; ++i) {
+                  msg.dane[i] = dane.dane[i];
+                }
+                strada.socket.emit('odpowiedz', msg);
+              } else {
+                msg.dane = common.readStringTo0(dane.dane, 0, 32);
+              }
+            });
+        }
         break;
       }
       case 'plikSkrawuWz_600':

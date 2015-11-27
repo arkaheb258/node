@@ -53,18 +53,11 @@ module.exports = function (strada) {
         var off = common.summerTimeOffset(get.wartosc);
         var temp = get.wartosc / 1000;
         var dataa = new Date();
-        //konwersja czas lokalny -> UTC
-        // var d = new Date(temp * 1000);
-        // var n = d.getTimezoneOffset();
-
-        // d.setMonth(0);
-        // n -= d.getTimezoneOffset();
         var gpar = common.getGpar();
         if (gpar) {
           if (gpar.rKonfCzasStrefa !== undefined) {
             temp -= (gpar.rKonfCzasStrefa - 12) * 3600;
           }
-          // if (gpar.rKonfCzasLetni) { temp += n * 60; }
           if (gpar.rKonfCzasLetni) { temp += off * 60; }
         }
         if (temp < 0) {
@@ -218,10 +211,9 @@ module.exports = function (strada) {
         break;
       }
       case 'statusWeWyBloku_310': {
-        console.log(get.rozkaz);
-        console.log(get.wartosc);
+        console.log(get.rozkaz, get.wartosc, get.sID);
         // console.log(get.wID);
-        console.log(get.sID);
+        console.log();
         if (!get.sID) {
           msg.dane = 'Brak parametru sID';
           strada.socket.emit('odpowiedz', msg);
@@ -231,6 +223,7 @@ module.exports = function (strada) {
             strada.socket.emit('odpowiedz', msg);
             return;
           }
+		  console.log(strada.daneDiagn);
           if (strada.daneDiagn && strada.daneDiagn.sID == get.sID) {
             strada.daneDiagn.lastReq = Date.now();
           } else {
@@ -245,9 +238,9 @@ module.exports = function (strada) {
                 strada.readAll(0x310, [0, strada.daneDiagn.sID],
                   function (dane) {
                     // console.log('dane 310');
-                    if (!dane.length) {
+                    // console.log(dane);
+                    if (typeof dane.dane === 'string') {
                       strada.socket.emit('broadcast', ['daneDiag', {error : dane.dane}]);
-                      console.log('dane 310 ', dane);
                       return;
                     }
                     var br = new BlockRW();
@@ -315,13 +308,9 @@ module.exports = function (strada) {
       case 'trybSerwisowy_223':
       case 'sterReflektorami_402':
       case 'kalibracjeEnk_404': {
-        console.log(get.rozkaz);
-        console.log(get.wWartosc);
-        console.log(get.wID);
         if (get.rozkaz === 'nrSekcji_204') { 
           get.wWartosc = get.wWartosc * 100; 
           if (get.wWartosc > 0xffff) {
-            // console.log('przekroczenie zakresu');
             msg.dane = 'przekroczenie zakresu';
             strada.socket.emit('odpowiedz', msg);
             break;
@@ -329,7 +318,7 @@ module.exports = function (strada) {
         }
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [parseFloat(get.wWartosc), parseInt(get.wID, 10)]},
           function (dane) {
-            console.log(dane);
+            // console.log(dane);
             emitSIN(dane, msg);
           });
         break;
@@ -338,8 +327,8 @@ module.exports = function (strada) {
         console.log(get.rozkaz);
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [0, 0]},
           function (dane) {
-            console.log(dane.dane);
-            console.log(common.readStringTo0(dane.dane, 0, 32));
+            // console.log(dane.dane);
+            // console.log(common.readStringTo0(dane.dane, 0, 32));
             msg.dane = common.readStringTo0(dane.dane, 0, 32);
             strada.socket.emit('odpowiedz', msg);
             // emitSIN(dane, msg);
@@ -347,8 +336,8 @@ module.exports = function (strada) {
         break;
       }
       case 'kes_405':{
-        console.log(get.rozkaz);
-        console.log(get.tDane);
+        // console.log(get.rozkaz);
+        // console.log(get.tDane);
         if (!get.tDane) {
           msg.dane = 'Brak parametru tDane';
           strada.socket.emit('odpowiedz', msg);
@@ -372,8 +361,8 @@ module.exports = function (strada) {
       case 'plikSkrawuWz_600':
       case 'skasujPlik_604':
       case 'nowyPlik_606': {
-        console.log(get.rozkaz);
-        console.log(get.sWartosc);
+        // console.log(get.rozkaz);
+        // console.log(get.sWartosc);
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: get.sWartosc},
           function (dane) {
             console.log(dane);
@@ -383,21 +372,21 @@ module.exports = function (strada) {
       }
       case 'zerujLicznikiDzien_403':
       case 'skasujAktywnyPlik_602': {
-        console.log(get.rozkaz);
+        // console.log(get.rozkaz);
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: null},
           function (dane) {
-            console.log(dane);
+            // console.log(dane);
             emitSIN(dane, msg);
           });
         break;
       }
       case 'zmienNazwePliku_605': {
-        console.log(get.rozkaz);
-        console.log(get.sNazwaPlikuOld);
-        console.log(get.sNazwaPlikuNew);
+        // console.log(get.rozkaz);
+        // console.log(get.sNazwaPlikuOld);
+        // console.log(get.sNazwaPlikuNew);
         strada.stradaEnqueue({instrNo: parseInt(get.rozkaz.split('_')[1], 16), instrVer: 1, data: [get.sNazwaPlikuOld, get.sNazwaPlikuNew]},
           function (dane) {
-            console.log(dane);
+            // console.log(dane);
             emitSIN(dane, msg);
           });
         break;

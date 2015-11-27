@@ -268,7 +268,7 @@ function czytajPlikKomunikatow(text, word) {
               opis = opis.substring(4).trim();
               nb = 1;
             }
-            opis = opisStr + opis;
+            opis = opisStr + ' ' + opis;
             out_string += 'Kod ' + (nr * 16 + bit) + ': ' + opis + '\n';
             output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
             i += 1;
@@ -285,7 +285,7 @@ function czytajPlikKomunikatow(text, word) {
               opis = opis.substring(4).trim();
               nb = 1;
             }
-            opis = opisStr + opis;
+            opis = opisStr + ' ' + opis;
             out_string += 'Kod ' + (nr * 16 + bit) + ': ' + opis + '\n';
             output[nr].bity[bit] = {nb: nb, bit: bit, opis: opis};
             i += 1;

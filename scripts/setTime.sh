@@ -10,7 +10,7 @@ else
   sTime=$2
   # echo $sDate
   # echo $sTime
-  date -u --set $sDate && date -u --set $sTime
-  hwclock -w
-  hwclock -w -f /dev/rtc1
+  sudo date -u --set $sDate && sudo date -u --set $sTime
+  sudo /sbin/hwclock -w
+  sudo /sbin/hwclock -w -f /dev/rtc1
 fi

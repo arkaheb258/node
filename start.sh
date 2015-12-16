@@ -10,10 +10,10 @@
 ### END INIT INFO
 
 echo ds1307 0x68>/sys/class/i2c-adapter/i2c-1/new_device
-hwclock -s -f /dev/rtc1
-hwclock -w
+sudo hwclock -s -f /dev/rtc1
+sudo hwclock -w
 
-chmod +xs /home/debian/kopex/scripts/*
+sudo chmod +xs /home/debian/kopex/scripts/*
 
 /home/debian/kopex/scripts/restart_network.sh 10 &
 #ifconfig eth0 192.168.3.51 netmask 255.255.255.0 up

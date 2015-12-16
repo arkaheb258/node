@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file common.js
 *  @brief Funkcje wykorzystywane przez wiele modułów
 */

@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  @file webServer.js
  *  @brief Serwer HTTP dla wizualizacji
  */

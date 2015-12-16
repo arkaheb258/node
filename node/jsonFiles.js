@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file jsonFiles.js
 *  @brief Podstawianie wartości parametró w plikach JSON
 */

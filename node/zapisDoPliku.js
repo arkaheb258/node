@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  @file zapisDoPliku.js
  *  @brief Logowanie danych z pracy maszyny
  */

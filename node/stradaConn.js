@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file stradaConn.js
 *  @brief Kolejkowanie wiadomosci Strada
 */

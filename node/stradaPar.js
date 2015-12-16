@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file stradaPar.js
 *  @brief Odświerzania parametrów
 */

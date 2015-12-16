@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  @file blockrw.js
  *  @brief Odczyt i zapis do bloków danych Strada
  */

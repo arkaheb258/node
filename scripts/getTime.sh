@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 sys=`uname`
 if [[ "$sys" == "Linux" ]]; then
   sudo /usr/bin/node i2cTime.js

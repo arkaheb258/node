@@ -1,4 +1,4 @@
-﻿var argv = require('minimist')(process.argv.slice(2));
+var argv = require('minimist')(process.argv.slice(2));
 var exec = require('child_process').exec;
 
 function decToBcd(val) { return( (val-val%10)/10*16 + (val%10) ); }

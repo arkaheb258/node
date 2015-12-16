@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  @file main.js
  *  @brief zarządzanie uruchomieniem programu i logowanie do plikow
  */

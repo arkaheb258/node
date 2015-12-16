@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file stradaRozk.js
 *  @brief Obsługa rozkazów z socket.io
 */

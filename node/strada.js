@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file strada.js
 *  @brief Komunikacja z PLC
 */

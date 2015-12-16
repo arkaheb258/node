@@ -10,6 +10,8 @@ else
   sTime=$2
   # echo $sDate
   # echo $sTime
+  sudo /usr/bin/node i2cTime.js $1 $2
+  exit 0
   sudo date -u --set $sDate && sudo date -u --set $sTime
   sudo /sbin/hwclock -w
   sudo /sbin/hwclock -w -f /dev/rtc1

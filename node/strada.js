@@ -50,10 +50,12 @@ function Strada() {
           if (self.ntpDate === -1) {
             self.ntpDate = -2;
             common.runScript(['getTime.sh'], function (data) {
+              if (argv.debug) { console.log(data); }
               if (data.error === 0) {
                 self.ntpDate = Number(data.stdout.replace(/[ \n\r]*/mg, '') + '000');
+                if (argv.debug) { console.log('Sterownik dostaje date', self.ntpDate); }
               } else {
-                // console.log(data);
+                if (argv.debug) { console.log('Sterownik nie dostaje daty', self.ntpDate); }
                 self.ntpDate = -1;
               }
             });
@@ -140,12 +142,12 @@ Strada.prototype.setMaster = function (master) {
           }
         }, 1000);
       })
-      // .on('reconnect', function(val){
-        // console.log('master reconnected', val);
-      // })
-      // .on('reconnect_attempt', function(){
-        // console.log('master try');
-      // })
+      .on('reconnect', function(val){
+        console.log('master reconnected', val);
+      })
+      .on('reconnect_attempt', function(){
+        console.log('master try');
+      })
       .on('disconnect', function(){
         console.log('master disconnected =', !self.master.connected);
         self.master.connected2 = false;

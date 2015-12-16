@@ -71,6 +71,7 @@
       return;
     }
     var fileName = argv[0].match(/.*[\/\\]+(.*)\.js/);
+    if (!fileName) { fileName = argv[0].match(/(.*)\.js/); }
     if (!fileName) { fileName = 'undefined'; } else { fileName = fileName[1]; }
     logStream = fs.createWriteStream(__dirname + '/../log/' + fileName + '.log', {flags : 'w'});
     errStream = fs.createWriteStream(__dirname + '/../log/' + fileName + '.err', {flags : 'a'});

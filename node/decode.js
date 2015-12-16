@@ -212,6 +212,8 @@ function decodeStrada307(buf, outPar) {
   return wyluskajParametry(outPar);
 }
 
+var temp = {};
+
 /**
  * Description
  * @method DecodeStrada302
@@ -241,13 +243,19 @@ function DecodeStrada302(data) {
   // n -= d.getTimezoneOffset();
   var gpar = common.getGpar();
   if (gpar) {
+    if (temp.rKonfCzasLetni != gpar.rKonfCzasLetni || temp.rKonfCzasStrefa != gpar.rKonfCzasStrefa) {
+      console.log('rKonfCzasLetni: ', gpar.rKonfCzasLetni, 'rKonfCzasStrefa: ', gpar.rKonfCzasStrefa, 'off', off);
+      console.log('this.TimeStamp_js: ', new Date(this.TimeStamp_js));
+      temp.rKonfCzasLetni = gpar.rKonfCzasLetni;
+      temp.rKonfCzasStrefa = gpar.rKonfCzasStrefa;
+    }
     if (gpar.rKonfCzasStrefa !== undefined) {
       this.TimeStamp_js += (gpar.rKonfCzasStrefa - 12) * 3600000;
     }
     // if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= n * 60000; }
     if (gpar.rKonfCzasLetni) { this.TimeStamp_js -= off * 60000; }
     if (gpar.sKonfNrKomisji) { this.komisja = gpar.sKonfNrKomisji; }
-  }
+  } else { console.log('brak gpar'); }
   var SpecData = br.read(data);
   this.wDataControl = SpecData[0];
   this.wData = SpecData;

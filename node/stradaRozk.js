@@ -30,6 +30,7 @@ module.exports = function (strada) {
     console.log('on rozkaz', get);
     if (strada.master) { console.log(strada.master.connected2); }
     if (strada.master && strada.master.connected2) {
+      console.log('przekierowanie do mastera');
       strada.master.emit('rozkaz', get);
       strada.master.once('odpowiedz', function(msg){
           console.log('master on odpowiedz', msg);
@@ -37,6 +38,7 @@ module.exports = function (strada) {
       });
       return;
     }
+    console.log('wykonanie');
     var msg = {};
     msg.instrID = get.instrID;
     

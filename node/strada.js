@@ -204,7 +204,7 @@ Strada.prototype.connect = function (err) {
     if (argv.debug) { console.log(dane.error); }
     if (self.emitEnable) { self.socket.emit('broadcast', ['dane', dane]); }
     if (self.PLCConnected) {
-      console.log('PLC nie połączony');
+      console.log('PLC nie połączony - timeout');
       self.myInterval.setInterval(1000);
       self.PLCConnected = false;
     }

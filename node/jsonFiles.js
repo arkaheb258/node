@@ -85,7 +85,14 @@ function czytajPlikSygnalow(fileToRead, gpar, callback) {
       return;
     }
     var temp = null;
-    var js = JSON.parse(data);
+	var js = "";
+	try {
+		js = JSON.parse(data);
+	}
+	catch (err) {
+		callback({error:'Parse error',desc:err+""});
+		return {error:'Parse error'};
+	}
     var g, p, s;
     if (typeof js === 'object') {
       for (g in js) {

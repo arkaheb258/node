@@ -95,6 +95,7 @@ module.exports = function (Strada) {
         }
         if (self.plc == "WAGO_FPC") {
           con_par.password = 'kopex';
+          con_par.path = '/home/codesys/Parametry/Temp.par';
         }
         common.pobierzPlikFTP(con_par, function (string) {
           console.log('Wczytano parametry FTP');

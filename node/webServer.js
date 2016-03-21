@@ -20,6 +20,20 @@
   argv.dir = argv.dir || '../build';
   // argv.debug = 2;
 
+  app.enable("jsonp callback");  
+
+  // Pliki statyczne z folderu /jsonDefault
+  app.use('/jsonDefault', function (req, res, next){
+    if (!fs) { fs = require('fs'); }
+    var file = req.url.match(/\/([a-zA-Z]+)\.json/);
+    fs.readFile(__dirname + '/../jsonDefault' + file[0],
+      'utf8',
+      function (err, text) {
+        if (err) { res.json({err:err}); }
+        else { res.jsonp(JSON.parse(text)); }
+    });
+  });
+  
   app.use(function (req, res, next) {
     if (argv.debug > 1 || req.url === '/') {
       console.log(req.connection.remoteAddress + ' -> ' + req.url);
@@ -30,9 +44,25 @@
   app.use('/test', express.static(__dirname + '/../test'));
   app.use('/logs', express.static(__dirname + '/../logs'));
 
-  //tresc statyczna na poczatku routowania
-  app.use(express.static(__dirname + '/' + argv.dir));
-
+  function jsonp_file(req,res,next){
+    if (!fs) { fs = require('fs'); }
+    // res.jsonp({url:req.baseUrl,file:__dirname + '/..' + req.baseUrl}); return;
+    fs.readFile(__dirname + '/..' + req.baseUrl,
+      'utf8',
+      function (err, text) {
+        var json = {error:"parse Error"};
+        try {
+          json = JSON.parse(text);
+        }
+        catch(err) {
+          json.desc = err+"";
+          // console.log(err);
+        }
+        if (err) { res.json({err:err}); }
+        else { res.jsonp(json); }
+    });
+  }
+  
   //obsluga rozkazow dla PLC
   app.get('/rozkaz', function (req, res, next) {
     if (!socketIo) { socketIo = require('socket.io-client')('http://127.0.0.1:' + argv.port); }
@@ -111,18 +141,18 @@
       return;
     }
 
-    var fileToRead = '/../json';
+    var fileToRead = '/json';
     var dirLang = common.dirLangPar(gpar, file[1]);
     fileToRead += dirLang.file + '.json';
     switch (file[1]) {
     case 'sygnaly': {
-      jsonFiles.czytajPlikSygnalow(fileToRead, common.getGpar(), function (dane) {
+      jsonFiles.czytajPlikSygnalow('/..'+fileToRead, common.getGpar(), function (dane) {
         res.jsonp(dane);
       });
       break;
     }
     case 'parametry': {
-      jsonFiles.czytajPlikParametrowWiz(fileToRead, common.getGpar(), function (dane) {
+      jsonFiles.czytajPlikParametrowWiz('/..'+fileToRead, common.getGpar(), function (dane) {
         res.jsonp(dane);
       });
       break;
@@ -134,7 +164,9 @@
         'utf8',
         function (err, text) {
           if (err) {
-            res.redirect(fileToRead);
+            req.baseUrl = fileToRead;
+            jsonp_file(req, res, next);
+            // res.redirect(fileToRead);
           } else {
             res.jsonp(jsonFiles.czytajPlikKomunikatow(text, false));
           }
@@ -142,19 +174,39 @@
       break;
     }
     case 'diagnostykaBlokow': {
-      //przekierowanie do odpowiedniego folderu bez wersji językowych
-      res.redirect('/../json' + dirLang.dir + '/diagnostykaBlokow.json');
+      // przekierowanie do odpowiedniego folderu bez wersji językowych
+      req.baseUrl = '/json' + dirLang.dir + '/diagnostykaBlokow.json';
+      jsonp_file(req, res, next);
+      // res.redirect('/../json' + dirLang.dir + '/diagnostykaBlokow.json');
       break;
     }
     default:
-      res.redirect(fileToRead);
+      // next();
+      if (fileToRead.search(/\.json/i) > 2) {
+        req.baseUrl = fileToRead;
+        jsonp_file(req, res, next);
+      } else {
+        res.redirect(fileToRead);
+      }
+      /*
+      console.log('default');
+      fs.readFile(__dirname + '/../json' + file[0],
+        'utf8',
+        function (err, text) {
+          if (err) { res.json({err:err}); }
+          else { res.jsonp(JSON.parse(text)); }
+      });
+      */
       break;
     }
   });
 
-  // Pliki statyczne z folderu /json
-  app.use('/json', express.static(__dirname + '/../json'));
+  // app.use('/json', function (req, res, next){
+  app.use(/^\/json\/.*\.json/, jsonp_file);
 
+  //tresc statyczna na poczatku routowania
+  app.use(express.static(__dirname + '/' + argv.dir));
+  
   //wystartowanie serwera
   server.listen(argv.port, function () {
     console.log('HTTP Server listening on', argv.port);

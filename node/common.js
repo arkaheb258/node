@@ -49,6 +49,7 @@ function pobierzPlikFTP(con_par, callback) {
     c.get(con_par.path, function (err, stream) {
       if (err) {
         console.log('FTP error', err);
+        c.end();
         callback(null);
         return;
       }
@@ -65,10 +66,12 @@ function pobierzPlikFTP(con_par, callback) {
   });
   c.on('timeout', function () {
     console.log('FTP timeout');
+    c.end();
     callback(null);
   });
   c.on('error', function (err) {
     console.log('FTP error', err);
+    c.end();
     callback(null);
   });
   c.connect({host: con_par.host,

@@ -14,5 +14,6 @@ else
   exit 0
   sudo date -u --set $sDate && sudo date -u --set $sTime
   sudo /sbin/hwclock -w
+  sudo /sbin/hwclock -w -f /dev/rtc0
   sudo /sbin/hwclock -w -f /dev/rtc1
 fi

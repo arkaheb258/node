@@ -38,6 +38,9 @@ function Strada() {
   require('./stradaPar.js')(Strada);
   require('./stradaConn.js')(Strada);
 
+  if (argv.server) {
+    selv.openServer(20021);
+  }
   //TODO: wystartowanie interwału w osobnej metodzie, a nie w konstruktorze
   self.myInterval = new common.MyInterval(self.interval, function () {
     // if (!strada.master || !strada.master.connected) {
@@ -460,6 +463,17 @@ Strada.prototype.send = function (el) {
   if (self.client) { self.client.write(outBuff); } else { console.log('client error'); }
   // console.log('wysłano ID=', instrID, 'instrNo:', instrNo, 'self.lastSent.instrID =', self.lastSent.instrID);
 };
+
+Strada.prototype.openServer = function (port) {
+  console.log('openServer', port);
+  this.server = net.createServer((socket) => {
+    socket.end('goodbye\n');
+  }).on('error', (err) => {
+    // handle errors here
+    throw err;
+  });    
+  this.server.listen({ port: port });
+}
 
 module.exports = Strada;
 
